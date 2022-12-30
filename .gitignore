@@ -1,5 +1,6 @@
 .DS_Store
-src/.DS_Store
 /target/
-tests/*.*
 Cargo.lock
+Icon?
+src/.DS_Store
+tests/*.*
