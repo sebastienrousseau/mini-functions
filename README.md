@@ -2,7 +2,7 @@
 
 ![Mini Functions][banner]
 
-## Highly Performant Utility And Wrapper Functions Library For Rust
+## Highly Performant Utility And Wrapper Functions Library For Rust 🦀
 
 ![Made With Love][SH-MWL]
 
@@ -14,7 +14,7 @@
 
 ![divider][divider]
 
-## Welcome to the Mini Functions library for Rust 🦀
+## Welcome to the Mini Functions library
 
 Mini Functions defines a base layer of functionality for writing Rust
 applications. It provides a set of functions that can be used in your
@@ -89,5 +89,5 @@ for their help and support.
 [7]: http://semver.org/
 
 [SH-MWL]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg "Made With Love"
-[banner]: https://raw.githubusercontent.com/sebastienrousseau/mini-functions/main/.github/assets/mini-functions.svg "Mini Functions"
+[banner]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/banners/banner-mini-functions.svg "Mini Functions - Rust 🦀"
 [divider]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/elements/divider.svg "divider"
