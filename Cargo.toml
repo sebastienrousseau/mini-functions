@@ -9,8 +9,7 @@ include = [
     "/LICENSE-Apache",
     "/LICENSE-MIT",
     "/README.md",
-    "/src/**",
-    "/tests/**",
+    "/src/**"
 ]
 keywords = ["functions"]
 license = "Apache-2.0 OR MIT"
