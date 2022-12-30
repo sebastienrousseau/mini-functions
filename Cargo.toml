@@ -3,14 +3,14 @@ authors = ["Sebastien Rousseau"]
 categories = ["development-tools"]
 description = "Highly Performant Utility And Wrapper Functions Library For Rust"
 edition = "2021"
-exclude = ["tests/"]
 homepage = "https://minifunctions.com"
 include = [
     "/Cargo.toml",
     "/LICENSE-Apache",
     "/LICENSE-MIT",
     "/README.md",
-    "/src/**"
+    "/src/**",
+    "/tests/**",
 ]
 keywords = ["functions"]
 license = "Apache-2.0 OR MIT"
