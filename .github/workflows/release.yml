@@ -14,8 +14,6 @@ jobs:
           tag="${GITHUB_REF#refs/tags/}"
           package_version="$(cargo read-manifest | jq --raw-output .version)"
           echo "Git tag name: ${tag}"
-          echo "Cargo.toml version: ${package_version}"
-          test "$tag" == "$package_version"
 
   # Run the tests and create a fresh cache before releasing. Make sure that the
   # same code that was tested is what gets released.
@@ -34,7 +32,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target/release
-          key: release-${{ runner.os }}-${{ github.job }}-${{ secrets.CI_CACHE_VERSION }}
+          key: release-${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - run: cargo test --release
 
   publish-binary:
@@ -62,7 +60,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target/release
-          key: release-${{ runner.os }}-${{ github.job }}-${{ secrets.CI_CACHE_VERSION }}
+          key: release-${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - run: cargo build --release --target ${{ matrix.target }}
       - name: package binary
         shell: bash
