@@ -6,84 +6,47 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  verify-version:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: |
-          tag="${GITHUB_REF#refs/tags/}"
-          package_version="$(cargo read-manifest | jq --raw-output .version)"
-          echo "Git tag name: ${tag}"
-
-  # Run the tests and create a fresh cache before releasing. Make sure that the
-  # same code that was tested is what gets released.
-  test:
-    runs-on: ${{ matrix.os }}
+  release:
     strategy:
       matrix:
-        os:
-          - ubuntu-latest
-          - macos-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            target/release
-          key: release-${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-      - run: cargo test --release
-
-  publish-binary:
-    needs:
-      - verify-version
-      - test
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os:
-          - ubuntu-latest
-          - macos-latest
+        os: [ubuntu-latest, macOS-latest, windows-latest]
         include:
-          - os: macos-latest
-            artifact_prefix: macos-x86-64
-            target: x86_64-apple-darwin
           - os: ubuntu-latest
-            artifact_prefix: linux-x86-64
-            target: x86_64-unknown-linux-gnu
+            target: x86_64-unknown-linux-musl
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+          - os: macOS-latest
+            target: x86_64-apple-darwin
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            target/release
-          key: release-${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-      - run: cargo build --release --target ${{ matrix.target }}
-      - name: package binary
-        shell: bash
+      - run: rustup update stable
+      - run: rustup target add ${{ matrix.target }}
+      - run: cargo build --package webbundle-cli --all-features --release --target ${{ matrix.target }}
+      - run: cargo test --package webbundle-cli --all-features --release --target ${{ matrix.target }}
+      - name: Package
+        if: matrix.os != 'windows-latest'
         run: |
+          strip target/${{ matrix.target }}/release/${{ env.BIN_NAME }}
           cd target/${{ matrix.target }}/release
-          tar czvf \
-            ${{ github.event.repository.name }}-${{ matrix.artifact_prefix }}.tar.gz \
-            ${{ github.event.repository.name }}
-          shasum -a 256 ${{ github.event.repository.name }}-${{ matrix.artifact_prefix }}.tar.gz \
-            > ${{ github.event.repository.name }}-${{ matrix.artifact_prefix }}.sha256
-      - name: publish release to github
+          tar czvf ../../../${{ env.PACKAGE_NAME }}-${{ matrix.target }}.tar.gz ${{ env.BIN_NAME }}
+          cd -
+      - name: Package (windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          strip target/${{ matrix.target }}/release/${{ env.BIN_NAME }}.exe
+          cd target/${{ matrix.target }}/release
+          7z a ../../../${{ env.PACKAGE_NAME }}-${{ matrix.target }}.zip ${{ env.BIN_NAME }}.exe
+          cd -
+      - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            target/${{ matrix.target }}/release/${{ github.event.repository.name }}-${{ matrix.artifact_prefix }}.tar.gz
-            target/${{ matrix.target }}/release/${{ github.event.repository.name }}-${{ matrix.artifact_prefix }}.sha256
+          files: "${{ env.PACKAGE_NAME }}-${{ matrix.target }}*"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  publish-crate:
+  publish:
     needs:
-      - verify-version
-      - test
+      - release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -93,5 +56,5 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target/release
-          key: release-${{ runner.os }}-${{ github.job }}-${{ secrets.CI_CACHE_VERSION }}
+          key: "${{ env.PACKAGE_NAME }}-${{ matrix.target }}*"
       - run: cargo publish --token ${{ secrets.CARGO_API_TOKEN }} --allow-dirty
