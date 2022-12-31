@@ -1,8 +1,12 @@
 name: ❯ release
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
 
 env:
   APP_NAME: "mini-functions"
   RUSTFLAGS: -D warnings
   RUSTDOCFLAGS: -D warnings
+
