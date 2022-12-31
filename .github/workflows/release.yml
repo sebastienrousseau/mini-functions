@@ -23,5 +23,4 @@ jobs:
         run: make dmg-universal
       - name: Upload Application
         run: |
-          mv ./target/release/osx/${PACKAGE_NAME}.dmg ./${PACKAGE_NAME}-${GITHUB_REF##*/}.dmg
-          ./.github/workflows/upload_asset.sh ./${PACKAGE_NAME}-${GITHUB_REF##*/}.dmg $GITHUB_TOKEN
+          mv ./target/release/osx/${PACKAGE_NAME}.dmg ./${PACKAGE_NAME}-${GITHUB_REF##*/}.dmg $GITHUB_TOKEN
