@@ -2,6 +2,9 @@ name: ❯ release
 
 on: [push, pull_request]
 
+env:
+  CARGO_TERM_COLOR: always
+
 jobs:
   test:
     runs-on: ${{ matrix.os }}
@@ -23,7 +26,6 @@ jobs:
 
   publish-binary:
     needs:
-      - verify-version
       - test
     runs-on: ${{ matrix.os }}
     strategy:
@@ -69,7 +71,6 @@ jobs:
 
   publish-crate:
     needs:
-      - verify-version
       - test
     runs-on: ubuntu-latest
     steps:

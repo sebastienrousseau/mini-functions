@@ -2,6 +2,9 @@ name: ❯ build
 
 on: [push, pull_request]
 
+env:
+  CARGO_TERM_COLOR: always
+
 jobs:
   build-and-test:
     name: ${{ matrix.name }}
