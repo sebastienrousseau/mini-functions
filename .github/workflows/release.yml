@@ -66,7 +66,6 @@ jobs:
         shell: bash
         run: |
           cd target/${{ matrix.target }}/release
-          strip ${{ github.event.repository.name }}
           tar czvf \
             ${{ github.event.repository.name }}-${{ matrix.artifact_prefix }}.tar.gz \
             ${{ github.event.repository.name }}
