@@ -1,9 +1,6 @@
-name: release
+name: ❯ release
 
-on:
-  push:
-    tags:
-      - v1.*
+on: [push, pull_request]
 
 jobs:
   create-release:
