@@ -85,7 +85,7 @@ jobs:
           esac;
           # Setup paths
           BIN_DIR="${{ env.CICD_INTERMEDIATES_DIR }}/stripped-release-bin/"
-          mkdir -p "${BIN_DIR}"
+          sudo mkdir -p "${BIN_DIR}"
           BIN_NAME="${{ env.PROJECT_NAME }}${EXE_suffix}"
           BIN_PATH="${BIN_DIR}/${BIN_NAME}"
           TRIPLET_NAME="${{ matrix.job.target }}"
@@ -107,8 +107,8 @@ jobs:
           echo ::set-output name=PKG_NAME::${PKG_NAME}
           PKG_STAGING="${{ env.CICD_INTERMEDIATES_DIR }}/package"
           ARCHIVE_DIR="${PKG_STAGING}/${PKG_BASENAME}/"
-          mkdir -p "${ARCHIVE_DIR}"
-          mkdir -p "${ARCHIVE_DIR}/autocomplete"
+          sudo mkdir -p "${ARCHIVE_DIR}"
+          sudo mkdir -p "${ARCHIVE_DIR}/autocomplete"
           # Binary
           cp "${{ steps.strip.outputs.BIN_PATH }}" "$ARCHIVE_DIR"
           # base compressed package
