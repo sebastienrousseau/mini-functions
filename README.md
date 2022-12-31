@@ -1,14 +1,15 @@
 # Mini Functions 🦀
 
+[![Made With Love][mwl]][6]
+
 ## Highly performant utility and wrapper functions library for Rust
 
 ![Mini Functions][banner]
 
 [![Crates.io][crates-badge]][8]
-[![Docs.rs][docs-badge]][9]
 [![Lib.rs][libs-badge]][10]
+[![Docs.rs][docs-badge]][9]
 [![License][license-badge]][2]
-![Made with Love][mwl]
 
 ![divider][divider]
 
