@@ -5,22 +5,35 @@ on: [push, pull_request]
 env:
   PACKAGE_NAME: mini-functions
   CARGO_TERM_COLOR: always
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  macos:
-    runs-on: macos-11
+  build:
+    runs-on: ubuntu-latest
 
+    name: Create and Publish Release
     steps:
       - uses: actions/checkout@v2
-      - name: Install ARM target
-        run: rustup update && rustup target add aarch64-apple-darwin
-      # - name: Test
-      #   run: cargo test --release
-      - name: Build ARM
-        run: cargo build --release --target=aarch64-apple-darwin
-      - name: Make DMG
-        run: make dmg-universal
-      - name: Upload Application
-        run: |
-          mv ./target/release/osx/${PACKAGE_NAME}.dmg ./${PACKAGE_NAME}-${GITHUB_REF##*/}.dmg $GITHUB_TOKEN
+      - name: Create GitHub release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          body: |
+            Please see the root of the repository for the CHANGELOG.md
+          draft: true
+          prerelease: false
+
+      - name: Publish to crates.io
+        uses: actions-rs/cargo@v1
+        with:
+          command: publish
+          args: --token ${{ secrets.CRATES_IO_TOKEN }}
+
+      - name: Create Binaries
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --release --all-features
