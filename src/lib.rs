@@ -17,4 +17,5 @@
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/icons/ico-mini-functions.svg"
 )]
+
 pub mod date;
