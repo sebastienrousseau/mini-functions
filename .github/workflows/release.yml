@@ -3,47 +3,25 @@ name: ❯ release
 on: [push, pull_request]
 
 env:
+  PACKAGE_NAME: mini-functions
   CARGO_TERM_COLOR: always
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  build:
-    env:
-      BIN_NAME: mini-functions
-      PACKAGE_NAME: mini-functions
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macOS-latest, windows-latest]
-        include:
-          - os: ubuntu-latest
-            target: x86_64-unknown-linux-musl
-          - os: windows-latest
-            target: x86_64-pc-windows-msvc
-          - os: macOS-latest
-            target: x86_64-apple-darwin
-    runs-on: ${{ matrix.os }}
+  macos:
+    runs-on: macos-11
+
     steps:
       - uses: actions/checkout@v2
-      - run: rustup update stable
-      - run: rustup target add ${{ matrix.target }}
-      - run: cargo build --package mini-functions --all-features --release --target ${{ matrix.target }}
-      # - run: cargo test --package mini-functions --all-features --release --target ${{ matrix.target }}
-      - name: Package
-        if: matrix.os != 'windows-latest'
+      - name: Install ARM target
+        run: rustup update && rustup target add aarch64-apple-darwin
+      # - name: Test
+      #   run: cargo test --release
+      - name: Build ARM
+        run: cargo build --release --target=aarch64-apple-darwin
+      - name: Make DMG
+        run: make dmg-universal
+      - name: Upload Application
         run: |
-          strip target/${{ matrix.target }}/release/${{ env.BIN_NAME }}
-          cd target/${{ matrix.target }}/release
-          tar czvf ../../../${{ env.PACKAGE_NAME }}-${{ matrix.target }}.tar.gz ${{ env.BIN_NAME }}
-          cd -
-      - name: Package (windows)
-        if: matrix.os == 'windows-latest'
-        run: |
-          strip target/${{ matrix.target }}/release/${{ env.BIN_NAME }}.exe
-          cd target/${{ matrix.target }}/release
-          7z a ../../../${{ env.PACKAGE_NAME }}-${{ matrix.target }}.zip ${{ env.BIN_NAME }}.exe
-          cd -
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: '${{ env.PACKAGE_NAME }}-${{ matrix.target }}*'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          mv ./target/release/osx/${PACKAGE_NAME}.dmg ./${PACKAGE_NAME}-${GITHUB_REF##*/}.dmg
+          ./.github/workflows/upload_asset.sh ./${PACKAGE_NAME}-${GITHUB_REF##*/}.dmg $GITHUB_TOKEN
