@@ -80,16 +80,16 @@ jobs:
       - name: Build wheel (with sdist)
         if: matrix.target == 'x86_64-unknown-linux-musl'
         run: |
-          cargo run -- build --release -b bin --sdist -o dist --target ${{ matrix.target }} --features password-storage --compatibility manylinux2010 musllinux_1_1
+          cargo run -- build --release --lib --sdist -o dist --target ${{ matrix.target }} --features password-storage --compatibility manylinux2010 musllinux_1_1
 
       # ring doesn't support aarch64 windows yet
       - name: Build wheel (windows aarch64)
         if: matrix.target == 'aarch64-pc-windows-msvc'
-        run: cargo run -- build --release -b bin -o dist --target ${{ matrix.target }} --no-default-features --features full
+        run: cargo run -- build --release --lib -o dist --target ${{ matrix.target }} --no-default-features --features full
 
       - name: Build wheel (without sdist)
         if: ${{ matrix.target != 'x86_64-unknown-linux-musl' && matrix.target != 'aarch64-pc-windows-msvc' }}
-        run: cargo run -- build --release -b bin -o dist --target ${{ matrix.target }} --features password-storage
+        run: cargo run -- build --release --lib -o dist --target ${{ matrix.target }} --features password-storage
 
       - name: Build wheel (macOS universal2)
         if: matrix.target == 'x86_64-apple-darwin'
@@ -100,7 +100,7 @@ jobs:
           # set SDKROOT for C dependencies like ring and bzip2
           export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
           rustup target add aarch64-apple-darwin
-          cargo run -- build --release -b bin -o dist --universal2 --features password-storage
+          cargo run -- build --release --lib -o dist --universal2 --features password-storage
 
       - name: Archive binary (windows)
         if: matrix.os == 'windows-latest'
@@ -175,7 +175,7 @@ jobs:
       - name: Build wheel
         run: |
           sudo python3 -m pip install -U --pre mini-functions
-          mini-functions build --release -b bin -o dist \
+          mini-functions build --release --lib -o dist \
             --target ${{ matrix.platform.target }} \
             --compatibility ${{ matrix.platform.compatibility }} \
             --features password-storage
@@ -217,7 +217,7 @@ jobs:
       - name: Build wheel
         run: |
           sudo python3 -m pip install -U --pre mini-functions
-          mini-functions build --release -b bin -o dist \
+          mini-functions build --release --lib -o dist \
             --target ${{ matrix.platform.target }} \
             --compatibility ${{ matrix.platform.compatibility }} \
             --no-default-features \
