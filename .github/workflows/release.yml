@@ -1,136 +1,103 @@
-name: ❯ release
+name: release
 
-on: [push, pull_request]
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
-    name: ${{ matrix.job.target }} (${{ matrix.job.os }})
-    runs-on: ${{ matrix.job.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        job:
-          - { target: x86_64-apple-darwin, os: macos-10.15 }
-          - { target: aarch64-apple-darwin, os: macos-11.0 }
-          - { target: x86_64-unknown-linux-gnu, os: ubuntu-20.04 }
-          - { target: x86_64-pc-windows-gnu, os: windows-2019 }
-          - {
-              target: x86_64-pc-windows-msvc,
-              os: windows-2019,
-              use-cross: true,
-            }
-          - {
-              target: aarch64-pc-windows-msvc,
-              os: windows-2019,
-              use-cross: true,
-            }
-
+  verify-version:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2
-      - name: Cache
-        uses: actions/cache@v2
+      - uses: actions/checkout@v2
+      - run: |
+          tag="${GITHUB_REF#refs/tags/}"
+          package_version="$(cargo read-manifest | jq --raw-output .version)"
+          echo "Git tag name: ${tag}"
+          echo "Cargo.toml version: ${package_version}"
+          test "$tag" == "$package_version"
+
+  # Run the tests and create a fresh cache before releasing. Make sure that the
+  # same code that was tested is what gets released.
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
         with:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-            target
-          key: ${{ matrix.job.target }}-${{ matrix.job.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+            target/release
+          key: release-${{ runner.os }}-${{ github.job }}-${{ secrets.CI_CACHE_VERSION }}
+      - run: cargo test --release
 
-      - name: Extract crate information
-        shell: bash
-        run: |
-          echo "PROJECT_NAME=${{ github.event.repository.name }}" >> $GITHUB_ENV
-          echo "PROJECT_VERSION=$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -n1)" >> $GITHUB_ENV
-          echo "PROJECT_MAINTAINER=$(sed -n 's/^authors = \["\(.*\)"\]/\1/p' Cargo.toml)" >> $GITHUB_ENV
-          echo "PROJECT_HOMEPAGE=$(sed -n 's/^homepage = "\(.*\)"/\1/p' Cargo.toml)" >> $GITHUB_ENV
-      - name: Install Rust toolchain
-        uses: actions-rs/toolchain@v1
+  publish-binary:
+    needs:
+      - verify-version
+      - test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+        include:
+          - os: macos-latest
+            artifact_prefix: macos-x86-64
+            target: x86_64-apple-darwin
+          - os: ubuntu-latest
+            artifact_prefix: linux-x86-64
+            target: x86_64-unknown-linux-gnu
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
         with:
-          target: ${{ matrix.job.target }}
-          profile: minimal
-          toolchain: stable
-
-      - name: Show version information (Rust, cargo, GCC)
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target/release
+          key: release-${{ runner.os }}-${{ github.job }}-${{ secrets.CI_CACHE_VERSION }}
+      - run: cargo build --release --target ${{ matrix.target }}
+      - name: package binary
         shell: bash
         run: |
-          gcc --version || true
-          rustup -V
-          rustup toolchain list
-          rustup default
-          cargo -V
-          rustc -V
-      - name: Show rustc --version --verbose
-        shell: bash
-        run: rustc --version --verbose
-
-      - name: Build
-        uses: actions-rs/cargo@v1
-        with:
-          use-cross: ${{ matrix.job.use-cross }}
-          command: build
-          args: --release --target=${{ matrix.job.target }}
-
-      - name: Strip debug information from executable
-        id: strip
-        shell: bash
-        run: |
-          # Figure out suffix of binary
-          EXE_suffix=""
-          case ${{ matrix.job.target }} in
-            *-pc-windows-*) EXE_suffix=".exe" ;;
-          esac;
-          # Setup paths
-          BIN_DIR="${{ env.CICD_INTERMEDIATES_DIR }}/stripped-release-bin/"
-          sudo e2fsck /dev/sdb -p
-          mkdir -p "${BIN_DIR}"
-          BIN_NAME="${{ env.PROJECT_NAME }}${EXE_suffix}"
-          BIN_PATH="${BIN_DIR}/${BIN_NAME}"
-          TRIPLET_NAME="${{ matrix.job.target }}"
-          # Copy the release build binary to the result location
-          cp "target/$TRIPLET_NAME/release/${BIN_NAME}" "${BIN_DIR}"
-          # Let subsequent steps know where to find the (stripped) bin
-          echo ::set-output name=BIN_PATH::${BIN_PATH}
-          echo ::set-output name=BIN_NAME::${BIN_NAME}
-      - name: Create tarball
-        id: package
-        shell: bash
-        run: |
-          PKG_suffix=".tar.gz" ;
-          case ${{ matrix.job.target }} in
-            *-pc-windows-*) PKG_suffix=".zip" ;;
-          esac;
-          PKG_BASENAME=${PROJECT_NAME}-v${PROJECT_VERSION}-${{ matrix.job.target }}
-          PKG_NAME=${PKG_BASENAME}${PKG_suffix}
-          echo ::set-output name=PKG_NAME::${PKG_NAME}
-          PKG_STAGING="${{ env.CICD_INTERMEDIATES_DIR }}/package"
-          ARCHIVE_DIR="${PKG_STAGING}/${PKG_BASENAME}/"
-          mkdir -p "${ARCHIVE_DIR}"
-          mkdir -p "${ARCHIVE_DIR}/autocomplete"
-          # Binary
-          cp "${{ steps.strip.outputs.BIN_PATH }}" "$ARCHIVE_DIR"
-          # base compressed package
-          pushd "${PKG_STAGING}/" >/dev/null
-          case ${{ matrix.job.target }} in
-            *-pc-windows-*) 7z -y a "${PKG_NAME}" "${PKG_BASENAME}"/* | tail -2 ;;
-            *) tar czf "${PKG_NAME}" "${PKG_BASENAME}"/* ;;
-          esac;
-          popd >/dev/null
-          # Let subsequent steps know where to find the compressed package
-          echo ::set-output name=PKG_PATH::"${PKG_STAGING}/${PKG_NAME}"
-      - name: "Artifact upload: tarball"
-        uses: actions/upload-artifact@master
-        with:
-          name: ${{ steps.package.outputs.PKG_NAME }}
-          path: ${{ steps.package.outputs.PKG_PATH }}
-
-      - name: Publish archives and packages
+          cd target/${{ matrix.target }}/release
+          strip ${{ github.event.repository.name }}
+          tar czvf \
+            ${{ github.event.repository.name }}-${{ matrix.artifact_prefix }}.tar.gz \
+            ${{ github.event.repository.name }}
+          shasum -a 256 ${{ github.event.repository.name }}-${{ matrix.artifact_prefix }}.tar.gz \
+            > ${{ github.event.repository.name }}-${{ matrix.artifact_prefix }}.sha256
+      - name: publish release to github
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ${{ steps.package.outputs.PKG_PATH }}
+            target/${{ matrix.target }}/release/${{ github.event.repository.name }}-${{ matrix.artifact_prefix }}.tar.gz
+            target/${{ matrix.target }}/release/${{ github.event.repository.name }}-${{ matrix.artifact_prefix }}.sha256
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-crate:
+    needs:
+      - verify-version
+      - test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target/release
+          key: release-${{ runner.os }}-${{ github.job }}-${{ secrets.CI_CACHE_VERSION }}
+      - run: cargo publish --token ${{ secrets.CARGO_API_TOKEN }} --allow-dirty
