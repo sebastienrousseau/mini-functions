@@ -1,22 +1,6 @@
 name: ❯ build
 
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - "Cargo.lock"
-      - "Cargo.toml"
-      - "src/**"
-      - "tests/**"
-  pull_request:
-    branches:
-      - main
-    paths:
-      - "Cargo.lock"
-      - "Cargo.toml"
-      - "src/**"
-      - "tests/**"
+on: [push, pull_request]
 
 jobs:
   build-and-test:
