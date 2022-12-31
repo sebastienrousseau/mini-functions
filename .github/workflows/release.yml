@@ -1,7 +1,6 @@
 name: ❯ release
 
-on:
-  [push, pull_request]
+on: [push, pull_request]
 
 env:
   CARGO_TERM_COLOR: always
@@ -17,7 +16,7 @@ jobs:
             os: ubuntu-latest
             rust: stable
             target: x86_64-unknown-linux-musl
-            cross: false
+            cross: true
           - build: arm-v7
             os: ubuntu-latest
             rust: stable
