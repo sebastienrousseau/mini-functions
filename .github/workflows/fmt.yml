@@ -1,6 +1,9 @@
+name: ❯ rustfmt
+
 on: [push, pull_request]
 
-name: ❯ rustfmt
+env:
+  CARGO_TERM_COLOR: always
 
 jobs:
   fmt:
