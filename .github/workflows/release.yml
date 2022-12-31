@@ -27,14 +27,12 @@ jobs:
       - name: Package
         if: matrix.os != 'windows-latest'
         run: |
-          strip target/${{ matrix.target }}/release/${{ env.BIN_NAME }}
           cd target/${{ matrix.target }}/release
           tar czvf ../../../${{ env.PACKAGE_NAME }}-${{ matrix.target }}.tar.gz ${{ env.BIN_NAME }}
           cd -
       - name: Package (windows)
         if: matrix.os == 'windows-latest'
         run: |
-          strip target/${{ matrix.target }}/release/${{ env.BIN_NAME }}.exe
           cd target/${{ matrix.target }}/release
           7z a ../../../${{ env.PACKAGE_NAME }}-${{ matrix.target }}.zip ${{ env.BIN_NAME }}.exe
           cd -
