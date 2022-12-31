@@ -106,7 +106,7 @@ jobs:
 
       - name: Strip release binary (linux and macos)
         if: matrix.build == 'x86_64-linux' || matrix.build == 'x86_64-macos'
-        run: strip "target/${{ matrix.target }}/release/$BIN_NAME"
+        run: strip "target/${{ matrix.target }}/release/${{ BIN_NAME }}"
 
       - name: Strip release binary (arm)
         if: matrix.build == 'aarch64-linux'
@@ -115,16 +115,16 @@ jobs:
             "$PWD/target:/target:Z" \
             rustembedded/cross:${{ matrix.target }} \
             aarch64-linux-gnu-strip \
-            /target/${{ matrix.target }}/release/$BIN_NAME
+            /target/${{ matrix.target }}/release/${{ BIN_NAME }}
 
       - name: Build archive
         shell: bash
         run: |
           mkdir dist
           if [ "${{ matrix.os }}" = "windows-2019" ]; then
-            cp "target/${{ matrix.target }}/release/$BIN_NAME.exe" "dist/"
+            cp "target/${{ matrix.target }}/release/${{ BIN_NAME }}.exe" "dist/"
           else
-            cp "target/${{ matrix.target }}/release/$BIN_NAME" "dist/"
+            cp "target/${{ matrix.target }}/release/${{ BIN_NAME }}" "dist/"
           fi
 
       - uses: actions/upload-artifact@v2.2.4
