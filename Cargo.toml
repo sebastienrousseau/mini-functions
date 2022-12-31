@@ -22,10 +22,10 @@ rust-version = "1.57.0"
 version = "0.0.1"
 
 [[bin]]
-name = "mini-functions"
+name = "mini_functions"
 
 [lib]
-name = "mini-functions"
+name = "mini_functions"
 
 [badges]
 maintenance = { status = "actively-developed" }
