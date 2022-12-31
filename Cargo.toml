@@ -28,7 +28,7 @@ bench = false
 
 [[test]]
 name = "tests"
-path = "./tests/main.rs"
+path = "tests/main.rs"
 
 [dependencies]
 time = { version ="0.3.17", features = ["default"] }
