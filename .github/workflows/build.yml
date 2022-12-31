@@ -1,22 +1,6 @@
 name: ❯ build
 
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - "Cargo.lock"
-      - "Cargo.toml"
-      - "src/**"
-      - "tests/**"
-  pull_request:
-    branches:
-      - main
-    paths:
-      - "Cargo.lock"
-      - "Cargo.toml"
-      - "src/**"
-      - "tests/**"
+on: [push, pull_request]
 
 jobs:
   build-and-test:
@@ -79,11 +63,11 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Build default target in debug mode
-        run: cargo build --target ${{ matrix.target }} --locked
+        run: cargo build --target ${{ matrix.target }}
 
       - name: Build Apple ARM64 target in debug mode
         if: ${{ matrix.os == 'macos-latest' }}
-        run: cargo build --target ${{ matrix.target2 }} --locked
+        run: cargo build --target ${{ matrix.target2 }}
 
       - name: Test default target in debug mode
         run: cargo test --target ${{ matrix.target }}

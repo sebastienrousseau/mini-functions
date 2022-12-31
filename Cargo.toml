@@ -9,25 +9,20 @@ include = [
     "/LICENSE-Apache",
     "/LICENSE-MIT",
     "/README.md",
-    "/src/**"
+    "/src/**",
+    "/tests/**",
 ]
 keywords = ["functions"]
 license = "Apache-2.0 OR MIT"
 name = "mini-functions"
 readme = "README.md"
 repository = "https://github.com/sebastienrousseau/mini-functions.git"
+resolver = "2" # Enables the new Cargo resolution engine
 rust-version = "1.57.0"
 version = "0.0.1"
 
 [badges]
 maintenance = { status = "actively-developed" }
-
-[lib]
-bench = false
-
-[[test]]
-name = "tests"
-path = "./tests/main.rs"
 
 [dependencies]
 time = { version ="0.3.17", features = ["default"] }
