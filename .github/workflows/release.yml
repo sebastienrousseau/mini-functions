@@ -30,7 +30,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: publish
-          args: --token ${{ secrets.CRATES_IO_TOKEN }}
+          args: --token ${{ secrets.CARGO_TOKEN }}
 
       - name: Create Binaries
         uses: actions-rs/cargo@v1
