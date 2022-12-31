@@ -1,12 +1,15 @@
-name: Release
+name: ❯ release
+
 on:
+  [push, pull_request]
+
   # schedule:
   # - cron: '0 0 * * *' # midnight UTC
 
-  push:
-    tags:
-      - "v[0-9]+.[0-9]+.[0-9]+"
-    ## - release
+  # push:
+  #   tags:
+  #     - "v[0-9]+.[0-9]+.[0-9]+"
+  ## - release
 
 # 1. set up:
 # secrets.COMMITTER_TOKEN - for pushing update to brew tap
@@ -14,14 +17,15 @@ on:
 
 # 2. fill these in and you're done.
 env:
+  # BREW_TAP: Kerosin3/homebrew-tap
   BIN_NAME: mini-functions
+  CARGO_TERM_COLOR: always
   PROJECT_NAME: mini-functions
   REPO_NAME: ${{ github.event.repository.name }}
-  # BREW_TAP: Kerosin3/homebrew-tap
 
 jobs:
   dist:
-    name: Dist
+    name: release
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false # don't fail other jobs if one fails
@@ -206,18 +210,18 @@ jobs:
       #   env:
       #     COMMITTER_TOKEN: ${{ secrets.COMMITTER_TOKEN }}
 
-        #
-        # you can use this initial file in your homebrew-tap if you don't have an initial formula:
-        # <projectname>.rb
-        #
-        # class <Projectname capitalized> < Formula
-        #   desc "A test formula"
-        #   homepage "http://www.example.com"
-        #   url "-----"
-        #   version "-----"
-        #   sha256 "-----"
+      #
+      # you can use this initial file in your homebrew-tap if you don't have an initial formula:
+      # <projectname>.rb
+      #
+      # class <Projectname capitalized> < Formula
+      #   desc "A test formula"
+      #   homepage "http://www.example.com"
+      #   url "-----"
+      #   version "-----"
+      #   sha256 "-----"
 
-        #   def install
-        #     bin.install "<bin-name>"
-        #   end
-        # end
+      #   def install
+      #     bin.install "<bin-name>"
+      #   end
+      # end
