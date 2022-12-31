@@ -16,6 +16,5 @@
 
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/icons/ico-mini-functions.svg",
-    html_root_url = "https://docs.rs/mini-functions/0.0.1"
 )]
 pub mod date;

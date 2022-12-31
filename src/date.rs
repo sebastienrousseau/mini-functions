@@ -104,10 +104,10 @@ impl Date {
     pub fn timestamp() -> String {
         OffsetDateTime::now_utc().unix_timestamp().to_string()
     }
-    /// Get the weekday of the date in the stored offset.
-    ///
-    /// This current uses Zeller's congruence internally.
-    pub fn weekday() -> String {
-        OffsetDateTime::now_utc().weekday().to_string()
-    }
+    // Get the weekday of the date in the stored offset.
+    //
+    // This current uses Zeller's congruence internally.
+    // pub fn weekday() -> String {
+    //     OffsetDateTime::now_utc().weekday().to_string()
+    // }
 }
