@@ -7,7 +7,7 @@ env:
 
 jobs:
   clippy-stable:
-    name: stable toolchain lints
+    name: Stable toolchain lints (clippy) 🦀
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -20,8 +20,9 @@ jobs:
         with:
           command: clippy
           args: --all-features -- -D warnings
+
   clippy-beta:
-    name: beta toolchain lints
+    name: Beta toolchain lints (clippy) 🦀
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
