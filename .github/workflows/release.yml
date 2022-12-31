@@ -2,6 +2,9 @@ name: ❯ release
 
 on: [push, pull_request]
 
+env:
+  APP_NAME: "mini-functions"
+
 jobs:
   create-release:
     name: ${{ matrix.name }}
@@ -54,31 +57,31 @@ jobs:
         run: |
           choco install zip
           cd target/${{ matrix.target }}/release
-          zip mini_functions-${{ steps.get_version.outputs.version }}-${{ matrix.target }}.zip mini_functions.exe
+          zip ${{ env.APP_NAME }}-${{ steps.get_version.outputs.version }}-${{ matrix.target }}.zip ${{ env.APP_NAME }}.exe
           cd ../../..
 
       - name: Create tar.gz file on macOS
         if: ${{ matrix.os == 'macos-latest' }}
         run: |
-          chmod +x target/${{ matrix.target }}/release/mini_functions
-          tar -zcf target/${{ matrix.target }}/release/mini_functions-${{ steps.get_version.outputs.version }}-${{ matrix.target }}.tar.gz -C target/${{ matrix.target }}/release mini_functions
-          chmod +x target/${{ matrix.target2 }}/release/mini_functions
-          tar -zcf target/${{ matrix.target2 }}/release/mini_functions-${{ steps.get_version.outputs.version }}-${{ matrix.target2 }}.tar.gz -C target/${{ matrix.target2 }}/release mini_functions
+          chmod +x target/${{ matrix.target }}/release/${{ env.APP_NAME }}
+          tar -zcf target/${{ matrix.target }}/release/${{ env.APP_NAME }}-${{ steps.get_version.outputs.version }}-${{ matrix.target }}.tar.gz -C target/${{ matrix.target }}/release ${{ env.APP_NAME }}
+          chmod +x target/${{ matrix.target2 }}/release/${{ env.APP_NAME }}
+          tar -zcf target/${{ matrix.target2 }}/release/${{ env.APP_NAME }}-${{ steps.get_version.outputs.version }}-${{ matrix.target2 }}.tar.gz -C target/${{ matrix.target2 }}/release ${{ env.APP_NAME }}
 
       - name: Create tar.gz file on Linux
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
-          chmod +x target/${{ matrix.target }}/release/mini_functions
-          tar -zcf target/${{ matrix.target }}/release/mini_functions-${{ steps.get_version.outputs.version }}-${{ matrix.target }}.tar.gz -C target/${{ matrix.target }}/release mini_functions
+          chmod +x target/${{ matrix.target }}/release/${{ env.APP_NAME }}
+          tar -zcf target/${{ matrix.target }}/release/${{ env.APP_NAME }}-${{ steps.get_version.outputs.version }}-${{ matrix.target }}.tar.gz -C target/${{ matrix.target }}/release ${{ env.APP_NAME }}
 
       - name: Upload release and assets to GitHub
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref }}
-          release_name: mini_functions ${{ steps.get_version.outputs.version }}
+          release_name: ${{ env.APP_NAME }} ${{ steps.get_version.outputs.version }}
           file_glob: true
-          file: target/*/release/mini_functions-${{ steps.get_version.outputs.version }}-*.{zip,tar.gz}
+          file: target/*/release/${{ env.APP_NAME }}-${{ steps.get_version.outputs.version }}-*.{zip,tar.gz}
 
       - name: Upload release to crates.io
         uses: katyo/publish-crates@v1
