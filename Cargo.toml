@@ -21,6 +21,12 @@ resolver = "2" # Enables the new Cargo resolution engine
 rust-version = "1.57.0"
 version = "0.0.1"
 
+[[bin]]
+name = "mini-functions"
+
+[lib]
+name = "mini-functions"
+
 [badges]
 maintenance = { status = "actively-developed" }
 
