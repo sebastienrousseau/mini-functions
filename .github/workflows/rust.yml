@@ -1,15 +1,10 @@
 name: ❯ rust
 
+on: [push, pull_request]
+
 env:
   APP_NAME: "mini-functions"
   CARGO_TERM_COLOR: always
-
-on:
-  push:
-    paths-ignore:
-      - "**.md"
-    branches:
-      - master
 
 jobs:
   build:
