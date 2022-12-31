@@ -1,6 +1,9 @@
 name: ❯ release
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
 
 env:
   RUSTFLAGS: -D warnings
