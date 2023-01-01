@@ -19,13 +19,16 @@ readme = "README.md"
 repository = "https://github.com/sebastienrousseau/mini-functions.git"
 resolver = "2" # Enables the new Cargo resolution engine
 rust-version = "1.57.0"
-version = "0.0.1"
+version = "0.0.2"
 
 [badges]
 maintenance = { status = "actively-developed" }
 
 [dependencies]
 time = { version ="0.3.17", features = ["default"] }
+
+[dev-dependencies]
+regex = "1.7.0"
 
 [package.metadata.docs.rs]
 all-features = true

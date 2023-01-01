@@ -19,7 +19,7 @@
 • [Request Feature][3]
 • [Contributing Guidelines][4]**
 
-## Welcome to the Mini Functions Library for Rust 👋 (v0.0.1)
+## Welcome to the Mini Functions Library for Rust 👋 (v0.0.2)
 
 Mini Functions defines a base layer of functionality for writing Rust
 applications. It provides a set of functions that can be used in your
@@ -33,23 +33,34 @@ prototype for each function.
 
 `mini-functions` requires Rust **1.57.0** or later.
 
-### Table 1 - Mini Functions Library for Rust
+The `mini-functions` library consists of the following functions listed
+in alphabetical order in the following tables.
+
+### Table 1 - Date Functions (date.rs)
 
 | Function | Include File | Function Prototype | Description |
 | -------- | ------------ | ------------------ | ----------- |
+| `Date::date()` | `date.rs` | `fn date()` | Returns the current date in UTC format. |
 | `Date::day()` | `date.rs` | `fn day()` | Returns the current day. |
 | `Date::hour()` | `date.rs` | `fn hour()` | Returns the current hour. |
+| `Date::iso_8601() | `date.rs` | `fn iso_8601()` | Returns the current date and time in ISO 8601 format. |
 | `Date::microsecond()` | `date.rs` | `fn microsecond()` | Returns the current microsecond. |
 | `Date::millisecond()` | `date.rs` | `fn millisecond()` | Returns the current millisecond. |
 | `Date::minute()` | `date.rs` | `fn minute()` | Returns the current minute. |
 | `Date::month()` | `date.rs` | `fn month()` | Returns the current month. |
 | `Date::nanosecond()` | `date.rs` | `fn nanosecond()` | Returns the current nanosecond. |
-| `Date::now()` | `date.rs` | `fn now()` | Returns the current date and time in UTC format. |
+| `Date::now_utc()` | `date.rs` | `fn now_utc()` | Returns the current date and time in UTC format. |
 | `Date::second()` | `date.rs` | `fn second()` | Returns the current second. |
 | `Date::timestamp()` | `date.rs` | `fn timestamp()` | Returns the current timestamp. |
-| `Date::timezone()` | `date.rs` | `fn timezone()` | Returns the current timezone. |
 | `Date::weekday()` | `date.rs` | `fn weekday()` | Returns the current weekday. |
 | `Date::year()` | `date.rs` | `fn year()` | Returns the current year. |
+
+### Table 2 - Log Function (log.rs)
+
+| Function | Include File | Function Prototype | Description |
+| -------- | ------------ | ------------------ | ----------- |
+| `Log::new()` | `log.rs` | `fn new()` | Creates a new log instance. |
+| `Log::log()` | `log.rs` | `fn log()` | Logs a message to the console.|
 
 ![divider][divider]
 

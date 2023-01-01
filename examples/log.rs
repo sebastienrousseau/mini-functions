@@ -1,0 +1,12 @@
+use mini_functions::{date::Date, log::Log};
+
+fn main() {
+    let log = Log::new(
+        "12345678-1234-1234-1234-1234567890ab",
+        &Date::now_utc(),
+        "INFO",
+        "SystemTrayEvent",
+        "Showing main window",
+    );
+    log.log();
+}
