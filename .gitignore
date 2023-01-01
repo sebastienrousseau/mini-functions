@@ -3,4 +3,3 @@
 Cargo.lock
 Icon?
 src/.DS_Store
-tests/*.*

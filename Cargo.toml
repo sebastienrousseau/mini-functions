@@ -27,6 +27,9 @@ maintenance = { status = "actively-developed" }
 [dependencies]
 time = { version ="0.3.17", features = ["default"] }
 
+[dev-dependencies]
+regex = "1.7.0"
+
 [package.metadata.docs.rs]
 all-features = true
 rustdoc-args = ["--cfg", "docsrs"]
