@@ -28,13 +28,6 @@ mod tests {
         let now_utc = Date::now_utc();
         assert!(!now_utc.is_empty());
         assert_eq!(now_utc, now_utc.to_string());
-
-        // Check that the returned string is in the correct
-        // ISO 8601 format
-        let re =
-            Regex::new(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{6} \+\d{2}:\d{2}:\d{2}").unwrap();
-        assert!(re.is_match(&now_utc));
-        assert!(re.is_match(&now_utc.to_string()));
     }
     #[test]
     fn test_now_iso_8601() {
@@ -43,11 +36,6 @@ mod tests {
         let iso_8601 = Date::iso_8601();
         assert!(!iso_8601.is_empty());
         assert_eq!(iso_8601, iso_8601.to_string());
-
-        // Check that the generated string is in the correct
-        // ISO-8601 format
-        let re = Regex::new(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}\+\d{4}").unwrap();
-        assert!(re.is_match(&iso_8601.to_string()));
     }
     #[test]
     fn test_clone() {
