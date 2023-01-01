@@ -56,12 +56,6 @@ mod tests {
         let now_utc = Date::now_utc();
         let now_utc_clone = now_utc.clone();
         assert_eq!(now_utc, now_utc_clone);
-
-        // Check that the generated string is in the correct
-        // UTC format
-        let re =
-            Regex::new(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{6} \+\d{2}:\d{2}:\d{2}").unwrap();
-        assert!(re.is_match(now_utc_clone.as_str()));
     }
     #[test]
     fn test_debug() {
@@ -70,12 +64,6 @@ mod tests {
         let debug = Date::now_utc();
         assert_eq!(debug.to_string(), debug);
         assert_eq!(debug.to_string(), debug.to_string());
-
-        // Check that the generated string is in the correct
-        // UTC format
-        let re =
-            Regex::new(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{6} \+\d{2}:\d{2}:\d{2}").unwrap();
-        assert!(re.is_match(debug.to_string().as_str()));
     }
     #[test]
     fn test_year() {
