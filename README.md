@@ -19,7 +19,7 @@
 • [Request Feature][3]
 • [Contributing Guidelines][4]**
 
-## Welcome to the Mini Functions Library for Rust 👋 (v0.0.1)
+## Welcome to the Mini Functions Library for Rust 👋 (v0.0.2)
 
 Mini Functions defines a base layer of functionality for writing Rust
 applications. It provides a set of functions that can be used in your
@@ -60,7 +60,7 @@ in alphabetical order in the following tables.
 | Function | Include File | Function Prototype | Description |
 | -------- | ------------ | ------------------ | ----------- |
 | `Log::new()` | `log.rs` | `fn new()` | Creates a new log instance. |
-| `Log::log()` | `log.rs` | `fn log()` | Logs a message to the console. |
+| `Log::log()` | `log.rs` | `fn log()` | Logs a message to the console.|
 
 ![divider][divider]
 
