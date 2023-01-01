@@ -1,10 +1,10 @@
-
 use mini_functions::date::Date;
 
 fn main() {
     let date = Date::date();
     let day = Date::day();
     let hour = Date::hour();
+    let iso_8601 = Date::iso_8601();
     let microsecond = Date::microsecond();
     let millisecond = Date::millisecond();
     let minute = Date::minute();
@@ -19,12 +19,13 @@ fn main() {
     println!("✅ Date::date():          {}", date);
     println!("✅ Date::day():           {}", day);
     println!("✅ Date::hour():          {}", hour);
+    println!("✅ Date::iso_8601():      {}", iso_8601);
     println!("✅ Date::microsecond():   {}", microsecond);
     println!("✅ Date::millisecond():   {}", millisecond);
     println!("✅ Date::minute():        {}", minute);
     println!("✅ Date::month():         {}", month);
     println!("✅ Date::nanosecond():    {}", nanosecond);
-    println!("✅ Date::now():           {}", now_utc);
+    println!("✅ Date::now_utc():       {}", now_utc);
     println!("✅ Date::second():        {}", second);
     println!("✅ Date::timestamp():     {}", timestamp);
     println!("✅ Date::weekday():       {}", weekday);
