@@ -13,23 +13,6 @@
 /// * `namespace` - A string slice that holds a namespace UUID.
 /// * `name` - A string slice that holds a name.
 ///
-/// # Examples
-/// ```
-/// use mini_functions::uuid::UUID;
-///
-/// let uuid3 = UUID::uuid_v3(namespace, name);
-/// ```
-///
-/// let uuid4 = UUID::uuid_v4();
-/// ```
-/// let uuid5 = UUID::uuid_v5(namespace, name);
-///
-///
-// use uuid::Uuid;
-
-/// UUID Utility
-///
-/// By default, a new UUID is generated.
 #[non_exhaustive]
 #[derive(Default, Debug, Clone, PartialEq, PartialOrd)]
 pub struct UUID;
@@ -40,13 +23,7 @@ impl UUID {
     /// * `version` - A string slice that holds a version number.
     /// * `namespace` - A string slice that holds a namespace UUID.
     /// * `name` - A string slice that holds a name.
-    /// # Returns
-    /// A new UUID (Universally Unique Identifier) in version 3, 4, or 5.
-    /// # Examples
-    /// ```
-    /// use mini_functions::uuid::UUID;
-    /// let uuid = UUID::new(version, namespace, name);
-    /// ```
+    ///
     #[must_use]
     pub fn new(version: u8, namespace: uuid::Uuid, name: &[u8]) -> String {
         match version {
@@ -63,24 +40,15 @@ impl UUID {
     /// # Arguments
     /// * `namespace` - A string slice that holds a namespace UUID.
     /// * `name` - A string slice that holds a name.
-    /// # Returns
-    /// A new v3 UUID.
-    /// # Examples
-    /// ```
-    /// use mini_functions::uuid::UUID;
-    /// let uuid3 = UUID::uuid_v3(namespace, name);
-    /// ```
+    ///
     pub fn uuid_v3(namespace: uuid::Uuid, name: &[u8]) -> String {
         uuid::Uuid::new_v3(&namespace, name).to_string()
     }
     /// Create a new v4 UUID
-    /// # Returns
-    /// A new v4 UUID.
-    /// # Examples
-    /// ```
-    /// use mini_functions::uuid::UUID;
-    /// let uuid4 = UUID::uuid_v4();
-    /// ```
+    /// # Arguments
+    /// * `namespace` - A string slice that holds a namespace UUID.
+    /// * `name` - A string slice that holds a name.
+    ///
     pub fn uuid_v4() -> String {
         uuid::Uuid::new_v4().to_string()
     }
@@ -88,13 +56,7 @@ impl UUID {
     /// # Arguments
     /// * `namespace` - A string slice that holds a namespace UUID.
     /// * `name` - A string slice that holds a name.
-    /// # Returns
-    /// A new v5 UUID.
-    /// # Examples
-    /// ```
-    /// use mini_functions::uuid::UUID;
-    /// let uuid5 = UUID::uuid_v5(namespace, name);
-    /// ```
+    ///
     pub fn uuid_v5(namespace: uuid::Uuid, name: &[u8]) -> String {
         uuid::Uuid::new_v5(&namespace, name).to_string()
     }
