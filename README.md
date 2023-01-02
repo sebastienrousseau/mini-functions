@@ -76,7 +76,7 @@ the `mini-functions` library.
 | `Date::date()` | `date.rs` | `fn date()` | Returns the current date in UTC format. |
 | `Date::day()` | `date.rs` | `fn day()` | Returns the current day. |
 | `Date::hour()` | `date.rs` | `fn hour()` | Returns the current hour. |
-| `Date::iso_8601() | `date.rs` | `fn iso_8601()` | Returns the current date and time in ISO 8601 format. |
+| `Date::iso_8601()` | `date.rs` | `fn iso_8601()` | Returns the current date and time in ISO 8601 format. |
 | `Date::microsecond()` | `date.rs` | `fn microsecond()` | Returns the current microsecond. |
 | `Date::millisecond()` | `date.rs` | `fn millisecond()` | Returns the current millisecond. |
 | `Date::minute()` | `date.rs` | `fn minute()` | Returns the current minute. |
