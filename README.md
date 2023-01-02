@@ -2,7 +2,7 @@
 
 [![Made With Love][mwl]][6]
 
-## Highly performant utility and wrapper functions library for Rust
+## Highly performant utility and wrapper functions library for Rust 🚀
 
 ![Mini Functions][banner]
 
@@ -19,31 +19,93 @@
 • [Request Feature][3]
 • [Contributing Guidelines][4]**
 
-## Welcome to the Mini Functions Library for Rust 👋 (v0.0.2)
+## Welcome to the Mini Functions Library for Rust 👋
 
-Mini Functions defines a base layer of functionality for writing Rust
-applications. It provides a set of functions that can be used in your
-application code.
+`Mini Functions` is a highly performant utility and wrapper functions
+library for Rust that has been carefully designed with optimization and
+efficiency in mind.
 
-This table briefly describes the Mini Functions Library available for
-Rust. This table provides the include file name and the function
-prototype for each function.
+By providing convenient wrapper functions, our library aims to provide a
+high-level interface for common tasks while still leveraging the
+performance benefits of Rust under the hood.
+
+These utility functions serve as an essential toolkit for any Rust
+developer, and the library's design abstractions allow for easy
+integration into a variety of projects and applications.
+
+## Key Features 🎯
+
+- **Built with Rust** — A modern programming language that is well-
+  suited for building high-performance, reliable, and secure systems.
+- **High-level Utility Functions** — A collection of high-level,
+  abstracted functions for common tasks, such as string manipulation,
+  file manipulation, and data parsing.
+- **Wrapper Functions for Easy Access** — Wrapper functions that provide
+  a more convenient interface for accessing and using underlying Rust
+  libraries or APIs.
+- **Optimization and Performance Tools** — Tools for optimizing and
+  improving the performance of Rust code.
+- **Multi-platform Support** — Support for a variety of platforms,
+  including desktop, mobile, and web.
+- **Comprehensive Documentation and Examples** — Documentation and
+  examples to help developers understand and use the library effectively.
+- **Regular Maintenance and Updates** — Regular updates and maintenance
+  to ensure the library stays up-to-date and reliable.
 
 ## Requirements 📋
 
 `mini-functions` requires Rust **1.57.0** or later.
 
-The `mini-functions` library consists of the following functions listed
-in alphabetical order in the following tables.
+## Installation 📦
 
-### Table 1 - Date Functions (date.rs)
+It takes just a few minutes to get up and running with `mini-functions`.
+Check out our [documentation][0] for more information.
+
+Add the following to your `Cargo.toml` file:
+
+```toml
+[dependencies]
+mini-functions = "0.0.3"
+```
+
+## Usage 📖
+
+Add the following to your `main.rs` file:
+
+```rust
+use mini_functions::*;
+```
+
+then you can use the functions in your application code.
+
+## The Functions library 📚
+
+`Mini Functions` is a library of functions for Rust that provides a
+collection of tools for working with various aspects of a Rust
+application.
+
+The functions in `Mini Functions` are optimized for speed and
+efficiency, making them useful for a variety of applications, including
+those that require fast performance or that need to handle large amounts
+of data.
+
+The `mini-functions` library consists of the following functions:
+
+- [Date and time functions](#date-and-time-functions)
+- [Log functions](#log-functions)
+- [UUID functions](#uuid-functions)
+
+The following tables provide a brief description of each function in the
+`mini-functions` library.
+
+### Date and time functions
 
 | Function | Include File | Function Prototype | Description |
 | -------- | ------------ | ------------------ | ----------- |
 | `Date::date()` | `date.rs` | `fn date()` | Returns the current date in UTC format. |
 | `Date::day()` | `date.rs` | `fn day()` | Returns the current day. |
 | `Date::hour()` | `date.rs` | `fn hour()` | Returns the current hour. |
-| `Date::iso_8601() | `date.rs` | `fn iso_8601()` | Returns the current date and time in ISO 8601 format. |
+| `Date::iso_8601()` | `date.rs` | `fn iso_8601()` | Returns the current date and time in ISO 8601 format. |
 | `Date::microsecond()` | `date.rs` | `fn microsecond()` | Returns the current microsecond. |
 | `Date::millisecond()` | `date.rs` | `fn millisecond()` | Returns the current millisecond. |
 | `Date::minute()` | `date.rs` | `fn minute()` | Returns the current minute. |
@@ -55,12 +117,21 @@ in alphabetical order in the following tables.
 | `Date::weekday()` | `date.rs` | `fn weekday()` | Returns the current weekday. |
 | `Date::year()` | `date.rs` | `fn year()` | Returns the current year. |
 
-### Table 2 - Log Function (log.rs)
+### Log functions
 
 | Function | Include File | Function Prototype | Description |
 | -------- | ------------ | ------------------ | ----------- |
-| `Log::new()` | `log.rs` | `fn new()` | Creates a new log instance. |
 | `Log::log()` | `log.rs` | `fn log()` | Logs a message to the console.|
+| `Log::new()` | `log.rs` | `fn new()` | Creates a new log instance. |
+
+### UUID functions
+
+| Function | Include File | Function Prototype | Description |
+| -------- | ------------ | ------------------ | ----------- |
+| `UUID::new()` | `uuid.rs` | `fn new()` | Creates a new UUID instance based on the version specified. (v3, v4, v5) |
+| `UUID::uuid_v3()` | `uuid.rs` | `fn uuid_v3()` | Creates a new UUID v3 instance. |
+| `UUID::uuid_v4()` | `uuid.rs` | `fn uuid_v4()` | Creates a new UUID v4 instance. |
+| `UUID::uuid_v5()` | `uuid.rs` | `fn uuid_v5()` | Creates a new UUID v5 instance. |
 
 ![divider][divider]
 

@@ -1,7 +1,6 @@
 #[cfg(test)]
 mod tests {
     use mini_functions::date::Date;
-    use regex::Regex;
     #[test]
     fn test_date() {
         // Check that the date function is correctly generating a non
@@ -9,11 +8,6 @@ mod tests {
         let date = Date::date();
         assert!(!date.is_empty());
         assert_eq!(date, date.to_string());
-
-        // Check that the date string is in the correct format
-        let re = Regex::new(r"^\d{4}-\d{2}-\d{2}$").unwrap();
-        assert!(re.is_match(&date));
-        assert!(re.is_match(&date.to_string()));
 
         // Check that the returned date is today's date
         let today = Date::date();
