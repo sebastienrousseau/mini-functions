@@ -19,7 +19,7 @@
 • [Request Feature][3]
 • [Contributing Guidelines][4]**
 
-## Welcome to the Mini Functions Library for Rust 👋 (v0.0.2)
+## Welcome to the Mini Functions Library for Rust 👋
 
 Mini Functions defines a base layer of functionality for writing Rust
 applications. It provides a set of functions that can be used in your
