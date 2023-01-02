@@ -33,10 +33,43 @@ prototype for each function.
 
 `mini-functions` requires Rust **1.57.0** or later.
 
-The `mini-functions` library consists of the following functions listed
-in alphabetical order in the following tables.
+## Installation 📦
 
-### Table 1 - Date Functions (date.rs)
+Add the following to your `Cargo.toml` file:
+
+```toml
+[dependencies]
+mini-functions = "0.0.3"
+```
+
+## Usage 📖
+
+Add the following to your `main.rs` file:
+
+```rust
+use mini_functions::*;
+```
+
+## Functions library for Rust 🦀
+
+`Mini Functions` is a library of functions for the programming language
+Rust that provides a collection of tools for working with various
+aspects of a Rust application.
+
+The functions in Mini Functions are optimized for speed and efficiency,
+making them useful for a variety of applications, including those that
+require fast performance or that need to handle large amounts of data.
+
+The `mini-functions` library consists of the following functions:
+
+- [Date and time functions](#date-and-time-functions)
+- [Log functions](#log-functions)
+- [UUID functions](#uuid-functions)
+
+The following tables provide a brief description of each function in
+the `mini-functions` library.
+
+### Date and time functions
 
 | Function | Include File | Function Prototype | Description |
 | -------- | ------------ | ------------------ | ----------- |
@@ -55,20 +88,21 @@ in alphabetical order in the following tables.
 | `Date::weekday()` | `date.rs` | `fn weekday()` | Returns the current weekday. |
 | `Date::year()` | `date.rs` | `fn year()` | Returns the current year. |
 
-### Table 2 - Log Function (log.rs)
+### Log functions
 
 | Function | Include File | Function Prototype | Description |
 | -------- | ------------ | ------------------ | ----------- |
 | `Log::new()` | `log.rs` | `fn new()` | Creates a new log instance. |
 | `Log::log()` | `log.rs` | `fn log()` | Logs a message to the console.|
 
-### Table 3 - UUID Functions (uuid.rs)
+### UUID functions
 
 | Function | Include File | Function Prototype | Description |
 | -------- | ------------ | ------------------ | ----------- |
-| `uuid_v3()` | `uuid.rs` | `fn uuid_v3()` | Generates a UUID v3. |
-| `uuid_v4()` | `uuid.rs` | `fn uuid_v4()` | Generates a UUID v4. |
-| `uuid_v5()` | `uuid.rs` | `fn uuid_v5()` | Generates a UUID v5. |
+| `UUID::new()` | `uuid.rs` | `fn new()` | Creates a new UUID instance based on the version specified. (v3, v4, v5) |
+| `UUID::uuid_v3()` | `uuid.rs` | `fn uuid_v3()` | Creates a new UUID v3 instance. |
+| `UUID::uuid_v4()` | `uuid.rs` | `fn uuid_v4()` | Creates a new UUID v4 instance. |
+| `UUID::uuid_v5()` | `uuid.rs` | `fn uuid_v5()` | Creates a new UUID v5 instance. |
 
 ![divider][divider]
 

@@ -25,7 +25,6 @@ version = "0.0.3"
 maintenance = { status = "actively-developed" }
 
 [dependencies]
-regex = { version = "1.7.0", features = ["default"] }
 time = { version ="0.3.17", features = ["default"] }
 
 [dependencies.uuid]
