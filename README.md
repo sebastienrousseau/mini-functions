@@ -62,6 +62,14 @@ in alphabetical order in the following tables.
 | `Log::new()` | `log.rs` | `fn new()` | Creates a new log instance. |
 | `Log::log()` | `log.rs` | `fn log()` | Logs a message to the console.|
 
+### Table 3 - UUID Functions (uuid.rs)
+
+| Function | Include File | Function Prototype | Description |
+| -------- | ------------ | ------------------ | ----------- |
+| `uuid_v3()` | `uuid.rs` | `fn uuid_v3()` | Generates a UUID v3. |
+| `uuid_v4()` | `uuid.rs` | `fn uuid_v4()` | Generates a UUID v4. |
+| `uuid_v5()` | `uuid.rs` | `fn uuid_v5()` | Generates a UUID v5. |
+
 ![divider][divider]
 
 ## Semantic Versioning Policy 🚥
