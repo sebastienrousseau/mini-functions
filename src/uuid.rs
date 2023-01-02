@@ -59,7 +59,7 @@ impl UUID {
     /// * `name` - The name to use for the UUID.
     ///
     pub fn uuid_v5(ns: &Uuid, name: &str) -> Self {
-        let inner = Uuid::new_v5(&ns, name.as_bytes());
+        let inner = Uuid::new_v5(ns, name.as_bytes());
         UUID { inner }
     }
 }
