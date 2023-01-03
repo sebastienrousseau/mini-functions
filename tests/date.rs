@@ -1,6 +1,11 @@
 #[cfg(test)]
+
 mod tests {
+
+    extern crate mini_functions;
+
     use mini_functions::date::Date;
+
     #[test]
     fn test_date() {
         // Check that the date function is correctly generating a non

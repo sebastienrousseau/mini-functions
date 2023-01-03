@@ -1,11 +1,22 @@
 {
     "cSpell.words": [
+        "aarch",
         "ABCDEFGHIJKLMNOP",
         "datetime",
+        "dylib",
+        "GITHUB",
+        "gnubin",
         "hasher",
+        "libexec",
+        "linux",
+        "msvc",
         "nanos",
         "qrcode",
+        "rlib",
+        "rustc",
+        "rustup",
         "Seedable",
-        "uuid"
+        "uuid",
+        "Zellers"
     ]
 }

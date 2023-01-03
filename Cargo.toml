@@ -25,19 +25,16 @@ version = "0.0.4"
 maintenance = { status = "actively-developed" }
 
 [dependencies]
-time = { version ="0.3.17", features = ["default"] }
-qrcode = "0.12.0"
 image = "0.24.5"
-
-[dependencies.uuid]
-features = ["v3", "v4", "v5"]
-version = "1.2.2"
-
+qrcode = "0.12.0"
+time = "0.3.17"
+uuid = { version = "1.2.2", features = ["v3", "v4", "v5"] }
 
 [package.metadata.docs.rs]
 all-features = true
+default-target = "x86_64-unknown-linux-gnu"
 rustdoc-args = ["--cfg", "docsrs"]
-targets = ["x86_64-unknown-linux-gnu"]
+targets = ["x86_64-unknown-linux-gnu", "x86_64-apple-darwin", "x86_64-pc-windows-msvc"]
 
 [profile.release]
 codegen-units = 1 # Compile crates one after another so the compiler can optimize better
@@ -46,4 +43,5 @@ incremental = false # Disable incremental compilation
 lto = true # Enables link to optimizations
 opt-level = "s" # Optimize for binary size
 panic = "abort" # Strip expensive panic clean-up logic
+rpath = false # Disable rpath
 strip = "symbols"  # Automatically strip symbols from the binary.

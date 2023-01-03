@@ -8,12 +8,17 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
+extern crate image;
+extern crate qrcode;
+
 use image::{ImageBuffer, Rgb, RgbImage};
 use qrcode::render::svg;
 use qrcode::QrCode;
 
 #[derive(Debug, Clone, Default, PartialEq)]
+/// The `QRCode` struct represents a QR code image.
 pub struct QRCode {
+    /// The `data` field holds the data to be encoded in the QR code.
     pub data: Vec<u8>,
 }
 

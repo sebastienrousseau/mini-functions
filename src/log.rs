@@ -7,6 +7,8 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
+use std::fmt; // Import the `fmt` module from the standard library.
+
 /// Implements [`Log`] to log a message to the console with a simple, readable output format.
 ///
 /// # Arguments
@@ -82,10 +84,20 @@ impl Log {
             description: description.to_string(),
         }
     }
+    /// Log a message to the console with a simple, readable output format.
     pub fn log(&self) {
         println!(
             "SessionID={} Timestamp={} Level={} Component={} Description=\"{}\"",
             self.session_id, self.time, self.level, self.component, self.description
         );
+    }
+}
+impl fmt::Display for Log {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(
+            f,
+            "SessionID={} Timestamp={} Level={} Component={} Description=\"{}\"",
+            self.session_id, self.time, self.level, self.component, self.description
+        )
     }
 }

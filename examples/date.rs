@@ -1,3 +1,13 @@
+/*!
+Using `date` module
+
+```no_run,shell
+cargo run --example date
+```
+*/
+
+extern crate mini_functions;
+
 use mini_functions::date::Date;
 
 fn main() {
@@ -16,18 +26,18 @@ fn main() {
     let weekday = Date::weekday();
     let year = Date::year();
 
-    println!("✅ Date::date():          {}", date);
-    println!("✅ Date::day():           {}", day);
-    println!("✅ Date::hour():          {}", hour);
-    println!("✅ Date::iso_8601():      {}", iso_8601);
-    println!("✅ Date::microsecond():   {}", microsecond);
-    println!("✅ Date::millisecond():   {}", millisecond);
-    println!("✅ Date::minute():        {}", minute);
-    println!("✅ Date::month():         {}", month);
-    println!("✅ Date::nanosecond():    {}", nanosecond);
-    println!("✅ Date::now_utc():       {}", now_utc);
-    println!("✅ Date::second():        {}", second);
-    println!("✅ Date::timestamp():     {}", timestamp);
-    println!("✅ Date::weekday():       {}", weekday);
-    println!("✅ Date::year():          {}", year);
+    println!("🦀 Date::date():          ✅  {}", date);
+    println!("🦀 Date::day():           ✅  {}", day);
+    println!("🦀 Date::hour():          ✅  {}", hour);
+    println!("🦀 Date::iso_8601():      ✅  {}", iso_8601);
+    println!("🦀 Date::microsecond():   ✅  {}", microsecond);
+    println!("🦀 Date::millisecond():   ✅  {}", millisecond);
+    println!("🦀 Date::minute():        ✅  {}", minute);
+    println!("🦀 Date::month():         ✅  {}", month);
+    println!("🦀 Date::nanosecond():    ✅  {}", nanosecond);
+    println!("🦀 Date::now_utc():       ✅  {}", now_utc);
+    println!("🦀 Date::second():        ✅  {}", second);
+    println!("🦀 Date::timestamp():     ✅  {}", timestamp);
+    println!("🦀 Date::weekday():       ✅  {}", weekday);
+    println!("🦀 Date::year():          ✅  {}", year);
 }
