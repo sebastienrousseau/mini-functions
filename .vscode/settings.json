@@ -1,8 +1,10 @@
 {
     "cSpell.words": [
+        "ABCDEFGHIJKLMNOP",
         "datetime",
         "hasher",
         "nanos",
+        "qrcode",
         "Seedable",
         "uuid"
     ]
