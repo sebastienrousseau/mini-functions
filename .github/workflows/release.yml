@@ -36,27 +36,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Add rustup for Linux targets
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: |
-          rustup target add ${{ matrix.target }}
-          rustup target add ${{ matrix.target2 }}
-
-      - name: Add rustup for Apple targets
-        if: ${{ matrix.os == 'macos-latest' }}
-        run: |
-          rustup target add ${{ matrix.target }}
-          rustup target add ${{ matrix.target2 }}
-
-      - name: Add rustup for Windows targets
-        if: ${{ matrix.os == 'windows-latest' }}
-        run: rustup target add ${{ matrix.target }}
-
       - name: Install dependencies for Linux
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           sudo apt-get update
           sudo apt-get install musl-tools libssl-dev
+
+      - name: Install chocolatey 🛠
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: |
+          # Install chocolatey
+          @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 
       - name: Install Visual Studio or Build Tools for Visual Studio 🛠
         if: ${{ matrix.os == 'windows-latest' }}
@@ -73,6 +63,22 @@ jobs:
           # Install rustup and update the Rust toolchain to the latest stable version
           choco install rustup
           rustup update stable
+
+      - name: Add rustup for Linux targets
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: |
+          rustup target add ${{ matrix.target }}
+          rustup target add ${{ matrix.target2 }}
+
+      - name: Add rustup for Apple targets
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: |
+          rustup target add ${{ matrix.target }}
+          rustup target add ${{ matrix.target2 }}
+
+      - name: Add rustup for Windows targets
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: rustup target add ${{ matrix.target }}
 
       - name: Install cross 🛠
         if: ${{ matrix.os == 'windows-latest' }}
