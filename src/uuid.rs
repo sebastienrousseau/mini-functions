@@ -7,6 +7,8 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
+extern crate uuid;
+
 use std::fmt; // Import the `fmt` module from the standard library.
 use uuid::Uuid; // Import the `Uuid` type from the `uuid` crate.
 

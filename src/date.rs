@@ -8,7 +8,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
-/// Implements [`Date`] to get the current date and time in UTC.
+extern crate time;
 use time::OffsetDateTime;
 
 /// Date Utility

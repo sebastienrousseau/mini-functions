@@ -2,9 +2,11 @@
 authors = ["Sebastien Rousseau"]
 categories = ["development-tools"]
 description = "Highly Performant Utility And Wrapper Functions Library For Rust"
+documentation = "https://docs.rs/mini-functions"
 edition = "2021"
 homepage = "https://minifunctions.com"
 include = [
+    "/build.rs",
     "/Cargo.toml",
     "/LICENSE-Apache",
     "/LICENSE-MIT",
@@ -19,22 +21,34 @@ readme = "README.md"
 repository = "https://github.com/sebastienrousseau/mini-functions.git"
 resolver = "2" # Enables the new Cargo resolution engine
 rust-version = "1.57.0"
-version = "0.0.3"
+version = "0.0.4"
 
 [badges]
 maintenance = { status = "actively-developed" }
 
 [dependencies]
-time = { version ="0.3.17", features = ["default"] }
+image = "0.24.5"
+qrcode = "0.12.0"
+time = "0.3.17"
+uuid = { version = "1.2.2", features = ["v3", "v4", "v5"] }
 
-[dependencies.uuid]
-features = ["v3", "v4", "v5"]
-version = "1.2.2"
+[build-dependencies]
+cross = "0.2.4"
+
+[lib]
+name = "mini_functions"
+path = "src/lib.rs"
+crate-type = ["rlib", "staticlib"]
 
 [package.metadata.docs.rs]
 all-features = true
+default-target = "x86_64-unknown-linux-gnu"
 rustdoc-args = ["--cfg", "docsrs"]
-targets = ["x86_64-unknown-linux-gnu"]
+targets = [
+    "x86_64-unknown-linux-gnu",
+    "x86_64-pc-windows-gnu",
+    "x86_64-apple-darwin"
+]
 
 [profile.release]
 codegen-units = 1 # Compile crates one after another so the compiler can optimize better
@@ -43,4 +57,5 @@ incremental = false # Disable incremental compilation
 lto = true # Enables link to optimizations
 opt-level = "s" # Optimize for binary size
 panic = "abort" # Strip expensive panic clean-up logic
+rpath = false # Disable rpath
 strip = "symbols"  # Automatically strip symbols from the binary.

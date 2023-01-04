@@ -8,5 +8,5 @@ fn main() {
         "SystemTrayEvent",
         "Showing main window",
     );
-    log.log();
+    println!("🦀 Log::new():            ✅ {}", log);
 }

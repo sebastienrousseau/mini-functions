@@ -65,7 +65,7 @@ Add the following to your `Cargo.toml` file:
 
 ```toml
 [dependencies]
-mini-functions = "0.0.3"
+mini-functions = "0.0.4"
 ```
 
 ## Usage 📖
@@ -132,6 +132,19 @@ The following tables provide a brief description of each function in the
 | `UUID::uuid_v3()` | `uuid.rs` | `fn uuid_v3()` | Creates a new UUID v3 instance. |
 | `UUID::uuid_v4()` | `uuid.rs` | `fn uuid_v4()` | Creates a new UUID v4 instance. |
 | `UUID::uuid_v5()` | `uuid.rs` | `fn uuid_v5()` | Creates a new UUID v5 instance. |
+
+### QRCode functions
+
+| Function | Include File | Function Prototype | Description |
+| -------- | ------------ | ------------------ | ----------- |
+| `QRCode::colorize()` | `qrcode.rs` | `fn colorize()` | Colorizes the QRCode instance. |
+| `QRCode::from_bytes()` | `qrcode.rs` | `fn from_bytes()` | Creates a new QRCode instance from a byte array. |
+| `QRCode::from_string()` | `qrcode.rs` | `fn from_string()` | Creates a new QRCode instance from a string. |
+| `QRCode::new()` | `qrcode.rs` | `fn new()` | Creates a new QRCode instance. |
+| `QRCode::resize()` | `qrcode.rs` | `fn resize()` | Resizes the QRCode instance. |
+| `QRCode::to_png()` | `qrcode.rs` | `fn to_png()` | Converts the QRCode instance to a PNG image. |
+| `QRCode::to_qrcode()` | `qrcode.rs` | `fn to_qrcode()` | Converts the QRCode instance to a QRCode image. |
+| `QRCode::to_svg()` | `qrcode.rs` | `fn to_svg()` | Converts the QRCode instance to a SVG image. |
 
 ![divider][divider]
 
