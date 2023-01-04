@@ -58,7 +58,7 @@ jobs:
       - name: Package 📦
         run: |
           mkdir -p packages
-          for crate_type in ["dylib", "rlib", "staticlib"]; do
+          for crate_type in ["rlib", "staticlib"]; do
             cp target/${{ matrix.target }}/release/libmini_functions.$crate_type packages/libmini_functions-$version-${{ github.sha }}.$crate_type
           done
           tar -czvf packages/mini_functions-$version-${{ github.sha }}.tar.gz packages/libmini_functions-$version-${{ github.sha }}.*
@@ -94,4 +94,3 @@ jobs:
           tag_name: ${{ github.workspace }}
           draft: false
           prerelease: false
-

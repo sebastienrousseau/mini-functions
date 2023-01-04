@@ -38,7 +38,7 @@ cross = "0.2.4"
 [lib]
 name = "mini_functions"
 path = "src/lib.rs"
-crate-type = ["dylib", "rlib", "staticlib"]
+crate-type = ["rlib", "staticlib"]
 
 [package.metadata.docs.rs]
 all-features = true
