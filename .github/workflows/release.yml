@@ -11,7 +11,11 @@ env:
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v3
       - name: Generate Changelog
@@ -41,19 +45,19 @@ jobs:
           override: true
 
       - run: mkdir binaries
-      - name: x86_64-unknown-linux-gnu
+      - name: ${{ matrix.platform }}
         run: |
-          rustup target add x86_64-unknown-linux-gnu
+          rustup target add ${{ matrix.platform }}
           cargo clean
           export RUSTFLAGS="-C strip=symbols --remap-path-prefix=$(pwd)=. --remap-path-prefix=$(cd; pwd)=/home/rust/"
-          cargo build --verbose --release --target=x86_64-unknown-linux-gnu
-          cp -r /home/runner/work/mini-functions/mini-functions/target/x86_64-unknown-linux-gnu /home/runner/work/mini-functions/mini-functions/binaries/mini-functions.x86_64-unknown-linux-gnu
+          cargo build --verbose --release --target=${{ matrix.platform }}
+          cp -r /home/runner/work/mini-functions/mini-functions/target/${{ matrix.platform }} /home/runner/work/mini-functions/mini-functions/binaries/mini-functions.${{ matrix.platform }}
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           body_path: ${{ github.workspace }}-CHANGELOG.txt
-          files: binaries/mini-functions.x86_64-unknown-linux-gnu
+          files: binaries/mini-functions.${{ matrix.platform }}
           name: ${{ github.workspace }}
           tag_name: ${{ github.workspace }}
           draft: false
