@@ -15,20 +15,56 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        target:
-          - x86_64-unknown-linux-gnu
-          - x86_64-pc-windows-gnu
-          - x86_64-apple-darwin
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            name: Linux Binary 64-Bit
+            target: x86_64-unknown-linux-gnu
+            target2: x86_64-unknown-linux-musl
+
+          - os: macos-latest
+            name: MacOS Binary 64-Bit
+            target: x86_64-apple-darwin
+            target2: aarch64-apple-darwin
+            env:
+              MACOSX_DEPLOYMENT_TARGET: 10.7
+
+          - os: windows-latest
+            name: Windows Binary 64-Bit
+            target: x86_64-pc-windows-msvc
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install targets 🛠
+      - name: Add rustup for Linux targets
+        if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           rustup target add ${{ matrix.target }}
+          rustup target add ${{ matrix.target2 }}
 
+      - name: Add rustup for Apple targets
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: |
+          rustup target add ${{ matrix.target }}
+          rustup target add ${{ matrix.target2 }}
 
+      - name: Add rustup for Windows targets
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: rustup target add ${{ matrix.target }}
 
+      - name: Install dependencies
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install musl-tools libssl-dev
+
+      # Needed to fix file corruption of cache
+      # https://github.com/actions/cache/issues/403
+      - name: Install GNU tar
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: |
+          brew install gnu-tar
+          echo "/usr/local/opt/gnu-tar/libexec/gnubin" >> $GITHUB_PATH
 
       - name: Cache cargo registry 🧑‍💼
         uses: actions/cache@v2
