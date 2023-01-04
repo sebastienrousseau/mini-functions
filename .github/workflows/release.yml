@@ -36,7 +36,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: package
-          args: --release --target ${{ matrix.target }} --package mini-functions
+          args: --target ${{ matrix.target }}
 
       - name: Upload release binary
         uses: actions/upload-artifact@v3
