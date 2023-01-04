@@ -1,9 +1,6 @@
 name: ❯ release
 
-on:
-  push:
-    branches:
-      - release
+on: [push, pull_request]
 
 jobs:
   mini_functions:
