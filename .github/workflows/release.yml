@@ -1,3 +1,5 @@
+name: ❯ release
+
 on: [push, pull_request]
 
 env:
@@ -23,13 +25,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Cache cargo registry 🧑‍💼
+      - name: Cache cargo registry 📦
         uses: actions/cache@v2
         with:
           path: ~/.cargo/registry
           key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Cache cargo build 🚀
+      - name: Cache cargo build 🔨
         uses: actions/cache@v2
         with:
           path: target
@@ -48,28 +50,53 @@ jobs:
 
       - name: Build with cross 🏗
         run: |
-          # Build the binary
           cargo install cross
           cargo clean
           cross build --release --target=${{ matrix.target }}
 
-      - name: Check if binary exists 📂
+      - name: Check if library exists 📂
         run: ls target/${{ matrix.target }}/release
 
-      - name: Create binaries folder 📂
-        run: mkdir -p binaries
+      - name: Create libraries folder 📂
+        run: mkdir -p libraries
 
       - name: Move library 🚚
         run: |
-          mv target/${{ matrix.target }}/release/libmini_functions.rlib binaries/libmini_functions.rlib
+          mv target/${{ matrix.target }}/release/libmini_functions.rlib libraries/libmini_functions-$version.rlib
 
-      - name: Rename library 📂
+      - name: Check if renamed library exists 📂
         run: |
-          mv binaries/libmini_functions.rlib binaries/libmini_functions-$version-${{ github.sha }}.rlib
+          ls libraries
 
-      - name: Check if renamed binary exists 📂
+      # Build the library as a static library
+      - name: Build static library 🏗
         run: |
-          ls binaries
+          cargo build --static --release --target=${{ matrix.target }}
+
+      # Package the library as a .deb file
+      - name: Package as .deb 📦
+        run: |
+          cargo install cargo-deb
+          cargo deb --target=${{ matrix.target }}
+
+      # Check if the .deb file was created
+      - name: Check if .deb file exists 📂
+        run: |
+          ls target/${{ matrix.target }}/deb
+
+      # Create a folder for the packaged artifacts
+      - name: Create artifacts folder 📂
+        run: mkdir -p artifacts
+
+      # Move the .deb file to the artifacts folder
+      - name: Move .deb file 🚚
+        run: |
+          mv target/${{ matrix.target }}/deb/libmini_functions-$version-${{ matrix.target }}.deb artifacts/libmini_functions-$version-${{ matrix.target }}.deb
+
+      # Move the static library to the artifacts folder
+      - name: Move static library 🚚
+        run: |
+          mv target/${{ matrix.target }}/release/libmini_functions.a artifacts/libmini_functions-$version-${{ matrix.target }}.a
 
       - name: Generate Changelog 📜
         run: |
@@ -83,6 +110,12 @@ jobs:
           # Append the commit history to the changelog
           cat changelog.txt >> ${{ github.workspace }}-CHANGELOG.txt
 
+      - name: Append links to changelog 🔗
+        run: |
+          echo "" >> ${GITHUB_WORKSPACE}-CHANGELOG.txt
+          echo "Compiled libraries:" >> ${GITHUB_WORKSPACE}-CHANGELOG.txt
+          echo "- [libmini_functions.rlib](https://example.com/libmini_functions.rlib)" >> ${GITHUB_WORKSPACE}-CHANGELOG.txt
+
       - name: Release 🚀
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
@@ -91,7 +124,7 @@ jobs:
         with:
           body_path: ${{ github.workspace }}-CHANGELOG.txt
           files: |
-            binaries/mini-functions.${{ matrix.target }}
+            libraries/mini-functions.${{ matrix.target }}
           name: ${{ github.workspace }}
           tag_name: ${{ github.workspace }}
           draft: false
