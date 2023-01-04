@@ -42,26 +42,45 @@ jobs:
           sudo apt-get update
           sudo apt-get install musl-tools libssl-dev
 
+      # Install PowerShell
+      - name: Install PowerShell 🛠
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: choco install powershell
+
+      # Install Chocolatey
       - name: Install chocolatey 🛠
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
           # Install chocolatey
-          @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+          Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
-      - name: Install Visual Studio or Build Tools for Visual Studio 🛠
+      # Install Visual Studio or Build Tools for Visual Studio
+      - name: Install Visual Studio 🛠
         if: ${{ matrix.os == 'windows-latest' }}
-        run: |
-          # Install Visual Studio or Build Tools for Visual Studio
-          choco install visualstudio2019buildtools
-          choco install visualstudio2019-workload-vctools
-          # Add the Visual C++ tools to the system path
-          setx /M PATH "%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.28.29333\bin\Hostx64\x64"
+        run: choco install visualstudio2019buildtools
 
-      - name: Install rustup 🛠
+      # Install rustup and update the Rust toolchain to the latest stable version
+      - name: Install rustup for Windows 🛠
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
           # Install rustup and update the Rust toolchain to the latest stable version
           choco install rustup
+          rustup update stable
+
+      - name: Install rustup for Linux 🛠
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: |
+          # Install rustup and update the Rust toolchain to the latest stable version
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          source $HOME/.cargo/env
+          rustup update stable
+
+      - name: Install rustup for Apple 🛠
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: |
+          # Install rustup and update the Rust toolchain to the latest stable version
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          source $HOME/.cargo/env
           rustup update stable
 
       - name: Add rustup for Linux targets
