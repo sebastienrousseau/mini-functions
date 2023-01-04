@@ -99,17 +99,17 @@ jobs:
       - name: Move default libraries 🚚
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
-          mv -f target/${{ matrix.target }}/release/ mini_functions libraries/
+          mv -f target/${{ matrix.target }}/release/mini_functions libraries/
 
       - name: Move Apple libraries 🚚
         if: ${{ matrix.os == 'macos-latest' }}
         run: |
-          mv -f target/${{ matrix.target }}/release/ mini_functions libraries/
+          mv -f target/${{ matrix.target }}/release/mini_functions libraries/
 
       - name: Move Windows libraries 🚚
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
-          mv -f target/${{ matrix.target }}/release/ mini_functions libraries/
+          mv -f target/${{ matrix.target }}/release/mini_functions libraries/
 
       - name: Generate Changelog 📝
         run: |
