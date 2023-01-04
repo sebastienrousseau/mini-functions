@@ -52,7 +52,16 @@ jobs:
           cargo install cross
           cargo clean
           cross build --release --target=${{ matrix.target }}
+
+      - name: Check if binary exists 📂
+        run: ls -la target/${{ matrix.target }}/release/mini-functions
+
+      - name: Rename binary 📂
+        run: |
           mv target/${{ matrix.target }}/release/mini-functions target/${{ matrix.target }}/release/mini-functions-$version-${{ github.sha }}
+
+      - name: Check if renamed binary exists 📂
+        run: ls -la target/${{ matrix.target }}/release/mini-functions-$version-${{ github.sha }}
 
       - name: Generate Changelog 📜
         run: |
@@ -69,11 +78,9 @@ jobs:
       - name: Create binaries folder 📂
         run: mkdir -p binaries
 
-      - name: Check if binary exists 📂
-        run: ls -la target/${{ matrix.target }}/release/mini-functions
-
       - name: Copy binary 📂
-        run: cp target/${{ matrix.target }}/release/mini-functions binaries/mini-functions.${{ matrix.target }}
+        run: |
+          cp target/${{ matrix.target }}/release/mini-functions-$version-${{ github.sha }} binaries/mini-functions.${{ matrix.target }}
 
       - name: Release 🚀
         if: startsWith(github.ref, 'refs/tags/')
