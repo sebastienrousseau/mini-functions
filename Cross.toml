@@ -17,6 +17,6 @@ compiler = "clang"
 image = "rust:latest"
 compiler = "clang"
 
-[targets.x86_64-pc-windows-msvc]
-image = "rust:latest"
-compiler = "cl.exe"
+# [targets.x86_64-pc-windows-msvc]
+# image = "rust:latest"
+# compiler = "cl.exe"
