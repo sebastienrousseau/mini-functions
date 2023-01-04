@@ -6,7 +6,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build-and-test:
+  release:
     name: ${{ matrix.name }}
 
     runs-on: ${{ matrix.os }}
@@ -32,72 +32,20 @@ jobs:
             target: x86_64-pc-windows-msvc
 
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v3
-
-      - name: Add rustup default target
-        run: rustup target add ${{ matrix.target }}
-
-      - name: Add rustup Apple ARM64 target
-        if: ${{ matrix.os == 'macos-latest' }}
-        run: rustup target add ${{ matrix.target2 }}
-
-      - name: Install apt packages
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: sudo apt-get install musl-tools libssl-dev
-
-      - name: Store or retrieve cargo caches
-        uses: actions/cache@v3
+      - name: package
+        uses: actions-rs/cargo@v1
         with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-
-      - name: Build release binary
-        run: cargo build --release --target ${{ matrix.target }}
-
-      - name: Create release package
-        run: cargo package --target ${{ matrix.target }}
-
-      - name: Build release binary for Apple ARM64
-        if: ${{ matrix.os == 'macos-latest' }}
-        run: cargo build --release --target ${{ matrix.target2 }}
-
-      - name: Create release package for Apple ARM64
-        if: ${{ matrix.os == 'macos-latest' }}
-        run: cargo package --target ${{ matrix.target2 }}
+          command: package
+          args: --release --target ${{ matrix.target }} --package mini-functions
 
       - name: Upload release binary
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.name }}
           path: |
-            target/${{ matrix.target }}/release/mini-functions-0.0.4
-            target/${{ matrix.target2 }}/release/mini-functions-0.0.4
+            target/${{ matrix.target }}/release/mini-functions
+            target/${{ matrix.target2 }}/release/mini-functions
 
-      # - name: Packaging final binary
-      #   shell: bash
-      #   run: |
-      #     cd target/${{ matrix.target }}/release
-      #     strip mini-functions${{ matrix.binary_postfix }}
-      #     tar czvf mini-functions-${{ matrix.artifact_prefix }}.tar.gz mini-functions${{ matrix.binary_postfix }}
-      #     if [[ ${{ runner.os }} == 'Windows' ]]; then
-      #       certutil -hashfile mini-functions-${{ matrix.artifact_prefix }}.tar.gz sha256 | grep -E [A-Fa-f0-9]{64} > mini-functions-${{ matrix.artifact_prefix }}.sha256
-      #     else
-      #       shasum -a 256 mini-functions-${{ matrix.artifact_prefix }}.tar.gz > mini-functions-${{ matrix.artifact_prefix }}.sha256
-      #     fi
-      - name: Releasing assets
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            target/${{ matrix.target }}/release/mini-functions--0.0.4.tar.gz
-            target/${{ matrix.target }}/release/mini-functions--0.0.4.sha256
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 # jobs:
 #   build-and-test:
 #     name: ${{ matrix.name }}
@@ -146,7 +94,6 @@ jobs:
 #         run: |
 #           brew install gnu-tar
 #           echo "/usr/local/opt/gnu-tar/libexec/gnubin" >> $GITHUB_PATH
-
 #       - name: Store or retrieve cargo caches
 #         uses: actions/cache@v3
 #         with:
@@ -180,7 +127,7 @@ jobs:
 #         with:
 #           name: ${{ matrix.name }}
 #           path: |
-#             target/${{ matrix.target }}/release/${{ matrix.name }}
+#             target/${{ matrix.target }}/release/mini-functions
 #             target/${{ matrix.target2 }}/release/mini-functions
 
 # publish-binaries:
