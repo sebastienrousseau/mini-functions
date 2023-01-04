@@ -44,10 +44,10 @@ jobs:
       - name: Extract version number 📜
         run: |
           version=$(grep version Cargo.toml | cut -d '"' -f 2)
+          echo "Version: $version" >> $GITHUB_ENV
           echo "Version: $version"
-
-      - name: Set PATH variable 🚀
-        run: echo "::set-env name=PATH::$PATH:/root/.cargo/bin"
+          echo "Git SHA: ${{ runner.git_commit }}" >> $GITHUB_ENV
+          echo "Git SHA: ${{ runner.git_commit }}"
 
       - name: Build with cross 🏗
         run: |
