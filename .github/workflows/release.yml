@@ -22,14 +22,20 @@ jobs:
           toolchain: stable
           override: true
       - name: build
-        run: cargo build --release
-      - name: archive
         run: |
-          tar -C target/${{ matrix.target }}/release -czf $(pwd)/mini-functions-0.0.4-${{ matrix.target }}.tar.gz mini-functions
-      - name: publish release
+          cargo build --release
+          cp target/${{ matrix.target }}/release/mini-functions target/${{ matrix.target }}/release/mini-functions-${{ matrix.target }}
+
+      - name: upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: mini-functions-${{ matrix.target }}
+          path: target/${{ matrix.target }}/release/mini-functions-${{ matrix.target }}
+
+      - name: release
         uses: softprops/action-gh-release@v1
         with:
-          files: mini-functions-*.tar.gz
+          files: target/${{ matrix.target }}/release/mini-functions-${{ matrix.target }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 # jobs:
