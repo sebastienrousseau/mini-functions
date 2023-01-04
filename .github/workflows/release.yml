@@ -6,107 +6,124 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
-    strategy:
-      matrix:
-        target:
-          - x86_64-unknown-linux-gnu
-          - x86_64-pc-windows-gnu
-          - x86_64-apple-darwin
-        include:
-          - target: x86_64-unknown-linux-gnu
-            os: ubuntu-latest
-          - target: x86_64-pc-windows-gnu
-            os: ubuntu-latest
-          - target: x86_64-apple-darwin
-            os: macos-latest
-
-    runs-on: ${{ matrix.os }}
-
+  release:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Cache cargo registry
-        uses: actions/cache@v2
+      - uses: actions/checkout@v3
+      - uses: actions-rs/toolchain@v1
+      - run: mkdir binaries
+      - name: x86_64-unknown-linux-gnu
+        run: |
+          rustup target add x86_64-unknown-linux-gnu
+          cargo clean
+          export RUSTFLAGS="-C strip=symbols --remap-path-prefix=$(pwd)=. --remap-path-prefix=$(cd; pwd)=/home/rust/"
+          cargo build --release
+          cp target/release/mini-functions binaries/mini-functions.x86_64-unknown-linux-gnu
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          path: ~/.cargo/registry
-          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+          files: binaries/mini-functions.x86_64-unknown-linux-gnu
+  # build:
+  #   strategy:
+  #     matrix:
+  #       target:
+  #         - x86_64-unknown-linux-gnu
+  #         - x86_64-pc-windows-gnu
+  #         - x86_64-apple-darwin
+  #       include:
+  #         - target: x86_64-unknown-linux-gnu
+  #           os: ubuntu-latest
+  #         - target: x86_64-pc-windows-gnu
+  #           os: ubuntu-latest
+  #         - target: x86_64-apple-darwin
+  #           os: macos-latest
 
-      - name: Cache cargo index
-        uses: actions/cache@v2
-        with:
-          path: ~/.cargo/git
-          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
+  #   runs-on: ${{ matrix.os }}
 
-      - name: Cache cargo build
-        uses: actions/cache@v2
-        with:
-          path: target
-          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Cache cargo registry
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ~/.cargo/registry
+  #         key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          override: true
+  #     - name: Cache cargo index
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ~/.cargo/git
+  #         key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Cargo build
-        uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --release --target=${{ matrix.target }}
-          use-cross: true
+  #     - name: Cache cargo build
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: target
+  #         key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Read toml
-        uses: SebRollen/toml-action@v1.0.0
-        id: read_toml
-        with:
-          file: "Cargo.toml"
-          field: "package.version"
+  #     - name: Toolchain
+  #       uses: actions-rs/toolchain@v1
+  #       with:
+  #         toolchain: stable
+  #         override: true
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.read_toml.outputs.value }}
-          release_name: ${{ steps.read_toml.outputs.value }}
-          body: false
-          draft: false
-          prerelease: false
+  #     - name: Cargo build
+  #       uses: actions-rs/cargo@v1
+  #       with:
+  #         command: build
+  #         args: --release --target=${{ matrix.target }}
+  #         use-cross: true
 
-      - name: Release Linux
-        id: release-linux
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: target/${{ matrix.target }}/release/mini-functions
-          asset_name: mini-functions
-          asset_content_type: binary/octet-stream
+  #     - name: Read toml
+  #       uses: SebRollen/toml-action@v1.0.0
+  #       id: read_toml
+  #       with:
+  #         file: "Cargo.toml"
+  #         field: "package.version"
 
-      - name: Release Windows
-        id: release-windows
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: target/${{ matrix.target }}/release/mini-functions.exe
-          asset_name: mini-functions.exe
-          asset_content_type: application/octet-stream
+  #     - name: Create Release
+  #       id: create_release
+  #       uses: actions/create-release@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         tag_name: ${{ steps.read_toml.outputs.value }}
+  #         release_name: ${{ steps.read_toml.outputs.value }}
+  #         body: false
+  #         draft: false
+  #         prerelease: false
 
-      - name: Release Mac
-        id: release-mac
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: target/${{ matrix.target }}/release/mini-functions
-          asset_name: mini-functions
-          asset_content_type: application/octet-stream
+  #     - name: Release Linux
+  #       id: release-linux
+  #       uses: actions/upload-release-asset@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         upload_url: ${{ steps.create_release.outputs.upload_url }}
+  #         asset_path: target/${{ matrix.target }}/release/mini-functions
+  #         asset_name: mini-functions
+  #         asset_content_type: binary/octet-stream
+
+  #     - name: Release Windows
+  #       id: release-windows
+  #       uses: actions/upload-release-asset@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         upload_url: ${{ steps.create_release.outputs.upload_url }}
+  #         asset_path: target/${{ matrix.target }}/release/mini-functions.exe
+  #         asset_name: mini-functions.exe
+  #         asset_content_type: application/octet-stream
+
+  #     - name: Release Mac
+  #       id: release-mac
+  #       uses: actions/upload-release-asset@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         upload_url: ${{ steps.create_release.outputs.upload_url }}
+  #         asset_path: target/${{ matrix.target }}/release/mini-functions
+  #         asset_name: mini-functions
+  #         asset_content_type: application/octet-stream
 # jobs:
 #   build-and-test:
 #     name: ${{ matrix.name }}
