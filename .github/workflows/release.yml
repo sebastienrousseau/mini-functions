@@ -22,32 +22,31 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
-      - name: Cache cargo registry
+      - name: Cache cargo registry 🧑‍💼
         uses: actions/cache@v2
         with:
           path: ~/.cargo/registry
           key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
-      - name: Generate Changelog
+      - name: Generate Changelog 📜
         run: echo "# Good things have arrived" > ${{ github.workspace }}-CHANGELOG.txt
-      - name: Cache cargo build
+      - name: Cache cargo build 🚀
         uses: actions/cache@v2
         with:
           path: target
           key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
-      - name: Toolchain
+      - name: Toolchain 🛠
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
-      - run: mkdir binaries
-      - name: Build for ${{ matrix.target }}
+      - run: mkdir -p binaries
+      - name: Build for ${{ matrix.target }} 🏗
         run: |
           rustup target add ${{ matrix.target }}
           cargo clean
-          export RUSTFLAGS="-C strip=symbols --remap-path-prefix=$(pwd)=. --remap-path-prefix=$(cd; pwd)=/home/rust/"
           cargo build --verbose --release --target=${{ matrix.target }}
-          cp -r /home/runner/work/mini-functions/mini-functions/target/${{ matrix.target }}/release/mini-functions /home/runner/work/mini-functions/mini-functions/binaries/mini-functions.${{ matrix.target }}
-      - name: Release
+          cp -r target/${{ matrix.target }}/release/mini-functions binaries/mini-functions.${{ matrix.target }}
+      - name: Release 🚀
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
         env:
