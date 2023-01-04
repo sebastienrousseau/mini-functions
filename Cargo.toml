@@ -34,7 +34,6 @@ uuid = { version = "1.2.2", features = ["v3", "v4", "v5"] }
 
 [build-dependencies]
 cross = "0.2.4"
-cc = "1.0.72"
 
 [lib]
 name = "mini_functions"
@@ -47,8 +46,8 @@ default-target = "x86_64-unknown-linux-gnu"
 rustdoc-args = ["--cfg", "docsrs"]
 targets = [
     "x86_64-unknown-linux-gnu",
-    "x86_64-apple-darwin",
-    "x86_64-pc-windows-msvc"
+    "x86_64-pc-windows-gnu",
+    "x86_64-apple-darwin"
 ]
 
 [profile.release]

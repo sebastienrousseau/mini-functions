@@ -12,80 +12,23 @@ on: [push, pull_request]
 
 jobs:
   mini_functions:
-    runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        target:
+          - x86_64-unknown-linux-gnu
+          - x86_64-pc-windows-gnu
+          - x86_64-apple-darwin
         include:
-          - os: ubuntu-latest
-            name: Linux Binary 64-Bit
-            target: x86_64-unknown-linux-gnu
-            target2: x86_64-unknown-linux-musl
-
-          - os: macos-latest
-            name: MacOS Binary 64-Bit
-            target: x86_64-apple-darwin
-            env:
-              MACOSX_DEPLOYMENT_TARGET: 10.7
-
-          # - os: windows-latest
-          #   name: Windows Binary 64-Bit
-          #   target: x86_64-pc-windows-msvc
-
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-latest
+          - target: x86_64-pc-windows-gnu
+            os: ubuntu-latest
+          - target: x86_64-apple-darwin
+            os: macos-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
-
-      - name: Install dependencies for Linux 🛠
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: |
-          sudo apt-get update
-          sudo apt-get install musl-tools libssl-dev
-
-      # # Install rustup and update the Rust toolchain to the latest stable version
-      # - name: Install rustup for Windows 🛠
-      #   if: ${{ matrix.os == 'windows-latest' }}
-      #   run: |
-      #     # Install rustup and update the Rust toolchain to the latest stable version
-      #     choco install rustup
-      #     rustup update stable
-
-      - name: Install rustup for Linux 🛠
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: |
-          # Install rustup and update the Rust toolchain to the latest stable version
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-          source $HOME/.cargo/env
-          rustup update stable
-
-      - name: Install rustup for Apple 🛠
-        if: ${{ matrix.os == 'macos-latest' }}
-        run: |
-          # Install rustup and update the Rust toolchain to the latest stable version
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-          source $HOME/.cargo/env
-          rustup update stable
-
-      - name: Add rustup for Linux targets 🛠
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: |
-          rustup target add ${{ matrix.target }}
-          rustup target add ${{ matrix.target2 }}
-
-      - name: Add rustup for Apple targets 🛠
-        if: ${{ matrix.os == 'macos-latest' }}
-        run: |
-          rustup target add ${{ matrix.target }}
-          # rustup target add ${{ matrix.target2 }}
-
-      # - name: Add rustup for Windows targets
-      #   if: ${{ matrix.os == 'windows-latest' }}
-      #   run: rustup target add ${{ matrix.target }}
-
-      - name: Install cross 🛠
-        if: ${{ matrix.os == 'windows-latest' }}
-        run: |
-          # Install the cross crate
-          cargo install cross
 
       - name: Cache cargo registry 🧑‍💼
         uses: actions/cache@v2
@@ -109,14 +52,12 @@ jobs:
         run: |
           version=$(grep version Cargo.toml | cut -d '"' -f 2)
           echo "version=$version"
-
       - name: Build with cross 🏗
         run: |
           # Build the binary
           cargo install cross
           cargo clean
           cross build --release --target=${{ matrix.target }}
-
       - name: Check if binary exists 📂
         run: ls target/${{ matrix.target }}/release
 
@@ -126,15 +67,12 @@ jobs:
       - name: Move library 🚚
         run: |
           mv target/${{ matrix.target }}/release/libmini_functions.rlib binaries/libmini_functions.rlib
-
       - name: Rename library 📂
         run: |
           mv binaries/libmini_functions.rlib binaries/libmini_functions-$version-${{ github.sha }}.rlib
-
       - name: Check if renamed binary exists 📂
         run: |
           ls binaries
-
       - name: Generate Changelog 📜
         run: |
           # Generate a changelog based on the commit history
@@ -144,47 +82,16 @@ jobs:
           echo >> ${{ github.workspace }}-CHANGELOG.txt
           # Append the commit history to the changelog
           cat changelog.txt >> ${{ github.workspace }}-CHANGELOG.txt
-
       - name: Release 🚀
-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/master')
+        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           body_path: ${{ github.workspace }}-CHANGELOG.txt
           files: |
-            binaries/libmini_functions-$version-${{ github.sha }}.rlib
-          name: v$version
-          tag_name: v$version
+            binaries/mini-functions.${{ matrix.target }}
+          name: ${{ github.workspace }}
+          tag_name: ${{ github.workspace }}
           draft: false
           prerelease: false
-
-      - name: Create Debian package 📦
-        if: matrix.target == 'x86_64-unknown-linux-gnu'
-        run: |
-          # Install dependencies
-          sudo apt-get update
-          sudo apt-get install -y debhelper fakeroot
-          # Create the Debian package
-          cargo deb --no-build --target=x86_64-unknown-linux-gnu
-
-      - name: Upload binaries 📂
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.release.upload_url }}
-          asset_path: binaries/libmini_functions-$version-${{ github.sha }}.rlib
-          asset_name: libmini_functions-$version-${{ matrix.target }}-${{ github.sha }}.rlib
-          asset_content_type: application/octet-stream
-
-      - name: Upload Debian package 📦
-        if: matrix.target == 'x86_64-unknown-linux-gnu'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.release.upload_url }}
-          asset_path: target/debian/mini-functions_${{ github.sha }}_amd64.deb
-          asset_name: mini-functions_${{ github.sha }}_amd64.deb
-          asset_content_type: application/octet-stream
