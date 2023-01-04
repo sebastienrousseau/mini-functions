@@ -15,36 +15,20 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        include:
-          - os: ubuntu-latest
-            name: Linux Binary 64-Bit
-            target: x86_64-unknown-linux-musl
-
-          - os: macos-latest
-            name: MacOS Binary 64-Bit
-            target: x86_64-apple-darwin
-            target2: aarch64-apple-darwin
-            env:
-              MACOSX_DEPLOYMENT_TARGET: 10.7
-
-          - os: windows-latest
-            name: Windows Binary 64-Bit
-            target: x86_64-pc-windows-msvc
 
     steps:
       - name: package
         uses: actions-rs/cargo@v1
         with:
           command: package
-          args: --target ${{ matrix.target }}
+          args: --target ${{ matrix.os }} --release
 
       - name: Upload release binary
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.name }}
           path: |
-            target/${{ matrix.target }}/release/mini-functions
-            target/${{ matrix.target2 }}/release/mini-functions
+            target/${{ matrix.os }}/release/mini-functions
 
 # jobs:
 #   build-and-test:
