@@ -2,11 +2,16 @@
     "cSpell.words": [
         "aarch",
         "ABCDEFGHIJKLMNOP",
+        "binutils",
+        "certutil",
+        "czvf",
         "datetime",
         "dylib",
+        "github",
         "GITHUB",
         "gnubin",
         "hasher",
+        "hashfile",
         "libexec",
         "linux",
         "msvc",
@@ -14,8 +19,11 @@
         "qrcode",
         "rlib",
         "rustc",
+        "RUSTFLAGS",
         "rustup",
         "Seedable",
+        "softprops",
+        "Swatinem",
         "uuid",
         "Zellers"
     ]
