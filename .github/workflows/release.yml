@@ -2,14 +2,6 @@ name: ❯ release
 
 on: [push, pull_request]
 
-# on:
-#   push:
-#     branches:
-#       - master
-#   pull_request:
-#     branches:
-#       - master
-
 jobs:
   mini_functions:
     strategy:
@@ -52,27 +44,33 @@ jobs:
         run: |
           version=$(grep version Cargo.toml | cut -d '"' -f 2)
           echo "version=$version"
-      - name: Build with cross 🏗
+
+      - name: Build libraries 🏗
         run: |
-          # Build the binary
           cargo install cross
           cargo clean
-          cross build --release --target=${{ matrix.target }}
-      - name: Check if binary exists 📂
-        run: ls target/${{ matrix.target }}/release
+          cross build --release --target=${{ matrix.target }} --lib
 
-      - name: Create binaries folder 📂
-        run: mkdir -p binaries
+      - name: Test 🧪
+        run: |
+          cargo test --all
 
-      - name: Move library 🚚
+      - name: Package 📦
         run: |
-          mv target/${{ matrix.target }}/release/libmini_functions.rlib binaries/libmini_functions.rlib
-      - name: Rename library 📂
-        run: |
-          mv binaries/libmini_functions.rlib binaries/libmini_functions-$version-${{ github.sha }}.rlib
-      - name: Check if renamed binary exists 📂
-        run: |
-          ls binaries
+          mkdir -p packages
+          for crate_type in ["dylib", "rlib", "staticlib"]; do
+            cp target/${{ matrix.target }}/release/libmini_functions.$crate_type packages/libmini_functions-$version-${{ github.sha }}.$crate_type
+          done
+          tar -czvf packages/mini_functions-$version-${{ github.sha }}.tar.gz packages/libmini_functions-$version-${{ github.sha }}.*
+
+  publish:
+    needs: build_and_test
+    if: startsWith(github.ref, 'refs/tags/')
+    name: Release Library
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛒
+        uses: actions/checkout@v3
       - name: Generate Changelog 📜
         run: |
           # Generate a changelog based on the commit history
@@ -82,16 +80,18 @@ jobs:
           echo >> ${{ github.workspace }}-CHANGELOG.txt
           # Append the commit history to the changelog
           cat changelog.txt >> ${{ github.workspace }}-CHANGELOG.txt
-      - name: Release 🚀
-        if: startsWith(github.ref, 'refs/tags/')
+          echo changelog.txt
+
+      - name: Create Release
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           body_path: ${{ github.workspace }}-CHANGELOG.txt
           files: |
-            binaries/mini-functions.${{ matrix.target }}
+            packages/mini_functions-$version-${{ github.sha }}.tar.gz
           name: ${{ github.workspace }}
           tag_name: ${{ github.workspace }}
           draft: false
           prerelease: false
+
