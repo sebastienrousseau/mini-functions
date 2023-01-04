@@ -46,14 +46,6 @@ jobs:
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: sudo apt-get install musl-tools libssl-dev
 
-      # needed to fix file corruption of cache
-      # https://github.com/actions/cache/issues/403
-      - name: Install GNU tar
-        if: ${{ matrix.os == 'macos-latest' }}
-        run: |
-          brew install gnu-tar
-          echo "/usr/local/opt/gnu-tar/libexec/gnubin" >> $GITHUB_PATH
-
       - name: Store or retrieve cargo caches
         uses: actions/cache@v3
         with:
@@ -84,8 +76,8 @@ jobs:
         with:
           name: ${{ matrix.name }}
           path: |
-            target/${{ matrix.target }}/release/mini-functions
-            target/${{ matrix.target2 }}/release/mini-functions
+            target/${{ matrix.target }}/release/mini-functions-0.0.4
+            target/${{ matrix.target2 }}/release/mini-functions-0.0.4
 
       # - name: Packaging final binary
       #   shell: bash
@@ -102,8 +94,8 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            target/${{ matrix.target }}/release/mini-functions-${{ matrix.artifact_prefix }}.tar.gz
-            target/${{ matrix.target }}/release/mini-functions-${{ matrix.artifact_prefix }}.sha256
+            target/${{ matrix.target }}/release/mini-functions--0.0.4.tar.gz
+            target/${{ matrix.target }}/release/mini-functions--0.0.4.sha256
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 # jobs:
