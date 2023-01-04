@@ -102,7 +102,7 @@ jobs:
           cargo deb --no-build --target=x86_64-unknown-linux-gnu
 
       - name: Upload binaries 📂
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
