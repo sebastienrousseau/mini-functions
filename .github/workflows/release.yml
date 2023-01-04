@@ -92,7 +92,7 @@ jobs:
       # # Check if the .deb file was created
       # - name: Check if .deb file exists 📂
       #   run: |
-      #     ls target/${{ matrix.target }}/debian/mini-functions_$version${{ matrix.target }}.deb
+      #     ls target/${{ matrix.target }}/debian/mini-functions_$version_*.deb
 
       # Create a folder for the packaged artifacts
       - name: Create artifacts folder 📂
@@ -101,7 +101,7 @@ jobs:
       # Move the .deb file to the artifacts folder
       - name: Move .deb file 🚚
         run: |
-          mv target/${{ matrix.target }}/deb/libmini_functions-$version-${{ matrix.target }}.deb artifacts/libmini_functions-$version-${{ matrix.target }}.deb
+          mv target/${{ matrix.target }}/deb/libmini_functions-$version-${{ matrix.target }}.deb artifacts/libmini_functions-$version-${{ matrix.arch }}.deb
 
       # Move the static library to the artifacts folder
       - name: Move static library 🚚
