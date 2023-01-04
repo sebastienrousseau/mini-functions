@@ -25,11 +25,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Get machine type
+      - name: Get machine type 🖥
         run: echo "::set-output name=machine_type::$(uname -m)"
         id: machine_type
 
-      - name: Set variable
+      - name: Set variable 📜
         run: echo "MACHINE_TYPE=${{ steps.machine_type.outputs.machine_type }}"
         shell: bash
         env:
@@ -64,7 +64,7 @@ jobs:
           cargo clean
           cross build --release --target=${{ matrix.target }}
 
-      - name: Check if library exists 📂
+      - name: Check if library exists 🔍
         run: ls target/${{ matrix.target }}/release
 
       - name: Create libraries folder 📂
@@ -74,7 +74,7 @@ jobs:
         run: |
           mv target/${{ matrix.target }}/release/libmini_functions.rlib libraries/libmini_functions-$version.rlib
 
-      - name: Check if renamed library exists 📂
+      - name: Check if renamed library exists 🤔
         run: |
           ls libraries
 
@@ -96,9 +96,9 @@ jobs:
       # Move the .deb file to the artifacts folder
       - name: Move .deb file 🚚
         run: |
-          mv target/${{ matrix.target }}/release/mini-functions_$version_*.deb artifacts/
+          mv target/${{ matrix.target }}/debian/mini-functions_*.deb artifacts/
 
-      - name: Generate Changelog 📜
+      - name: Generate Changelog 📝
         run: |
           # Generate a changelog based on the commit history
           git log --oneline --decorate --color > changelog.txt
