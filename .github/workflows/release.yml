@@ -6,90 +6,107 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  release:
-    name: ${{ matrix.name }}
+  build:
+    strategy:
+      matrix:
+        target:
+          - x86_64-unknown-linux-gnu
+          - x86_64-pc-windows-gnu
+          - x86_64-apple-darwin
+        include:
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-latest
+          - target: x86_64-pc-windows-gnu
+            os: ubuntu-latest
+          - target: x86_64-apple-darwin
+            os: macos-latest
 
     runs-on: ${{ matrix.os }}
 
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        include:
-          - os: ubuntu-latest
-            name: Linux Binary 64-Bit
-            target: x86_64-unknown-linux-musl
-
-          - os: macos-latest
-            name: MacOS Binary 64-Bit
-            target: x86_64-apple-darwin
-            target2: aarch64-apple-darwin
-            env:
-              MACOSX_DEPLOYMENT_TARGET: 10.7
-
-          - os: windows-latest
-            name: Windows Binary 64-Bit
-            target: x86_64-pc-windows-msvc
-
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v3
-
-      - name: Add rustup default target
-        run: rustup target add ${{ matrix.target }}
-
-      - name: Add rustup Apple ARM64 target
-        if: ${{ matrix.os == 'macos-latest' }}
-        run: rustup target add ${{ matrix.target2 }}
-
-      - name: Install apt packages
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: sudo apt-get install musl-tools libssl-dev
-
-      # needed to fix file corruption of cache
-      # https://github.com/actions/cache/issues/403
-      - name: Install GNU tar
-        if: ${{ matrix.os == 'macos-latest' }}
-        run: |
-          brew install gnu-tar
-          echo "/usr/local/opt/gnu-tar/libexec/gnubin" >> $GITHUB_PATH
-      - name: Store or retrieve cargo caches
-        uses: actions/cache@v3
+      - uses: actions/checkout@v2
+      - name: Cache cargo registry
+        uses: actions/cache@v2
         with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          path: ~/.cargo/registry
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Build
+      - name: Cache cargo index
+        uses: actions/cache@v2
+        with:
+          path: ~/.cargo/git
+          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache cargo build
+        uses: actions/cache@v2
+        with:
+          path: target
+          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Cargo build
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --release --target ${{ matrix.target }}
+          args: --release --target=${{ matrix.target }}
+          use-cross: true
 
-      # - name: Test
-      #   uses: actions-rs/cargo@v1
-      #   with:
-      #     command: test
-      #     args: --target ${{ matrix.target }}
-
-      - name: Package
-        uses: actions-rs/cargo@v1
+      - name: Read toml
+        uses: SebRollen/toml-action@v1.0.0
+        id: read_toml
         with:
-          command: package
-          args: --target ${{ matrix.target }}
+          file: "myfile.toml"
+          field: "package.version"
 
-      - name: Upload release binary
-        uses: actions/upload-artifact@v3
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: ${{ matrix.name }}
-          path: |
-            target/${{ matrix.target }}/release/mini-functions
-            target/${{ matrix.target2 }}/release/mini-functions
+          tag_name: ${{ steps.read_toml.outputs.value }}
+          release_name: ${{ steps.read_toml.outputs.value }}
+          body: false
+          draft: false
+          prerelease: false
 
+      - name: Release Linux
+        id: release-linux
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: target/${{ matrix.target }}/release/mini-functions
+          asset_name: mini-functions
+          asset_content_type: binary/octet-stream
+
+      - name: Release Windows
+        id: release-windows
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: target/${{ matrix.target }}/release/mini-functions.exe
+          asset_name: mini-functions.exe
+          asset_content_type: application/octet-stream
+
+      - name: Release Mac
+        id: release-mac
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: target/${{ matrix.target }}/release/mini-functions
+          asset_name: mini-functions
+          asset_content_type: application/octet-stream
 # jobs:
 #   build-and-test:
 #     name: ${{ matrix.name }}
