@@ -96,7 +96,7 @@ jobs:
       # Move the .deb file to the artifacts folder
       - name: Move .deb file 🚚
         run: |
-          mv target/${{ matrix.target }}/release/mini-functions_${version}_*.deb artifacts/
+          mv target/${{ matrix.target }}/release/mini-functions_${{version}}_*.deb artifacts/
 
       - name: Generate Changelog 📜
         run: |
