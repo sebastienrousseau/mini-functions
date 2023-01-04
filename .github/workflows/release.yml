@@ -2,10 +2,8 @@ name: ❯ release
 
 on:
   push:
-    branches-ignore:
-      - "*"
     tags:
-      - "v*"
+      - "v*.*.*"
 
 env:
   CARGO_TERM_COLOR: always
@@ -15,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Generate Changelog
+        run: echo "# Good things have arrived" > ${{ github.workspace }}-CHANGELOG.txt
       - name: Cache cargo registry
         uses: actions/cache@v2
         with:
@@ -49,8 +49,16 @@ jobs:
           cp -r /home/runner/work/mini-functions/mini-functions/target/x86_64-unknown-linux-gnu /home/runner/work/mini-functions/mini-functions/binaries/mini-functions.x86_64-unknown-linux-gnu
       - name: Release
         uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
+          body_path: ${{ github.workspace }}-CHANGELOG.txt
           files: binaries/mini-functions.x86_64-unknown-linux-gnu
+          name: ${{ github.workspace }}
+          tag_name: ${{ github.workspace }}
+          draft: false
+          prerelease: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+
   # build:
   #   strategy:
   #     matrix:
