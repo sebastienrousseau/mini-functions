@@ -32,117 +32,117 @@ jobs:
             name: Windows Binary 64-Bit (MSVC)
             target: x86_64-pc-windows-msvc
 
-        steps:
-          - name: Check out repository
-            uses: actions/checkout@v3
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
 
-          - name: Add rustup default targets
-            if: ${{ matrix.os == 'ubuntu-latest' }}
-            run: |
-              rustup target add ${{ matrix.target }}
-              rustup target add ${{ matrix.target2 }}
-              sudo apt-get install musl-tools libssl-dev
+      - name: Add rustup default targets
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: |
+          rustup target add ${{ matrix.target }}
+          rustup target add ${{ matrix.target2 }}
+          sudo apt-get install musl-tools libssl-dev
 
-          - name: Add rustup Apple default targets
-            if: ${{ matrix.os == 'macos-latest' }}
-            run: |
-              rustup target add ${{ matrix.target }}
-              rustup target add ${{ matrix.target2 }}
-              brew install gnu-tar
-              echo "/usr/local/opt/gnu-tar/libexec/gnubin" >> $GITHUB_PATH
+      - name: Add rustup Apple default targets
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: |
+          rustup target add ${{ matrix.target }}
+          rustup target add ${{ matrix.target2 }}
+          brew install gnu-tar
+          echo "/usr/local/opt/gnu-tar/libexec/gnubin" >> $GITHUB_PATH
 
-          - name: Add rustup Windows default targets
-            if: ${{ matrix.os == 'windows-latest' }}
-            run: |
-              rustup target add ${{ matrix.target }}
+      - name: Add rustup Windows default targets
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: |
+          rustup target add ${{ matrix.target }}
 
-          - name: Get machine type 🖥
-            run: echo "::set-output name=machine_type::$(uname -m)"
-            id: machine_type
+      - name: Get machine type 🖥
+        run: echo "::set-output name=machine_type::$(uname -m)"
+        id: machine_type
 
-          - name: Store or retrieve cargo caches 📦
-            uses: actions/cache@v3
-            with:
-              path: |
-                ~/.cargo/bin/
-                ~/.cargo/registry/index/
-                ~/.cargo/registry/cache/
-                ~/.cargo/git/db/
-                target/
-              key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+      - name: Store or retrieve cargo caches 📦
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
-          - name: Build default release target in release mode
-            if: ${{ matrix.os == 'ubuntu-latest' }}
-            run: |
-              # Build default release target in release mode
-              cargo rustc --lib --release --target=${{ matrix.target }} -- -C link-arg=-s
-              cargo rustc --lib --release --target=${{ matrix.target2 }} -- -C link-arg=-s
+      - name: Build default release target in release mode
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: |
+          # Build default release target in release mode
+          cargo rustc --lib --release --target=${{ matrix.target }} -- -C link-arg=-s
+          cargo rustc --lib --release --target=${{ matrix.target2 }} -- -C link-arg=-s
 
-              # Package as .deb 📦
-              cargo install cargo-deb
-              cargo deb --target=${{ matrix.target }}
+          # Package as .deb 📦
+          cargo install cargo-deb
+          cargo deb --target=${{ matrix.target }}
 
-          - name: Build Apple release target in release mode
-            if: ${{ matrix.os == 'macos-latest' }}
-            run: |
-              cargo rustc --lib --release --target=${{ matrix.target }} -- -C link-arg=-s
-              cargo rustc --lib --release --target=${{ matrix.target2 }} -- -C link-arg=-s
+      - name: Build Apple release target in release mode
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: |
+          cargo rustc --lib --release --target=${{ matrix.target }} -- -C link-arg=-s
+          cargo rustc --lib --release --target=${{ matrix.target2 }} -- -C link-arg=-s
 
-          - name: Build Windows release target in release mode
-            if: ${{ matrix.os == 'windows-latest' }}
-            run: |
-              cargo rustc --lib --release --target=${{ matrix.target }} -- -C link-arg=-s
+      - name: Build Windows release target in release mode
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: |
+          cargo rustc --lib --release --target=${{ matrix.target }} -- -C link-arg=-s
 
-          - name: Create libraries folder 📂
-            run: mkdir -p libraries
+      - name: Create libraries folder 📂
+        run: mkdir -p libraries
 
-          - name: Move default libraries 🚚
-            if: ${{ matrix.os == 'ubuntu-latest' }}
-            run: |
-              mv -f target/${{ matrix.target }}/release/ mini_functions libraries/
+      - name: Move default libraries 🚚
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: |
+          mv -f target/${{ matrix.target }}/release/ mini_functions libraries/
 
-          - name: Move Apple libraries 🚚
-            if: ${{ matrix.os == 'macos-latest' }}
-            run: |
-              mv -f target/${{ matrix.target }}/release/ mini_functions libraries/
+      - name: Move Apple libraries 🚚
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: |
+          mv -f target/${{ matrix.target }}/release/ mini_functions libraries/
 
-          - name: Move Windows libraries 🚚
-            if: ${{ matrix.os == 'windows-latest' }}
-            run: |
-              mv -f target/${{ matrix.target }}/release/ mini_functions libraries/
+      - name: Move Windows libraries 🚚
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: |
+          mv -f target/${{ matrix.target }}/release/ mini_functions libraries/
 
-          - name: Generate Changelog 📝
-            run: |
-              # Generate a changelog based on the commit history
-              git log --oneline --decorate --color > changelog.txt
+      - name: Generate Changelog 📝
+        run: |
+          # Generate a changelog based on the commit history
+          git log --oneline --decorate --color > changelog.txt
 
-              # Add a header to the changelog
-              echo "# Changelog" > ${{ github.workspace }}-CHANGELOG.txt
-              echo >> ${{ github.workspace }}-CHANGELOG.txt
+          # Add a header to the changelog
+          echo "# Changelog" > ${{ github.workspace }}-CHANGELOG.txt
+          echo >> ${{ github.workspace }}-CHANGELOG.txt
 
-              # Append the commit history to the changelog
-              cat changelog.txt >> ${{ github.workspace }}-CHANGELOG.txt
+          # Append the commit history to the changelog
+          cat changelog.txt >> ${{ github.workspace }}-CHANGELOG.txt
 
-              # Append the compiled libraries to the changelog
-              echo >> ${{ github.workspace }}-CHANGELOG.txt
-              echo "Compiled libraries:" >> ${{ github.workspace }}-CHANGELOG.txt
-              echo "- [libmini_functions.rlib](https://example.com/libmini_functions.rlib)" >> ${{ github.workspace }}-CHANGELOG.txt
-              echo "- [libmini_functions.dylib](https://example.com/libmini_functions.dylib)" >> ${{ github.workspace }}-CHANGELOG.txt
-              echo "- [libmini_functions.staticlib](https://example.com/libmini_functions.staticlib)" >> ${{ github.workspace }}-CHANGELOG.txt
+          # Append the compiled libraries to the changelog
+          echo >> ${{ github.workspace }}-CHANGELOG.txt
+          echo "Compiled libraries:" >> ${{ github.workspace }}-CHANGELOG.txt
+          echo "- [libmini_functions.rlib](https://example.com/libmini_functions.rlib)" >> ${{ github.workspace }}-CHANGELOG.txt
+          echo "- [libmini_functions.dylib](https://example.com/libmini_functions.dylib)" >> ${{ github.workspace }}-CHANGELOG.txt
+          echo "- [libmini_functions.staticlib](https://example.com/libmini_functions.staticlib)" >> ${{ github.workspace }}-CHANGELOG.txt
 
-          - name: Release 🚀
-            if: startsWith(github.ref, 'refs/tags/')
-            uses: softprops/action-gh-release@v1
-            env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            with:
-              body_path: ${{ github.workspace }}-CHANGELOG.txt
-              files: |
-                libraries/mini-functions.${{ matrix.target }}
-              name: ${{ github.workspace }}
-              tag_name: ${{ github.workspace }}
-              draft: false
-              prerelease: false
+      - name: Release 🚀
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          body_path: ${{ github.workspace }}-CHANGELOG.txt
+          files: |
+            libraries/mini-functions.${{ matrix.target }}
+          name: ${{ github.workspace }}
+          tag_name: ${{ github.workspace }}
+          draft: false
+          prerelease: false
 
   # build_and_release:
   #   strategy:
