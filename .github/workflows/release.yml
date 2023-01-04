@@ -1,6 +1,9 @@
 name: ❯ release
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - release
 
 jobs:
   mini_functions:
@@ -23,24 +26,28 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Cache cargo registry 🧑‍💼
+        id: cache-cargo-registry
         uses: actions/cache@v2
         with:
           path: ~/.cargo/registry
           key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Cache cargo build 🚀
+        id: cache-cargo-build
         uses: actions/cache@v2
         with:
           path: target
           key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Toolchain 🛠
+        id: toolchain
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
 
       - name: Extract version number 📜
+        id: version
         run: |
           version=$(grep version Cargo.toml | cut -d '"' -f 2)
           echo "version=$version"
@@ -52,24 +59,23 @@ jobs:
           cross build --release --target=${{ matrix.target }} --lib
 
       - name: Test 🧪
+        id: test
         run: |
           cargo test --all
 
       - name: Package 📦
+        id: package
         run: |
           mkdir -p packages
-          mv target/${{ matrix.target }}/release/libmini_functions.rlib packages/libmini_functions-$version-${{ github.sha }}.rlib
-          tar -czvf packages/mini_functions-$version-${{ github.sha }}.tar.gz packages/libmini_functions-$version-${{ github.sha }}.rlib
+          mv target/${{ matrix.target }}/release/libmini_functions.rlib packages/libmini_functions-$version.rlib
+          tar -czvf packages/mini_functions-$version.tar.gz packages/libmini_functions-$version.rlib
 
-  publish:
-    needs: mini_functions
-    if: startsWith(github.ref, 'refs/tags/')
-    name: Release Library
-    runs-on: ubuntu-latest
-    steps:
       - name: Checkout 🛒
+        id: checkout
         uses: actions/checkout@v3
+
       - name: Generate Changelog 📜
+        id: changelog
         run: |
           # Generate a changelog based on the commit history
           git log --oneline --decorate --color > changelog.txt
@@ -80,15 +86,18 @@ jobs:
           cat changelog.txt >> ${{ github.workspace }}-CHANGELOG.txt
           echo changelog.txt
 
-      - name: Create Release
+      - name: Create Release 🚀
+        id: create_release
         uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           body_path: ${{ github.workspace }}-CHANGELOG.txt
           files: |
-            packages/mini_functions-$version-${{ github.sha }}.tar.gz
+            packages/mini_functions-$version.tar.gz
           name: ${{ github.workspace }}
+          release_name: ${{ github.workspace }}
           tag_name: ${{ github.workspace }}
           draft: false
           prerelease: false
