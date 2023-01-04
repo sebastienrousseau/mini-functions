@@ -25,6 +25,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Get machine type
+        run: echo "::set-output name=machine_type::$(uname -m)"
+        id: machine_type
+
+      - name: Set variable
+        run: echo "MACHINE_TYPE=${{ steps.machine_type.outputs.machine_type }}"
+        shell: bash
+        env:
+          MACHINE_TYPE: ${{ steps.machine_type.outputs.machine_type }}
+
       - name: Cache cargo registry 📦
         uses: actions/cache@v2
         with:
@@ -82,7 +92,7 @@ jobs:
       # Check if the .deb file was created
       - name: Check if .deb file exists 📂
         run: |
-          ls target/${{ matrix.target }}/deb
+          ls target/${{ matrix.target }}/debian/mini-functions_${version}_${{ steps.machine_type.outputs.machine_type }}.deb
 
       # Create a folder for the packaged artifacts
       - name: Create artifacts folder 📂
