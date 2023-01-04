@@ -54,14 +54,14 @@ jobs:
           cross build --release --target=${{ matrix.target }}
 
       - name: Check if binary exists 📂
-        run: ls -la target/${{ matrix.target }}/release/mini-functions
+        run: ls target/${{ matrix.target }}/release
 
-      - name: Rename binary 📂
-        run: |
-          mv target/${{ matrix.target }}/release/mini-functions target/${{ matrix.target }}/release/mini-functions-$version-${{ github.sha }}
+      # - name: Rename binary 📂
+      #   run: |
+      #     mv target/${{ matrix.target }}/release/mini-functions target/${{ matrix.target }}/release/mini-functions-$version-${{ github.sha }}
 
-      - name: Check if renamed binary exists 📂
-        run: ls -la target/${{ matrix.target }}/release/mini-functions-$version-${{ github.sha }}
+      # - name: Check if renamed binary exists 📂
+      #   run: ls -la target/${{ matrix.target }}/release/mini-functions-$version-${{ github.sha }}
 
       - name: Generate Changelog 📜
         run: |
