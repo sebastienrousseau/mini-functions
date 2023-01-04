@@ -53,12 +53,12 @@ jobs:
           args: --release --target=${{ matrix.target }}
           use-cross: true
 
-      - run: |
-          zip --junk-paths mini-functions-${{ matrix.target }} target/${{ matrix.target }}/release/mini-functions{,.exe}
-      - uses: actions/upload-artifact@v1
-        with:
-          name: build-${{ matrix.target }}
-          path: mini-functions-${{ matrix.target }}.zip
+      # - run: |
+      #     zip --junk-paths mini-functions-${{ matrix.target }} target/${{ matrix.target }}/release/mini-functions{,.exe}
+      # - uses: actions/upload-artifact@v1
+      #   with:
+      #     name: build-${{ matrix.target }}
+      #     path: mini-functions-${{ matrix.target }}.zip
 
   create-release:
     needs: [build]
