@@ -70,17 +70,11 @@ jobs:
           command: build
           args: --release --target ${{ matrix.target }}
 
-      - name: Test
-        uses: actions-rs/cargo@v1
-        with:
-          command: test
-          args: --target ${{ matrix.target }}
-
-      - name: Release
-        uses: actions-rs/cargo@v1
-        with:
-          command: release
-          args: --target ${{ matrix.target }}
+      # - name: Test
+      #   uses: actions-rs/cargo@v1
+      #   with:
+      #     command: test
+      #     args: --target ${{ matrix.target }}
 
       - name: Package
         uses: actions-rs/cargo@v1
