@@ -41,7 +41,7 @@ jobs:
           cargo clean
           export RUSTFLAGS="-C strip=symbols --remap-path-prefix=$(pwd)=. --remap-path-prefix=$(cd; pwd)=/home/rust/"
           cargo build --verbose --release --target=x86_64-unknown-linux-gnu
-          cp target/release/mini-functions binaries/mini-functions.x86_64-unknown-linux-gnu
+          cp /home/runner/work/mini-functions/mini-functions/target/x86_64-unknown-linux-gnu
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
