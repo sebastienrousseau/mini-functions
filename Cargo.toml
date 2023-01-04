@@ -32,6 +32,9 @@ qrcode = "0.12.0"
 time = "0.3.17"
 uuid = { version = "1.2.2", features = ["v3", "v4", "v5"] }
 
+[build-dependencies]
+cross = "0.2.4"
+
 [lib]
 name = "mini_functions"
 path = "src/lib.rs"
