@@ -13,9 +13,9 @@ compiler = "musl-gcc"
 image = "rust:latest"
 compiler = "clang"
 
-[targets.aarch64-apple-darwin]
-image = "rust:latest"
-compiler = "clang"
+# [targets.aarch64-apple-darwin]
+# image = "rust:latest"
+# compiler = "clang"
 
 # [targets.x86_64-pc-windows-msvc]
 # image = "rust:latest"

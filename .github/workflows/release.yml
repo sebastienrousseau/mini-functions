@@ -11,7 +11,7 @@ on: [push, pull_request]
 #       - master
 
 jobs:
-  build_and_release:
+  mini_functions:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -25,7 +25,6 @@ jobs:
           - os: macos-latest
             name: MacOS Binary 64-Bit
             target: x86_64-apple-darwin
-            target2: aarch64-apple-darwin
             env:
               MACOSX_DEPLOYMENT_TARGET: 10.7
 
@@ -76,7 +75,7 @@ jobs:
         if: ${{ matrix.os == 'macos-latest' }}
         run: |
           rustup target add ${{ matrix.target }}
-          rustup target add ${{ matrix.target2 }}
+          # rustup target add ${{ matrix.target2 }}
 
       # - name: Add rustup for Windows targets
       #   if: ${{ matrix.os == 'windows-latest' }}
