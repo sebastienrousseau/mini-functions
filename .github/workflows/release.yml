@@ -22,32 +22,57 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
+
       - name: Cache cargo registry 🧑‍💼
         uses: actions/cache@v2
         with:
           path: ~/.cargo/registry
           key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+
       - name: Cache cargo build 🚀
         uses: actions/cache@v2
         with:
           path: target
           key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
+
       - name: Toolchain 🛠
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
-      - run: cargo install cross
+
+      - name: Extract version number 📜
+        run: |
+          version=$(grep version Cargo.toml | cut -d '"' -f 2)
+          echo "Version: $version"
+
       - name: Build with cross 🏗
         run: |
-          rustup target add ${{ matrix.target }}
           cargo clean
           cross build --release --target=${{ matrix.target }}
+          mv target/${{ matrix.target }}/release/mini-functions target/${{ matrix.target }}/release/mini-functions-$version-${{ github.sha }}
+
       - name: Generate Changelog 📜
-        run: echo "# Good things have arrived" > ${{ github.workspace }}-CHANGELOG.txt
-      - run: mkdir -p binaries
+        run: |
+          # Generate a changelog based on the commit history
+          git log --oneline --decorate --color > changelog.txt
+
+          # Add a header to the changelog
+          echo "# Changelog" > ${{ github.workspace }}-CHANGELOG.txt
+          echo >> ${{ github.workspace }}-CHANGELOG.txt
+
+          # Append the commit history to the changelog
+          cat changelog.txt >> ${{ github.workspace }}-CHANGELOG.txt
+
+      - name: Create binaries folder 📂
+        run: mkdir -p binaries
+
+      - name: Check if binary exists 📂
+        run: ls -la target/${{ matrix.target }}/release/mini-functions
+
       - name: Copy binary 📂
         run: cp target/${{ matrix.target }}/release/mini-functions binaries/mini-functions.${{ matrix.target }}
+
       - name: Release 🚀
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
