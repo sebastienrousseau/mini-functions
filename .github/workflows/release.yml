@@ -177,3 +177,14 @@ jobs:
           asset_path: binaries/libmini_functions-$version-${{ github.sha }}.rlib
           asset_name: libmini_functions-$version-${{ matrix.target }}-${{ github.sha }}.rlib
           asset_content_type: application/octet-stream
+
+      - name: Upload Debian package 📦
+        if: matrix.target == 'x86_64-unknown-linux-gnu'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.release.upload_url }}
+          asset_path: target/debian/mini-functions_${{ github.sha }}_amd64.deb
+          asset_name: mini-functions_${{ github.sha }}_amd64.deb
+          asset_content_type: application/octet-stream
