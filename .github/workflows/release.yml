@@ -104,9 +104,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.upload-url.outputs.url }}
-          asset_path: ./build-${{ matrix.target }}/mini-functions-${{ matrix.target }}.zip
-          asset_name: mini-functions-${{ matrix.target }}.zip
-          asset_content_type: application/zip
+          asset_path: ./build-${{ matrix.target }}/mini-functions-${{ matrix.target }}.tar.gz
+          asset_name: mini-functions-${{ matrix.target }}.tar.gz
+          asset_content_type: application/gzip
 # jobs:
 #   build-and-test:
 #     name: ${{ matrix.name }}
