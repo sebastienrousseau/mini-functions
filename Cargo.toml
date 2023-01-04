@@ -27,7 +27,7 @@ maintenance = { status = "actively-developed" }
 image = "0.24.5"
 qrcode = "0.12.0"
 time = "0.3.17"
-uuid = "1.2.2"
+uuid = "1.2.2", features = ["v3", "v4", "v5"] }
 
 [package.metadata.docs.rs]
 all-features = true
