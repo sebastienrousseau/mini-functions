@@ -1,10 +1,4 @@
-name: ❯ release
-
 on: [push, pull_request]
-# on:
-#   push:
-#     tags:
-#       - "v*.*.*"
 
 env:
   CARGO_TERM_COLOR: always
@@ -25,326 +19,44 @@ jobs:
             os: ubuntu-latest
           - target: x86_64-apple-darwin
             os: macos-latest
-    runs-on: ${{ matrix.platform }}
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
-
       - name: Cache cargo registry
         uses: actions/cache@v2
         with:
           path: ~/.cargo/registry
           key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
-
       - name: Generate Changelog
         run: echo "# Good things have arrived" > ${{ github.workspace }}-CHANGELOG.txt
-
       - name: Cache cargo build
         uses: actions/cache@v2
         with:
           path: target
           key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
-
       - name: Toolchain
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
-
       - run: mkdir binaries
-
-      - name: ${{ matrix.platform }}
+      - name: Build for ${{ matrix.target }}
         run: |
-          rustup target add ${{ matrix.platform }}
+          rustup target add ${{ matrix.target }}
           cargo clean
           export RUSTFLAGS="-C strip=symbols --remap-path-prefix=$(pwd)=. --remap-path-prefix=$(cd; pwd)=/home/rust/"
-          cargo build --verbose --release --target=${{ matrix.platform }}
-          use-cross: true
-          cp -r /home/runner/work/mini-functions/mini-functions/target/${{ matrix.platform }} /home/runner/work/mini-functions/mini-functions/binaries/mini-functions.${{ matrix.platform }}
-
+          cargo build --verbose --release --target=${{ matrix.target }}
+          cp -r /home/runner/work/mini-functions/mini-functions/target/${{ matrix.target }}/release/mini-functions /home/runner/work/mini-functions/mini-functions/binaries/mini-functions.${{ matrix.target }}
       - name: Release
-        uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           body_path: ${{ github.workspace }}-CHANGELOG.txt
-          files: binaries/mini-functions.${{ matrix.platform }}
+          files: |
+            binaries/mini-functions.${{ matrix.target }}
           name: ${{ github.workspace }}
           tag_name: ${{ github.workspace }}
           draft: false
           prerelease: false
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-  # build:
-  #   strategy:
-  #     matrix:
-  #       target:
-  #         - x86_64-unknown-linux-gnu
-  #         - x86_64-pc-windows-gnu
-  #         - x86_64-apple-darwin
-  #       include:
-  #         - target: x86_64-unknown-linux-gnu
-  #           os: ubuntu-latest
-  #         - target: x86_64-pc-windows-gnu
-  #           os: ubuntu-latest
-  #         - target: x86_64-apple-darwin
-  #           os: macos-latest
-
-  #   runs-on: ${{ matrix.os }}
-
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Cache cargo registry
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: ~/.cargo/registry
-  #         key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
-
-  #     - name: Cache cargo index
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: ~/.cargo/git
-  #         key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
-
-  #     - name: Cache cargo build
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: target
-  #         key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
-
-  #     - name: Toolchain
-  #       uses: actions-rs/toolchain@v1
-  #       with:
-  #         toolchain: stable
-  #         override: true
-
-  #     - name: Cargo build
-  #       uses: actions-rs/cargo@v1
-  #       with:
-  #         command: build
-  #         args: --release --target=${{ matrix.target }}
-  #         use-cross: true
-
-  #     - name: Read toml
-  #       uses: SebRollen/toml-action@v1.0.0
-  #       id: read_toml
-  #       with:
-  #         file: "Cargo.toml"
-  #         field: "package.version"
-
-  #     - name: Create Release
-  #       id: create_release
-  #       uses: actions/create-release@v1
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #       with:
-  #         tag_name: ${{ steps.read_toml.outputs.value }}
-  #         release_name: ${{ steps.read_toml.outputs.value }}
-  #         body: false
-  #         draft: false
-  #         prerelease: false
-
-  #     - name: Release Linux
-  #       id: release-linux
-  #       uses: actions/upload-release-asset@v1
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #       with:
-  #         upload_url: ${{ steps.create_release.outputs.upload_url }}
-  #         asset_path: target/${{ matrix.target }}/release/mini-functions
-  #         asset_name: mini-functions
-  #         asset_content_type: binary/octet-stream
-
-  #     - name: Release Windows
-  #       id: release-windows
-  #       uses: actions/upload-release-asset@v1
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #       with:
-  #         upload_url: ${{ steps.create_release.outputs.upload_url }}
-  #         asset_path: target/${{ matrix.target }}/release/mini-functions.exe
-  #         asset_name: mini-functions.exe
-  #         asset_content_type: application/octet-stream
-
-  #     - name: Release Mac
-  #       id: release-mac
-  #       uses: actions/upload-release-asset@v1
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #       with:
-  #         upload_url: ${{ steps.create_release.outputs.upload_url }}
-  #         asset_path: target/${{ matrix.target }}/release/mini-functions
-  #         asset_name: mini-functions
-  #         asset_content_type: application/octet-stream
-# jobs:
-#   build-and-test:
-#     name: ${{ matrix.name }}
-
-#     runs-on: ${{ matrix.os }}
-
-#     strategy:
-#       fail-fast: false
-#       matrix:
-#         os: [ubuntu-latest, macos-latest, windows-latest]
-#         include:
-#           - os: ubuntu-latest
-#             name: Linux Binary 64-Bit
-#             target: x86_64-unknown-linux-musl
-
-#           - os: macos-latest
-#             name: MacOS Binary 64-Bit
-#             target: x86_64-apple-darwin
-#             target2: aarch64-apple-darwin
-#             env:
-#               MACOSX_DEPLOYMENT_TARGET: 10.7
-
-#           - os: windows-latest
-#             name: Windows Binary 64-Bit
-#             target: x86_64-pc-windows-msvc
-
-#     steps:
-#       - name: Check out repository
-#         uses: actions/checkout@v3
-
-#       - name: Add rustup default target
-#         run: rustup target add ${{ matrix.target }}
-
-#       - name: Add rustup Apple ARM64 target
-#         if: ${{ matrix.os == 'macos-latest' }}
-#         run: rustup target add ${{ matrix.target2 }}
-
-#       - name: Install apt packages
-#         if: ${{ matrix.os == 'ubuntu-latest' }}
-#         run: sudo apt-get install musl-tools libssl-dev
-
-#       # needed to fix file corruption of cache
-#       # https://github.com/actions/cache/issues/403
-#       - name: Install GNU tar
-#         if: ${{ matrix.os == 'macos-latest' }}
-#         run: |
-#           brew install gnu-tar
-#           echo "/usr/local/opt/gnu-tar/libexec/gnubin" >> $GITHUB_PATH
-#       - name: Store or retrieve cargo caches
-#         uses: actions/cache@v3
-#         with:
-#           path: |
-#             ~/.cargo/bin/
-#             ~/.cargo/registry/index/
-#             ~/.cargo/registry/cache/
-#             ~/.cargo/git/db/
-#             target/
-#           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-
-#       - name: Build default target in debug mode
-#         run: cargo build --target ${{ matrix.target }}
-
-#       - name: Build Apple ARM64 target in debug mode
-#         if: ${{ matrix.os == 'macos-latest' }}
-#         run: cargo build --target ${{ matrix.target2 }}
-
-#       - name: Test default target in debug mode
-#         run: cargo test --target ${{ matrix.target }}
-
-#       - name: Create release binary for default target
-#         run: cargo package --target ${{ matrix.target }}
-
-#       - name: Create release binary for Apple ARM64
-#         if: ${{ matrix.os == 'macos-latest' }}
-#         run: cargo package --target ${{ matrix.target2 }}
-
-#       - name: Upload release binary
-#         uses: actions/upload-artifact@v3
-#         with:
-#           name: ${{ matrix.name }}
-#           path: |
-#             target/${{ matrix.target }}/release/mini-functions
-#             target/${{ matrix.target2 }}/release/mini-functions
-
-# publish-binaries:
-#   name: Publishing for ${{ matrix.job.os }}
-#   runs-on: ${{ matrix.job.os }}
-#   strategy:
-#     matrix:
-#       job:
-#         - os: macos-latest
-#           os-name: macos
-#           target: x86_64-apple-darwin
-#           architecture: x86_64
-#           binary-postfix: ""
-#           use-cross: false
-#         - os: ubuntu-latest
-#           os-name: linux
-#           target: x86_64-unknown-linux-musl
-#           architecture: x86_64
-#           binary-postfix: ""
-#           use-cross: false
-#         - os: windows-latest
-#           os-name: windows
-#           target: x86_64-pc-windows-msvc
-#           architecture: x86_64
-#           binary-postfix: ".exe"
-#           use-cross: false
-#   steps:
-#     - name: Checkout repository
-#       uses: actions/checkout@v3
-
-#     - name: Install Rust toolchain
-#       uses: actions-rs/toolchain@v1
-#       with:
-#         toolchain: stable
-#         profile: minimal
-#         target: ${{ matrix.job.target }}
-#     - uses: Swatinem/rust-cache@v1
-#     - name: Install Ubuntu MUSL deps
-#       run: |
-#         sudo apt-get install musl musl-dev musl-tools
-#       if: matrix.job.os-name == 'linux'
-#     - name: Cargo build
-#       uses: actions-rs/cargo@v1
-#       with:
-#         command: build
-#         use-cross: ${{ matrix.job.use-cross }}
-#         args: --release --target ${{ matrix.job.target }} --package mini-functions
-#       env:
-#         RUSTFLAGS: "-C target-feature=+crt-static"
-
-#     - name: install strip command
-#       shell: bash
-#       run: |
-#         if [[ ${{ matrix.job.target }} == aarch64-unknown-linux-gnu ]]; then
-#             sudo apt update
-#             sudo apt-get install -y binutils-aarch64-linux-gnu
-#         fi
-#     - name: Packaging final binary
-#       shell: bash
-#       run: |
-#         cd target/${{ matrix.job.target }}/release
-#         ####### reduce binary size by removing debug symbols #######
-#         BINARY_NAME=mini-functions${{ matrix.job.binary-postfix }}
-#         if [[ ${{ matrix.job.target }} == aarch64-unknown-linux-gnu ]]; then
-#           GCC_PREFIX="aarch64-linux-gnu-"
-#         else
-#           GCC_PREFIX=""
-#         fi
-#         "$GCC_PREFIX"strip $BINARY_NAME
-#         ########## create tar.gz ##########
-#         if [[ "${{ startsWith(github.ref, 'refs/tags/v') }}" == "true" ]]; then
-#           VERSION=${GITHUB_REF/refs\/tags\//}
-#         else
-#           VERSION=master
-#         fi
-#         RELEASE_NAME=mini-functions-${VERSION}-${{ matrix.job.os-name }}-${{ matrix.job.architecture }}
-#         tar czvf $RELEASE_NAME.tar.gz $BINARY_NAME
-#         ########## create sha256 ##########
-#         if [[ ${{ runner.os }} == 'Windows' ]]; then
-#           certutil -hashfile $RELEASE_NAME.tar.gz sha256 | grep -E [A-Fa-f0-9]{64} > $RELEASE_NAME.sha256
-#         else
-#           shasum -a 256 $RELEASE_NAME.tar.gz > $RELEASE_NAME.sha256
-#         fi
-#     - name: Releasing assets
-#       uses: softprops/action-gh-release@v1
-#       with:
-#         files: |
-#           target/${{ matrix.job.target }}/release/mini-functions-*.tar.gz
-#           target/${{ matrix.job.target }}/release/mini-functions-*.sha256
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#       if: startsWith(github.ref, 'refs/tags/v')
