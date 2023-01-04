@@ -45,7 +45,14 @@ jobs:
           rustup target add ${{ matrix.target }}
           cargo clean
           cargo build --verbose --release --target=${{ matrix.target }}
+
+      - name: Debugging output 🐛
+        run: ls -la target/${{ matrix.target }}
+
+      - name: Copy binaries 📋
+        run: |
           cp -r target/${{ matrix.target }}/release/mini-functions binaries/mini-functions.${{ matrix.target }}
+
       - name: Release 🚀
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
