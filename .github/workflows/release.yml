@@ -27,6 +27,18 @@ jobs:
           profile: minimal
           target: ${{ matrix.os }}
 
+      - name: Install apt packages
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: sudo apt-get install musl-tools libssl-dev
+
+      # needed to fix file corruption of cache
+      # https://github.com/actions/cache/issues/403
+      - name: Install GNU tar
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: |
+          brew install gnu-tar
+          echo "/usr/local/opt/gnu-tar/libexec/gnubin" >> $GITHUB_PATH
+
       - name: Store or retrieve cargo caches
         uses: actions/cache@v3
         with:
