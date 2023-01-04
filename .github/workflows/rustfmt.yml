@@ -1,12 +1,15 @@
 name: ❯ rustfmt
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  rustfmt:
     runs-on: ubuntu-latest
 
     steps:
