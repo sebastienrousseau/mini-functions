@@ -47,7 +47,7 @@ jobs:
           cargo build --verbose --release --target=${{ matrix.target }}
 
       - name: Debugging output 🐛
-        run: ls -la target/${{ matrix.target }}
+        run: ls -la target/${{ matrix.target }}/release/
 
       - name: Copy binaries 📋
         run: |
