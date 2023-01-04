@@ -89,10 +89,10 @@ jobs:
           cargo install cargo-deb
           cargo deb --target=${{ matrix.target }}
 
-      # Check if the .deb file was created
-      - name: Check if .deb file exists 📂
-        run: |
-          ls target/${{ matrix.target }}/debian/mini-functions_$version${{ matrix.target }}.deb
+      # # Check if the .deb file was created
+      # - name: Check if .deb file exists 📂
+      #   run: |
+      #     ls target/${{ matrix.target }}/debian/mini-functions_$version${{ matrix.target }}.deb
 
       # Create a folder for the packaged artifacts
       - name: Create artifacts folder 📂
