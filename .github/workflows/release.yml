@@ -89,11 +89,6 @@ jobs:
           cargo install cargo-deb
           cargo deb --target=${{ matrix.target }}
 
-      # # Check if the .deb file was created
-      # - name: Check if .deb file exists 📂
-      #   run: |
-      #     ls target/${{ matrix.target }}/debian/mini-functions_$version_*.deb
-
       # Create a folder for the packaged artifacts
       - name: Create artifacts folder 📂
         run: mkdir -p artifacts
@@ -101,12 +96,7 @@ jobs:
       # Move the .deb file to the artifacts folder
       - name: Move .deb file 🚚
         run: |
-          mv target/${{ matrix.target }}/deb/libmini_functions-$version-${{ matrix.target }}.deb artifacts/libmini_functions-$version-${{ matrix.arch }}.deb
-
-      # Move the static library to the artifacts folder
-      - name: Move static library 🚚
-        run: |
-          mv target/${{ matrix.target }}/release/libmini_functions.a artifacts/libmini_functions-$version-${{ matrix.target }}.a
+          mv target/${{ matrix.target }}/release/mini-functions_${version}_*.deb artifacts/
 
       - name: Generate Changelog 📜
         run: |
