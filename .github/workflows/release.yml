@@ -42,17 +42,17 @@ jobs:
           sudo apt-get update
           sudo apt-get install musl-tools libssl-dev
 
-      # Install PowerShell
-      - name: Install PowerShell 🛠
-        if: ${{ matrix.os == 'windows-latest' }}
-        run: choco install powershell
-
       # Install Chocolatey
       - name: Install chocolatey 🛠
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
-          # Install chocolatey
+          # Download and install chocolatey
           Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+      # Install PowerShell
+      - name: Install PowerShell 🛠
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: choco install powershell
 
       # Install Visual Studio or Build Tools for Visual Studio
       - name: Install Visual Studio 🛠
