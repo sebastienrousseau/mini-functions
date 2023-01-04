@@ -119,7 +119,7 @@ jobs:
         with:
           command: build
           use-cross: ${{ matrix.job.use-cross }}
-          args: --release --target ${{ matrix.job.target }} --package mini-functions-cli
+          args: --release --target ${{ matrix.job.target }} --package mini-functions
         env:
           RUSTFLAGS: "-C target-feature=+crt-static"
 
