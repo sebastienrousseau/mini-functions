@@ -56,12 +56,20 @@ jobs:
       - name: Check if binary exists 📂
         run: ls target/${{ matrix.target }}/release
 
-      # - name: Rename binary 📂
-      #   run: |
-      #     mv target/${{ matrix.target }}/release/mini-functions target/${{ matrix.target }}/release/mini-functions-$version-${{ github.sha }}
+      - name: Create binaries folder 📂
+        run: mkdir -p binaries
 
-      # - name: Check if renamed binary exists 📂
-      #   run: ls -la target/${{ matrix.target }}/release/mini-functions-$version-${{ github.sha }}
+      - name: Move library 🚚
+        run: |
+          mv target/${{ matrix.target }}/release/libmini_functions.rlib binaries/libmini_functions.rlib
+
+      - name: Rename library 📂
+        run: |
+          mv binaries/libmini_functions.rlib binaries/libmini_functions-$version-${{ github.sha }}.rlib
+
+      - name: Check if renamed binary exists 📂
+        run: |
+          ls binaries
 
       - name: Generate Changelog 📜
         run: |
@@ -74,13 +82,6 @@ jobs:
 
           # Append the commit history to the changelog
           cat changelog.txt >> ${{ github.workspace }}-CHANGELOG.txt
-
-      - name: Create binaries folder 📂
-        run: mkdir -p binaries
-
-      - name: Copy binary 📂
-        run: |
-          cp target/${{ matrix.target }}/release/mini-functions-$version-${{ github.sha }} binaries/mini-functions.${{ matrix.target }}
 
       - name: Release 🚀
         if: startsWith(github.ref, 'refs/tags/')
