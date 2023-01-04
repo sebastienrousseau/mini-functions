@@ -18,6 +18,7 @@ name = "mini-functions"
 readme = "README.md"
 repository = "https://github.com/sebastienrousseau/mini-functions.git"
 resolver = "2" # Enables the new Cargo resolution engine
+rust-version = "1.57.0"
 version = "0.0.4"
 
 [badges]
@@ -27,7 +28,7 @@ maintenance = { status = "actively-developed" }
 image = "0.24.5"
 qrcode = "0.12.0"
 time = "0.3.17"
-uuid = "1.2.2", features = ["v3", "v4", "v5"] }
+uuid = { version = "1.2.2", features = ["v3", "v4", "v5"] }
 
 [package.metadata.docs.rs]
 all-features = true
