@@ -1,267 +1,108 @@
-name: ❯ release
-
-on: [push, pull_request]
-
-env:
-  CARGO_TERM_COLOR: always
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
-  build-test-and-release:
-    name: ${{ matrix.name }}
-
-    runs-on: ${{ matrix.os }}
-
+  build_and_release:
+    runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        include:
-          - os: ubuntu-latest
-            name: Ubuntu Binary 64-Bit (x86_64)
-            target: x86_64-unknown-linux-musl
-            target2: aarch64-unknown-linux-musl
-
-          - os: macos-latest
-            name: MacOS Binaries 64-Bit (x86_64 / aarch64)
-            target: x86_64-apple-darwin
-            target2: aarch64-apple-darwin
-            env:
-              MACOSX_DEPLOYMENT_TARGET: 10.7
-
-          - os: windows-latest
-            name: Windows Binary 64-Bit (MSVC)
-            target: x86_64-pc-windows-msvc
-
+        target:
+          - x86_64-unknown-linux-gnu
+          - x86_64-pc-windows-gnu
+          - x86_64-apple-darwin
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Add rustup default targets
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: |
-          rustup target add ${{ matrix.target }}
-          rustup target add ${{ matrix.target2 }}
-          sudo apt-get install musl-tools libssl-dev
-
-      - name: Add rustup Apple default targets
-        if: ${{ matrix.os == 'macos-latest' }}
-        run: |
-          rustup target add ${{ matrix.target }}
-          rustup target add ${{ matrix.target2 }}
-          brew install gnu-tar
-          echo "/usr/local/opt/gnu-tar/libexec/gnubin" >> $GITHUB_PATH
-
-      - name: Add rustup Windows default targets
-        if: ${{ matrix.os == 'windows-latest' }}
-        run: |
-          rustup target add ${{ matrix.target }}
-
-      - name: Get machine type 🖥
-        run: echo "::set-output name=machine_type::$(uname -m)"
-        id: machine_type
-
-      - name: Store or retrieve cargo caches 📦
-        uses: actions/cache@v3
+      - name: Cache cargo registry 🧑‍💼
+        uses: actions/cache@v2
         with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          path: ~/.cargo/registry
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Build default release target in release mode
-        if: ${{ matrix.os == 'ubuntu-latest' }}
+      - name: Cache cargo build 🚀
+        uses: actions/cache@v2
+        with:
+          path: target
+          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Toolchain 🛠
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Extract version number 📜
         run: |
-          # Build default release target in release mode
-          cargo rustc --lib --release --target=${{ matrix.target }} -- -C link-arg=-s
-          cargo rustc --lib --release --target=${{ matrix.target2 }} -- -C link-arg=-s
-
-          # Package as .deb 📦
-          cargo install cargo-deb
-          cargo deb --target=${{ matrix.target }}
-
-      - name: Build Apple release target in release mode
-        if: ${{ matrix.os == 'macos-latest' }}
+          version=$(grep version Cargo.toml | cut -d '"' -f 2)
+          echo "version=$version"
+      - name: Build with cross 🏗
         run: |
-          cargo rustc --lib --release --target=${{ matrix.target }} -- -C link-arg=-s
-          cargo rustc --lib --release --target=${{ matrix.target2 }} -- -C link-arg=-s
+          # Build the binary
+          cargo install cross
+          cargo clean
+          cross build --release --target=${{ matrix.target }}
+      - name: Check if binary exists 📂
+        run: ls target/${{ matrix.target }}/release
 
-      - name: Build Windows release target in release mode
-        if: ${{ matrix.os == 'windows-latest' }}
+      - name: Create binaries folder 📂
+        run: mkdir -p binaries
+
+      - name: Move library 🚚
         run: |
-          cargo rustc --lib --release --target=${{ matrix.target }} -- -C link-arg=-s
+          mv target/${{ matrix.target }}/release/libmini_functions.rlib binaries/libmini_functions.rlib
 
-      - name: Create libraries folder 📂
-        run: mkdir -p libraries
-
-      - name: Move default libraries 🚚
-        if: ${{ matrix.os == 'ubuntu-latest' }}
+      - name: Rename library 📂
         run: |
-          mv -f target/${{ matrix.target }}/release/mini_functions libraries/
+          mv binaries/libmini_functions.rlib binaries/libmini_functions-$version-${{ github.sha }}.rlib
 
-      - name: Move Apple libraries 🚚
-        if: ${{ matrix.os == 'macos-latest' }}
+      - name: Check if renamed binary exists 📂
         run: |
-          mv -f target/${{ matrix.target }}/release/mini_functions libraries/
+          ls binaries
 
-      - name: Move Windows libraries 🚚
-        if: ${{ matrix.os == 'windows-latest' }}
-        run: |
-          mv -f target/${{ matrix.target }}/release/mini_functions libraries/
-
-      - name: Generate Changelog 📝
+      - name: Generate Changelog 📜
         run: |
           # Generate a changelog based on the commit history
           git log --oneline --decorate --color > changelog.txt
-
           # Add a header to the changelog
           echo "# Changelog" > ${{ github.workspace }}-CHANGELOG.txt
           echo >> ${{ github.workspace }}-CHANGELOG.txt
-
           # Append the commit history to the changelog
           cat changelog.txt >> ${{ github.workspace }}-CHANGELOG.txt
 
-          # Append the compiled libraries to the changelog
-          echo >> ${{ github.workspace }}-CHANGELOG.txt
-          echo "Compiled libraries:" >> ${{ github.workspace }}-CHANGELOG.txt
-          echo "- [libmini_functions.rlib](https://example.com/libmini_functions.rlib)" >> ${{ github.workspace }}-CHANGELOG.txt
-          echo "- [libmini_functions.dylib](https://example.com/libmini_functions.dylib)" >> ${{ github.workspace }}-CHANGELOG.txt
-          echo "- [libmini_functions.staticlib](https://example.com/libmini_functions.staticlib)" >> ${{ github.workspace }}-CHANGELOG.txt
-
       - name: Release 🚀
-        if: startsWith(github.ref, 'refs/tags/')
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/master')
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           body_path: ${{ github.workspace }}-CHANGELOG.txt
           files: |
-            libraries/mini-functions.${{ matrix.target }}
-          name: ${{ github.workspace }}
-          tag_name: ${{ github.workspace }}
+            binaries/libmini_functions-$version-${{ github.sha }}.rlib
+          name: v$version
+          tag_name: v$version
           draft: false
           prerelease: false
 
-  # build_and_release:
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       target:
-  #         - x86_64-unknown-linux-gnu
-  #       include:
-  #         - target: x86_64-unknown-linux-gnu
-  #           os: ubuntu-latest
+      - name: Create Debian package 📦
+        if: matrix.target == 'x86_64-unknown-linux-gnu'
+        run: |
+          # Install dependencies
+          sudo apt-get update
+          sudo apt-get install -y debhelper fakeroot
+          # Create the Debian package
+          cargo deb --no-build --target=x86_64-unknown-linux-gnu
 
-  #   runs-on: ${{ matrix.os }}
-  #   steps:
-  #     - uses: actions/checkout@v3
-
-  #     - name: Add rustup default target
-  #       run: rustup target add ${{ matrix.target }}
-
-  #     - name: Get machine type 🖥
-  #       run: echo "::set-output name=machine_type::$(uname -m)"
-  #       id: machine_type
-
-  #     - name: Set variable 📜
-  #       run: echo "MACHINE_TYPE=${{ steps.machine_type.outputs.machine_type }}"
-  #       shell: bash
-  #       env:
-  #         MACHINE_TYPE: ${{ steps.machine_type.outputs.machine_type }}
-
-  #     - name: Cache cargo registry 📦
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: ~/.cargo/registry
-  #         key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
-
-  #     - name: Cache cargo build 🔨
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: target
-  #         key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
-
-  #     - name: Toolchain 🛠
-  #       uses: actions-rs/toolchain@v1
-  #       with:
-  #         toolchain: stable
-  #         override: true
-
-  #     - name: Extract version number 📜
-  #       run: |
-  #         version=$(grep version Cargo.toml | cut -d '"' -f 2)
-  #         echo "version=$version"
-
-  #     - name: Build with cross 🏗
-  #       run: |
-  #         cargo install cross
-  #         cargo clean
-  #         cross build --release --target=${{ matrix.target }}
-
-  #     - name: Check if library exists 🔍
-  #       run: ls target/${{ matrix.target }}/release
-
-  #     - name: Create libraries folder 📂
-  #       run: mkdir -p libraries
-
-  #     - name: Move library 🚚
-  #       run: |
-  #         mv target/${{ matrix.target }}/release/libmini_functions.rlib libraries/libmini_functions-$version.rlib
-
-  #     - name: Check if renamed library exists 🤔
-  #       run: |
-  #         ls libraries
-
-  #     # Build the library as a static library
-  #     - name: Build static library 🏗
-  #       run: |
-  #         cargo rustc --lib --release --target=${{ matrix.target }} -- -C link-arg=-s
-
-  #     # Package the library as a .deb file
-  #     - name: Package as .deb 📦
-  #       run: |
-  #         cargo install cargo-deb
-  #         cargo deb --target=${{ matrix.target }}
-
-  #     # Create a folder for the packaged artifacts
-  #     - name: Create artifacts folder 📂
-  #       run: mkdir -p artifacts
-
-  #     # Move the .deb file to the artifacts folder
-  #     - name: Move .deb file 🚚
-  #       run: |
-  #         mv target/${{ matrix.target }}/debian/mini-functions_*.deb artifacts/
-
-  #     - name: Generate Changelog 📝
-  #       run: |
-  #         # Generate a changelog based on the commit history
-  #         git log --oneline --decorate --color > changelog.txt
-
-  #         # Add a header to the changelog
-  #         echo "# Changelog" > ${{ github.workspace }}-CHANGELOG.txt
-  #         echo >> ${{ github.workspace }}-CHANGELOG.txt
-
-  #         # Append the commit history to the changelog
-  #         cat changelog.txt >> ${{ github.workspace }}-CHANGELOG.txt
-
-  #     - name: Append links to changelog 🔗
-  #       run: |
-  #         echo "" >> ${GITHUB_WORKSPACE}-CHANGELOG.txt
-  #         echo "Compiled libraries:" >> ${GITHUB_WORKSPACE}-CHANGELOG.txt
-  #         echo "- [libmini_functions.rlib](https://example.com/libmini_functions.rlib)" >> ${GITHUB_WORKSPACE}-CHANGELOG.txt
-
-  #     - name: Release 🚀
-  #       if: startsWith(github.ref, 'refs/tags/')
-  #       uses: softprops/action-gh-release@v1
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #       with:
-  #         body_path: ${{ github.workspace }}-CHANGELOG.txt
-  #         files: |
-  #           libraries/mini-functions.${{ matrix.target }}
-  #         name: ${{ github.workspace }}
-  #         tag_name: ${{ github.workspace }}
-  #         draft: false
-  #         prerelease: false
+      - name: Upload binaries 📂
+        uses: actions/upload-release-asset@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.release.upload_url }}
+          asset_path: binaries/libmini_functions-$version-${{ github.sha }}.rlib
+          asset_name: libmini_functions-$version-${{ matrix.target }}-${{ github.sha }}.rlib
+          asset_content_type: application/octet-stream
