@@ -25,8 +25,7 @@ jobs:
         run: cargo build --release
       - name: archive
         run: |
-          GIT_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
-          tar -C target/${{ matrix.target }}/release -czf $(pwd)/mini-functions-${GIT_TAG}-${{ matrix.target }}.tar.gz mini-functions
+          tar -C target/${{ matrix.target }}/release -czf $(pwd)/mini-functions-0.0.4-${{ matrix.target }}.tar.gz mini-functions
       - name: publish release
         uses: softprops/action-gh-release@v1
         with:
