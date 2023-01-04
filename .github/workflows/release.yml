@@ -1,9 +1,10 @@
 name: ❯ release
 
-on:
-  push:
-    tags:
-      - "v*.*.*"
+on: [push, pull_request]
+# on:
+#   push:
+#     tags:
+#       - "v*.*.*"
 
 env:
   CARGO_TERM_COLOR: always

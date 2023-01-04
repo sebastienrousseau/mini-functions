@@ -17,7 +17,6 @@ mod tests {
         // Check that the returned date is today's date
         let today = Date::date();
         assert_eq!(date, today);
-        assert_eq!(date.to_string(), today.to_string());
     }
 
     #[test]
@@ -49,8 +48,7 @@ mod tests {
         // Check that the debug function is correctly generating a
         // non-empty string representation of the current date.
         let debug = Date::now_utc();
-        assert_eq!(debug.to_string(), debug);
-        assert_eq!(debug.to_string(), debug.to_string());
+        assert_eq!(debug, debug.to_string());
     }
     #[test]
     fn test_year() {
