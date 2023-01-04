@@ -1,6 +1,8 @@
 name: ❯ weekly
+
 env:
   CARGO_TERM_COLOR: always
+
 on:
   schedule:
     - cron: 00 3 * * 1
