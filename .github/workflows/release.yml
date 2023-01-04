@@ -56,6 +56,13 @@ jobs:
           args: --release --target=${{ matrix.target }}
           use-cross: true
 
+      - name: Read toml
+        uses: SebRollen/toml-action@v1.0.0
+        id: read_toml
+        with:
+          file: "Cargo.toml"
+          field: "package.version"
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
