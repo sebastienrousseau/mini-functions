@@ -6,107 +6,33 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  binaries:
+    name: Build mini-functions binaries for ${{ matrix.target }}
     strategy:
       matrix:
         target:
           - x86_64-unknown-linux-gnu
-          - x86_64-pc-windows-gnu
-          - x86_64-apple-darwin
-        include:
-          - target: x86_64-unknown-linux-gnu
-            os: ubuntu-latest
-          - target: x86_64-pc-windows-gnu
-            os: ubuntu-latest
-          - target: x86_64-apple-darwin
-            os: macos-latest
-
-    runs-on: ${{ matrix.os }}
-
+          - x86_64-unknown-linux-musl
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-
-      # https://github.com/actions/cache/blob/master/examples.md#rust---cargo
-      - name: Cache cargo registry
-        uses: actions/cache@v1
-        with:
-          path: ~/.cargo/registry
-          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
-      - name: Cache cargo index
-        uses: actions/cache@v1
-        with:
-          path: ~/.cargo/git
-          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
-      - name: Cache cargo build
-        uses: actions/cache@v1
-        with:
-          path: target
-          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
-
+      - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:
+          target: ${{ matrix.target }}
           toolchain: stable
           override: true
-      - uses: actions-rs/cargo@v1.0.1
-        with:
-          command: build
-          args: --release --target=${{ matrix.target }}
-          use-cross: true
-
-      # - run: |
-      #     zip --junk-paths mini-functions-${{ matrix.target }} target/${{ matrix.target }}/release/mini-functions{,.exe}
-      # - uses: actions/upload-artifact@v1
-      #   with:
-      #     name: build-${{ matrix.target }}
-      #     path: mini-functions-${{ matrix.target }}.zip
-
-  create-release:
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      - id: create-release
-        uses: actions/create-release@v1.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-      - run: |
-          echo '${{ steps.create-release.outputs.upload_url }}' > release_upload_url.txt
-      - uses: actions/upload-artifact@v1
-        with:
-          name: create-release
-          path: release_upload_url.txt
-
-  upload-release:
-    strategy:
-      matrix:
-        target:
-          - x86_64-unknown-linux-gnu
-          - x86_64-pc-windows-gnu
-          - x86_64-apple-darwin
-    needs: [create-release]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v1
-        with:
-          name: create-release
-      - id: upload-url
+      - name: build
+        run: cargo build --release
+      - name: archive
         run: |
-          echo "::set-output name=url::$(cat create-release/release_upload_url.txt)"
-      - uses: actions/download-artifact@v1
+          GIT_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+          tar -C target/${{ matrix.target }}/release -czf $(pwd)/mini-functions-${GIT_TAG}-${{ matrix.target }}.tar.gz mini-functions
+      - name: publish release
+        uses: softprops/action-gh-release@v1
         with:
-          name: build-${{ matrix.target }}
-      - uses: actions/upload-release-asset@v1.0.1
+          files: mini-functions-*.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.upload-url.outputs.url }}
-          asset_path: ./build-${{ matrix.target }}/mini-functions-${{ matrix.target }}.tar.gz
-          asset_name: mini-functions-${{ matrix.target }}.tar.gz
-          asset_content_type: application/gzip
 # jobs:
 #   build-and-test:
 #     name: ${{ matrix.name }}
