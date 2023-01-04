@@ -64,7 +64,7 @@ jobs:
           tar -czvf packages/mini_functions-$version-${{ github.sha }}.tar.gz packages/libmini_functions-$version-${{ github.sha }}.*
 
   publish:
-    needs: build_and_test
+    needs: mini_functions
     if: startsWith(github.ref, 'refs/tags/')
     name: Release Library
     runs-on: ubuntu-latest
