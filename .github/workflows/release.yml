@@ -19,8 +19,16 @@ jobs:
           - x86_64-unknown-linux-gnu
           - x86_64-pc-windows-gnu
           - x86_64-apple-darwin
+
     steps:
       - uses: actions/checkout@v3
+
+      - name: Install targets 🛠
+        run: |
+          rustup target add ${{ matrix.target }}
+
+
+
 
       - name: Cache cargo registry 🧑‍💼
         uses: actions/cache@v2
@@ -44,12 +52,14 @@ jobs:
         run: |
           version=$(grep version Cargo.toml | cut -d '"' -f 2)
           echo "version=$version"
+
       - name: Build with cross 🏗
         run: |
           # Build the binary
           cargo install cross
           cargo clean
           cross build --release --target=${{ matrix.target }}
+
       - name: Check if binary exists 📂
         run: ls target/${{ matrix.target }}/release
 
