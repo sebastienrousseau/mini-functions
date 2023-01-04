@@ -58,10 +58,8 @@ jobs:
       - name: Package 📦
         run: |
           mkdir -p packages
-          for crate_type in ["rlib", "staticlib"]; do
-            cp target/${{ matrix.target }}/release/libmini_functions.$crate_type packages/libmini_functions-$version-${{ github.sha }}.$crate_type
-          done
-          tar -czvf packages/mini_functions-$version-${{ github.sha }}.tar.gz packages/libmini_functions-$version-${{ github.sha }}.*
+          mv target/${{ matrix.target }}/release/libmini_functions.rlib packages/libmini_functions-$version-${{ github.sha }}.rlib
+          tar -czvf packages/mini_functions-$version-${{ github.sha }}.tar.gz packages/libmini_functions-$version-${{ github.sha }}.rlib
 
   publish:
     needs: mini_functions
