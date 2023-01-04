@@ -71,7 +71,7 @@ jobs:
       # Build the library as a static library
       - name: Build static library 🏗
         run: |
-          cargo rustc --release -- -C crate-type=staticlib --target=${{ matrix.target }}
+          cargo rustc --lib --release --target=${{ matrix.target }} -- -C link-arg=-s
 
       # Package the library as a .deb file
       - name: Package as .deb 📦

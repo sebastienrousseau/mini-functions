@@ -30,6 +30,11 @@ qrcode = "0.12.0"
 time = "0.3.17"
 uuid = { version = "1.2.2", features = ["v3", "v4", "v5"] }
 
+[lib]
+name = "mini_functions"
+path = "src/lib.rs"
+crate-type = ["cdylib", "rlib", "staticlib"]
+
 [package.metadata.docs.rs]
 all-features = true
 default-target = "x86_64-unknown-linux-gnu"
