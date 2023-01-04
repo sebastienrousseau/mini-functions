@@ -52,11 +52,33 @@ jobs:
         if: ${{ matrix.os == 'windows-latest' }}
         run: rustup target add ${{ matrix.target }}
 
-      - name: Install dependencies
+      - name: Install dependencies for Linux
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           sudo apt-get update
           sudo apt-get install musl-tools libssl-dev
+
+      - name: Install Visual Studio or Build Tools for Visual Studio 🛠
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: |
+          # Install Visual Studio or Build Tools for Visual Studio
+          choco install visualstudio2019buildtools
+          choco install visualstudio2019-workload-vctools
+          # Add the Visual C++ tools to the system path
+          setx /M PATH "%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.28.29333\bin\Hostx64\x64"
+
+      - name: Install rustup 🛠
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: |
+          # Install rustup and update the Rust toolchain to the latest stable version
+          choco install rustup
+          rustup update stable
+
+      - name: Install cross 🛠
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: |
+          # Install the cross crate
+          cargo install cross
 
       - name: Cache cargo registry 🧑‍💼
         uses: actions/cache@v2
