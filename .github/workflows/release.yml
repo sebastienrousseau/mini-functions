@@ -46,8 +46,13 @@ jobs:
           version=$(grep version Cargo.toml | cut -d '"' -f 2)
           echo "Version: $version"
 
+      - name: Set PATH variable 🚀
+        run: echo "::set-env name=PATH::$PATH:/root/.cargo/bin"
+
       - name: Build with cross 🏗
         run: |
+          # Build the binary
+          cargo install cross
           cargo clean
           cross build --release --target=${{ matrix.target }}
           mv target/${{ matrix.target }}/release/mini-functions target/${{ matrix.target }}/release/mini-functions-$version-${{ github.sha }}
