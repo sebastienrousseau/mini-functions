@@ -4,6 +4,7 @@
         "ABCDEFGHIJKLMNOP",
         "binutils",
         "certutil",
+        "congruential",
         "czvf",
         "datetime",
         "dylib",
@@ -24,6 +25,7 @@
         "rustup",
         "Seedable",
         "softprops",
+        "struct",
         "Swatinem",
         "uuid",
         "Zellers"

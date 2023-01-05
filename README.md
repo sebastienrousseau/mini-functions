@@ -65,7 +65,7 @@ Add the following to your `Cargo.toml` file:
 
 ```toml
 [dependencies]
-mini-functions = "0.0.4"
+mini-functions = "0.0.5"
 ```
 
 ## Usage 📖
@@ -91,9 +91,16 @@ of data.
 
 The `mini-functions` library consists of the following functions:
 
-- [Date and time functions](#date-and-time-functions)
-- [Log functions](#log-functions)
-- [UUID functions](#uuid-functions)
+- The **[Date and time functions](#date-and-time-functions)** are used
+  to retrieve and manipulate information about dates and times.
+- The **[Log functions](#log-functions)** are used to log messages to
+  the console.
+- The **[QRCode functions](#qrcode-functions)** are used to generate
+  QRCode images and data.
+- The **[Random number functions](#random-number-functions)** are used
+  to generate random numbers in a variety of sizes and formats.
+- The **[UUID functions](#uuid-functions)** are used to generate UUIDs
+  (Universally Unique Identifiers).
 
 The following tables provide a brief description of each function in the
 `mini-functions` library.
@@ -124,15 +131,6 @@ The following tables provide a brief description of each function in the
 | `Log::log()` | `log.rs` | `fn log()` | Logs a message to the console.|
 | `Log::new()` | `log.rs` | `fn new()` | Creates a new log instance. |
 
-### UUID functions
-
-| Function | Include File | Function Prototype | Description |
-| -------- | ------------ | ------------------ | ----------- |
-| `UUID::new()` | `uuid.rs` | `fn new()` | Creates a new UUID instance based on the version specified. (v3, v4, v5) |
-| `UUID::uuid_v3()` | `uuid.rs` | `fn uuid_v3()` | Creates a new UUID v3 instance. |
-| `UUID::uuid_v4()` | `uuid.rs` | `fn uuid_v4()` | Creates a new UUID v4 instance. |
-| `UUID::uuid_v5()` | `uuid.rs` | `fn uuid_v5()` | Creates a new UUID v5 instance. |
-
 ### QRCode functions
 
 | Function | Include File | Function Prototype | Description |
@@ -145,6 +143,27 @@ The following tables provide a brief description of each function in the
 | `QRCode::to_png()` | `qrcode.rs` | `fn to_png()` | Converts the QRCode instance to a PNG image. |
 | `QRCode::to_qrcode()` | `qrcode.rs` | `fn to_qrcode()` | Converts the QRCode instance to a QRCode image. |
 | `QRCode::to_svg()` | `qrcode.rs` | `fn to_svg()` | Converts the QRCode instance to a SVG image. |
+
+### Random number functions
+
+| Function | Include File | Function Prototype | Description |
+| -------- | ------------ | ------------------ | ----------- |
+| `Random::bytes()` | `random.rs` | `fn bytes()` | Generates a vector of random bytes of a given length. |
+| `Random::default()` | `random.rs` | `fn default()` | Creates a new `Random` struct with a default seed. |
+| `Random::float()` | `random.rs` | `fn float()` | Generates a random floating point number between 0 and 1. |
+| `Random::int()` | `random.rs` | `fn int()` | Generates a random integer between a minimum and maximum value. |
+| `Random::new()` | `random.rs` | `fn new()` | Creates a new `Random` struct with a seed based on the current system time. |
+| `Random::pseudo()` | `random.rs` | `fn pseudo()` | Generates a pseudo-random number by XORing the last 31 random numbers together. |
+| `Random::random()` | `random.rs` | `fn random()` | Generates a random number using the linear congruential generator algorithm. The multiplier for the algorithm is the golden ratio. |
+
+### UUID functions
+
+| Function | Include File | Function Prototype | Description |
+| -------- | ------------ | ------------------ | ----------- |
+| `UUID::new()` | `uuid.rs` | `fn new()` | Creates a new UUID instance based on the version specified. (v3, v4, v5) |
+| `UUID::uuid_v3()` | `uuid.rs` | `fn uuid_v3()` | Creates a new UUID v3 instance. |
+| `UUID::uuid_v4()` | `uuid.rs` | `fn uuid_v4()` | Creates a new UUID v4 instance. |
+| `UUID::uuid_v5()` | `uuid.rs` | `fn uuid_v5()` | Creates a new UUID v5 instance. |
 
 ![divider][divider]
 
@@ -195,6 +214,6 @@ for their help and support.
 [crates-badge]: https://img.shields.io/crates/v/mini-functions.svg?style=for-the-badge 'Crates.io'
 [divider]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/elements/divider.svg "divider"
 [docs-badge]: https://img.shields.io/docsrs/mini-functions.svg?style=for-the-badge 'Docs.rs'
-[libs-badge]: https://img.shields.io/badge/lib.rs-0.0.1-orange.svg?style=for-the-badge 'Lib.rs'
+[libs-badge]: https://img.shields.io/badge/lib.rs-v0.0.5-orange.svg?style=for-the-badge 'Lib.rs'
 [license-badge]: https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge 'License'
 [mwl]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg "Made With Love"
