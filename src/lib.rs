@@ -31,7 +31,7 @@
 //! Add the following to your `Cargo.toml` file:
 //! ```toml
 //! [dependencies]
-//! mini_functions = "0.0.4"
+//! mini_functions = "0.0.5"
 //! ```
 //! Then, add the following to your crate root:
 //! ```rust
@@ -72,6 +72,9 @@ pub mod log;
 
 /// Provides a set of utility functions for generating QR codes
 pub mod qrcode;
+
+/// Provides a set of utility functions for working with random numbers
+pub mod random;
 
 /// Provides a set of utility functions for working with UUIDs
 pub mod uuid;
