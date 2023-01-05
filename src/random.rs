@@ -83,3 +83,9 @@ impl std::fmt::Display for Random {
         write!(f, "Random {{ seed: {} }}", self.seed)
     }
 }
+
+impl Default for Random {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -11,6 +11,12 @@ mod tests {
     }
 
     #[test]
+    fn test_default() {
+        let mut rng = Random::default();
+        assert!(rng.random() > 0);
+    }
+
+    #[test]
     fn test_random() {
         let mut rng = Random::new();
         let first = rng.random();

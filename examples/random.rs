@@ -49,17 +49,23 @@ impl Deck {
 fn main() {
     // Create a new random number generator
     let mut rng = Random::new();
-
-    // Test the random number generator
     println!("🦀 Random::new():         ✅ {}", rng);
+
+    let default = Random::default();
+    println!("🦀 Random::default():     ✅ {}", default);
+
     let random = rng.random();
     println!("🦀 Random::random():      ✅ {}", random);
+
     let pseudo = rng.pseudo();
     println!("🦀 Random::pseudo():      ✅ {}", pseudo);
+
     let bytes = rng.bytes(10);
     println!("🦀 Random::bytes():       ✅ {:?}", bytes);
+
     let float = rng.random() as f32 / 0x7FFF as f32;
     println!("🦀 Random::float():       ✅ {}", float);
+
     let int = rng.random() as usize;
     println!("🦀 Random::int():         ✅ {}", int);
 
@@ -73,7 +79,7 @@ fn main() {
 
     // Print the cards to the console
     println!(
-        "\n🦀 Let's play `Three Card Draw Poker` to demonstrate the random number generator!\n"
+        "\n🦀 Let's play a mini game of `Three Card Draw Poker` to demonstrate the random number generator!\n"
     );
     println!("🎲 Deck::draw():          ✅ {}", card1);
     println!("🎲 Deck::draw():          ✅ {}", card2);

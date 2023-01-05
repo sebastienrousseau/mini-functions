@@ -97,8 +97,8 @@ The `mini-functions` library consists of the following functions:
   the console.
 - The **[QRCode functions](#qrcode-functions)** are used to generate
   QRCode images and data.
-- The **[Random numbers functions](#random-numbers-functions)** are used
-  to generate random numbers in a variety of formats.
+- The **[Random number functions](#random-number-functions)** are used
+  to generate random numbers in a variety of sizes and formats.
 - The **[UUID functions](#uuid-functions)** are used to generate UUIDs
   (Universally Unique Identifiers).
 
@@ -144,11 +144,12 @@ The following tables provide a brief description of each function in the
 | `QRCode::to_qrcode()` | `qrcode.rs` | `fn to_qrcode()` | Converts the QRCode instance to a QRCode image. |
 | `QRCode::to_svg()` | `qrcode.rs` | `fn to_svg()` | Converts the QRCode instance to a SVG image. |
 
-### Random numbers functions
+### Random number functions
 
 | Function | Include File | Function Prototype | Description |
 | -------- | ------------ | ------------------ | ----------- |
 | `Random::bytes()` | `random.rs` | `fn bytes()` | Generates a vector of random bytes of a given length. |
+| `Random::default()` | `random.rs` | `fn default()` | Creates a new `Random` struct with a default seed. |
 | `Random::float()` | `random.rs` | `fn float()` | Generates a random floating point number between 0 and 1. |
 | `Random::int()` | `random.rs` | `fn int()` | Generates a random integer between a minimum and maximum value. |
 | `Random::new()` | `random.rs` | `fn new()` | Creates a new `Random` struct with a seed based on the current system time. |
