@@ -47,7 +47,7 @@ impl Random {
     /// numbers together.
     pub fn pseudo(&mut self) -> u32 {
         let mut res = self.random();
-        let mut rng = Random::new();
+        let mut rng = Random::default();
         // XOR the last 31 random numbers together to generate the
         // pseudo-random number
         for _ in 0..31 {
@@ -59,7 +59,7 @@ impl Random {
     /// Generates a vector of random bytes of a given length.
     pub fn bytes(&mut self, len: usize) -> Vec<u8> {
         let mut res = Vec::with_capacity(len);
-        let mut rng = Random::new();
+        let mut rng = Random::default();
         for _ in 0..len {
             res.push(rng.random() as u8);
         }
@@ -67,12 +67,12 @@ impl Random {
     }
     /// Generates a random floating point number between 0 and 1.
     pub fn float(&mut self) -> f32 {
-        let mut rng = Random::new();
+        let mut rng = Random::default();
         rng.random() as f32 / 0x7FFF as f32
     }
     /// Generates a random integer between a minimum and maximum value.
     pub fn int(&mut self, min: i32, max: i32) -> i32 {
-        let mut rng = Random::new();
+        let mut rng = Random::default();
         (rng.random() as f32 / 0x7FFF as f32 * (max - min) as f32) as i32 + min
     }
 }
