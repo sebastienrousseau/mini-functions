@@ -102,7 +102,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          body_path: ${{ github.workspace }}-CHANGELOG.txt
+          body_path: ${{ github.workspace }}-CHANGELOG.md
           files: ${{ github.workspace }}/packages/libmini_functions-0.0.7.tar.gz
           name: Mini Functions 🦀 v0.0.7
           tag_name: v${{ env.version }}
