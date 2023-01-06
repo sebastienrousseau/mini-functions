@@ -95,12 +95,6 @@ jobs:
           echo "# Changelog" > ${{ github.workspace }}-CHANGELOG.txt
           echo >> ${{ github.workspace }}-CHANGELOG.txt
 
-          # Remove ANSI escape codes from the changelog
-          sed "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" changelog.txt > changelog-clean.txt
-
-          # Remove the first line of the changelog
-          sed -i '1d' changelog-clean.txt
-
           # Append the commit history to the changelog
           cat changelog-clean.txt >> ${{ github.workspace }}-CHANGELOG.txt
 
