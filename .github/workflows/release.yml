@@ -43,9 +43,18 @@ jobs:
           toolchain: stable
           override: true
 
+      - name: Install target 🛠
+        run: |
+          rustup target add x86_64-unknown-linux-gnu
+          rustup target add x86_64-pc-windows-gnu
+          rustup target add x86_64-apple-darwin
+
       - name: Build libraries 🏗
         run: |
-          bash -x -c "cargo install cross && cargo clean && cargo test --all --release --target=${{ matrix.target }} && cross build --release --target=${{ matrix.target }} --lib"
+          cargo install cross
+          cargo clean
+          cargo test --all --release --target=${{ matrix.target }} --lib
+          cross build --release --target=${{ matrix.target }} --lib
 
       - name: Cache build artifacts 🧑‍💼
         id: cache-build-artifacts
@@ -54,22 +63,11 @@ jobs:
           path: target/${{ matrix.target }}/release
           key: ${{ runner.os }}-cargo-build-target-${{ matrix.target }}-${{ hashFiles('**/Cargo.lock') }}
 
-      # - name: Test 🧪
-      #   id: test
-      #   run: |
-      #     cargo test --all
-
-      # - name: Extract version number 📜
-      #   id: version
-      #   run: |
-      #     version=$(grep version Cargo.toml | cut -d '"' -f 2)
-      #     echo "version=v$version"
-
       - name: Package 📦
         id: package
         run: |
           version=$(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
-          echo "version=$version" >> $GITHUB_ENV
+          echo "version=$version"
           mkdir -p packages
           mv target/${{ matrix.target }}/release/libmini_functions.rlib packages/libmini_functions-${version}.rlib
           tar -czvf packages/mini_functions-${version}.tar.gz packages/libmini_functions-${version}.rlib
@@ -97,6 +95,12 @@ jobs:
           # Append the commit history to the changelog
           cat changelog-clean.txt >> ${{ github.workspace }}-CHANGELOG.txt
           echo ${{ github.workspace }}-CHANGELOG.txt
+
+      - name: Extract version number 📜
+        id: version
+        run: |
+          version=$(grep version Cargo.toml | cut -d '"' -f 2)
+          echo "version=v$version" >> $GITHUB_ENV
 
       - name: Create Release 🚀
         # if: github.event_name != 'pull_request'
