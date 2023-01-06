@@ -66,11 +66,8 @@ jobs:
           # Extract the version number from Cargo.toml
           version=$(grep version Cargo.toml | cut -d '"' -f 2)
 
-          # Remove any characters that are not allowed in environment variable names from the version number
-          version=$(echo "$version" | sed 's/[^a-zA-Z0-9_]//g')
-
           # Set the version variable as an environment variable
-          echo "version=$version" >> $GITHUB_ENV
+          echo 'version=$version<<EOF' >> $GITHUB_ENV
 
       - name: Package 📦
         id: package
