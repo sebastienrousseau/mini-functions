@@ -52,24 +52,19 @@ integration into a variety of projects and applications.
 - **Regular Maintenance and Updates** — Regular updates and maintenance
   to ensure the library stays up-to-date and reliable.
 
-## Requirements 📋
-
-`mini-functions` requires Rust **1.57.0** or later.
-
 ## Installation 📦
 
 It takes just a few minutes to get up and running with `mini-functions`.
-Please check out our [website][0] for more information. You can also
-find our documentation on [docs.rs][9] and [lib.rs][10] and our
-[crates.io][8] page.
 
-Mini Functions comes with a set of examples that you can use to get
-started. To run the examples, clone the repository and run the following
-command:
+### Requirements
 
-```shell
-cargo run --example <example_name>
-```
+`mini-functions` requires Rust **1.57.0** or later.
+
+### Documentation
+
+> ℹ️ **Info:** Please check out our [website][0] for more information
+and find our documentation on [docs.rs][9], [lib.rs][10] and
+[crates.io][8].
 
 ## Usage 📖
 
@@ -90,34 +85,34 @@ use mini_functions::*;
 
 then you can use the functions in your application code.
 
+### Examples
+
+`Mini Functions` comes with a set of examples that you can use to get
+started. The examples are located in the `examples` directory of the
+project. To run the examples, clone the repository and run the following
+command in your terminal from the project root directory.
+
+```shell
+cargo run --example date
+```
+
+> 💡 **Note:** The examples available are date, hash, log, password, qrcode, random and uuid.
+
 ## The Functions library 📚
 
 `Mini Functions` is a library of functions for Rust that provides a
 collection of tools for working with various aspects of a Rust
-application.
+application. The `mini-functions` library consists of the following
+`non-exhaustive` functions:
 
-The functions in `Mini Functions` are optimized for speed and
-efficiency, making them useful for a variety of applications, including
-those that require fast performance or that need to handle large amounts
-of data.
+### 1) Date and time functions
 
-The `mini-functions` library consists of the following functions:
+The **Date and time functions** are used to retrieve and manipulate
+information about dates and times.
 
-- The **[Date and time functions](#date-and-time-functions)** are used
-  to retrieve and manipulate information about dates and times.
-- The **[Log functions](#log-functions)** are used to log messages to
-  the console.
-- The **[QRCode functions](#qrcode-functions)** are used to generate
-  QRCode images and data.
-- The **[Random number functions](#random-number-functions)** are used
-  to generate random numbers in a variety of sizes and formats.
-- The **[UUID functions](#uuid-functions)** are used to generate UUIDs
-  (Universally Unique Identifiers).
-
-The following tables provide a brief description of each function in the
-`mini-functions` library.
-
-### Date and time functions
+<!-- markdownlint-disable MD033 -->
+<details>
+  <summary>Open to view the Date and time functions available in the library<br><br></summary>
 
 | Function | Include File | Function Prototype | Description |
 | -------- | ------------ | ------------------ | ----------- |
@@ -135,15 +130,74 @@ The following tables provide a brief description of each function in the
 | `Date::timestamp()` | `date.rs` | `fn timestamp()` | Returns the current timestamp. |
 | `Date::weekday()` | `date.rs` | `fn weekday()` | Returns the current weekday. |
 | `Date::year()` | `date.rs` | `fn year()` | Returns the current year. |
+</details>
 
-### Log functions
+### 2) Hash functions
+
+The **Hash functions** are used to generate hashes for various data
+types.
+
+<!-- markdownlint-disable MD033 -->
+<details>
+  <summary>Open to view the Hash functions available in the library<br><br></summary>
+
+| Function | Include File | Function Prototype | Description |
+| -------- | ------------ | ------------------ | ----------- |
+| `Hash::entropy` | `hash.rs` | `fn entropy()` | Returns the entropy of a string. |
+| `Hash::generate_hash` | `hash.rs` | `fn generate_hash()` | Generates a hash for a string. |
+| `Hash::hash` | `hash.rs` | `fn hash()` | Returns the hash of a string. |
+| `Hash::hash_length` | `hash.rs` | `fn hash_length()` | Returns the length of a hash. |
+| `Hash::new` | `hash.rs` | `fn new()` | Creates a new hash instance. |
+| `Hash::password` | `hash.rs` | `fn password()` | Returns the hash of a password. |
+| `Hash::password_length` | `hash.rs` | `fn password_length()` | Returns the length of a password hash. |
+| `Hash::set_hash` | `hash.rs` | `fn set_hash()` | Sets the hash for a string. |
+| `Hash::set_password` | `hash.rs` | `fn set_password()` | Sets the hash for a password. |
+| `Hash::verify` | `hash.rs` | `fn verify()` | Verifies a hash. |
+</details>
+
+### 3) Log functions
+
+The **Log functions** are used to log messages to the console.
+
+<!-- markdownlint-disable MD033 -->
+<details>
+  <summary>Open to view the Log functions available in the library<br><br></summary>
 
 | Function | Include File | Function Prototype | Description |
 | -------- | ------------ | ------------------ | ----------- |
 | `Log::log()` | `log.rs` | `fn log()` | Logs a message to the console.|
 | `Log::new()` | `log.rs` | `fn new()` | Creates a new log instance. |
+</details>
 
-### QRCode functions
+### 4) Password functions
+
+The **Password functions** are used to generate passwords and verify
+passwords.
+
+<!-- markdownlint-disable MD033 -->
+<details>
+  <summary>Open to view the Password functions available in the library<br><br></summary>
+
+| Function | Include File | Function Prototype | Description |
+| -------- | ------------ | ------------------ | ----------- |
+| `Password::entropy` | `password.rs` | `fn entropy()` | Returns the entropy of a string. |
+| `Password::hash_length` | `password.rs` | `fn hash_length()` | Returns the length of a hash. |
+| `Password::hash` | `password.rs` | `fn hash()` | Returns the hash of a password. |
+| `Password::is_empty` | `password.rs` | `fn is_empty()` | Checks if a password is empty. |
+| `Password::len` | `password.rs` | `fn len()` | Returns the length of a password. |
+| `Password::new` | `password.rs` | `fn new()` | Creates a new password instance. |
+| `Password::passphrase` | `password.rs` | `fn passphrase()` | Generates a passphrase. |
+| `Password::password_length` | `password.rs` | `fn password_length()` | Returns the length of a password hash. |
+| `Password::set_passphrase` | `password.rs` | `fn set_passphrase()` | Sets a passphrase. |
+</details>
+
+### 5) QRCode functions
+
+The **QRCode functions** are used to generate QRCode images and data.
+
+<!-- markdownlint-disable MD033 -->
+<details>
+  <summary>Open to view the QRCode functions available in the library<br><br></summary>
 
 | Function | Include File | Function Prototype | Description |
 | -------- | ------------ | ------------------ | ----------- |
@@ -155,8 +209,16 @@ The following tables provide a brief description of each function in the
 | `QRCode::to_png()` | `qrcode.rs` | `fn to_png()` | Converts the QRCode instance to a PNG image. |
 | `QRCode::to_qrcode()` | `qrcode.rs` | `fn to_qrcode()` | Converts the QRCode instance to a QRCode image. |
 | `QRCode::to_svg()` | `qrcode.rs` | `fn to_svg()` | Converts the QRCode instance to a SVG image. |
+</details>
 
-### Random number functions
+### 6) Random number functions
+
+The **Random number functions** are used to
+generate random numbers in a variety of sizes and formats.
+
+<!-- markdownlint-disable MD033 -->
+<details>
+  <summary>Open to view the Random number functions available in the library<br><br></summary>
 
 | Function | Include File | Function Prototype | Description |
 | -------- | ------------ | ------------------ | ----------- |
@@ -167,8 +229,16 @@ The following tables provide a brief description of each function in the
 | `Random::new()` | `random.rs` | `fn new()` | Creates a new `Random` struct with a seed based on the current system time. |
 | `Random::pseudo()` | `random.rs` | `fn pseudo()` | Generates a pseudo-random number by XORing the last 31 random numbers together. |
 | `Random::random()` | `random.rs` | `fn random()` | Generates a random number using the linear congruential generator algorithm. The multiplier for the algorithm is the golden ratio. |
+</details>
 
-### UUID functions
+### 7) UUID functions
+
+The **UUID functions** are used to generate UUIDs (Universally Unique
+Identifiers).
+
+<!-- markdownlint-disable MD033 -->
+<details>
+  <summary>Open to view the UUID functions available in the library<br><br></summary>
 
 | Function | Include File | Function Prototype | Description |
 | -------- | ------------ | ------------------ | ----------- |
@@ -176,16 +246,13 @@ The following tables provide a brief description of each function in the
 | `UUID::uuid_v3()` | `uuid.rs` | `fn uuid_v3()` | Creates a new UUID v3 instance. |
 | `UUID::uuid_v4()` | `uuid.rs` | `fn uuid_v4()` | Creates a new UUID v4 instance. |
 | `UUID::uuid_v5()` | `uuid.rs` | `fn uuid_v5()` | Creates a new UUID v5 instance. |
-
-![divider][divider]
+</details>
 
 ## Semantic Versioning Policy 🚥
 
 For transparency into our release cycle and in striving to maintain
 backward compatibility, `Mini Functions` follows
 [semantic versioning][7].
-
-![divider][divider]
 
 ## License 📝
 
@@ -194,8 +261,6 @@ Apache License (Version 2.0).
 
 - [Apache License, Version 2.0][1]
 - [MIT license][2]
-
-![divider][divider]
 
 ## Contribution 🤝
 

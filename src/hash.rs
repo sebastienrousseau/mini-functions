@@ -22,63 +22,6 @@ pub struct Hash {
 }
 
 impl Hash {
-    /// Returns a new instance of `Hash`.
-    pub fn new() -> Self {
-        Self {
-            password: String::new(),
-            hash: String::new(),
-        }
-    }
-
-    /// Hashes the password.
-    pub fn generate_hash(&self) -> String {
-        let mut hasher = Hasher::new();
-        hasher.update(self.password.as_bytes());
-        let hash = hasher.finalize().to_hex();
-        hash.to_string()
-    }
-
-    /// Verifies the password against the stored hash.
-    ///
-    /// Returns `true` if the password and hash match, `false` otherwise.
-    pub fn verify(&self, hash: &str, password: &str) -> bool {
-        let mut hasher = Hasher::new();
-        hasher.update(password.as_bytes());
-        let password_hash = hasher.finalize().to_hex();
-        let password_hash_str = password_hash.to_string();
-        password_hash_str == hash
-    }
-
-    /// Sets the password and updates the hash.
-    pub fn set_password(&mut self, password: &str) {
-        self.password = password.to_string();
-        self.hash = self.generate_hash();
-    }
-
-    /// Sets the hash.
-    pub fn set_hash(&mut self, hash: &str) {
-        self.hash = hash.to_string();
-    }
-
-    /// Returns the password.
-    pub fn password(&self) -> &str {
-        &self.password
-    }
-
-    /// Returns the password length.
-    pub fn password_length(&self) -> usize {
-        self.password.len()
-    }
-
-    /// Returns the hash.
-    pub fn hash(&self) -> &str {
-        &self.hash
-    }
-
-    /// Returns the hash length.
-    pub fn hash_length(&self) -> usize {
-        self.hash.len()
-    }
     /// Calculates the entropy of the hash in bits based on the Shannon
     /// entropy formula.
     /// https://en.wikipedia.org/wiki/Entropy_(information_theory)
@@ -91,6 +34,63 @@ impl Hash {
             entropy -= p * p.log2();
         }
         entropy
+    }
+
+    /// Hashes the password.
+    pub fn generate_hash(&self) -> String {
+        let mut hasher = Hasher::new();
+        hasher.update(self.password.as_bytes());
+        let hash = hasher.finalize().to_hex();
+        hash.to_string()
+    }
+
+    /// Returns the hash.
+    pub fn hash(&self) -> &str {
+        &self.hash
+    }
+
+    /// Returns the hash length.
+    pub fn hash_length(&self) -> usize {
+        self.hash.len()
+    }
+
+    /// Returns a new instance of `Hash`.
+    pub fn new() -> Self {
+        Self {
+            password: String::new(),
+            hash: String::new(),
+        }
+    }
+
+    /// Returns the password.
+    pub fn password(&self) -> &str {
+        &self.password
+    }
+
+    /// Returns the password length.
+    pub fn password_length(&self) -> usize {
+        self.password.len()
+    }
+
+    /// Sets the hash.
+    pub fn set_hash(&mut self, hash: &str) {
+        self.hash = hash.to_string();
+    }
+
+    /// Sets the password and updates the hash.
+    pub fn set_password(&mut self, password: &str) {
+        self.password = password.to_string();
+        self.hash = self.generate_hash();
+    }
+    /// Verifies the password against the stored hash.
+    ///
+    /// Returns `true` if the password and hash match, `false` otherwise.
+    pub fn verify(&self, hash: &str, password: &str) -> bool {
+        let mut hasher = Hasher::new();
+        hasher.update(password.as_bytes());
+        let password_hash = hasher.finalize().to_hex();
+        let password_hash_str = password_hash.to_string();
+        password_hash_str == hash
     }
 }
 

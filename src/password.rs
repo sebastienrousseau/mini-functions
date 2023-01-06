@@ -19,6 +19,32 @@ pub struct Password {
 }
 
 impl Password {
+    /// Calculates the entropy of the generated passphrase.
+    /// Returns the entropy as a f64.
+    pub fn entropy(&self) -> f64 {
+        let mut hash = Hash::new();
+        hash.set_password(&format!(
+            "{}{}",
+            self.passphrase,
+            self.special_chars.iter().collect::<String>()
+        ));
+        hash.entropy()
+    }
+    /// Returns the hash of the generated passphrase.
+    pub fn hash(&self) -> String {
+        let mut hash = Hash::new();
+        hash.set_password(&format!(
+            "{}{}",
+            self.passphrase,
+            self.special_chars.iter().collect::<String>()
+        ));
+        let hash_value = hash.hash();
+        hash_value.to_string()
+    }
+    /// Returns the hash length.
+    pub fn hash_length(&self) -> usize {
+        self.hash().len()
+    }
     /// Returns true if the generated passphrase is empty.
     /// Returns false if the generated passphrase is not empty.
     pub fn is_empty(&self) -> bool {
@@ -118,39 +144,13 @@ impl Password {
     pub fn passphrase(&self) -> &str {
         &self.passphrase
     }
-    /// Sets the generated passphrase.
-    pub fn set_passphrase(&mut self, passphrase: &str) {
-        self.passphrase = passphrase.to_string();
-    }
-    /// Returns the hash of the generated passphrase.
-    pub fn hash(&self) -> String {
-        let mut hash = Hash::new();
-        hash.set_password(&format!(
-            "{}{}",
-            self.passphrase,
-            self.special_chars.iter().collect::<String>()
-        ));
-        let hash_value = hash.hash();
-        hash_value.to_string()
-    }
     /// Returns the password length.
     pub fn password_length(&self) -> usize {
         self.passphrase.len()
     }
-    /// Returns the hash length.
-    pub fn hash_length(&self) -> usize {
-        self.hash().len()
-    }
-    /// Calculates the entropy of the generated passphrase.
-    /// Returns the entropy as a f64.
-    pub fn entropy(&self) -> f64 {
-        let mut hash = Hash::new();
-        hash.set_password(&format!(
-            "{}{}",
-            self.passphrase,
-            self.special_chars.iter().collect::<String>()
-        ));
-        hash.entropy()
+    /// Sets the generated passphrase.
+    pub fn set_passphrase(&mut self, passphrase: &str) {
+        self.passphrase = passphrase.to_string();
     }
 }
 
