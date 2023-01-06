@@ -90,9 +90,15 @@ jobs:
           echo "# Changelog" > ${{ github.workspace }}-CHANGELOG.txt
           echo >> ${{ github.workspace }}-CHANGELOG.txt
 
+          # Remove ANSI escape codes from the changelog
+          sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" changelog.txt > changelog-clean.txt
+
+          # Remove the first line of the changelog
+          sed -i '1d' changelog-clean.txt
+
           # Append the commit history to the changelog
-          cat changelog.txt >> ${{ github.workspace }}-CHANGELOG.txt
-          echo changelog.txt
+          cat changelog-clean.txt >> ${{ github.workspace }}-CHANGELOG.txt
+          echo ${{ github.workspace }}-CHANGELOG.txt
 
       - name: Create Release 🚀
         # if: github.event_name != 'pull_request'
@@ -106,8 +112,8 @@ jobs:
             README.md
             LICENSE-MIT
             LICENSE-Apache
-            packages/libmini_functions-${version}.tar.gz
-          name: ${{ github.workspace }}
+            packages/libmini_functions-${{ steps.version.outputs.version }}.tar.gz
+          name: Mini Functions 🦀 v${{ steps.version.outputs.version }}
           # release_name: ${{ github.workspace }}
           # -${{ steps.version.outputs.version }}
           tag_name: v${{ steps.version.outputs.version }}
