@@ -60,14 +60,27 @@ jobs:
         run: |
           cargo test --all
 
+      - name: Extract version number 📜
+        id: version
+        run: |
+          # Extract the version number from Cargo.toml
+          version=$(grep version Cargo.toml | cut -d '"' -f 2)
+
+          # Remove any characters that are not allowed in environment variable names from the version number
+          version=$(echo "$version" | sed 's/[^a-zA-Z0-9_]//g')
+
+          # Set the version variable as an environment variable
+          echo "version=$version" >> $GITHUB_ENV
+
       - name: Package 📦
         id: package
         run: |
-          version=$(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
-          echo "version=$version" >> $GITHUB_ENV
+          # Set the version variable as an environment variable
+          echo "version=v$version" >> $GITHUB_ENV
           mkdir -p packages
-          mv target/${{ matrix.target }}/release/libmini_functions.rlib packages/libmini_functions-${version}.rlib
-          tar -czvf packages/mini_functions-${version}.tar.gz packages/libmini_functions-${version}.rlib
+          mv target/${{ matrix.target }}/release/libmini_functions.rlib packages/libmini_functions-${{ env.version }}.rlib
+          tar -czvf packages/mini_functions-${{ env.version }}.tar.gz packages/libmini_functions-${{ env.version }}.rlib
+
       - name: Checkout 🛒
         id: checkout
         uses: actions/checkout@v3
@@ -83,22 +96,13 @@ jobs:
           echo >> ${{ github.workspace }}-CHANGELOG.txt
 
           # Remove ANSI escape codes from the changelog
-          sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" changelog.txt > changelog-clean.txt
+          sed "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" changelog.txt > changelog-clean.txt
 
           # Remove the first line of the changelog
           sed -i '1d' changelog-clean.txt
 
           # Append the commit history to the changelog
           cat changelog-clean.txt >> ${{ github.workspace }}-CHANGELOG.txt
-
-      - name: Extract version number 📜
-        id: version
-        run: |
-          # Extract the version number from Cargo.toml
-          version=$(grep version Cargo.toml | cut -d '"' -f 2)
-
-          # Set the version variable as an environment variable
-          echo "version=$version"
 
       - name: Create Release 🚀
         # if: github.event_name != 'pull_request'
