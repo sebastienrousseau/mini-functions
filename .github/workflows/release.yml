@@ -64,7 +64,7 @@ jobs:
         id: package
         run: |
           version=$(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
-          echo "version=$version"
+          echo "version=$version" >> $GITHUB_ENV
           mkdir -p packages
           mv target/${{ matrix.target }}/release/libmini_functions.rlib packages/libmini_functions-${version}.rlib
           tar -czvf packages/mini_functions-${version}.tar.gz packages/libmini_functions-${version}.rlib
@@ -90,7 +90,6 @@ jobs:
 
           # Append the commit history to the changelog
           cat changelog-clean.txt >> ${{ github.workspace }}-CHANGELOG.txt
-          echo ${{ github.workspace }}-CHANGELOG.txt
 
       - name: Extract version number 📜
         id: version
@@ -114,7 +113,7 @@ jobs:
             LICENSE-MIT
             LICENSE-Apache
             packages/libmini_functions-${{ env.version }}.tar.gz
-          name: Mini Functions 🦀 v${{ steps.version.outputs.version }}
+          name: Mini Functions 🦀 v${{ env.version }}
           # release_name: ${{ github.workspace }}
           # -${{ steps.version.outputs.version }}
           tag_name: v${{ steps.version.outputs.version }}
