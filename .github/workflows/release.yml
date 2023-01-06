@@ -91,8 +91,8 @@ jobs:
           echo "<h2>Key Features 🎯</h2><br>" >> ${{ github.workspace }}-CHANGELOG.md
           echo "" >> ${{ github.workspace }}-CHANGELOG.md
 
-          # Generate a list of commits and append it to the changelog file
-          git log main..feature/mini-functions --oneline | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{print "- "$0}' >> ${{ github.workspace }}-CHANGELOG.md
+          # Generate a list of commits since the last release and add them to the release notes
+          git log -50 main..feature/mini-functions --oneline | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{labels="";for(i=2;i<=NF;i++){if($i~/^[a-zA-Z]+\([a-zA-Z0-9-_]+\):/)labels=labels" "$i;else break;}printf("-%s %s\n",labels,$0);}' | sort -k1,1 >> ${{ github.workspace }}-CHANGELOG.md
           echo "" >> ${{ github.workspace }}-CHANGELOG.md
 
       - name: Create Release 🚀
