@@ -1,6 +1,6 @@
-//! # Core date functionality
+//! # Core Date functionality
 //!
-//! Date provides an easy way to get the current date and time in multiple formats.
+//! This crate provides an easy way to get the current date and time in multiple formats.
 //!
 //!
 

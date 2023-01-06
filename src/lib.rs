@@ -31,7 +31,7 @@
 //! Add the following to your `Cargo.toml` file:
 //! ```toml
 //! [dependencies]
-//! mini_functions = "0.0.5"
+//! mini_functions = "0.0.6"
 //! ```
 //! Then, add the following to your crate root:
 //! ```rust
@@ -66,9 +66,17 @@
 /// Provides a set of utility functions for working with dates and times
 pub mod date;
 
+/// Provides a set of utility functions for working with hashes. This
+/// module is a wrapper around the `blake2` crate.
+pub mod hash;
+
 /// Provides a log function to log a message to the console with a
 /// simple, readable output format
 pub mod log;
+
+/// Provides a set of utility functions for generating and working with
+/// passwords/passphrases
+pub mod password;
 
 /// Provides a set of utility functions for generating QR codes
 pub mod qrcode;
@@ -78,3 +86,6 @@ pub mod random;
 
 /// Provides a set of utility functions for working with UUIDs
 pub mod uuid;
+
+/// Provides a set of common constants used in the application
+pub mod common;
