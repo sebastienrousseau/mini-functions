@@ -45,9 +45,7 @@ jobs:
 
       - name: Build libraries 🏗
         run: |
-          cargo install cross
-          cargo clean
-          cross build --release --target=${{ matrix.target }} --lib
+          bash -x -c "cargo install cross && cargo clean && cargo test --all --release --target=${{ matrix.target }} && cross build --release --target=${{ matrix.target }} --lib"
 
       - name: Cache build artifacts 🧑‍💼
         id: cache-build-artifacts
@@ -56,10 +54,10 @@ jobs:
           path: target/${{ matrix.target }}/release
           key: ${{ runner.os }}-cargo-build-target-${{ matrix.target }}-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Test 🧪
-        id: test
-        run: |
-          cargo test --all
+      # - name: Test 🧪
+      #   id: test
+      #   run: |
+      #     cargo test --all
 
       # - name: Extract version number 📜
       #   id: version
@@ -71,7 +69,7 @@ jobs:
         id: package
         run: |
           version=$(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
-          echo "version=$version"
+          echo "version=$version" >> $GITHUB_ENV
           mkdir -p packages
           mv target/${{ matrix.target }}/release/libmini_functions.rlib packages/libmini_functions-${version}.rlib
           tar -czvf packages/mini_functions-${version}.tar.gz packages/libmini_functions-${version}.rlib
@@ -112,7 +110,7 @@ jobs:
             README.md
             LICENSE-MIT
             LICENSE-Apache
-            packages/libmini_functions-${{ steps.version.outputs.version }}.tar.gz
+            packages/libmini_functions-${{ env.version }}.tar.gz
           name: Mini Functions 🦀 v${{ steps.version.outputs.version }}
           # release_name: ${{ github.workspace }}
           # -${{ steps.version.outputs.version }}
