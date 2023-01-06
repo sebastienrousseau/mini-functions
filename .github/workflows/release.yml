@@ -49,6 +49,13 @@ jobs:
           cargo clean
           cross build --release --target=${{ matrix.target }} --lib
 
+      - name: Cache build artifacts 🧑‍💼
+        id: cache-build-artifacts
+        uses: actions/cache@v2
+        with:
+          path: target/${{ matrix.target }}/release
+          key: ${{ runner.os }}-cargo-build-target-${{ matrix.target }}-${{ hashFiles('**/Cargo.lock') }}
+
       - name: Test 🧪
         id: test
         run: |
@@ -66,10 +73,10 @@ jobs:
           version=$(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
           echo "version=$version"
           mkdir -p packages
-          mv target/${{ matrix.target }}/release/libmini_functions-${version}.rlib packages/libmini_functions-${version}.rlib
-          tar -czvf packages/mini_functions.tar.gz packages/libmini_functions-${version}.rlib
-          echo "mv target/${{ matrix.target }}/release/libmini_functions-${version}.rlib packages/libmini_functions-${version}.rlib"
-          echo "tar -czvf packages/mini_functions.tar.gz packages/libmini_functions-${version}.rlib"
+          mv target/${{ matrix.target }}/release/libmini_functions.rlib packages/libmini_functions-${version}.rlib
+          tar -czvf packages/mini_functions-${version}.tar.gz packages/libmini_functions-${version}.rlib
+          echo "mv target/${{ matrix.target }}/release/libmini_functions.rlib packages/libmini_functions-${version}.rlib"
+          echo "tar -czvf packages/mini_functions-${version}.tar.gz packages/libmini_functions-${version}.rlib"
 
       - name: Checkout 🛒
         id: checkout
