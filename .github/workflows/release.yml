@@ -77,20 +77,23 @@ jobs:
         id: changelog
         run: |
 
-          # Generate the changelog file
+          # Generate the release notes template
+          echo "<img src=\"https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg\" alt=\"Made with Love\"/><br>" > ${{ github.workspace }}-CHANGELOG.md
+          echo "<h1>Highly performant utility and wrapper functions library for Rust 🚀</h1><br>" > ${{ github.workspace }}-CHANGELOG.md
           echo "<img src=\"https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/banners/banner-mini-functions.svg\" alt=\"Mini Functions Banner\" width=\"100%\"/><br>" > ${{ github.workspace }}-CHANGELOG.md
-          echo "<h2>Highly performant utility and wrapper functions library for Rust 🚀</h2><br>" > ${{ github.workspace }}-CHANGELOG.md
+          echo "<h2>Welcome to Mini Functions 👋</h2><br>" >> ${{ github.workspace }}-CHANGELOG.md
           echo "Mini Functions is a highly performant utility and wrapper functions library for Rust that has been carefully designed with optimization and efficiency in mind.<br>" >> ${{ github.workspace }}-CHANGELOG.md
           echo "" >> ${{ github.workspace }}-CHANGELOG.md
           echo "By providing convenient wrapper functions, our library aims to provide a high-level interface for common tasks while still leveraging the performance benefits of Rust under the hood.<br>" >> ${{ github.workspace }}-CHANGELOG.md
           echo "" >> ${{ github.workspace }}-CHANGELOG.md
           echo "These utility functions serve as an essential toolkit for any Rust developer, and the library's design abstractions allow for easy integration into a variety of projects and applications." >> ${{ github.workspace }}-CHANGELOG.md
           echo "" >> ${{ github.workspace }}-CHANGELOG.md
-          echo "## Key Features 🎯" >> ${{ github.workspace }}-CHANGELOG.md
+          echo "<h2>Key Features 🎯</h2><br>" >> ${{ github.workspace }}-CHANGELOG.md
           echo "" >> ${{ github.workspace }}-CHANGELOG.md
 
           # Generate a list of commits and append it to the changelog file
           git log main..feature/mini-functions --oneline | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{print "- "$0}' >> ${{ github.workspace }}-CHANGELOG.md
+          echo "" >> ${{ github.workspace }}-CHANGELOG.md
 
       - name: Create Release 🚀
         # if: github.event_name != 'pull_request'
