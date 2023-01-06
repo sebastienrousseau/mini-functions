@@ -85,8 +85,20 @@ jobs:
       - name: Generate Changelog 📜
         id: changelog
         run: |
+          # Extract the version number from Cargo.toml
+          version=$(grep version Cargo.toml | cut -d '"' -f 2)
+
+          # Remove any characters that are not allowed in environment variable names from the version number
+          version=$(echo "$version" | sed 's/[^a-zA-Z0-9_]//g')
+
           # Generate a changelog based on the commit history
           git log --oneline --decorate --color > changelog.txt
+
+          # Add a header to the changelog
+          echo "# Mini Functions 🦀 $version" > ${{ github.workspace }}-CHANGELOG.md
+          echo >> ${{ github.workspace }}-CHANGELOG.md
+          echo "## What's Changed" >> ${{ github.workspace }}-CHANGELOG.md
+          echo >> ${{ github.workspace }}-CHANGELOG.md
 
           # Remove ANSI escape codes from the changelog
           sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" changelog.txt > changelog-clean.txt
@@ -94,6 +106,20 @@ jobs:
           # Remove the first line of the changelog
           sed -i '1d' changelog-clean.txt
 
+          # Append the commit history to the changelog
+          cat changelog-clean.txt >> ${{ github.workspace }}-CHANGELOG.md
+          echo >> ${{ github.workspace }}-CHANGELOG.md
+
+          # Add a footer to the changelog
+          echo "## Full Changelog" >> ${{ github.workspace }}-CHANGELOG.md
+          echo >> ${{ github.workspace }}-CHANGELOG.md
+          cat changelog.txt >> ${{ github.workspace }}-CHANGELOG.md
+
+      - name: Create Release 🚀
+        # if: github.event_name != 'pull_request'
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        run: |
           # Extract the version number from Cargo.toml
           version=$(grep version Cargo.toml | cut -d '"' -f 2)
 
@@ -101,31 +127,7 @@ jobs:
           version=$(echo "$version" | sed 's/[^a-zA-Z0-9_]//g')
 
           # Set the version variable as an environment variable
-          echo "version=$version" >> $GITHUB_ENV
-
-          # Filter the commit history to only show commits that are not tagged as "grafted"
-          grep -v "grafted" changelog-clean.txt > changelog-filtered.txt
-
-          # Re-format the commit history to include the commit message on a new line
-          sed -i -E 's/^([^ ]+) /\1\n/' changelog-filtered.txt
-
-          # Create a new file with the reformatted commit history
-          cat changelog-filtered.txt > changelog-reformatted.txt
-
-          # Add a header to the changelog
-          echo "# Mini Functions 🦀 ${{ env.version }}" > ${{ github.workspace }}/CHANGELOG.md
-          echo "## What's Changed" >> ${{ github.workspace }}/CHANGELOG.md
-          echo >> ${{ github.workspace }}/CHANGELOG.md
-          cat changelog-reformatted.txt >> ${{ github.workspace }}/CHANGELOG.md
-          echo >> ${{ github.workspace }}/CHANGELOG.md
-          echo "## Full Changelog" >> ${{ github.workspace }}/CHANGELOG.md
-          echo >> ${{ github.workspace }}/CHANGELOG.md
-          cat changelog-filtered.txt >> ${{ github.workspace }}/CHANGELOG.md
-
-      - name: Create Release 🚀
-        # if: github.event_name != 'pull_request'
-        id: create_release
-        uses: softprops/action-gh-release@v1
+          echo "version=$version"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
