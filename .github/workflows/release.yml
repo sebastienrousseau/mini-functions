@@ -115,9 +115,8 @@ jobs:
           echo >> ${{ github.workspace }}-CHANGELOG.md
           cat changelog.txt >> ${{ github.workspace }}-CHANGELOG.md
 
-      - name: Create Release 🚀
-        # if: github.event_name != 'pull_request'
-        id: create_release
+      - name: Get version 📜
+        id: version
         run: |
           # Extract the version number from Cargo.toml
           version=$(grep version Cargo.toml | cut -d '"' -f 2)
@@ -128,7 +127,10 @@ jobs:
           # Set the version variable as an environment variable
           echo "version=$version"
 
-          softprops/action-gh-release@v1
+      - name: Create Release 🚀
+        # if: github.event_name != 'pull_request'
+        id: create_release
+        uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
