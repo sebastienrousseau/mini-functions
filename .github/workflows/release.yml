@@ -47,7 +47,7 @@ jobs:
         id: version
         run: |
           version=$(grep version Cargo.toml | cut -d '"' -f 2 | sed 's/^/v/')
-          echo "version=$version"
+          echo version=$version
 
       - name: Build libraries 🏗
         run: |
@@ -64,8 +64,8 @@ jobs:
         id: package
         run: |
           mkdir -p packages
-          mv target/${{ matrix.target }}/release/libmini_functions.rlib packages/libmini_functions-v${version}.rlib
-          tar -czvf packages/mini_functions-v${version}.tar.gz packages/libmini_functions-v${version}.rlib
+          mv target/${{ matrix.target }}/release/libmini_functions.rlib packages/libmini_functions-v$(echo $version).rlib
+          tar -czvf packages/mini_functions-v$(echo $version).tar.gz packages/libmini_functions-v$(echo $version).rlib
 
       - name: Checkout 🛒
         id: checkout
