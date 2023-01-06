@@ -75,8 +75,6 @@ jobs:
           mkdir -p packages
           mv target/${{ matrix.target }}/release/libmini_functions.rlib packages/libmini_functions-${version}.rlib
           tar -czvf packages/mini_functions-${version}.tar.gz packages/libmini_functions-${version}.rlib
-          echo "mv target/${{ matrix.target }}/release/libmini_functions.rlib packages/libmini_functions-${version}.rlib"
-          echo "tar -czvf packages/mini_functions-${version}.tar.gz packages/libmini_functions-${version}.rlib"
 
       - name: Checkout 🛒
         id: checkout
@@ -108,7 +106,7 @@ jobs:
             README.md
             LICENSE-MIT
             LICENSE-Apache
-            packages/mini_functions.tar.gz
+            packages/libmini_functions-${version}.tar.gz
           name: ${{ github.workspace }}
           # release_name: ${{ github.workspace }}
           # -${{ steps.version.outputs.version }}
