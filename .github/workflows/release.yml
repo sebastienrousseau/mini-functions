@@ -118,7 +118,6 @@ jobs:
       - name: Create Release 🚀
         # if: github.event_name != 'pull_request'
         id: create_release
-        uses: softprops/action-gh-release@v1
         run: |
           # Extract the version number from Cargo.toml
           version=$(grep version Cargo.toml | cut -d '"' -f 2)
@@ -128,6 +127,8 @@ jobs:
 
           # Set the version variable as an environment variable
           echo "version=$version"
+
+          softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
