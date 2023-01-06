@@ -1,17 +1,18 @@
 # Mini Functions 🦀
 
+[![Made With Love][mwl]][6]
+
 <!-- markdownlint-disable MD033 -->
 <center>
 
-![Mini Functions][banner]
-
 ## Highly performant utility and wrapper functions library for Rust 🚀
+
+![Mini Functions][banner]
 
 [![Crates.io][crates-badge]][8]
 [![Lib.rs][libs-badge]][10]
 [![Docs.rs][docs-badge]][9]
 [![License][license-badge]][2]
-[![Made With Love][mwl]][6]
 
 ![divider][divider]
 
@@ -291,7 +292,7 @@ for their help and support.
 [9]: https://docs.rs/mini-functions
 [10]: https://lib.rs/crates/mini-functions
 
-[banner]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/banners/banner-mini-functions.svg "Mini Functions - Rust 🦀"
+[banner]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/logos/logo-mini-functions.svg "Mini Functions - Rust 🦀"
 [crates-badge]: https://img.shields.io/crates/v/mini-functions.svg?style=for-the-badge 'Crates.io'
 [divider]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/elements/divider.svg "divider"
 [docs-badge]: https://img.shields.io/docsrs/mini-functions.svg?style=for-the-badge 'Docs.rs'
