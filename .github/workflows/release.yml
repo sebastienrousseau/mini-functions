@@ -46,7 +46,7 @@ jobs:
       - name: Extract version number 📜
         id: version
         run: |
-          version=$(grep version Cargo.toml | cut -d '"' -f 2)
+          version=$(grep version Cargo.toml | cut -d '"' -f 2 | sed 's/^/v/')
           echo "version=$version"
 
       - name: Build libraries 🏗
@@ -86,15 +86,15 @@ jobs:
       - name: Create Release 🚀
         id: create_release
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
+        if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           body_path: ${{ github.workspace }}-CHANGELOG.txt
           files: |
-            packages/mini_functions-$version.tar.gz
+            packages/mini_functions-${{ steps.version.outputs.version }}.tar.gz
           name: ${{ github.workspace }}
           release_name: ${{ github.workspace }}
-          tag_name: ${{ github.workspace }}
+          tag_name: v${{ steps.version.outputs.version }}
           draft: false
           prerelease: false

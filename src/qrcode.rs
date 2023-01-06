@@ -15,6 +15,7 @@ use image::{ImageBuffer, Rgb, RgbImage};
 use qrcode::render::svg;
 use qrcode::QrCode;
 
+#[non_exhaustive]
 #[derive(Debug, Clone, Default, PartialEq)]
 /// The `QRCode` struct represents a QR code image.
 pub struct QRCode {
