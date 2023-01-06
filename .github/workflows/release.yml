@@ -46,8 +46,8 @@ jobs:
       - name: Extract version number 📜
         id: version
         run: |
-          version=$(grep version Cargo.toml | cut -d '"' -f 2 | sed 's/^/v/')
-          echo "version=$version"
+          version=$(grep version Cargo.toml | cut -d '"' -f 2)
+          echo "version=v$version"
 
       - name: Build libraries 🏗
         run: |
