@@ -44,14 +44,10 @@ jobs:
           override: true
 
       - name: Extract version number 📜
-        id: get_version
-        uses: battila7/get-version-action@v2
-      - run: echo ${{ steps.get_version.outputs.version }}
-      # - name: Extract version number 📜
-      #   id: version
-      #   run: |
-      #     version=$(grep version Cargo.toml | cut -d '"' -f 2 | sed 's/^/v/')
-      #     echo "version=$version"
+        id: version
+        run: |
+          version=$(grep version Cargo.toml | cut -d '"' -f 2 | sed 's/^/v/')
+          echo "version=$version"
 
       - name: Build libraries 🏗
         run: |
