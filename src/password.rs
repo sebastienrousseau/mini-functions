@@ -40,7 +40,7 @@ impl Password {
         let mut words: Vec<String> = Vec::new();
 
         // Convert the special characters to a vector of chars.
-        let ascii: Vec<char> = SPECIAL_CHARS.iter().copied().collect();
+        let ascii: Vec<char> = SPECIAL_CHARS.to_vec();
 
         // Create a new HashSet to store the generated words.
         let mut word_set = HashSet::new();
