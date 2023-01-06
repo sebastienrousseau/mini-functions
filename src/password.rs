@@ -1,16 +1,15 @@
-pub use crate::common;
+use crate::common::constant::{HASH_COST, SPECIAL_CHARS};
+use crate::common::words::WORD_LIST;
 use crate::hash::Hash;
 use crate::random::Random;
-use common::constant::*;
-use common::words::*;
 use convert_case::{Case, Casing};
 use std::collections::HashSet;
-// use std::path::Path;
 
 /// A random password / passphrase generator. The generated password
 /// is a string of three words separated by hyphens. Each word is
 /// between 6 and 8 characters long. The first character of each word
 /// is capitalized.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, PartialOrd)]
 pub struct Password {
     /// The generated passphrase.
@@ -41,7 +40,7 @@ impl Password {
         let mut words: Vec<String> = Vec::new();
 
         // Convert the special characters to a vector of chars.
-        let ascii: Vec<char> = SPECIAL_CHARS.iter().map(|&c| c as char).collect();
+        let ascii: Vec<char> = SPECIAL_CHARS.iter().map(|&c| c).collect();
 
         // Create a new HashSet to store the generated words.
         let mut word_set = HashSet::new();

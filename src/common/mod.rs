@@ -1,7 +1,8 @@
-pub use crate::common;
+/// Commonly used constants
+pub mod constant; // src/common/constant.rs
 
-/// Path: src/common/mod.rs
-pub mod constant;
+/// Commonly used word lists
+pub mod words; // src/common/words.rs
 
-/// Path: src/common/mod.rs
-pub mod words;
+/// Commonly used functions and constants
+pub use {constant::*, words::*};

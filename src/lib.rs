@@ -55,7 +55,9 @@
 //!
 #![warn(missing_docs)]
 #![doc(
-    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/icons/ico-mini-functions.svg"
+    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/icons/ico-mini-functions.svg",
+    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/icons/ico-mini-functions.svg",
+    html_root_url = "https://docs.rs/mini-functions"
 )]
 #![crate_name = "mini_functions"]
 #![crate_type = "lib"]
@@ -63,6 +65,9 @@
 #![crate_type = "dylib"]
 
 #[macro_use]
+/// Provides a set of common constants used in the application
+pub mod common;
+
 /// Provides a set of utility functions for working with dates and times
 pub mod date;
 
@@ -86,6 +91,3 @@ pub mod random;
 
 /// Provides a set of utility functions for working with UUIDs
 pub mod uuid;
-
-/// Provides a set of common constants used in the application
-pub mod common;

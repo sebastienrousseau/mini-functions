@@ -10,11 +10,9 @@
 
 use std::time::SystemTime;
 
-// pub use crate::common;
-// use common::constant::GOLDEN_RATIO;
-
 /// A random number generator based on the linear congruential generator
 /// algorithm with the golden ratio as the multiplier.
+#[non_exhaustive]
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd)]
 pub struct Random {
     seed: u32,

@@ -12,6 +12,7 @@ use blake3::Hasher;
 
 /// A struct for storing and verifying hashed passwords based on
 /// the [blake3](https://crates.io/crates/blake3) crate.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, PartialOrd)]
 pub struct Hash {
     /// The password.

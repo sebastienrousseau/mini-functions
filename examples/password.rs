@@ -18,7 +18,7 @@ fn main() {
         "    🔓 Original passphrase:       ✅ {}",
         password.passphrase()
     );
-    password.set_passphrase("M1n1Funct1()ns-N3wP@ssphr4s3-Ex@mpl3");
+    password.set_passphrase("M1n1Funct1()ns-N3wP@s5phr4s3-Ex@mpl3");
     println!(
         "    🔐 Updated passphrase:        ✅ {}",
         password.passphrase()
