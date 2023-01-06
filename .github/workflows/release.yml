@@ -87,7 +87,19 @@ jobs:
         run: |
 
           # Add a header to the changelog
-          echo "# Mini Functions 🦀 v0.0.7" > ${{ github.workspace }}-CHANGELOG.md
+          echo "# Welcome to Mini Functions 👋 (v0.0.7)" > ${{ github.workspace }}-CHANGELOG.md
+
+          # Add a paragraph to the changelog
+          echo "`Mini Functions` is a highly performant utility and wrapper functions library for Rust that has been carefully designed with optimization and efficiency in mind." >> ${{ github.workspace }}-CHANGELOG.md
+
+          # Add a paragraph to the changelog
+          echo "By providing convenient wrapper functions, our library aims to provide a high-level interface for common tasks while still leveraging the performance benefits of Rust under the hood." >> ${{ github.workspace }}-CHANGELOG.md
+
+          # Add a paragraph to the changelog
+          echo "These utility functions serve as an essential toolkit for any Rust developer, and the library's design abstractions allow for easy integration into a variety of projects and applications." >> ${{ github.workspace }}-CHANGELOG.md
+
+          # Add a header to the changelog
+          echo "## Key Features 🎯" >> ${{ github.workspace }}-CHANGELOG.md
 
           # Generate a changelog based on the commit history
           git log --oneline  | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{print "- "$0}' >> CHANGELOG.md
