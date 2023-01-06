@@ -64,8 +64,8 @@ jobs:
         id: package
         run: |
           mkdir -p packages
-          mv target/${{ matrix.target }}/release/libmini_functions.rlib packages/libmini_functions-v${{ steps.version.outputs.version }}.rlib
-          tar -czvf packages/mini_functions-v${{ steps.version.outputs.version }}.tar.gz packages/libmini_functions-v${{ steps.version.outputs.version }}.rlib
+          mv target/${{ matrix.target }}/release/libmini_functions.rlib packages/libmini_functions-v${version}.rlib
+          tar -czvf packages/mini_functions-v${version}.tar.gz packages/libmini_functions-v${version}.rlib
 
       - name: Checkout 🛒
         id: checkout
@@ -86,6 +86,7 @@ jobs:
           echo changelog.txt
 
       - name: Create Release 🚀
+        # if: github.event_name != 'pull_request'
         id: create_release
         uses: softprops/action-gh-release@v1
         env:
