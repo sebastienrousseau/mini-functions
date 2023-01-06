@@ -57,8 +57,8 @@ impl Hash {
     /// Returns a new instance of `Hash`.
     pub fn new() -> Self {
         Self {
-            password: String::new(),
-            hash: String::new(),
+            password: String::default(),
+            hash: String::default(),
         }
     }
 
