@@ -78,7 +78,7 @@ jobs:
         run: |
 
           # Generate the changelog file
-          echo "Highly performant utility and wrapper functions library for Rust 🚀" > ${{ github.workspace }}-CHANGELOG.md
+          echo "## Highly performant utility and wrapper functions library for Rust 🚀" > ${{ github.workspace }}-CHANGELOG.md
           echo "Mini Functions is a highly performant utility and wrapper functions library for Rust that has been carefully designed with optimization and efficiency in mind.<br>" >> ${{ github.workspace }}-CHANGELOG.md
           echo "" >> ${{ github.workspace }}-CHANGELOG.md
           echo "By providing convenient wrapper functions, our library aims to provide a high-level interface for common tasks while still leveraging the performance benefits of Rust under the hood.<br>" >> ${{ github.workspace }}-CHANGELOG.md
@@ -89,7 +89,7 @@ jobs:
           echo "" >> ${{ github.workspace }}-CHANGELOG.md
 
           # Generate a list of commits and append it to the changelog file
-          git log --oneline | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{print "- "$0}' >> ${{ github.workspace }}-CHANGELOG.md
+          git log main..feature/mini-functions --oneline | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{print "- "$0}' >> ${{ github.workspace }}-CHANGELOG.md
 
       - name: Create Release 🚀
         # if: github.event_name != 'pull_request'
