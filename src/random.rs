@@ -77,8 +77,7 @@ impl Random {
         // Calculate the range between the min and max values
         let range = (max - min) as f32;
         // Multiply the range by the random float and add the min value
-        let random_number = (range * random_float) as i32 + min;
-        random_number
+        (range * random_float) as i32 + min
     }
 
     // pub fn choose<T>(&mut self, values: &[T]) -> Option<&T> {
