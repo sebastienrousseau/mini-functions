@@ -63,7 +63,7 @@ jobs:
       - name: Package 📦
         id: package
         run: |
-          version=$(grep version Cargo.toml | cut -d '"' -f 2)
+          version=$(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
           echo "version=$version"
           mkdir -p packages
           mv target/${{ matrix.target }}/release/libmini_functions-${version}.rlib packages/libmini_functions-${version}.rlib
