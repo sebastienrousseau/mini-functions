@@ -64,8 +64,8 @@ jobs:
         id: package
         run: |
           mkdir -p packages
-          mv target/${{ matrix.target }}/release/libmini_functions.rlib packages/libmini_functions-v$(echo $version).rlib
-          tar -czvf packages/mini_functions-v$(echo $version).tar.gz packages/libmini_functions-v$(echo $version).rlib
+          mv target/${{ matrix.target }}/release/libmini_functions.rlib packages/libmini_functions.rlib
+          tar -czvf packages/mini_functions.tar.gz packages/libmini_functions.rlib
 
       - name: Checkout 🛒
         id: checkout
