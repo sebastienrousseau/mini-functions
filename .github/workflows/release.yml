@@ -78,10 +78,10 @@ jobs:
         run: |
 
           # Generate the changelog file
-          echo "# Welcome to Mini Functions 👋 (v0.0.7)" > ${{ github.workspace }}-CHANGELOG.md
-          echo "`Mini Functions` is a highly performant utility and wrapper functions library for Rust that has been carefully designed with optimization and efficiency in mind." >> ${{ github.workspace }}-CHANGELOG.md
+          echo "Highly performant utility and wrapper functions library for Rust 🚀" > ${{ github.workspace }}-CHANGELOG.md
+          echo "Mini Functions is a highly performant utility and wrapper functions library for Rust that has been carefully designed with optimization and efficiency in mind.<br>" >> ${{ github.workspace }}-CHANGELOG.md
           echo "" >> ${{ github.workspace }}-CHANGELOG.md
-          echo "By providing convenient wrapper functions, our library aims to provide a high-level interface for common tasks while still leveraging the performance benefits of Rust under the hood." >> ${{ github.workspace }}-CHANGELOG.md
+          echo "By providing convenient wrapper functions, our library aims to provide a high-level interface for common tasks while still leveraging the performance benefits of Rust under the hood.<br>" >> ${{ github.workspace }}-CHANGELOG.md
           echo "" >> ${{ github.workspace }}-CHANGELOG.md
           echo "These utility functions serve as an essential toolkit for any Rust developer, and the library's design abstractions allow for easy integration into a variety of projects and applications." >> ${{ github.workspace }}-CHANGELOG.md
           echo "" >> ${{ github.workspace }}-CHANGELOG.md
