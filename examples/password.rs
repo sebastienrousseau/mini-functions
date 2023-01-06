@@ -1,7 +1,8 @@
+use mini_functions::common::constant::SPECIAL_CHARS;
 use mini_functions::password::Password;
 
 fn main() {
-    let password = Password::new(3, "-");
+    let password = Password::new(4, "-", SPECIAL_CHARS.to_vec());
     println!(
         "🦀 Password::default():           ✅ {}",
         Password::default()
@@ -11,7 +12,7 @@ fn main() {
         "🦀 Password::passphrase():        ✅ {}",
         password.passphrase()
     );
-    let mut password = Password::new(3, "-");
+    let mut password = Password::new(4, "-", SPECIAL_CHARS.to_vec());
     println!("🦀 Password::set_passphrase");
     println!(
         "    🔓 Original passphrase:       ✅ {}",

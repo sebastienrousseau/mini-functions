@@ -1,4 +1,7 @@
 pub use crate::common;
 
-pub(crate) mod constant;
-pub(crate) mod words;
+/// Path: src/common/mod.rs
+pub mod constant;
+
+/// Path: src/common/mod.rs
+pub mod words;

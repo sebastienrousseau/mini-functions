@@ -11,6 +11,7 @@
         "datetime",
         "dylib",
         "Funct",
+        "getrandom",
         "github",
         "GITHUB",
         "gnubin",

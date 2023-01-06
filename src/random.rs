@@ -10,6 +10,9 @@
 
 use std::time::SystemTime;
 
+// pub use crate::common;
+// use common::constant::GOLDEN_RATIO;
+
 /// A random number generator based on the linear congruential generator
 /// algorithm with the golden ratio as the multiplier.
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd)]
@@ -26,8 +29,9 @@ impl Random {
     /// Generates a random byte.
     pub fn bytes(&mut self, len: usize) -> Vec<u8> {
         let mut res = Vec::with_capacity(len);
+        let mut rng = Random::default();
         for _ in 0..len {
-            res.push(self.random() as u8);
+            res.push(rng.random() as u8);
         }
         res
     }

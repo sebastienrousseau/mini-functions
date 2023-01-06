@@ -15,6 +15,8 @@ use std::collections::HashSet;
 pub struct Password {
     /// The generated passphrase.
     passphrase: String,
+    /// The special characters to use for replacing letters in words.
+    special_chars: Vec<char>,
 }
 
 impl Password {
@@ -28,18 +30,18 @@ impl Password {
         self.passphrase.len()
     }
     /// Generates a random passphrase.
-    pub fn new(len: u8, separator: &str) -> Self {
+    pub fn new(len: u8, separator: &str, special_chars: Vec<char>) -> Self {
         // Setup a random number generator
         let mut rng = Random::default();
 
         // Generate a random number between 0 and 99.
-        let mut nb: i32 = rng.range(0, 99);
+        let mut nb: i32 = rng.range(HASH_COST.try_into().unwrap(), 99);
 
         // Create a new vector to store the words in.
         let mut words: Vec<String> = Vec::new();
 
         // Convert the special characters to a vector of chars.
-        let ascii: Vec<char> = SPECIAL.iter().map(|&c| c as char).collect();
+        let ascii: Vec<char> = SPECIAL_CHARS.iter().map(|&c| c as char).collect();
 
         // Create a new HashSet to store the generated words.
         let mut word_set = HashSet::new();
@@ -47,13 +49,24 @@ impl Password {
         // Generate `len` random words from the word list.
         while words.len() < len as usize {
             // Choose a random word from the list.
-            let word = if let Some(w) = Random::choose(&mut rng, WORD_LIST) {
+            let mut word = if let Some(w) = Random::choose(&mut rng, WORD_LIST) {
                 // If a word was found, return it.
                 w
             } else {
                 // If no word was found, return an empty string.
                 ""
             };
+
+            // Ensure that the random word is not already present in the vector of words
+            while words.contains(&word.to_string()) {
+                word = if let Some(w) = Random::choose(&mut rng, WORD_LIST) {
+                    // If a word was found, return it.
+                    w
+                } else {
+                    // If no word was found, return an empty string.
+                    ""
+                };
+            }
 
             // Check if the word is already in the HashSet. If it is, skip
             // to the next iteration.
@@ -64,15 +77,31 @@ impl Password {
             // Add the word to the HashSet.
             word_set.insert(word);
 
+            // Generate a random uppercase or lowercase letter
+            let mut random_letter = rng.char();
+
+            // Ensure that the random letter is not already present in the word
+            while word.contains(random_letter) {
+                random_letter = rng.char();
+            }
+
             // Convert the word to title case and add a number to the end
             let word = format!(
-                "{}{}{}",
+                "{}{}{}{}",
                 word.to_case(Case::Title),
+                random_letter,
                 Random::choose(&mut rng, &ascii).unwrap(),
                 nb
             );
             // Generate a new random number between 0 and 99.
-            nb = rng.range(0, 99);
+            nb = rng.range(HASH_COST.try_into().unwrap(), 99);
+
+            // Replace a random letter in the word with a special character from the list.
+            let mut chars: Vec<char> = word.chars().collect();
+            let index = rng.range(0, chars.len().try_into().unwrap()) as usize;
+            chars[index] = *Random::choose(&mut rng, &special_chars).unwrap();
+            let word = chars.into_iter().collect::<String>();
+
             // Add the word to the vector of words.
             words.push(word);
         }
@@ -81,7 +110,10 @@ impl Password {
         let pass = words.join(separator);
 
         // Return the password and hash
-        Self { passphrase: pass }
+        Self {
+            passphrase: pass,
+            special_chars,
+        }
     }
     /// Returns the generated passphrase.
     pub fn passphrase(&self) -> &str {
@@ -94,7 +126,11 @@ impl Password {
     /// Returns the hash of the generated passphrase.
     pub fn hash(&self) -> String {
         let mut hash = Hash::new();
-        hash.set_password(&self.passphrase);
+        hash.set_password(&format!(
+            "{}{}",
+            self.passphrase,
+            self.special_chars.iter().collect::<String>()
+        ));
         let hash_value = hash.hash();
         hash_value.to_string()
     }
@@ -110,7 +146,11 @@ impl Password {
     /// Returns the entropy as a f64.
     pub fn entropy(&self) -> f64 {
         let mut hash = Hash::new();
-        hash.set_password(&self.passphrase);
+        hash.set_password(&format!(
+            "{}{}",
+            self.passphrase,
+            self.special_chars.iter().collect::<String>()
+        ));
         hash.entropy()
     }
 }
@@ -123,6 +163,6 @@ impl std::fmt::Display for Password {
 
 impl Default for Password {
     fn default() -> Self {
-        Self::new(3, "-")
+        Self::new(4, "-", SPECIAL_CHARS.to_vec())
     }
 }
