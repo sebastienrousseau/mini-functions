@@ -60,23 +60,14 @@ jobs:
         run: |
           cargo test --all
 
-      - name: Extract version number 📜
-        id: version
-        run: |
-          # Extract the version number from Cargo.toml
-          version=$(grep version Cargo.toml | cut -d '"' -f 2)
-
-          # Set the version variable as an environment variable
-          echo 'version=$version'
-
       - name: Package 📦
         id: package
         run: |
           version=$(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
           echo "version=$version"
           mkdir -p packages
-          mv target/${{ matrix.target }}/release/libmini_functions.rlib packages/libmini_functions-${version}.rlib
-          tar -czvf packages/mini_functions-${version}.tar.gz packages/libmini_functions-${version}.rlib
+          mv target/${{ matrix.target }}/release/libmini_functions.rlib packages/libmini_functions-0.0.7.rlib
+          tar -czvf packages/mini_functions-0.0.7.tar.gz packages/libmini_functions-0.0.7.rlib
 
       - name: Checkout 🛒
         id: checkout
@@ -86,26 +77,19 @@ jobs:
         id: changelog
         run: |
 
-          # Add a header to the changelog
+          # Generate the changelog file
           echo "# Welcome to Mini Functions 👋 (v0.0.7)" > ${{ github.workspace }}-CHANGELOG.md
-
-          # Add a paragraph to the changelog
           echo "`Mini Functions` is a highly performant utility and wrapper functions library for Rust that has been carefully designed with optimization and efficiency in mind." >> ${{ github.workspace }}-CHANGELOG.md
-
-          # Add a paragraph to the changelog
+          echo "" >> ${{ github.workspace }}-CHANGELOG.md
           echo "By providing convenient wrapper functions, our library aims to provide a high-level interface for common tasks while still leveraging the performance benefits of Rust under the hood." >> ${{ github.workspace }}-CHANGELOG.md
-
-          # Add a paragraph to the changelog
+          echo "" >> ${{ github.workspace }}-CHANGELOG.md
           echo "These utility functions serve as an essential toolkit for any Rust developer, and the library's design abstractions allow for easy integration into a variety of projects and applications." >> ${{ github.workspace }}-CHANGELOG.md
-
-          # Add a header to the changelog
+          echo "" >> ${{ github.workspace }}-CHANGELOG.md
           echo "## Key Features 🎯" >> ${{ github.workspace }}-CHANGELOG.md
+          echo "" >> ${{ github.workspace }}-CHANGELOG.md
 
-          # Generate a changelog based on the commit history
-          git log --oneline  | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{print "- "$0}' >> CHANGELOG.md
-
-          # Append the commit history to the changelog
-          cat CHANGELOG.md >> ${{ github.workspace }}-CHANGELOG.md
+          # Generate a list of commits and append it to the changelog file
+          git log --oneline | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{print "- "$0}' >> ${{ github.workspace }}-CHANGELOG.md
 
       - name: Create Release 🚀
         # if: github.event_name != 'pull_request'
