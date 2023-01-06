@@ -87,10 +87,10 @@ jobs:
         run: |
 
           # Add a header to the changelog
-          echo "# Mini Functions 🦀 v$version" > ${{ github.workspace }}-CHANGELOG.md
+          echo "# Mini Functions 🦀 v0.0.7" > ${{ github.workspace }}-CHANGELOG.md
 
           # Generate a changelog based on the commit history
-          git log --oneline --decorate --color | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{print "* "$0}' >> CHANGELOG.md
+          git log --oneline  | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{print "- "$0}' >> CHANGELOG.md
 
           # Append the commit history to the changelog
           cat CHANGELOG.md >> ${{ github.workspace }}-CHANGELOG.md
@@ -103,9 +103,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           body_path: ${{ github.workspace }}-CHANGELOG.txt
-          files: ${{ github.workspace }}/packages/libmini_functions-${{ env.version }}.tar.gz
+          files: ${{ github.workspace }}/packages/libmini_functions-0.0.7.tar.gz
           name: Mini Functions 🦀 v0.0.7
           tag_name: v${{ env.version }}
-          release_name: Mini Functions 🦀 v${{ env.version }}
+          release_name: Mini Functions 🦀 v0.0.7
           draft: true
           prerelease: false
