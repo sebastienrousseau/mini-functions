@@ -3,7 +3,7 @@ name: ❯ release
 on: [push, pull_request]
 
 jobs:
-  mini_functions:
+  mini_functions_release:
     strategy:
       fail-fast: false
       matrix:
@@ -64,8 +64,8 @@ jobs:
         id: package
         run: |
           mkdir -p packages
-          mv target/${{ matrix.target }}/release/libmini_functions.rlib packages/libmini_functions-$version.rlib
-          tar -czvf packages/mini_functions-$version.tar.gz packages/libmini_functions-$version.rlib
+          mv target/${{ matrix.target }}/release/libmini_functions.rlib packages/libmini_functions-v${{ steps.version.outputs.version }}.rlib
+          tar -czvf packages/mini_functions-v${{ steps.version.outputs.version }}.tar.gz packages/libmini_functions-v${{ steps.version.outputs.version }}.rlib
 
       - name: Checkout 🛒
         id: checkout
@@ -76,9 +76,11 @@ jobs:
         run: |
           # Generate a changelog based on the commit history
           git log --oneline --decorate --color > changelog.txt
+
           # Add a header to the changelog
           echo "# Changelog" > ${{ github.workspace }}-CHANGELOG.txt
           echo >> ${{ github.workspace }}-CHANGELOG.txt
+
           # Append the commit history to the changelog
           cat changelog.txt >> ${{ github.workspace }}-CHANGELOG.txt
           echo changelog.txt
@@ -86,7 +88,6 @@ jobs:
       - name: Create Release 🚀
         id: create_release
         uses: softprops/action-gh-release@v1
-        if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -96,5 +97,5 @@ jobs:
           name: ${{ github.workspace }}
           release_name: ${{ github.workspace }}
           tag_name: v${{ steps.version.outputs.version }}
-          draft: false
+          draft: true
           prerelease: false
