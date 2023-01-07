@@ -68,7 +68,7 @@ jobs:
       - name: Set environment variables
         run: |
           echo "VERSION=$(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))" >> $GITHUB_ENV
-          echo "ARTIFACT_NAME=mini-functions-${{ matrix.target }}-v${{ env.VERSION }}" >> $GITHUB_ENV
+          echo "ARTIFACT_NAME=mini-functions-${{ matrix.target }}" >> $GITHUB_ENV
 
       # - name: Print package version 📦
       #   run: echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
@@ -102,7 +102,7 @@ jobs:
         id: upload
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.ARTIFACT_NAME }}
+          name: ${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}
           path: target/release
           generate_release_notes: true
           files: |
