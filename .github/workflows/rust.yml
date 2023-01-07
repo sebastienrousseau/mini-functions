@@ -58,11 +58,20 @@ jobs:
           command: fmt
           args: --all -- --check --verbose
 
-      - name: Build 🚀
-        run: "cargo build --release --target $TARGET --out-dir target/release"
+      - name: Build libraries 🏗
+        run: |
 
-      - name: Run tests 🧪
-        run: "cargo test --release --target $TARGET --out-dir target/release"
+          # Check the code base
+          cargo check --all
+
+          # Install cross
+          cargo install cross
+
+          # Clean the build artifacts
+          cargo clean
+
+          # Build the libraries for the target platform and architecture
+          cross build --release --target=${{ matrix.target }} --lib
 
       - name: Upload artifacts 📦
         uses: actions/upload-artifact@v2

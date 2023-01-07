@@ -36,8 +36,10 @@ uuid = { version = "1.2.2", features = ["v3", "v4", "v5"] }
 
 [lib]
 name = "mini_functions"
+documentation = true
 path = "src/lib.rs"
-crate-type = ["rlib", "staticlib"]
+version = "0.0.7"
+# crate-type = ["rlib", "staticlib"]
 
 [package.metadata.docs.rs]
 all-features = true
