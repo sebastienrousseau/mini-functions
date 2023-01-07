@@ -108,7 +108,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}
-          path: ${{ github.workspace }}/${{ matrix.target }}/
+          path: target/release
 
       - name: Create Release 🚀
         id: create_release
@@ -122,12 +122,12 @@ jobs:
             README.md
             LICENSE-MIT
             LICENSE-APACHE
-            ${{ github.workspace }}/${{ matrix.target }}/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.a
-            ${{ github.workspace }}/${{ matrix.target }}/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.so
-            ${{ github.workspace }}/${{ matrix.target }}/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.dll
-            ${{ github.workspace }}/${{ matrix.target }}/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.dylib
-            ${{ github.workspace }}/${{ matrix.target }}/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.lib
-            ${{ github.workspace }}/${{ matrix.target }}/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.rlib
+            target/${{ matrix.target }}/release/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.a
+            target/${{ matrix.target }}/release/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.so
+            target/${{ matrix.target }}/release/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.dll
+            target/${{ matrix.target }}/release/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.dylib
+            target/${{ matrix.target }}/release/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.lib
+            target/${{ matrix.target }}/release/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.rlib
           name: Mini Functions 🦀 v${{ env.VERSION }}
           prerelease: false
           tag_name: v${{ env.VERSION }}
