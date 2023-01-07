@@ -1,6 +1,9 @@
 name: ❯ release
 
-on: [push, pull_request]
+on: [push]
+
+env:
+  CARGO_TERM_COLOR: always
 
 jobs:
   mini_functions_release:
@@ -19,22 +22,9 @@ jobs:
           - target: x86_64-apple-darwin
             os: macos-latest
     runs-on: ${{ matrix.os }}
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v3
-
-      - name: Cache cargo registry 🧑‍💼
-        id: cache-cargo-registry
-        uses: actions/cache@v2
-        with:
-          path: ~/.cargo/registry
-          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
-
-      - name: Cache cargo build 🚀
-        id: cache-cargo-build
-        uses: actions/cache@v2
-        with:
-          path: target
-          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Toolchain 🛠
         id: toolchain
@@ -45,9 +35,21 @@ jobs:
 
       - name: Build libraries 🏗
         run: |
+
+          # Check the code base
+          cargo check --all
+
+          # Install cross
           cargo install cross
+
+          # Clean the build artifacts
           cargo clean
+
+          # Build the libraries for the target platform and architecture
           cross build --release --target=${{ matrix.target }} --lib
+
+          # 
+
       - name: Cache build artifacts 🧑‍💼
         id: cache-build-artifacts
         uses: actions/cache@v2
