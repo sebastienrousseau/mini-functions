@@ -78,9 +78,7 @@ jobs:
 
       - name: Upload artifacts 📦
         id: upload
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
-          node-version: 16
           name: mini-functions-${{ matrix.target }}
           path: target/release
-          retry-count: 2
