@@ -65,6 +65,9 @@ jobs:
           command: fmt
           args: --all -- --check --verbose --color=always
 
+      - name: Print target
+        run: echo ${{ matrix.target }}
+
       - name: Build libraries 🏗
         run: |
           # Check the code base
@@ -76,8 +79,12 @@ jobs:
           # Clean the build artifacts
           cargo clean
 
+          # Define the target platform and architecture
+          image=$(cargo metadata --format-version 1 | jq '.["target-dir"][0]["custom-metadata"]["targets." + env.TARGET + ".image"]')
+
           # Build the libraries for the target platform and architecture
-          cross build --release --target=${{ matrix.target }} --lib --docker-image=${{ toml(\"targets.\" + matrix.target + \".image\") }}
+          cross build --release --target=${{ matrix.target }} --lib --docker-image=$image
+
         shell: /bin/bash -e {0}
         env:
           CARGO_TERM_COLOR: always
