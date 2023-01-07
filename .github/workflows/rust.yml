@@ -42,7 +42,6 @@ jobs:
         id: install-rustfmt
         uses: actions-rs/toolchain@v1
         with:
-          node-version: 16
           components: rustfmt
           override: true
           profile: minimal
@@ -57,7 +56,6 @@ jobs:
         id: fmt
         uses: actions-rs/cargo@v1
         with:
-          node-version: 16
           command: fmt
           args: --all -- --check --verbose --color=always
 
