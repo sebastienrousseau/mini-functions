@@ -71,6 +71,9 @@ jobs:
       - name: Print package version 📦
         run: cargo metadata --format-version 1 | jq '.packages[0].version'
 
+      - name: Set image 🌅
+        run: echo "::set-env name=IMAGE::$(cargo metadata --format-version 1 | jq '.["target-dir"][0]["custom-metadata"]["targets." + env.TARGET + ".image"]')"
+
       - name: Build libraries 🏗
         run: |
           # Check the code base
@@ -92,7 +95,7 @@ jobs:
         shell: /bin/bash -e {0}
         env:
           CARGO_TERM_COLOR: always
-          DOCKER_IMAGE: ${{ toml("targets." + matrix.target + ".image") }}
+          DOCKER_IMAGE: ${{ env.IMAGE }}
 
       - name: Upload artifacts 📦
         id: upload
