@@ -8,7 +8,7 @@ homepage = "https://minifunctions.com"
 include = [
     "/build.rs",
     "/Cargo.toml",
-    "/LICENSE-Apache",
+    "/LICENSE-APACHE",
     "/LICENSE-MIT",
     "/README.md",
     "/src/**",

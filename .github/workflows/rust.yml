@@ -87,7 +87,7 @@ jobs:
         run: |
 
           # Generate the release notes template
-          echo "<img src='https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg' alt='Made with Love'/><br>" > ${{ github.workspace }}-CHANGELOG.md
+          echo "<img src='https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg' alt='Made with Love' width='100%'/><br>" > ${{ github.workspace }}-CHANGELOG.md
           echo "<h1>Highly performant utility and wrapper functions library for Rust 🚀</h1><br>" > ${{ github.workspace }}-CHANGELOG.md
           echo "<img src='https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/banners/banner-mini-functions.svg' alt='Mini Functions Banner' width='100%'/><br>" > ${{ github.workspace }}-CHANGELOG.md
           echo "<h2>Welcome to Mini Functions 👋</h2><br>" >> ${{ github.workspace }}-CHANGELOG.md
@@ -98,7 +98,8 @@ jobs:
           echo "These utility functions serve as an essential toolkit for any Rust developer, and the library's design abstractions allow for easy integration into a variety of projects and applications." >> ${{ github.workspace }}-CHANGELOG.md
           echo "" >> ${{ github.workspace }}-CHANGELOG.md
           echo "<h2>Key Features 🎯</h2><br>" >> ${{ github.workspace }}-CHANGELOG.md
-          echo "$(git log main..feature/mini-functions -20 --oneline | sed -r "s/\x1B[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{labels="";for(i=2;i<=NF;i++){if($i~/^[a-zA-Z]+([a-zA-Z0-9-_]+):/)labels=labels" "$i;else break;}printf("-%s %s\n",labels,$0);}' | sort -k1,1)" >> ${{ github.workspace }}-CHANGELOG.md
+          # echo "$(git log main..feature/mini-functions -20 --oneline | sed -r "s/\x1B[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{labels="";for(i=2;i<=NF;i++){if($i~/^[a-zA-Z]+([a-zA-Z0-9-_]+):/)labels=labels" "$i;else break;}printf("-%s %s\n",labels,$0);}' | sort -k1,1)" >> ${{ github.workspace }}-CHANGELOG.md
+          echo "$(cd ${{ github.workspace }} && git log main..feature/mini-functions -20 --oneline | sed -r "s/\x1B[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{labels="";for(i=2;i<=NF;i++){if($i~/^[a-zA-Z]+([a-zA-Z0-9-_]+):/)labels=labels" "$i;else break;}printf("-%s %s\n",labels,$0);}' | sort -k1,1)" >> ${{ github.workspace }}-CHANGELOG.md
           echo "" >> ${{ github.workspace }}-CHANGELOG.md
 
           # Generate a list of commits since the last release and add them to the release notes
