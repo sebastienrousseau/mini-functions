@@ -38,7 +38,7 @@ jobs:
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
       - name: Install rustfmt 🦀
-        id: rustfmt
+        id: install-rustfmt
         uses: actions-rs/toolchain@v1
         with:
           components: rustfmt
