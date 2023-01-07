@@ -72,7 +72,7 @@ jobs:
         run: cargo metadata --format-version 1 | jq '.packages[0].version'
 
       - name: Set image 🌅
-        run: echo "::set-env name=IMAGE::$(cargo metadata --format-version 1 | jq '.["target-dir"][0]["custom-metadata"]["targets." + env.TARGET + ".image"]')"
+        run: echo "IMAGE=$(cargo metadata --format-version 1 | jq -r '.["target-dir"][0]["custom-metadata"]["targets." + env.TARGET + ".image"]')"
 
       - name: Build libraries 🏗
         run: |
