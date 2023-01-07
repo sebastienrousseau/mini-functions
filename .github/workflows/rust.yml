@@ -8,8 +8,8 @@ env:
 jobs:
   rust:
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
         target:
           - x86_64-unknown-linux-gnu
           - x86_64-pc-windows-gnu
@@ -17,16 +17,20 @@ jobs:
           - aarch64-unknown-linux-gnu
           - aarch64-unknown-windows-gnu
           - aarch64-apple-darwin
-          - arm64-unknown-linux-gnu
-          - arm64-pc-windows-gnu
-          - arm64-apple-darwin
-          - armv7-unknown-linux-gnueabihf
-          - armv7-pc-windows-gnu
-          - armv7-apple-darwin
-          - wasm32-unknown-unknown
-          - wasm32-pc-windows-gnu
-          - wasm32-wasi
 
+        include:
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-latest
+          - target: x86_64-pc-windows-gnu
+            os: ubuntu-latest
+          - target: x86_64-apple-darwin
+            os: macos-latest
+          - target: aarch64-unknown-linux-gnu
+            os: ubuntu-latest
+          - target: aarch64-unknown-windows-gnu
+            os: ubuntu-latest
+          - target: aarch64-apple-darwin
+            os: macos-latest
     runs-on: ${{ matrix.os }}
 
     steps:
