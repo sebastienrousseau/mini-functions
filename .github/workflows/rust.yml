@@ -10,55 +10,56 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target:
-          - x86_64-unknown-linux-gnu
-          - x86_64-pc-windows-gnu
-          - x86_64-apple-darwin
-          - aarch64-unknown-linux-gnu
-          - aarch64-unknown-windows-gnu
-          - aarch64-apple-darwin
-
         include:
-          - target: x86_64-unknown-linux-gnu
-            os: ubuntu-latest
-          - target: x86_64-pc-windows-gnu
-            os: ubuntu-latest
-          - target: x86_64-apple-darwin
-            os: macos-latest
-          - target: aarch64-unknown-linux-gnu
-            os: ubuntu-latest
-          - target: aarch64-unknown-windows-gnu
-            os: ubuntu-latest
-          - target: aarch64-apple-darwin
-            os: macos-latest
+          # @see https://doc.rust-lang.org/nightly/rustc/platform-support.html
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+)
+          - os: ubuntu-latest
+            target: aarch64-unknown-linux-gnu # ARM64 Linux (kernel 4.1, glibc 2.17+)
+          - os: ubuntu-latest
+            target: x86_64-pc-windows-gnu # 64-bit Windows (7 or later)
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc # 64-bit Windows (7 or later)
+          - os: macOS-latest
+            target: x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
+          - os: macOS-latest
+            target: aarch64-apple-darwin # ARM64 macOS (10.15 Catalina or later)
+
     runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout repository 🛎️
+        id: checkout
         uses: actions/checkout@v3
 
       - name: Install Rust
+        id: rust
         run: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
       - name: Install rustfmt 🦀
+        id: rustfmt
         uses: actions-rs/toolchain@v1
         with:
           components: rustfmt
           override: true
           profile: minimal
+          target: ${{ matrix.target }}
           toolchain: stable
 
       - name: Run rustfmt 🦀
+        id: rustfmt
         run: rustup component add rustfmt
 
       - name: Check formatting 🦀
+        id: fmt
         uses: actions-rs/cargo@v1
         with:
           command: fmt
-          args: --all -- --check --verbose
+          args: --all -- --check --verbose --color=always --edition=2021
 
       - name: Build libraries 🏗
+        id: build
         run: |
 
           # Check the code base
@@ -74,6 +75,7 @@ jobs:
           cross build --release --target=${{ matrix.target }} --lib
 
       - name: Upload artifacts 📦
+        id: upload
         uses: actions/upload-artifact@v2
         with:
           name: mini-functions
