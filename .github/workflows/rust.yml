@@ -1,4 +1,4 @@
-name: ❯ rust
+name: ❯ mini_functions_release
 
 on: [push, pull_request]
 
@@ -110,8 +110,6 @@ jobs:
         with:
           name: ${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}
           path: target/release
-        run: |
-          echo "The artifacts were uploaded to $(pwd)/target/release
 
       - name: Create Release 🚀
         id: create_release
