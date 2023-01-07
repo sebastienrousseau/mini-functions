@@ -35,6 +35,18 @@ jobs:
         id: checkout
         uses: actions/checkout@v3
 
+      - name: Restore dependencies cache 📦
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo
+            ~/.rustup
+          key: ${{ runner.os }}-cache-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+            ${{ runner.os }}-rustup-
+
       - name: Install Rust 🦀
         id: rust
         run: |
@@ -98,8 +110,7 @@ jobs:
           echo "These utility functions serve as an essential toolkit for any Rust developer, and the library's design abstractions allow for easy integration into a variety of projects and applications." >> ${{ github.workspace }}-CHANGELOG.md
           echo "" >> ${{ github.workspace }}-CHANGELOG.md
           echo "<h2>Key Features 🎯</h2><br>" >> ${{ github.workspace }}-CHANGELOG.md
-          # echo "$(git log main..feature/mini-functions -20 --oneline | sed -r "s/\x1B[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{labels="";for(i=2;i<=NF;i++){if($i~/^[a-zA-Z]+([a-zA-Z0-9-_]+):/)labels=labels" "$i;else break;}printf("-%s %s\n",labels,$0);}' | sort -k1,1)" >> ${{ github.workspace }}-CHANGELOG.md
-          echo "$(cd ${{ github.workspace }} && git log origin/main..${{ github.ref }} -20 --oneline | sed -r "s/\x1B[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{labels="";for(i=2;i<=NF;i++){if($i~/^[a-zA-Z]+([a-zA-Z0-9-_]+):/)labels=labels" "$i;else break;}printf("-%s %s\n",labels,$0);}' | sort -k1,1)" >> ${{ github.workspace }}-CHANGELOG.md
+          echo "$(git log origin/main..${{ github.ref }} -20 --oneline | sed -r "s/\x1B[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{labels="";for(i=2;i<=NF;i++){if($i~/^[a-zA-Z]+([a-zA-Z0-9-_]+):/)labels=labels" "$i;else break;}printf("-%s %s\n",labels,$0);}' | sort -k1,1)" >> ${{ github.workspace }}-CHANGELOG.md
           echo "" >> ${{ github.workspace }}-CHANGELOG.md
 
           # Generate a list of commits since the last release and add them to the release notes
