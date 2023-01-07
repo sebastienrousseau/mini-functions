@@ -59,10 +59,10 @@ jobs:
           args: --all -- --check --verbose
 
       - name: Build 🚀
-        run: cargo build --release --target $TARGET --out-dir target/release
+        run: "cargo build --release --target $TARGET --out-dir target/release"
 
       - name: Run tests 🧪
-        run: cargo test --release --target $TARGET --out-dir target/release
+        run: "cargo test --release --target $TARGET --out-dir target/release"
 
       - name: Upload artifacts 📦
         uses: actions/upload-artifact@v2
