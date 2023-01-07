@@ -39,7 +39,7 @@ jobs:
         id: checkout
         uses: actions/checkout@v3
 
-      - name: Install Rust
+      - name: Install Rust 🦀
         id: rust
         run: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
@@ -65,8 +65,11 @@ jobs:
           command: fmt
           args: --all -- --check --verbose --color=always
 
-      - name: Print target
+      - name: Print target 🎯
         run: echo ${{ matrix.target }}
+
+      - name: Print package version 📦
+        run: cargo metadata --format-version 1 | jq '.packages[0].version'
 
       - name: Build libraries 🏗
         run: |
@@ -80,14 +83,16 @@ jobs:
           cargo clean
 
           # Define the target platform and architecture
-          image=$(cargo metadata --format-version 1 | jq '.["target-dir"][0]["custom-metadata"]["targets." + env.TARGET + ".image"]')
+          # image=$(cargo metadata --format-version 1 | jq '.["target-dir"][0]["custom-metadata"]["targets." + env.TARGET + ".image"]')
 
           # Build the libraries for the target platform and architecture
-          cross build --release --target=${{ matrix.target }} --lib --docker-image=$image
+          # cross build --release --target=${{ matrix.target }} --lib --docker-image=$image
+          cross build --release --target=${{ matrix.target }} --lib --docker
 
         shell: /bin/bash -e {0}
         env:
           CARGO_TERM_COLOR: always
+          DOCKER_IMAGE: ${{ toml("targets." + matrix.target + ".image") }}
 
       - name: Upload artifacts 📦
         id: upload
