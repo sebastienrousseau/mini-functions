@@ -113,17 +113,38 @@ jobs:
 
       - name: Create Release 🚀
         id: create_release
-        uses: softprops/action-gh-release@v1
+        uses: http@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          asset_pattern: "target/release/*"
-          body_path: ${{ github.workspace }}-CHANGELOG.md
-          draft: true
-          files: |
-            README.md
-            LICENSE-MIT
-            LICENSE-APACHE
-          name: Mini Functions 🦀 v${{ env.VERSION }}
-          prerelease: false
-          tag_name: v${{ env.VERSION }}
+          method: POST
+          url: https://api.github.com/repos/${{ github.repository }}/releases
+          headers:
+          Accept: application/vnd.github+json
+          Authorization: Bearer ${{ env.GITHUB_TOKEN }}
+          body: |
+            {
+              "tag_name": "v${{ env.VERSION }}",
+              "target_commitish": "master",
+              "name": "Mini Functions 🦀 v${{ env.VERSION }}",
+              "body": "$(cat ${{ github.workspace }}-CHANGELOG.md)",
+              "draft": true,
+              "prerelease": false
+            }
+
+      # - name: Create Release 🚀
+      #   id: create_release
+      #   uses: softprops/action-gh-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     asset_pattern: "target/release/*"
+      #     body_path: ${{ github.workspace }}-CHANGELOG.md
+      #     draft: true
+      #     files: |
+      #       README.md
+      #       LICENSE-MIT
+      #       LICENSE-APACHE
+      #     name: Mini Functions 🦀 v${{ env.VERSION }}
+      #     prerelease: false
+      #     tag_name: v${{ env.VERSION }}
