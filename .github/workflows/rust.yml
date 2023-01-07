@@ -3,7 +3,7 @@ name: ❯ rust
 on: [push, pull_request]
 
 jobs:
-  rust:
+  mini_functions_release:
     strategy:
       fail-fast: false
       matrix:
@@ -122,12 +122,12 @@ jobs:
             README.md
             LICENSE-MIT
             LICENSE-APACHE
-            target/release/${{ matrix.target }}/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.a
-            target/release/${{ matrix.target }}/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.so
-            target/release/${{ matrix.target }}/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.dll
-            target/release/${{ matrix.target }}/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.dylib
-            target/release/${{ matrix.target }}/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.lib
-            target/release/${{ matrix.target }}/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.rlib
+            target/release/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.a
+            target/release/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.so
+            target/release/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.dll
+            target/release/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.dylib
+            target/release/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.lib
+            target/release/${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}.rlib
           name: Mini Functions 🦀 v${{ env.VERSION }}
           prerelease: false
           tag_name: v${{ env.VERSION }}
