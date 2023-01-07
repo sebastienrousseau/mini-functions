@@ -67,8 +67,8 @@ jobs:
 
       - name: Set environment variables
         run: |
-          echo "::set-env name=VERSION::$(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))"
-          echo "::set-env name=ARTIFACT_NAME::mini-functions-${{ matrix.target }}-v${{ env.VERSION }}"
+          echo "VERSION=$(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))" >> $GITHUB_ENV
+          echo "ARTIFACT_NAME=mini-functions-${{ matrix.target }}-v${{ env.VERSION }}" >> $GITHUB_ENV
 
       # - name: Print package version 📦
       #   run: echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
