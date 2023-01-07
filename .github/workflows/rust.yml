@@ -66,9 +66,7 @@ jobs:
           args: --all -- --check --verbose --color=always
 
       - name: Build libraries 🏗
-        id: build
         run: |
-
           # Check the code base
           cargo check --all
 
@@ -79,7 +77,10 @@ jobs:
           cargo clean
 
           # Build the libraries for the target platform and architecture
-          cross build --release --target=${{ matrix.target }} --lib
+          cross build --release --target=${{ matrix.target }} --lib --docker-image=${{ toml(\"targets.\" + matrix.target + \".image\") }}
+        shell: /bin/bash -e {0}
+        env:
+          CARGO_TERM_COLOR: always
 
       - name: Upload artifacts 📦
         id: upload
