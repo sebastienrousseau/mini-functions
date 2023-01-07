@@ -109,8 +109,8 @@ jobs:
         id: upload
         uses: actions/upload-artifact@v3
         with:
-          name: Mini Functions 🦀 v${{ env.VERSION }}
-          path: target/release
+          name: ${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}
+          path: ${{ github.workspace }}
 
       - name: Create Release 🚀
         id: create_release
@@ -121,10 +121,10 @@ jobs:
           body_path: ${{ github.workspace }}-CHANGELOG.md
           draft: true
           files: |
-            ${{ github.workspace }}-CHANGELOG.md
             README.md
             LICENSE-MIT
             LICENSE-APACHE
+            ${{ github.workspace }}
             target/release/${{ matrix.target }}/libmini_functions_${{ env.VERSION }}.a
             target/release/${{ matrix.target }}/libmini_functions_${{ env.VERSION }}.so
             target/release/${{ matrix.target }}/libmini_functions_${{ env.VERSION }}.dll
