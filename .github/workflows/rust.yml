@@ -2,10 +2,6 @@ name: ❯ rust
 
 on: [push, pull_request]
 
-env:
-  CARGO_TERM_COLOR: always
-  ARTIFACT_NAME: mini-functions-${{ matrix.target }}-v$(cargo metadata --format-version 1 | jq -r '.packages[2].version')
-
 jobs:
   rust:
     strategy:
@@ -83,15 +79,13 @@ jobs:
           # Clean the build artifacts
           cargo clean
 
-          # Define the target platform and architecture
-          # image=$(cargo metadata --format-version 1 | jq '.["target-dir"][0]["custom-metadata"]["targets." + env.TARGET + ".image"]')
-
           # Build the libraries for the target platform and architecture
           cross build --release --target=${{ matrix.target }} --lib
 
         shell: /bin/bash -e {0}
         env:
           CARGO_TERM_COLOR: always
+          ARTIFACT_NAME: mini-functions-${{ matrix.target }}-v$(cargo metadata --format-version 1 | jq -r '.packages[2].version')
 
       - name: Upload artifacts 📦
         id: upload
