@@ -78,9 +78,9 @@ jobs:
         run: |
 
           # Generate the release notes template
-          echo "<img src=\"https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg\" alt=\"Made with Love\"/><br>" > ${{ github.workspace }}-CHANGELOG.md
+          echo "<img src='https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg' alt=\"Made with Love\"/><br>" > ${{ github.workspace }}-CHANGELOG.md
           echo "<h1>Highly performant utility and wrapper functions library for Rust 🚀</h1><br>" > ${{ github.workspace }}-CHANGELOG.md
-          echo "<img src=\"https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/banners/banner-mini-functions.svg\" alt=\"Mini Functions Banner\" width=\"100%\"/><br>" > ${{ github.workspace }}-CHANGELOG.md
+          echo "<img src='https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/banners/banner-mini-functions.svg' alt=\"Mini Functions Banner\" width=\"100%\"/><br>" > ${{ github.workspace }}-CHANGELOG.md
           echo "<h2>Welcome to Mini Functions 👋</h2><br>" >> ${{ github.workspace }}-CHANGELOG.md
           echo "Mini Functions is a highly performant utility and wrapper functions library for Rust that has been carefully designed with optimization and efficiency in mind.<br>" >> ${{ github.workspace }}-CHANGELOG.md
           echo "" >> ${{ github.workspace }}-CHANGELOG.md
@@ -96,16 +96,17 @@ jobs:
           echo "" >> ${{ github.workspace }}-CHANGELOG.md
 
       - name: Create Release 🚀
-        # if: github.event_name != 'pull_request'
         id: create_release
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           body_path: ${{ github.workspace }}-CHANGELOG.md
-          files: ${{ github.workspace }}/packages/libmini_functions-0.0.7.tar.gz
-          name: Mini Functions 🦀 v0.0.7
-          tag_name: v${{ env.version }}
-          release_name: Mini Functions 🦀 v0.0.7
           draft: true
+          files: README.md
+            LICENSE-MIT
+            LICENSE-APACHE
+            ${{ github.workspace }}/packages/libmini_functions-0.0.7.tar.gz
+          name: Mini Functions 🦀 v0.0.7
           prerelease: false
+          tag_name: v${{ env.version }}
