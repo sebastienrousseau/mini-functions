@@ -1,11 +1,11 @@
-name: ❯ weekly
+name: ❯ monday
 
 env:
   CARGO_TERM_COLOR: always
 
 on:
   schedule:
-    - cron: 00 3 * * 1
+    - cron: 0 0 * * 1
 jobs:
   build:
     strategy:

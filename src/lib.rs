@@ -31,7 +31,7 @@
 //! Add the following to your `Cargo.toml` file:
 //! ```toml
 //! [dependencies]
-//! mini_functions = "0.0.6"
+//! mini_functions = "0.0.7"
 //! ```
 //! Then, add the following to your crate root:
 //! ```rust

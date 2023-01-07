@@ -8,7 +8,7 @@ homepage = "https://minifunctions.com"
 include = [
     "/build.rs",
     "/Cargo.toml",
-    "/LICENSE-Apache",
+    "/LICENSE-APACHE",
     "/LICENSE-MIT",
     "/README.md",
     "/src/**",
@@ -21,7 +21,7 @@ readme = "README.md"
 repository = "https://github.com/sebastienrousseau/mini-functions.git"
 resolver = "2" # Enables the new Cargo resolution engine
 rust-version = "1.57.0"
-version = "0.0.6"
+version = "0.0.7"
 
 [badges]
 maintenance = { status = "actively-developed" }
@@ -34,20 +34,36 @@ qrcode = "0.12.0"
 time = "0.3.17"
 uuid = { version = "1.2.2", features = ["v3", "v4", "v5"] }
 
-[lib]
-name = "mini_functions"
-path = "src/lib.rs"
-crate-type = ["rlib", "staticlib"]
-
 [package.metadata.docs.rs]
 all-features = true
 default-target = "x86_64-unknown-linux-gnu"
 rustdoc-args = ["--cfg", "docsrs"]
 targets = [
     "x86_64-unknown-linux-gnu",
+    "aarch64-unknown-linux-gnu",
     "x86_64-pc-windows-gnu",
-    "x86_64-apple-darwin"
+    "x86_64-pc-windows-msvc",
+    "x86_64-apple-darwin",
+    "aarch64-apple-darwin"
 ]
+
+[targets.x86_64-unknown-linux-gnu]
+image = "ubuntu:latest"
+
+[targets.aarch64-unknown-linux-gnu]
+image = "arm64v8/ubuntu:latest"
+
+[targets.x86_64-pc-windows-gnu]
+image = "mcr.microsoft.com/windows/servercore:ltsc2019"
+
+[targets.x86_64-pc-windows-msvc]
+image = "mcr.microsoft.com/windows/servercore:ltsc2019"
+
+[targets.x86_64-apple-darwin]
+image = "darwin:latest"
+
+[targets.aarch64-apple-darwin]
+image = "arm64v8/darwin:latest"
 
 [profile.release]
 codegen-units = 1 # Compile crates one after another so the compiler can optimize better
