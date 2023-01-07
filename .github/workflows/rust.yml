@@ -32,11 +32,6 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - name: Set environment variables
-        run: |
-          echo "::set-env name=VERSION::$(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))"
-          echo "::set-env name=ARTIFACT_NAME::mini-functions-${{ matrix.target }}-v${{ env.VERSION }}"
-
       - name: Checkout repository 🛎️
         id: checkout
         uses: actions/checkout@v3
@@ -69,6 +64,11 @@ jobs:
 
       - name: Print target 🎯
         run: echo ${{ matrix.target }}
+
+      - name: Set environment variables
+        run: |
+          echo "::set-env name=VERSION::$(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))"
+          echo "::set-env name=ARTIFACT_NAME::mini-functions-${{ matrix.target }}-v${{ env.VERSION }}"
 
       # - name: Print package version 📦
       #   run: echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
