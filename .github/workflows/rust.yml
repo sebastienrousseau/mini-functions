@@ -71,14 +71,11 @@ jobs:
       - name: Print package version 📦
         run: cargo metadata --format-version 1 | jq '.packages[0].version'
 
-      - name: Set image 🌅
-        run: echo "IMAGE=$(cargo metadata --format-version 1 | jq -r '.["target-dir"][0]["custom-metadata"]["targets." + env.TARGET + ".image"]')"
-
       - name: Build libraries 🏗
         run: |
           # Check the code base
-          cargo check --all
 
+          cargo check --all
           # Install cross
           cargo install cross
 
@@ -89,17 +86,15 @@ jobs:
           # image=$(cargo metadata --format-version 1 | jq '.["target-dir"][0]["custom-metadata"]["targets." + env.TARGET + ".image"]')
 
           # Build the libraries for the target platform and architecture
-          # cross build --release --target=${{ matrix.target }} --lib --docker-image=$image
-          cross build --release --target=${{ matrix.target }} --lib --docker
+          cross build --release --target=${{ matrix.target }} --lib
 
         shell: /bin/bash -e {0}
         env:
           CARGO_TERM_COLOR: always
-          DOCKER_IMAGE: ${{ env.IMAGE }}
 
       - name: Upload artifacts 📦
         id: upload
         uses: actions/upload-artifact@v3
         with:
-          name: mini-functions-${{ matrix.target }}
+          name: mini-functions-${{ matrix.target }}-v$(cargo metadata --format-version 1 | jq -r '.packages[0].version')
           path: target/release
