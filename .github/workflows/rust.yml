@@ -4,6 +4,10 @@ on: [push, pull_request]
 
 jobs:
   rust:
+    env:
+      CARGO_TERM_COLOR: always
+      ARTIFACT_NAME: mini-functions-${{ matrix.target }}-v${{ env.VERSION }}
+      VERSION: $(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))
     strategy:
       fail-fast: false
       matrix:
@@ -65,8 +69,8 @@ jobs:
       - name: Print target 🎯
         run: echo ${{ matrix.target }}
 
-      - name: Print package version 📦
-        run: echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
+      # - name: Print package version 📦
+      #   run: echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
         # cargo metadata --format-version 1 | jq '.packages[1].version'
 
       - name: Build libraries 🏗
@@ -84,18 +88,18 @@ jobs:
           cross build --release --target=${{ matrix.target }} --lib
 
         shell: /bin/bash -e {0}
-        env:
-          CARGO_TERM_COLOR: always
-          ARTIFACT_NAME: mini-functions-${{ matrix.target }}-v$(cargo metadata --format-version 1 | jq -r '.packages[1].version')
-          VERSION: $(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))
+        # env:
+        #   CARGO_TERM_COLOR: always
+        #   ARTIFACT_NAME: mini-functions-${{ matrix.target }}-v${{ env.VERSION }}
+        #   VERSION: $(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))
 
       - name: Upload artifacts 📦
         id: upload
         uses: actions/upload-artifact@v3
-        env:
-          CARGO_TERM_COLOR: always
-          VERSION: $(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))
-          ARTIFACT_NAME: mini-functions-${{ matrix.target }}-v${{ env.VERSION }}}
+        # env:
+        #   CARGO_TERM_COLOR: always
+        #   VERSION: $(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))
+        #   ARTIFACT_NAME: mini-functions-${{ matrix.target }}-v${{ env.VERSION }}}
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: target/release
