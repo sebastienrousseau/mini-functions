@@ -47,8 +47,23 @@ targets = [
     "aarch64-apple-darwin"
 ]
 
+[targets.x86_64-unknown-linux-gnu]
+image = "ubuntu:latest"
+
+[targets.aarch64-unknown-linux-gnu]
+image = "arm64v8/ubuntu:latest"
+
+[targets.x86_64-pc-windows-gnu]
+image = "mcr.microsoft.com/windows/servercore:ltsc2019"
+
+[targets.x86_64-pc-windows-msvc]
+image = "mcr.microsoft.com/windows/servercore:ltsc2019"
+
+[targets.x86_64-apple-darwin]
+image = "darwin:latest"
+
 [targets.aarch64-apple-darwin]
-image = "arm64v8/openjdk:8-jdk"
+image = "arm64v8/darwin:latest"
 
 [profile.release]
 codegen-units = 1 # Compile crates one after another so the compiler can optimize better
