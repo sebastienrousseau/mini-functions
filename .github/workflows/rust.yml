@@ -67,13 +67,6 @@ jobs:
           echo "VERSION=$(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))" >> $GITHUB_ENV
           echo "ARTIFACT_NAME=mini-functions-${{ matrix.target }}" >> $GITHUB_ENV
 
-      - name: Print environment variables 💻
-        run: |
-          echo $VERSION
-          echo "$ARTIFACT_NAME
-          echo "${{ matrix.os }}
-          echo "${{ matrix.target }}
-
       - name: Build libraries 🏗
         run: |
           # Check the code base
