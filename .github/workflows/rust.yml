@@ -83,24 +83,6 @@ jobs:
 
         shell: /bin/bash -e {0}
 
-      - name: Upload artifacts 📦
-        id: upload
-        uses: actions/upload-artifact@v3
-        with:
-          name: Mini Functions 🦀 v${{ env.VERSION }}
-          path: target/release
-          generate_release_notes: true
-          files: |
-            README.md
-            LICENSE-MIT
-            LICENSE-APACHE
-            target/release/${{ matrix.target }}/libmini_functions_${{ env.VERSION }}.a
-            target/release/${{ matrix.target }}/libmini_functions_${{ env.VERSION }}.so
-            target/release/${{ matrix.target }}/libmini_functions_${{ env.VERSION }}.dll
-            target/release/${{ matrix.target }}/libmini_functions_${{ env.VERSION }}.dylib
-            target/release/${{ matrix.target }}/libmini_functions_${{ env.VERSION }}.lib
-            target/release/${{ matrix.target }}/libmini_functions_${{ env.VERSION }}.rlib
-
       - name: Generate Changelog 📜
         id: changelog
         run: |
@@ -122,3 +104,33 @@ jobs:
           # Generate a list of commits since the last release and add them to the release notes
           git log -50 --oneline | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{labels="";for(i=2;i<=NF;i++){if($i~/^[a-zA-Z]+\([a-zA-Z0-9-_]+\):/)labels=labels" "$i;else break;}printf("-%s %s\n",labels,$0);}' | sort -k1,1 >> ${{ github.workspace }}-CHANGELOG.md
           echo "" >> ${{ github.workspace }}-CHANGELOG.md
+
+      - name: Upload artifacts 📦
+        id: upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: Mini Functions 🦀 v${{ env.VERSION }}
+          path: target/release
+
+      - name: Create Release 🚀
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          body_path: ${{ github.workspace }}-CHANGELOG.md
+          draft: true
+          files: |
+            ${{ github.workspace }}-CHANGELOG.md
+            README.md
+            LICENSE-MIT
+            LICENSE-APACHE
+            target/release/${{ matrix.target }}/libmini_functions_${{ env.VERSION }}.a
+            target/release/${{ matrix.target }}/libmini_functions_${{ env.VERSION }}.so
+            target/release/${{ matrix.target }}/libmini_functions_${{ env.VERSION }}.dll
+            target/release/${{ matrix.target }}/libmini_functions_${{ env.VERSION }}.dylib
+            target/release/${{ matrix.target }}/libmini_functions_${{ env.VERSION }}.lib
+            target/release/${{ matrix.target }}/libmini_functions_${{ env.VERSION }}.rlib
+          name: Mini Functions 🦀 v${{ env.VERSION }}
+          prerelease: false
+          tag_name: v${{ env.VERSION }}
