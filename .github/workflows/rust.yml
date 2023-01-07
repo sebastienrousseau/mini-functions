@@ -92,19 +92,21 @@ jobs:
         env:
           CARGO_TERM_COLOR: always
 
+      - name: Set artifact name
+        run: echo "::set-env name=ARTIFACT_NAME::mini-functions-${{ matrix.target }}-v$(cargo metadata --format-version 1 | jq -r '.packages[0].version')"
+
       - name: Upload artifacts 📦
         id: upload
         uses: actions/upload-artifact@v3
         with:
-          name: mini-functions-${{ matrix.target }}-v${{ get_package_version }}
+          name: ${{ env.ARTIFACT_NAME }}
           path: target/release
+          generate_release_notes: true
           files: |
-            target/release/${{ matrix.target }}/libmini_functions_${{ get_package_version }}.a
-            target/release/${{ matrix.target }}/libmini_functions_${{ get_package_version }}.so
-            target/release/${{ matrix.target }}/libmini_functions_${{ get_package_version }}.dll
-            target/release/${{ matrix.target }}/libmini_functions_${{ get_package_version }}.dylib
-            target/release/${{ matrix.target }}/libmini_functions_${{ get_package_version }}.lib
-            target/release/${{ matrix.target }}/libmini_functions_${{ get_package_version }}.rlib
-        env:
-          get_package_version: |
-            cargo metadata --format-version 1 | jq -r '.packages[0].version'
+            target/release/${{ matrix.target }}/libmini_functions_$(cargo metadata --format-version 1 | jq -r '.packages[0].version').a
+            target/release/${{ matrix.target }}/libmini_functions_$(cargo metadata --format-version 1 | jq -r '.packages[0].version').so
+            target/release/${{ matrix.target }}/libmini_functions_$(cargo metadata --format-version 1 | jq -r '.packages[0].version').dll
+            target/release/${{ matrix.target }}/libmini_functions_$(cargo metadata --format-version 1 | jq -r '.packages[0].version').dylib
+            target/release/${{ matrix.target }}/libmini_functions_$(cargo metadata --format-version 1 | jq -r '.packages[0].version').lib
+            target/release/${{ matrix.target }}/libmini_functions_$(cargo metadata --format-version 1 | jq -r '.packages[0].version').rlib
+
