@@ -62,17 +62,18 @@ jobs:
           command: fmt
           args: --all -- --check --verbose --color=always
 
-      - name: Print target 🎯
-        run: echo ${{ matrix.target }}
-
-      - name: Set environment variables
+      - name: Set environment variables 🔢
         run: |
           echo "VERSION=$(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))" >> $GITHUB_ENV
           echo "ARTIFACT_NAME=mini-functions-${{ matrix.target }}" >> $GITHUB_ENV
 
-      # - name: Print package version 📦
-      #   run: echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
-      # cargo metadata --format-version 1 | jq '.packages[1].version'
+      - name: Print environment variables 💻
+        run: |
+          echo $VERSION
+          echo "$ARTIFACT_NAME
+          echo "${{ matrix.os }}
+          echo "${{ matrix.target }}
+
       - name: Build libraries 🏗
         run: |
           # Check the code base
@@ -102,13 +103,38 @@ jobs:
         id: upload
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}
+          name: Mini Functions 🦀 v${{ env.VERSION }}
           path: target/release
           generate_release_notes: true
           files: |
+            README.md
+            LICENSE-MIT
+            LICENSE-APACHE
             target/release/${{ matrix.target }}/libmini_functions_${{ env.VERSION }}.a
             target/release/${{ matrix.target }}/libmini_functions_${{ env.VERSION }}.so
             target/release/${{ matrix.target }}/libmini_functions_${{ env.VERSION }}.dll
             target/release/${{ matrix.target }}/libmini_functions_${{ env.VERSION }}.dylib
             target/release/${{ matrix.target }}/libmini_functions_${{ env.VERSION }}.lib
             target/release/${{ matrix.target }}/libmini_functions_${{ env.VERSION }}.rlib
+
+      - name: Generate Changelog 📜
+        id: changelog
+        run: |
+
+          # Generate the release notes template
+          echo "<img src='https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg' alt=\"Made with Love\"/><br>" > ${{ github.workspace }}-CHANGELOG.md
+          echo "<h1>Highly performant utility and wrapper functions library for Rust 🚀</h1><br>" > ${{ github.workspace }}-CHANGELOG.md
+          echo "<img src='https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/banners/banner-mini-functions.svg' alt=\"Mini Functions Banner\" width=\"100%\"/><br>" > ${{ github.workspace }}-CHANGELOG.md
+          echo "<h2>Welcome to Mini Functions 👋</h2><br>" >> ${{ github.workspace }}-CHANGELOG.md
+          echo "Mini Functions is a highly performant utility and wrapper functions library for Rust that has been carefully designed with optimization and efficiency in mind.<br>" >> ${{ github.workspace }}-CHANGELOG.md
+          echo "" >> ${{ github.workspace }}-CHANGELOG.md
+          echo "By providing convenient wrapper functions, our library aims to provide a high-level interface for common tasks while still leveraging the performance benefits of Rust under the hood.<br>" >> ${{ github.workspace }}-CHANGELOG.md
+          echo "" >> ${{ github.workspace }}-CHANGELOG.md
+          echo "These utility functions serve as an essential toolkit for any Rust developer, and the library's design abstractions allow for easy integration into a variety of projects and applications." >> ${{ github.workspace }}-CHANGELOG.md
+          echo "" >> ${{ github.workspace }}-CHANGELOG.md
+          echo "<h2>Key Features 🎯</h2><br>" >> ${{ github.workspace }}-CHANGELOG.md
+          echo "" >> ${{ github.workspace }}-CHANGELOG.md
+
+          # Generate a list of commits since the last release and add them to the release notes
+          git log -50 main..feature/mini-functions --oneline | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{labels="";for(i=2;i<=NF;i++){if($i~/^[a-zA-Z]+\([a-zA-Z0-9-_]+\):/)labels=labels" "$i;else break;}printf("-%s %s\n",labels,$0);}' | sort -k1,1 >> ${{ github.workspace }}-CHANGELOG.md
+          echo "" >> ${{ github.workspace }}-CHANGELOG.md
