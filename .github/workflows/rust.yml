@@ -4,10 +4,6 @@ on: [push, pull_request]
 
 jobs:
   rust:
-    env:
-      CARGO_TERM_COLOR: always
-      ARTIFACT_NAME: mini-functions-${{ matrix.target }}-v${{ env.VERSION }}
-      VERSION: $(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))
     strategy:
       fail-fast: false
       matrix:
@@ -36,6 +32,11 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
+      - name: Set environment variables
+        run: |
+          echo "::set-env name=VERSION::$(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))"
+          echo "::set-env name=ARTIFACT_NAME::mini-functions-${{ matrix.target }}-v${{ env.VERSION }}"
+
       - name: Checkout repository 🛎️
         id: checkout
         uses: actions/checkout@v3
@@ -71,8 +72,7 @@ jobs:
 
       # - name: Print package version 📦
       #   run: echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
-        # cargo metadata --format-version 1 | jq '.packages[1].version'
-
+      # cargo metadata --format-version 1 | jq '.packages[1].version'
       - name: Build libraries 🏗
         run: |
           # Check the code base
