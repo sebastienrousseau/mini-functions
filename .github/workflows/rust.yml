@@ -10,6 +10,23 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
+        target:
+          - x86_64-unknown-linux-gnu
+          - x86_64-pc-windows-gnu
+          - x86_64-apple-darwin
+          - aarch64-unknown-linux-gnu
+          - aarch64-unknown-windows-gnu
+          - aarch64-apple-darwin
+          - arm64-unknown-linux-gnu
+          - arm64-pc-windows-gnu
+          - arm64-apple-darwin
+          - armv7-unknown-linux-gnueabihf
+          - armv7-pc-windows-gnu
+          - armv7-apple-darwin
+          - wasm32-unknown-unknown
+          - wasm32-pc-windows-gnu
+          - wasm32-wasi
+
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -38,9 +55,10 @@ jobs:
           args: --all -- --check --verbose
 
       - name: Build 🚀
-        run: cargo build --verbose
+        run: cargo build --release --target $TARGET --out-dir target/release
+
       - name: Run tests 🧪
-        run: cargo test --verbose
+        run: cargo test --release --target $TARGET --out-dir target/release
 
       - name: Upload artifacts 📦
         uses: actions/upload-artifact@v2
