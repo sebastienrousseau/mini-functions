@@ -88,18 +88,19 @@ jobs:
           cross build --release --target=${{ matrix.target }} --lib
 
         shell: /bin/bash -e {0}
-        # env:
-        #   CARGO_TERM_COLOR: always
-        #   ARTIFACT_NAME: mini-functions-${{ matrix.target }}-v${{ env.VERSION }}
-        #   VERSION: $(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))
+
+      - name: Set environment variables
+        env:
+          VERSION: $(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))
+          ARTIFACT_NAME: mini-functions-${{ matrix.target }}-v${{ env.VERSION }}
+        run: |
+          # You can use the environment variables here
+          echo $VERSION
+          echo $ARTIFACT_NAME
 
       - name: Upload artifacts 📦
         id: upload
         uses: actions/upload-artifact@v3
-        # env:
-        #   CARGO_TERM_COLOR: always
-        #   VERSION: $(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))
-        #   ARTIFACT_NAME: mini-functions-${{ matrix.target }}-v${{ env.VERSION }}}
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: target/release
