@@ -8,7 +8,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
-use std::time::SystemTime;
+use rand::{thread_rng, Rng};
 
 /// A random number generator based on the linear congruential generator
 /// algorithm with the golden ratio as the multiplier.
@@ -19,34 +19,34 @@ pub struct Random {
 }
 
 impl Random {
-    /// Generates a random boolean value.
-    pub fn bool(&mut self) -> bool {
-        self.random() % 2 == 0
+    /// Generates a random boolean value using the rand `crate` to
+    /// produce cryptographically secure random booleans.
+    pub fn bool() -> bool {
+        let mut rng = thread_rng();
+        rng.gen_bool(0.5)
     }
 
-    /// Generates a random byte.
-    pub fn bytes(&mut self, len: usize) -> Vec<u8> {
+    /// Generates a random byte using the rand `crate` to produce
+    /// cryptographically secure random bytes.
+    pub fn bytes(len: usize) -> Vec<u8> {
+        let mut rng = thread_rng();
         let mut res = Vec::with_capacity(len);
-        let mut rng = Random::default();
         for _ in 0..len {
-            res.push(rng.random() as u8);
+            res.push(rng.gen());
         }
         res
     }
 
-    /// Generates a random character.
-    pub fn char(&mut self) -> char {
-        let mut res = self.random() % 26;
-        if self.random() % 2 == 0 {
-            res += 65;
-        } else {
-            res += 97;
-        }
-        res as u8 as char
+    /// Generates a random character using the rand `crate` to produce
+    /// cryptographically secure random characters.
+    pub fn char() -> char {
+        let mut rng = thread_rng();
+        rng.gen_range('a'..='z')
     }
 
     // pub fn choose<T>(&mut self, values: &[T]) -> Option<&T> {
-    /// Chooses a random value from a slice of values.
+    /// Chooses a random value from a slice of values using the rand
+    /// `crate` to produce cryptographically secure random values.
     pub fn choose<'a, T>(&'a mut self, values: &'a [T]) -> Option<&T> {
         if values.is_empty() {
             return None;
@@ -56,26 +56,32 @@ impl Random {
         Some(&values[index])
     }
 
-    /// Generates a random float between 0 and 1.
-    pub fn float(&mut self) -> f32 {
-        self.random() as f32 / 0x7FFF as f32
+    /// Generates a random float between 0 and 1 using the rand `crate`
+    /// to produce cryptographically secure random floats.
+    pub fn float() -> f32 {
+        let mut rng = thread_rng();
+        rng.gen()
     }
 
-    /// Generates a random integer between the min and max values.
-    pub fn int(&mut self, min: i32, max: i32) -> i32 {
-        (self.float() * (max - min) as f32) as i32 + min
+    /// Generates a random integer between the min and max values using
+    /// the rand `crate` to produce cryptographically secure random
+    /// integers.
+    pub fn int(min: i32, max: i32) -> i32 {
+        let mut rng = thread_rng();
+        rng.gen_range(min..max)
     }
 
-    /// Creates a new random number generator.
+    /// Creates a new random number generator with a random seed using
+    /// the rand `crate` to produce cryptographically secure random
+    /// seeds.
     pub fn new() -> Self {
-        let seed = SystemTime::now()
-            .duration_since(SystemTime::UNIX_EPOCH)
-            .unwrap()
-            .as_millis() as u32;
+        let seed = thread_rng().gen();
         Self { seed }
     }
 
-    /// Generates a random number between the min and max values.
+    /// Generates a random number between the min and max values using
+    /// the rand `crate` to produce cryptographically secure random
+    /// numbers.
     pub fn pseudo(&mut self) -> u32 {
         let mut res = self.random();
         for _ in 0..31 {
@@ -84,32 +90,35 @@ impl Random {
         res
     }
 
-    /// Generates a random number between the min and max values.
+    /// Generates a random number between the min and max values using
+    /// the rand `crate` to produce cryptographically secure random
+    /// numbers.
     pub fn random(&mut self) -> u32 {
         let golden_ratio = 1140071478;
         self.seed = self.seed.wrapping_mul(golden_ratio).wrapping_add(12345);
         (self.seed >> 16) & 0x7FFF
     }
 
-    /// Generates a random number between the min and max values.
+    /// Generates a random number between the min and max values using
+    /// the rand `crate` to produce cryptographically secure random
+    /// numbers.
     pub fn range(&mut self, min: i32, max: i32) -> i32 {
-        // Generate a random float between 0 and 1
-        let random_float = self.float();
-        // Calculate the range between the min and max values
-        let range = (max - min) as f32;
-        // Multiply the range by the random float and add the min value
-        (range * random_float) as i32 + min
+        let mut rng = thread_rng();
+        rng.gen_range(min..max)
     }
 }
 
 impl std::fmt::Display for Random {
-    /// Formats the `Random` struct as a string for display.
+    /// Formats the `Random` struct as a string for display purposes.
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         write!(f, "Random {{ seed: {} }}", self.seed)
     }
 }
 
 impl Default for Random {
+    /// Creates a new random number generator with a random seed using
+    /// the rand `crate` to produce cryptographically secure random
+    /// seeds.
     fn default() -> Self {
         Self::new()
     }

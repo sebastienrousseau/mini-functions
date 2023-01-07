@@ -47,6 +47,10 @@ impl Deck {
 }
 
 fn main() {
+    // Create a new random boolean
+    let bool: bool = Random::bool();
+    println!("🦀 Random::bool():        ✅ {}", bool);
+
     // Create a new random number generator
     let mut rng = Random::new();
     println!("🦀 Random::new():         ✅ {}", rng);
@@ -60,7 +64,7 @@ fn main() {
     let pseudo = rng.pseudo();
     println!("🦀 Random::pseudo():      ✅ {}", pseudo);
 
-    let bytes = rng.bytes(10);
+    let bytes = Random::bytes(10);
     println!("🦀 Random::bytes():       ✅ {:?}", bytes);
 
     let float = rng.random() as f32 / 0x7FFF as f32;

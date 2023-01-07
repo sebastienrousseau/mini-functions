@@ -103,11 +103,11 @@ impl Password {
             word_set.insert(word);
 
             // Generate a random uppercase or lowercase letter
-            let mut random_letter = rng.char();
+            let mut random_letter = Random::char();
 
             // Ensure that the random letter is not already present in the word
             while word.contains(random_letter) {
-                random_letter = rng.char();
+                random_letter = Random::char();
             }
 
             // Convert the word to title case and add a number to the end

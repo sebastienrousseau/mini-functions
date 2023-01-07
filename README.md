@@ -79,7 +79,7 @@ To use `mini-functions` in your project, add the following to your
 
 ```toml
 [dependencies]
-mini-functions = "0.0.7"
+mini-functions = "0.0.8"
 ```
 
 Add the following to your `main.rs` file:
@@ -298,7 +298,7 @@ for their help and support.
 [crates-badge]: https://img.shields.io/crates/v/mini-functions.svg?style=for-the-badge 'Crates.io'
 [divider]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/elements/divider.svg "divider"
 [docs-badge]: https://img.shields.io/docsrs/mini-functions.svg?style=for-the-badge 'Docs.rs'
-[libs-badge]: https://img.shields.io/badge/lib.rs-v0.0.7-orange.svg?style=for-the-badge 'Lib.rs'
+[libs-badge]: https://img.shields.io/badge/lib.rs-v0.0.8-orange.svg?style=for-the-badge 'Lib.rs'
 [license-badge]: https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge 'License'
 [made-with-rust-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-rust.svg "Made With Rust 🦀"
 [mwl]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg "Made With Love"

@@ -3,6 +3,12 @@ mod tests {
     use mini_functions::random::Random;
 
     #[test]
+    fn test_bool() {
+        let bool = Random::bool();
+        assert!(bool == true || bool == false);
+    }
+
+    #[test]
     fn test_new() {
         let mut rng = Random::new();
         // We cannot directly access the `seed` field, so we will check
@@ -26,15 +32,13 @@ mod tests {
 
     #[test]
     fn test_bytes() {
-        let mut rng = Random::new();
-
-        let bytes = rng.bytes(0);
+        let bytes = Random::bytes(0);
         assert_eq!(bytes.len(), 0);
 
-        let bytes = rng.bytes(10);
+        let bytes = Random::bytes(10);
         assert_eq!(bytes.len(), 10);
 
-        let bytes = rng.bytes(100);
+        let bytes = Random::bytes(100);
         assert_eq!(bytes.len(), 100);
     }
 
