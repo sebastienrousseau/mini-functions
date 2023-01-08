@@ -1,3 +1,12 @@
+//! # Core Claims functionality
+//!
+//! Claims provides a set of utility functions for working with JSON Web Token (JWT) claims.
+//!
+
+// Copyright © 2022-2023 Mini Functions. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
+
 use serde::{Deserialize, Serialize};
 
 /// Claims are the registered claims defined in the RFC 7519.
@@ -30,7 +39,8 @@ use serde::{Deserialize, Serialize};
 /// );
 /// ```
 ///
-#[derive(Serialize, Deserialize)]
+#[non_exhaustive]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 pub struct Claims {
     pub(crate) exp: String, // expiration date
     pub(crate) iat: String, // issued at date
@@ -90,5 +100,23 @@ impl Claims {
     /// Get the audience.
     pub fn aud(&self) -> &str {
         &self.aud
+    }
+}
+
+/// Implement the `Display` trait for `Claims`.
+impl std::fmt::Display for Claims {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "exp: {}, iat: {}, iss: {}, sub: {}, aud: {}",
+            self.exp, self.iat, self.iss, self.sub, self.aud
+        )
+    }
+}
+
+/// Implement the `Default` trait for `Claims`.
+impl Default for Claims {
+    fn default() -> Self {
+        Claims::new("", "", "", "", "")
     }
 }

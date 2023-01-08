@@ -16,7 +16,8 @@ use jwt::Header;
 use serde::{Deserialize, Serialize};
 use sha2::Sha256;
 
-// Provides a set of utility functions for working with JSON Web Tokens
+/// JWT is a struct that holds the JWT token and its associated claims.
+/// Provides a set of utility functions for working with JSON Web Tokens
 /// (JWTs) and JSON Web Signatures (JWSs).
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, PartialOrd, Eq, Ord, Hash, Serialize, Deserialize)]
@@ -33,6 +34,25 @@ pub struct JWT {
 }
 
 impl Default for JWT {
+    /// Create a new instance of `JWT`.
+    /// The default values are:
+    /// * `audience` - "audience"
+    /// * `claim` - "claim"
+    /// * `create_date` - current date
+    /// * `expire_date` - current date
+    /// * `issuer` - "issuer"
+    /// * `password` - "password"
+    /// * `token` - None
+    /// * `update_date` - current date + 1 day
+    /// * `username` - "username"
+    ///
+    /// # Examples
+    /// ```
+    /// use mini_functions::jwt::jwt::JWT;
+    ///
+    /// let jwt = JWT::default();
+    /// ```
+    ///
     fn default() -> Self {
         JWT {
             audience: String::from("audience"), // audience
@@ -216,7 +236,6 @@ impl JWT {
 //         JWT::new(String::new(), String::new(), String::new(), String::new())
 //     }
 // }
-
 impl std::fmt::Display for JWT {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         write!(

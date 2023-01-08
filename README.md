@@ -111,6 +111,25 @@ collection of tools for working with various aspects of a Rust
 application. The `mini-functions` library consists of the following
 `non-exhaustive` functions:
 
+### 1) Claim functions
+
+The **Claim functions** are used to retrieve and manipulate information
+about claims. These functions are used to create and manage claims in
+JSON Web Tokens (JWT) and JSON Web Signatures (JWS).
+
+<!-- markdownlint-disable MD033 -->
+<details>
+  <summary>Open to view the Claim functions available in the library<br><br></summary>
+
+| Function | Include File | Function Prototype | Description |
+| -------- | ------------ | ------------------ | ----------- |
+| `Claim::new()` | `claim.rs` | `fn new()` | Creates a new claim. |
+| `Claim::exp` | `claim.rs` | `exp` | Returns the expiration time of the claim. |
+| `Claim::iat` | `claim.rs` | `iat` | Returns the issued at time of the claim. |
+| `Claim::iss` | `claim.rs` | `iss` | Returns the issuer of the claim. |
+| `Claim::sub` | `claim.rs` | `sub` | Returns the subject of the claim. |
+| `Claim::aud` | `claim.rs` | `aud` | Returns the audience of the claim. |
+
 ### 1) Date and time functions
 
 The **Date and time functions** are used to retrieve and manipulate
