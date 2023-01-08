@@ -8,7 +8,7 @@ cargo run --example date
 
 extern crate mini_functions;
 
-use mini_functions::date::Date;
+use mini_functions::date::date::Date;
 
 fn main() {
     let date = Date::date();

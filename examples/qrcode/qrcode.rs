@@ -1,5 +1,5 @@
 use image::{ImageBuffer, Rgb, RgbImage}; // Import the ImageBuffer and Rgb structs from the image crate
-use mini_functions::qrcode::QRCode;
+use mini_functions::qrcode::qrcode::QRCode;
 use std::fs; // Import the fs module from the standard library // Import the QRCode struct from the mini_functions crate
 
 fn main() {

@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use mini_functions::hash::Hash;
+    use mini_functions::hash::hash::Hash;
 
     #[test]
     fn test_new() {

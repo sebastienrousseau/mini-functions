@@ -43,7 +43,7 @@
 //! ```rust
 //! extern crate mini_functions;
 //!
-//! use mini_functions::date::Date;
+//! use mini_functions::date::date::Date;
 //!
 //! fn main() {
 //!   let date = Date::date();
@@ -74,6 +74,10 @@ pub mod date;
 /// Provides a set of utility functions for working with hashes. This
 /// module is a wrapper around the `blake2` crate.
 pub mod hash;
+
+/// Provides a set of utility functions for working with JWTs (JSON Web
+/// Tokens) and JWSs (JSON Web Signatures).
+pub mod jwt;
 
 /// Provides a log function to log a message to the console with a
 /// simple, readable output format

@@ -1,4 +1,4 @@
-use mini_functions::{date::Date, log::Log};
+use mini_functions::{date::date::Date, log::log::Log};
 
 fn main() {
     let log = Log::new(

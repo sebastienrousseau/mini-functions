@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use mini_functions::common::constant::SPECIAL_CHARS;
-    use mini_functions::password::Password;
+    use mini_functions::password::password::Password;
 
     #[test]
     fn test_password() {

@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use mini_functions::random::Random;
+    use mini_functions::random::random::Random;
 
     #[test]
     fn test_bool() {

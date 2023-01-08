@@ -1,7 +1,7 @@
 use crate::common::constant::{HASH_COST, SPECIAL_CHARS};
 use crate::common::words::WORD_LIST;
-use crate::hash::Hash;
-use crate::random::Random;
+use crate::hash::hash::Hash;
+use crate::random::random::Random;
 use convert_case::{Case, Casing};
 use std::collections::HashSet;
 
@@ -56,13 +56,13 @@ impl Password {
     }
     /// Generates a random passphrase.
     pub fn new(len: u8, separator: &str, special_chars: Vec<char>) -> Self {
-        // Setup a random number generator
+        // Setup a random number generator.
         let mut rng = Random::default();
 
         // Generate a random number between 0 and 99.
         let mut nb: i32 = rng.range(HASH_COST.try_into().unwrap(), 99);
 
-        // Create a new vector to store the words in.
+        // Create a new vector to store the words in the passphrase.
         let mut words: Vec<String> = Vec::new();
 
         // Convert the special characters to a vector of chars.
@@ -82,7 +82,8 @@ impl Password {
                 ""
             };
 
-            // Ensure that the random word is not already present in the vector of words
+            // Ensure that the random word is not already present in
+            // the vector of words
             while words.contains(&word.to_string()) {
                 word = if let Some(w) = Random::choose(&mut rng, WORD_LIST) {
                     // If a word was found, return it.
@@ -93,8 +94,8 @@ impl Password {
                 };
             }
 
-            // Check if the word is already in the HashSet. If it is, skip
-            // to the next iteration.
+            // Check if the word is already in the HashSet. If it is,
+            // skip to the next iteration of the loop.
             if word_set.contains(word) {
                 continue;
             }
@@ -102,15 +103,18 @@ impl Password {
             // Add the word to the HashSet.
             word_set.insert(word);
 
-            // Generate a random uppercase or lowercase letter
+            // Generate a random uppercase or lowercase letter from the
+            // ASCII table.
             let mut random_letter = Random::char();
 
-            // Ensure that the random letter is not already present in the word
+            // Ensure that the random letter is not already present in
+            // the word that was chosen.
             while word.contains(random_letter) {
                 random_letter = Random::char();
             }
 
-            // Convert the word to title case and add a number to the end
+            // Convert the word to title case and add a number to the
+            // end of the word.
             let word = format!(
                 "{}{}{}{}",
                 word.to_case(Case::Title),
@@ -121,7 +125,8 @@ impl Password {
             // Generate a new random number between 0 and 99.
             nb = rng.range(HASH_COST.try_into().unwrap(), 99);
 
-            // Replace a random letter in the word with a special character from the list.
+            // Replace a random letter in the word with a special
+            // character from the list.
             let mut chars: Vec<char> = word.chars().collect();
             let index = rng.range(0, chars.len().try_into().unwrap()) as usize;
             chars[index] = *Random::choose(&mut rng, &special_chars).unwrap();
@@ -155,12 +160,14 @@ impl Password {
 }
 
 impl std::fmt::Display for Password {
+    // Display the generated passphrase.
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", self.passphrase)
     }
 }
 
 impl Default for Password {
+    // Default to a passphrase of 4 words.
     fn default() -> Self {
         Self::new(4, "-", SPECIAL_CHARS.to_vec())
     }

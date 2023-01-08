@@ -1,4 +1,4 @@
-use mini_functions::random::Random;
+use mini_functions::random::random::Random;
 
 // Defining an example for a simple `A Three Card Draw Poker Game` that
 // shuffles a deck of cards and allows the user to draw cards from the

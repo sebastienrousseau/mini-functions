@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use image::{Rgb, RgbImage};
-    use mini_functions::qrcode::QRCode;
+    use mini_functions::qrcode::qrcode::QRCode;
     use std::convert::TryInto;
 
     #[test]

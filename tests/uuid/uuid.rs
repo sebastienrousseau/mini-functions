@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use mini_functions::uuid::UUID;
+    use mini_functions::uuid::uuid::UUID;
     #[test]
     fn test_new() {
         let version_3 = 3;

@@ -21,7 +21,7 @@ use std::fmt; // Import the `fmt` module from the standard library.
 ///
 /// # Examples
 /// ```
-/// use mini_functions::log::Log;
+/// use mini_functions::log::log::Log;
 ///
 /// let log = Log::new(
 /// "12345678-1234-1234-1234-1234567890ab",
@@ -58,7 +58,7 @@ impl Log {
     /// # Examples
     ///
     /// ```
-    /// use mini_functions::log::Log;
+    /// use mini_functions::log::log::Log;
     ///
     /// let log = Log::new(
     /// "12345678-1234-1234-1234-1234567890ab",

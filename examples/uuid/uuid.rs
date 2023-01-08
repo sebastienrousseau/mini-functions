@@ -1,4 +1,4 @@
-use mini_functions::uuid::UUID; // Import the UUID struct from the mini_functions crate
+use mini_functions::uuid::uuid::UUID; // Import the UUID struct from the mini_functions crate
 
 fn main() {
     let version_3 = 3; // Define a variable for UUID version 3

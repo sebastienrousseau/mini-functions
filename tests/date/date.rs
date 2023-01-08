@@ -4,7 +4,7 @@ mod tests {
 
     extern crate mini_functions;
 
-    use mini_functions::date::Date;
+    use mini_functions::date::date::Date;
 
     #[test]
     fn test_date() {

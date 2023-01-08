@@ -18,12 +18,16 @@
         "gnubin",
         "hasher",
         "hashfile",
+        "hmac",
+        "Hmac",
         "libexec",
         "libmini",
         "linux",
         "msvc",
         "nanos",
         "oneline",
+        "openssl",
+        "OPENSSL",
         "qrcode",
         "rlib",
         "rustc",
@@ -35,6 +39,7 @@
         "struct",
         "Swatinem",
         "uuid",
+        "varkey",
         "Zellers"
     ]
 }

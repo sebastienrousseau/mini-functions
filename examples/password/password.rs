@@ -1,5 +1,5 @@
 use mini_functions::common::constant::SPECIAL_CHARS;
-use mini_functions::password::Password;
+use mini_functions::password::password::Password;
 
 fn main() {
     let password = Password::new(4, "-", SPECIAL_CHARS.to_vec());

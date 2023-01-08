@@ -1,4 +1,4 @@
-use mini_functions::hash::Hash;
+use mini_functions::hash::hash::Hash;
 
 fn main() {
     let mut hash = Hash::new();
