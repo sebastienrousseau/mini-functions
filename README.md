@@ -204,6 +204,7 @@ The **JWT functions** are used to generate and verify JSON Web Tokens.
 | `JWT::new` | `jwt.rs` | `fn new()` | Creates a new JWT instance. |
 | `JWT::secret` | `jwt.rs` | `fn secret()` | Returns the JWT secret. |
 | `JWT::set_token` | `jwt.rs` | `fn set_token()` | Sets the JWT token. |
+</details>
 
 ### 5) Log functions
 
