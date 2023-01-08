@@ -130,7 +130,9 @@ JSON Web Tokens (JWT) and JSON Web Signatures (JWS).
 | `Claim::sub` | `claim.rs` | `sub` | Returns the subject of the claim. |
 | `Claim::aud` | `claim.rs` | `aud` | Returns the audience of the claim. |
 
-### 1) Date and time functions
+</details>
+
+### 2) Date and time functions
 
 The **Date and time functions** are used to retrieve and manipulate
 information about dates and times.
@@ -157,7 +159,7 @@ information about dates and times.
 | `Date::year()` | `date.rs` | `fn year()` | Returns the current year. |
 </details>
 
-### 2) Hash functions
+### 3) Hash functions
 
 The **Hash functions** are used to generate hashes for various data
 types.
@@ -180,7 +182,7 @@ types.
 | `Hash::verify` | `hash.rs` | `fn verify()` | Verifies a hash. |
 </details>
 
-### 3) JWT functions
+### 4) JWT functions
 
 The **JWT functions** are used to generate and verify JSON Web Tokens.
 
@@ -203,7 +205,7 @@ The **JWT functions** are used to generate and verify JSON Web Tokens.
 | `JWT::secret` | `jwt.rs` | `fn secret()` | Returns the JWT secret. |
 | `JWT::set_token` | `jwt.rs` | `fn set_token()` | Sets the JWT token. |
 
-### 3) Log functions
+### 5) Log functions
 
 The **Log functions** are used to log messages to the console.
 
@@ -217,7 +219,7 @@ The **Log functions** are used to log messages to the console.
 | `Log::new()` | `log.rs` | `fn new()` | Creates a new log instance. |
 </details>
 
-### 4) Password functions
+### 6) Password functions
 
 The **Password functions** are used to generate passwords and verify
 passwords.
@@ -239,7 +241,7 @@ passwords.
 | `Password::set_passphrase` | `password.rs` | `fn set_passphrase()` | Sets a passphrase. |
 </details>
 
-### 5) QRCode functions
+### 7) QRCode functions
 
 The **QRCode functions** are used to generate QRCode images and data.
 
@@ -259,7 +261,7 @@ The **QRCode functions** are used to generate QRCode images and data.
 | `QRCode::to_svg()` | `qrcode.rs` | `fn to_svg()` | Converts the QRCode instance to a SVG image. |
 </details>
 
-### 6) Random number functions
+### 8) Random number functions
 
 The **Random number functions** are used to
 generate random numbers in a variety of sizes and formats.
@@ -279,7 +281,7 @@ generate random numbers in a variety of sizes and formats.
 | `Random::random()` | `random.rs` | `fn random()` | Generates a random number using the linear congruential generator algorithm. The multiplier for the algorithm is the golden ratio. |
 </details>
 
-### 7) UUID functions
+### 9) UUID functions
 
 The **UUID functions** are used to generate UUIDs (Universally Unique
 Identifiers).
