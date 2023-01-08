@@ -161,6 +161,29 @@ types.
 | `Hash::verify` | `hash.rs` | `fn verify()` | Verifies a hash. |
 </details>
 
+### 3) JWT functions
+
+The **JWT functions** are used to generate and verify JSON Web Tokens.
+
+<!-- markdownlint-disable MD033 -->
+<details>
+  <summary>Open to view the JWT functions available in the library<br><br></summary>
+
+| Function | Include File | Function Prototype | Description |
+| -------- | ------------ | ------------------ | ----------- |
+| `JWT::default` | `jwt.rs` | `fn default()` | Creates a new JWT instance. |
+| `JWT::decode` | `jwt.rs` | `fn decode()` | Decodes a JWT. |
+| `JWT::encode` | `jwt.rs` | `fn encode()` | Encodes a JWT. |
+| `JWT::generate` | `jwt.rs` | `fn generate()` | Generates a JWT. |
+| `JWT::get_token` | `jwt.rs` | `fn get_token()` | Returns the JWT token. |
+| `JWT::claims` | `jwt.rs` | `fn claims()` | Returns the JWT claims. |
+| `JWT::get_token_length` | `jwt.rs` | `fn get_token_length()` | Returns the length of the JWT token. |
+| `JWT::get_token_username` | `jwt.rs` | `fn get_token_username()` | Returns the username of the JWT token. |
+| `JWT::header` | `jwt.rs` | `fn header()` | Returns the JWT header. |
+| `JWT::new` | `jwt.rs` | `fn new()` | Creates a new JWT instance. |
+| `JWT::secret` | `jwt.rs` | `fn secret()` | Returns the JWT secret. |
+| `JWT::set_token` | `jwt.rs` | `fn set_token()` | Sets the JWT token. |
+
 ### 3) Log functions
 
 The **Log functions** are used to log messages to the console.

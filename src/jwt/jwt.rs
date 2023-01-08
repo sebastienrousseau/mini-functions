@@ -1,3 +1,13 @@
+//! # Core JWT functionality
+//!
+//! JWT provides a set of utility functions for working with JSON Web Tokens (JWTs) and JSON Web Signatures (JWSs).
+//!
+
+// Copyright © 2022-2023 Mini Functions. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
+
+use crate::claims::claims::Claims;
 use crate::date::date::Date;
 use crate::jwt::error::JwtError;
 
@@ -6,27 +16,10 @@ use jwt::Header;
 use serde::{Deserialize, Serialize};
 use sha2::Sha256;
 
-#[derive(Serialize, Deserialize, Debug)]
-/// A JSON Web Token (JWT) is a compact, URL-safe means of representing
-/// claims to be transferred between two parties. The claims in a JWT
-/// are encoded as a JSON object that is used as the payload of a JSON
-/// Web Signature (JWS) structure or as the plaintext of a JSON Web
-/// Encryption (JWE) structure, enabling the claims to be digitally
-/// signed or integrity protected with a Message Authentication Code
-/// (MAC) and/or encrypted.
-#[non_exhaustive]
-pub struct Claims {
-    exp: String, // expiration date
-    iat: String, // issued at date
-    iss: String, // issuer
-    sub: String, // subject
-    aud: String, // audience
-}
-
 // Provides a set of utility functions for working with JSON Web Tokens
 /// (JWTs) and JSON Web Signatures (JWSs).
 #[non_exhaustive]
-#[derive(Clone, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+#[derive(Clone, Debug, PartialEq, PartialOrd, Eq, Ord, Hash, Serialize, Deserialize)]
 pub struct JWT {
     audience: String,      // audience
     claim: String,         // claim
@@ -114,7 +107,7 @@ impl JWT {
     /// resulting string with the provided secret using the HMAC-SHA256
     /// algorithm, and then concatenates the signed string with the
     /// signature, separated by a period.
-    fn encode(header: &Header, claims: &Claims, secret: &[u8]) -> Result<String, JwtError> {
+    pub fn encode(header: &Header, claims: &Claims, secret: &[u8]) -> Result<String, JwtError> {
         // Convert the header and claims to JSON
         let header_json = serde_json::to_string(header)?;
         let claims_json = serde_json::to_string(claims)?;

@@ -65,6 +65,10 @@
 #![crate_type = "dylib"]
 
 #[macro_use]
+
+/// Provides a set of utility functions for working with claims
+pub mod claims;
+
 /// Provides a set of common constants used in the application
 pub mod common;
 
