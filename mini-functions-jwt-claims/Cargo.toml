@@ -1,0 +1,28 @@
+[package]
+name = "mini-functions-jwt-claims"
+version = "0.0.8"
+authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
+description = "Claims is a struct that holds the claims defined in the RFC 7519."
+include = [
+    # "/build.rs",
+    "/Cargo.toml",
+    # "/LICENSE-APACHE",
+    # "/LICENSE-MIT",
+    # "/README.md",
+    "/src/**",
+    "/tests/**",
+    "/examples/**",
+]
+
+[dependencies]
+mini-functions = { path = "../mini-functions" }
+mini-functions-date = { path = "../mini-functions-date" }
+serde_derive = "1.0.152"
+serde = "1.0.152"
+serde_json = "1.0.91"
+
+[lib]
+path = "src/lib.rs"
+
+[features]
+default = []
