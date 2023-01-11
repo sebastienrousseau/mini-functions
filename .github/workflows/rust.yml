@@ -4,8 +4,6 @@ on: [push]
 
 env:
   CARGO_TERM_COLOR: always
-  RUSTFLAGS: -D warnings
-  CLIPPY_DISABLE_DOCS_LINKS: 1
 
 jobs:
   mini_functions_release:
@@ -81,22 +79,21 @@ jobs:
       - name: Set environment variables 🔢
         run: |
           echo "VERSION=0.0.8" >> $GITHUB_ENV
-          echo "ARTIFACT_NAME=mini-functions-${{ matrix.target }}" >> $GITHUB_ENV
 
       - name: Build libraries 🏗
         id: build
         run: |
           # Check the code base
-          cargo check --all
+          cargo check --all --all-features --workspace --verbose
 
           # Install cross
           cargo install cross
 
           # Clean the build artifacts
-          cargo clean
+          cargo clean --verbose
 
           # Build the libraries for the target platform and architecture
-          cargo build --verbose --workspace --target=${{ matrix.target }} --release
+          cargo build --verbose --workspace --release --target ${{ matrix.target }}
         shell: /bin/bash -e {0}
 
       - name: Package the binary 📦
@@ -107,7 +104,7 @@ jobs:
 
       - name: Deploy 🚀
         id: deploy
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.platform }}.tar.gz
           path: target/package/${{ matrix.platform }}.tar.gz
