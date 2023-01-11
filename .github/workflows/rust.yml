@@ -36,6 +36,8 @@ jobs:
         with:
           tag_name: v${{ env.CARGO_MINI_FUNCTIONS_VERSION }}
           release_name: v${{ env.CARGO_MINI_FUNCTIONS_VERSION }}
+          draft: true
+          prerelease: false
 
   build-release:
     name: build-release
@@ -112,28 +114,82 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Install Rust
+      # - name: Install Rust
+      #   uses: actions-rs/toolchain@v1
+      #   with:
+      #     toolchain: ${{ matrix.rust }}
+      #     profile: minimal
+      #     override: true
+      #     target: ${{ matrix.target }}
+
+      - name: Install Rust 🦀
+        id: rust
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
+      - name: Install rustfmt 🦀
+        id: install-rustfmt
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: ${{ matrix.rust }}
-          profile: minimal
+          components: rustfmt
           override: true
+          profile: minimal
           target: ${{ matrix.target }}
+          toolchain: stable
 
-      - name: Use Cross
+      - name: Run rustfmt 🦀
+        id: rustfmt
+        run: rustup component add rustfmt
+
+      - name: Check formatting 🦀
+        id: fmt
+        uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: --all -- --check --verbose --color=always
+
+      - name: Use Cross ✚
         shell: bash
         run: |
+          # Install cross
           cargo install cross
           echo "CARGO=cross" >> $GITHUB_ENV
           echo "TARGET_FLAGS=--target ${{ matrix.target }}" >> $GITHUB_ENV
           echo "TARGET_DIR=./target/${{ matrix.target }}" >> $GITHUB_ENV
-      - name: Show command used for Cargo
-        run: |
+
+          # Show command used for Cargo
           echo "cargo command is: ${{ env.CARGO }}"
           echo "target flag is: ${{ env.TARGET_FLAGS }}"
           echo "target dir is: ${{ env.TARGET_DIR }}"
-      - name: Build release binary
-        run: ${{ env.CARGO }} build --verbose --release ${{ env.TARGET_FLAGS }}
+
+          # Check the code base
+          cargo check --all
+
+          # Clean the build artifacts
+          cargo clean
+
+      - name: Build libraries 🏗
+        shell: bash
+        run: |
+          # Build the libraries for the target platform and architecture
+          # cross build --release --target=${{ matrix.target }} --lib
+          ${{ env.CARGO }} build --verbose --lib --release ${{ env.TARGET_FLAGS }}
+
+      # - name: Use Cross
+        # shell: bash
+        # run: |
+        #   cargo install cross
+        #   echo "CARGO=cross" >> $GITHUB_ENV
+        #   echo "TARGET_FLAGS=--target ${{ matrix.target }}" >> $GITHUB_ENV
+        #   echo "TARGET_DIR=./target/${{ matrix.target }}" >> $GITHUB_ENV
+
+      # - name: Show command used for Cargo
+      #   run: |
+      #     echo "cargo command is: ${{ env.CARGO }}"
+      #     echo "target flag is: ${{ env.TARGET_FLAGS }}"
+      #     echo "target dir is: ${{ env.TARGET_DIR }}"
+      # - name: Build release binary
+      #   run: ${{ env.CARGO }} build --verbose --release ${{ env.TARGET_FLAGS }}
 
       - name: Strip release binary (linux and macos)
         if: matrix.build == 'linux' || matrix.build == 'macos'
@@ -173,7 +229,6 @@ jobs:
           asset_path: ${{ env.ASSET }}
           asset_name: ${{ env.ASSET }}
           asset_content_type: application/octet-stream
-          draft: true
 # jobs:
 #   create-release:
 #     name: create-release
