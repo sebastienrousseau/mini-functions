@@ -8,100 +8,29 @@ env:
   CLIPPY_DISABLE_DOCS_LINKS: 1
 
 jobs:
-  rustfmt:
-    name: rustfmt 🦀
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout repository
-        id: checkout_repository_rustfmt
-        uses: actions/checkout@v3
-        with: { submodules: true }
-      - name: Install rust
-        id: install_rust
-        run: |
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-
-      - name: Check formatting
-        id: check_formatting
-        run: cargo fmt -- --check
-
-  documentation:
-    name: documentation 📚
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout repository
-        id: checkout_repository_documentation
-        uses: actions/checkout@v3
-        with: { submodules: true }
-      - name: Install rust
-        id: install_rust_documentation
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          override: true
-          profile: minimal
-      - name: Documentation
-        id: documentation
-        run: cargo doc --all-features --workspace
-
-  clippy:
-    name: clippy 🦀
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          override: true
-      - run: rustup component add clippy
-      - uses: actions-rs/cargo@v1
-        with:
-          command: clippy
-          args: --all-features -- -D warnings
-
   mini_functions_release:
+    name: mini_functions_release
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+        target:
+          [
+            aarch64-apple-darwin,
+            x86_64-apple-darwin,
+            x86_64-unknown-linux-gnu,
+            x86_64-pc-windows-msvc,
+          ]
+        rust: [stable]
 
       max-parallel: 2
-
-    runs-on: ${{ matrix.platform }}
 
     steps:
       - name: Checkout repository 🛎️
         id: checkout
         uses: actions/checkout@v3
         with: { submodules: true }
-
-      - name: Install Rust aarch64-apple-darwin
-        if: matrix.platform == 'macos-latest'
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: nightly
-          target: aarch64-apple-darwin
-
-      - name: Install Rust x86_64-apple-darwin
-        if: matrix.platform == 'macos-latest'
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: nightly
-          target: x86_64-apple-darwin
-
-      - name: Install Rust Linux x86_64-unknown-linux-gnu
-        if: matrix.platform == 'ubuntu-latest'
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: nightly
-          target: x86_64-unknown-linux-gnu
-
-      - name: Install Rust Windows x86_64-pc-windows-msvc
-        if: matrix.platform == 'windows-latest'
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: nightly
-          target: x86_64-pc-windows-msvc
 
       - name: Restore dependencies cache 📦
         id: cache
@@ -116,15 +45,43 @@ jobs:
             ${{ runner.os }}-rustup-
 
       - name: Install Rust 🦀
-        id: rust-install
+        id: rust
         run: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
+      - name: Install rustfmt 🦀
+        id: install-rustfmt
+        uses: actions-rs/toolchain@v1
+        with:
+          components: rustfmt
+          override: true
+          profile: minimal
+          target: ${{ matrix.target }}
+          toolchain: stable
+
+      - name: Run rustfmt 🦀
+        id: rustfmt
+        run: rustup component add rustfmt
+
+      - name: Check formatting 🦀
+        id: fmt
+        uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: --all -- --check --verbose --color=always
+
+      - name: documentation 📚
+        id: documentation
+        run: cargo doc --all-features --workspace
+
+      - name: clippy 🦀
+        id: clippy
+        run: cargo clippy --all-features -- -D warnings
 
       - name: Set environment variables 🔢
         run: |
           echo "VERSION=0.0.8" >> $GITHUB_ENV
-          echo "ARTIFACT_NAME=mini-functions-${{ matrix.platform }}" >> $GITHUB_ENV
-          # echo "COMMITS=$(git log -20 --oneline | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{labels="";for(i=2;i<=NF;i++){if($i~/^[a-zA-Z]+\([a-zA-Z0-9-_]+\):/)labels=labels" "$i;else break;}printf("-%s %s\n",labels,$0);}' | sort -k1,1)" >> $GITHUB_ENV
+          echo "ARTIFACT_NAME=mini-functions-${{ matrix.target }}" >> $GITHUB_ENV
 
       - name: Build libraries 🏗
         id: build
@@ -139,7 +96,7 @@ jobs:
           cargo clean
 
           # Build the libraries for the target platform and architecture
-          cargo build --verbose --workspace --target=${{ matrix.target }} --lib
+          cargo build --verbose --workspace --target=${{ matrix.target }} --release
         shell: /bin/bash -e {0}
 
       - name: Package the binary 📦
