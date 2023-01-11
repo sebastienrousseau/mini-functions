@@ -23,7 +23,7 @@ fn main() {
         iat: Some(date.to_string()),
         iss: Some(CL_ISS.to_string()),
         jti: Some(CL_JTI.to_string()),
-        nbf: Some(date.to_string()),
+        nbf: Some(date),
         sub: Some(CL_SUB.to_string()),
         vc: Some(CL_VC.to_string()),
         vp: Some(CL_VP.to_string()),

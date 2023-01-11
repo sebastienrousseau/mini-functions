@@ -11,17 +11,17 @@ mod tests {
     #[test]
     fn test_claims() {
         let claims = {
-            let aud: &str = &"1516239022";
-            let custom: &str = &"John Doe".to_string();
-            let did: &str = &"mini_functions_claims".to_string();
-            let exp: &str = &"1516239022";
-            let iat: &str = &"John Doe".to_string();
-            let iss: &str = &"mini_functions_claims".to_string();
-            let jti: &str = &"John Doe".to_string();
-            let nbf: &str = &"John Doe".to_string();
-            let sub: &str = &"John Doe".to_string();
-            let vc: &str = &"John Doe".to_string();
-            let vp: &str = &"John Doe".to_string();
+            let aud: &str = "1516239022";
+            let custom: &str = "John Doe";
+            let did: &str = "mini_functions_claims";
+            let exp: &str = "1516239022";
+            let iat: &str = "John Doe";
+            let iss: &str = "mini_functions_claims";
+            let jti: &str = "John Doe";
+            let nbf: &str = "John Doe";
+            let sub: &str = "John Doe";
+            let vc: &str = "John Doe";
+            let vp: &str = "John Doe";
 
             Claims {
                 aud: Some(aud.to_string()),

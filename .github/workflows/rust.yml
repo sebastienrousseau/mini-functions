@@ -13,35 +13,23 @@ jobs:
       fail-fast: false
       matrix:
         node-version: [16]
-        # setup different OS and targets
+        target:
+          - x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+)
+          # - x86_64-pc-windows-gnu # 64-bit Windows (7 or later)
+          - x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
+          # - aarch64-unknown-linux-gnu # ARM64 Linux (kernel 4.1, glibc 2.17+)
+          # - aarch64-apple-darwin # ARM64 macOS (10.15 Catalina or later)
         include:
-          - name: ubuntu_18_04-x86_64
-            os: ubuntu-18.04
-            TARGET_CPU: x86-64
-
-          - name: ubuntu_22_04-x86_64
-            os: ubuntu-22.04
-            TARGET_CPU: x86-64
-
-          # - name: osx_11_0-x86_64
-          #   os: macos-11.0
-          #   TARGET_CPU: x86-64
-
-          - name: osx_10_11-x86_64
-            os: macos-10.15
-            TARGET_CPU: nehalem
-
-          - name: win-x86_64
-            os: windows-2019
-            TARGET_CPU: x86-64
-
-          - name: ubuntu_18_04-x86_64-haswell
-            os: ubuntu-18.04
-            TARGET_CPU: haswell
-
-          - name: win-x86_64-haswell
-            os: windows-2019
-            TARGET_CPU: haswell
+          - target: x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+)
+            os: ubuntu-latest
+          # - target: x86_64-pc-windows-gnu # 64-bit Windows (7 or later)
+          #   os: ubuntu-latest
+          - target: x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
+            os: macos-latest
+          # - target: aarch64-unknown-linux-gnu # ARM64 Linux (kernel 4.1, glibc 2.17+)
+          # os: ubuntu-latest
+          # - target: aarch64-apple-darwin # ARM64 macOS (10.15 Catalina or later)
+          # os: macos-latest
 
       max-parallel: 2
 
@@ -50,12 +38,6 @@ jobs:
         id: checkout
         uses: actions/checkout@v3
         with: { submodules: true }
-
-      - name: Install GNU tar (Macos)
-        if: ${{contains( matrix.os, 'macos' )}}
-        run: |
-          brew install gnu-tar
-          echo PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH" >> $GITHUB_ENV
 
       - name: Restore dependencies cache 📦
         id: cache
@@ -68,37 +50,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cargo-
             ${{ runner.os }}-rustup-
-
-      - name: Install nasm 🦀
-        run: brew install nasm
-        if: ${{contains( matrix.os, 'macos' )}}
-
-      - name: Install nasm
-        run: choco install nasm
-        if: ${{contains( matrix.os, 'windows' )}}
-
-      - name: Install nasm
-        run: |
-          curl -L -o nasminst.exe https://imageflow-resources.s3-us-west-2.amazonaws.com/tools/nasm-2.15.05-installer-x64.exe
-          .\nasminst.exe /S
-        if: ${{contains( matrix.os, 'windows' ) && failure()}}
-
-      - name: Set Path
-        run: |
-          echo "C:\Program Files\NASM" >> $GITHUB_PATH
-          echo "C:\Program Files (x86)\NASM" >> $GITHUB_PATH
-        if: ${{contains( matrix.os, 'windows' )}}
-        shell: bash
-
-      - name: Install nasm
-        run: sudo apt install nasm
-        if: ${{contains( matrix.os, 'ubuntu' )}}
-
       - name: Install Rust 🦀
         id: rust
         run: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-
       - name: Install rustfmt 🦀
         id: install-rustfmt
         uses: actions-rs/toolchain@v1
@@ -113,6 +68,10 @@ jobs:
         id: rustfmt
         run: rustup component add rustfmt
 
+      - name: Run unit tests 🦀
+        run: cargo test --locked --all-targets --workspace --all-features
+        timeout-minutes: 10
+
       - name: Check formatting 🦀
         id: fmt
         uses: actions-rs/cargo@v1
@@ -120,51 +79,35 @@ jobs:
           command: fmt
           args: --all -- --check --verbose --color=always
 
-      - name: Documentation 📚
+      - name: documentation 📚
         id: documentation
         run: cargo doc --all-features --workspace
 
-      - name: Clippy 🦀
+      - name: clippy 🦀
         id: clippy
-        run: cargo clippy --all-features -- -D warnings
+        run: cargo clippy --locked --all-targets --all-features --workspace -- -D warnings
 
       - name: Set environment variables 🔢
         run: |
           echo "VERSION=0.0.8" >> $GITHUB_ENV
-          echo "ARTIFACT_NAME=mini-functions-${{ matrix.target }}" >> $GITHUB_ENV
-
       - name: Build libraries 🏗
         id: build
         run: |
           # Check the code base
           cargo check --all --all-features --workspace --verbose
-
-      - name: Test Build 🧪
-        run: cargo test --all
-        env:
-          RUSTFLAGS: -C target-cpu=${{matrix.TARGET_CPU}}
-
-      - run: cargo build --all --all-targets --release --verbose
-        shell: bash
-        env:
-          RUSTFLAGS: -C target-cpu=${{matrix.TARGET_CPU}}
-
           # Install cross
-          # cargo install cross
-
+          cargo install cross
           # Clean the build artifacts
-          # cargo clean --verbose
-
+          cargo clean --verbose
           # Build the libraries for the target platform and architecture
-          # cargo build --verbose --workspace --release --target ${{ matrix.target }}  --lib
-        # shell: /bin/bash -e {0}
+          cargo build --verbose --workspace --release --target ${{ matrix.target }}
+        shell: /bin/bash -e {0}
 
       - name: Package the binary 📦
         id: package
         run: |
           mkdir -p target/package
           tar czf target/package/${{ matrix.target }}.tar.gz -C target/${{ matrix.target }}/release .
-
       - name: Deploy 🚀
         id: deploy
         uses: actions/upload-artifact@v3
