@@ -69,7 +69,7 @@ jobs:
         run: rustup component add rustfmt
 
       - name: Run unit tests 🦀
-        run: cargo test --locked --all-targets --workspace --all-features
+        run: cargo test --all-targets --workspace --all-features
         timeout-minutes: 10
 
       - name: Check formatting 🦀
@@ -85,7 +85,7 @@ jobs:
 
       - name: clippy 🦀
         id: clippy
-        run: cargo clippy --locked --all-targets --all-features --workspace -- -D warnings
+        run: cargo clippy --all-targets --all-features --workspace -- -D warnings
 
       - name: Set environment variables 🔢
         run: |
