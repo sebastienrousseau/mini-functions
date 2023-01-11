@@ -1,11 +1,11 @@
 // Imports various error types that can be converted into the custom `Error` enum defined in this file.
 
 extern crate base64;
-extern crate openssl;
+// extern crate openssl;
 extern crate serde_json;
 
 use base64::DecodeError as B64Error;
-use openssl::error::ErrorStack;
+// use openssl::error::ErrorStack;
 use serde_json::Error as SJError;
 use std::error::Error as StdError;
 use std::fmt;
@@ -59,11 +59,11 @@ impl From<SJError> for JwtError {
     }
 }
 
-impl From<ErrorStack> for JwtError {
-    fn from(error: ErrorStack) -> Self {
-        JwtError::OpenSslError(error.to_string())
-    }
-}
+// impl From<ErrorStack> for JwtError {
+//     fn from(error: ErrorStack) -> Self {
+//         JwtError::OpenSslError(error.to_string())
+//     }
+// }
 
 impl From<IoError> for JwtError {
     fn from(error: IoError) -> Self {
