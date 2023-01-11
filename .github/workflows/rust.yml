@@ -117,7 +117,7 @@ jobs:
       - name: Install packages (Ubuntu) 🐧
         if: matrix.os == 'ubuntu-latest'
         run: |
-          sudo apt update \
+          sudo apt update
           sudo apt install \
           build-essential \
           curl \
