@@ -1,21 +1,20 @@
 [package]
 name = "mini-functions-date"
-version = "0.0.8"
+version = "0.0.1"
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 description = "Date is a struct that provides an easy way to get the current date and time in multiple formats."
 include = [
-    # "/build.rs",
+    "/build.rs",
     "/Cargo.toml",
-    # "/LICENSE-APACHE",
-    # "/LICENSE-MIT",
-    # "/README.md",
+    "../../LICENSE-APACHE",
+    "../../LICENSE-MIT",
+    "/README.md",
     "/src/**",
     "/tests/**",
     "/examples/**",
 ]
 
 [dependencies]
-mini-functions = { path = "../mini-functions" }
 time = "0.3.17"
 
 [lib]

@@ -1,21 +1,21 @@
 [package]
 name = "mini-functions-jwt-errors"
-version = "0.0.8"
+version = "0.0.1"
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 description = "JWT provides a set of utility functions for working with JSON Web Tokens (JWTs) and JSON Web Signatures (JWSs)."
 include = [
     # "/build.rs",
     "/Cargo.toml",
-    # "/LICENSE-APACHE",
-    # "/LICENSE-MIT",
-    # "/README.md",
+    "../../LICENSE-APACHE",
+    "../../LICENSE-MIT",
+    "/README.md",
     "/src/**",
+    "/mini-functions*/**",
     "/tests/**",
     "/examples/**",
 ]
 
 [dependencies]
-mini-functions = { path = "../mini-functions" }
 base64 = "0.21.0"
 jwt = "0.16.0"
 jsonwebtoken = "8.2.0"
