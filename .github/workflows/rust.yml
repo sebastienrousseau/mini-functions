@@ -1,12 +1,6 @@
 name: ❯ mini_functions_release
 
-on:
-  push:
-    # Enable when testing release infrastructure on a branch.
-    branches:
-      - feature/mini_functions
-    tags:
-      - "v[0-9]+.[0-9]+.[0-9]+"
+on: [push]
 
 jobs:
   build-release:
