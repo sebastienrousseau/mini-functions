@@ -192,7 +192,7 @@ jobs:
         run: |
           # Build the libraries for the target platform and architecture
           # cross build --release --target=${{ matrix.target }} --lib
-          ${{ env.CARGO }} build --verbose --lib --release ${{ env.TARGET_FLAGS }}
+          PKG_CONFIG_ALLOW_CROSS=1 ${{ env.CARGO }} build --verbose --release ${{ env.TARGET_FLAGS }} --lib --all
 
       # - name: Use Cross
       # shell: bash
@@ -214,14 +214,6 @@ jobs:
         if: matrix.build == 'linux' || matrix.build == 'macos'
         run: strip "target/${{ matrix.target }}/release/mini-functions"
 
-      - name: Strip release binary (arm)
-        if: matrix.build == 'linux-arm'
-        run: |
-          docker run --rm -v \
-            "$PWD/target:/target:Z" \
-            rustembedded/cross:arm-unknown-linux-gnueabihf \
-            arm-linux-gnueabihf-strip \
-            /target/arm-unknown-linux-gnueabihf/release/mini-functions
       - name: Build archive
         shell: bash
         run: |
@@ -239,6 +231,7 @@ jobs:
             tar czf "$staging.tar.gz" "$staging"
             echo "ASSET=$staging.tar.gz" >> $GITHUB_ENV
           fi
+
       - name: Upload release archive
         uses: actions/upload-release-asset@v1.0.2
         env:
