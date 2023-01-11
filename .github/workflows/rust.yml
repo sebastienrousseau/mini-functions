@@ -118,7 +118,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           # Make sure the script is executable.
-          git update-index --chmod=+x ./.github/ci/ubuntu-install-packages.sh
+          chmod=+x ./.github/ci/ubuntu-install-packages.sh
 
           # Run the script.
           .github/ci/ubuntu-install-packages.sh
