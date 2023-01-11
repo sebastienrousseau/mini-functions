@@ -132,6 +132,6 @@ impl JwtError {
 // Implementation of `Default` for `Error` to provide a default error.
 impl Default for JwtError {
     fn default() -> Self {
-        Self::SignatureExpired("Signature expired.".to_string())
+        Self::SignatureExpired("Signature expired.".to_owned())
     }
 }
