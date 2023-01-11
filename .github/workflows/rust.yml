@@ -139,14 +139,14 @@ jobs:
           cargo clean
 
           # Build the libraries for the target platform and architecture
-          cargo build --verbose --workspace --target=${{ matrix.platform }} --lib
+          cargo build --verbose --workspace --target=${{ matrix.target }} --lib
         shell: /bin/bash -e {0}
 
       - name: Package the binary 📦
         id: package
         run: |
           mkdir -p target/package
-          tar czf target/package/${{ matrix.platform }}.tar.gz -C target/${{ matrix.platform }}/release .
+          tar czf target/package/${{ matrix.target }}.tar.gz -C target/${{ matrix.target }}/release .
 
       - name: Deploy 🚀
         id: deploy
