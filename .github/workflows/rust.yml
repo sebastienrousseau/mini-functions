@@ -117,8 +117,16 @@ jobs:
       - name: Install packages (Ubuntu) 🐧
         if: matrix.os == 'ubuntu-latest'
         run: |
-          chmod +x ./.github/ci/ubuntu-install-packages.sh \
-          ./.github/ci/ubuntu-install-packages.sh
+          sudo apt update \
+          sudo apt install \
+          build-essential \
+          curl \
+          wget \
+          libssl-dev \
+          pkg-config
+
+          # chmod +x ./.github/ci/ubuntu-install-packages.sh \
+          # ./.github/ci/ubuntu-install-packages.sh
 
       # - name: Install packages (macOS) 🍎
       #   if: matrix.os == 'macos-latest'
