@@ -110,7 +110,7 @@ jobs:
 
       - name: Set environment variables 🔢
         run: |
-          echo "VERSION=$(echo $(grep '^version ='.\/mini-functions\/Cargo.toml | sed 's/.*"\(.*\)".*/\1/')" >> $GITHUB_ENV
+          echo "VERSION=0.0.8" >> $GITHUB_ENV
           echo "ARTIFACT_NAME=mini-functions-${{ matrix.target }}" >> $GITHUB_ENV
           # echo "COMMITS=$(git log -20 --oneline | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{labels="";for(i=2;i<=NF;i++){if($i~/^[a-zA-Z]+\([a-zA-Z0-9-_]+\):/)labels=labels" "$i;else break;}printf("-%s %s\n",labels,$0);}' | sort -k1,1)" >> $GITHUB_ENV
 
