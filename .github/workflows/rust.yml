@@ -120,7 +120,7 @@ jobs:
 
       - name: Generate Changelog 📜
         id: changelog
-        if: github.ref == 'refs/heads/main'
+        # if: github.ref == 'refs/heads/main'
         run: |
           # Generate the release notes template
           echo "<img src='https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg' alt='Made with Love' width='100%'/><br>" > ${{ github.workspace }}-CHANGELOG.md
