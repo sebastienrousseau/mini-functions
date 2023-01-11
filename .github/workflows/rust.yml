@@ -118,6 +118,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt update
+          sudo apt-get upgrade -y
           sudo apt install \
           build-essential \
           curl \
@@ -128,10 +129,11 @@ jobs:
           # chmod +x ./.github/ci/ubuntu-install-packages.sh \
           # ./.github/ci/ubuntu-install-packages.sh
 
-      # - name: Install packages (macOS) 🍎
-      #   if: matrix.os == 'macos-latest'
-      #   run: |
-      #     .github/ci/macos-install-packages
+      - name: Install packages (macOS) 🍎
+        if: matrix.os == 'macos-latest'
+        run: |
+          chmod +x ./.github/ci/macos-install-packages.sh \
+          ./.github/ci/macos-install-packages
 
       # - name: Install Rust
       #   uses: actions-rs/toolchain@v1
@@ -191,8 +193,8 @@ jobs:
         shell: bash
         run: |
           # Build the libraries for the target platform and architecture
-          # cross build --release --target=${{ matrix.target }} --lib
-          PKG_CONFIG_ALLOW_CROSS=1 ${{ env.CARGO }} build --verbose --release ${{ env.TARGET_FLAGS }} --lib --all
+          cross build --release --target=${{ matrix.target }} --lib
+          # ${{ env.CARGO }} build --verbose --release ${{ env.TARGET_FLAGS }} --lib --all
 
       # - name: Use Cross
       # shell: bash

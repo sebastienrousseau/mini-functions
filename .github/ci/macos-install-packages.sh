@@ -1,3 +1,3 @@
 #!/bin/sh
 
-brew install asciidoctor
+brew install openssl@1.1
