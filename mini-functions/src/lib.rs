@@ -4,3 +4,8 @@
 //! used to provide a more convenient API for the `mini-functions`
 //! crate.
 //!
+
+crate mini_functions_date;
+crate mini_functions_jwt;
+crate mini_functions_jwt_claims;
+crate mini_functions_jwt_errors;
