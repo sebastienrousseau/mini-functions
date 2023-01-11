@@ -18,12 +18,9 @@ jobs:
         with: { submodules: true }
       - name: Install rust
         id: install_rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          override: true
-          profile: minimal
-          components: rustfmt
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
       - name: Check formatting
         id: check_formatting
         run: cargo fmt -- --check
@@ -120,11 +117,8 @@ jobs:
 
       - name: Install Rust 🦀
         id: rust-install
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: ${{ matrix.rust }}
-          profile: minimal
-          override: true
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
       - name: Set environment variables 🔢
         run: |
