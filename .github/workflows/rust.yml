@@ -13,7 +13,6 @@ jobs:
       fail-fast: false
       matrix:
         node-version: [16]
-        matrix:
         # setup different OS and targets
         include:
           - name: ubuntu_18_04-x86_64
