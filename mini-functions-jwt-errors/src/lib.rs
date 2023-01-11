@@ -39,8 +39,8 @@ impl StdError for JwtError {}
 impl fmt::Display for JwtError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            JwtError::AudienceInvalid(err) => write!(f, "Audience Invalid Error: {}", err),
-            JwtError::ExpirationInvalid(err) => write!(f, "Expiration Invalid Error: {}", err),
+            JwtError::AudienceInvalid(err) => write!(f, "Audience Invalid Error: {err}"),
+            JwtError::ExpirationInvalid(err) => write!(f, "Expiration Invalid Error: {err}"),
             // implement display for other variants as well
             _ => write!(f, "Unknown error"),
         }
