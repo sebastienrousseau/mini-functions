@@ -19,6 +19,7 @@ mini-functions = { path = "../mini-functions" }
 time = "0.3.17"
 
 [lib]
+crate-type = ["lib"]
 path = "src/lib.rs"
 
 [features]

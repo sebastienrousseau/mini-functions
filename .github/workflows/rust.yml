@@ -1,140 +1,301 @@
-name: ❯ mini_functions_release
+name: ❯ release
 
-on: [push]
+on:
+  push:
+    # Enable when testing release infrastructure on a branch.
+    branches:
+      - feature/mini-functions
+    # tags:
+    #   - "v[0-9]+.[0-9]+.[0-9]+"
 
 jobs:
-  mini_functions_release:
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [16]
-        target:
-          - x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+)
-          - x86_64-pc-windows-gnu # 64-bit Windows (7 or later)
-          - x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
-          - aarch64-unknown-linux-gnu # ARM64 Linux (kernel 4.1, glibc 2.17+)
-          - aarch64-apple-darwin # ARM64 macOS (10.15 Catalina or later)
-        include:
-          - target: x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+)
-            os: ubuntu-latest
-          - target: x86_64-pc-windows-gnu # 64-bit Windows (7 or later)
-            os: ubuntu-latest
-          - target: x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
-            os: macos-latest
-          - target: aarch64-unknown-linux-gnu # ARM64 Linux (kernel 4.1, glibc 2.17+)
-            os: ubuntu-latest
-          - target: aarch64-apple-darwin # ARM64 macOS (10.15 Catalina or later)
-            os: macos-latest
-
-      max-parallel: 5
-
-    runs-on: ${{ matrix.os }}
-
+  create-release:
+    name: create-release
+    runs-on: ubuntu-latest
+    env:
+      # Set to force version number, e.g., when no tag exists.
+      CARGO_MINI_FUNCTIONS_VERSION: TEST-0.0.8
+    outputs:
+      upload_url: ${{ steps.release.outputs.upload_url }}
+      cargo_mini_functions_version: ${{ env.CARGO_MINI_FUNCTIONS_VERSION }}
     steps:
-      - name: Checkout repository 🛎️
-        id: checkout
-        uses: actions/checkout@v3
-
-      - name: Restore dependencies cache 📦
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo
-            ~/.rustup
-          key: ${{ runner.os }}-cache-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-
-            ${{ runner.os }}-rustup-
-
-      - name: Install Rust 🦀
-        id: rust
+      - name: Get the release version from the tag
+        shell: bash
+        if: env.CARGO_MINI_FUNCTIONS_VERSION == ''
         run: |
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-
-      - name: Install rustfmt 🦀
-        id: install-rustfmt
-        uses: actions-rs/toolchain@v1
-        with:
-          components: rustfmt
-          override: true
-          profile: minimal
-          target: ${{ matrix.target }}
-          toolchain: stable
-
-      - name: Run rustfmt 🦀
-        id: rustfmt
-        run: rustup component add rustfmt
-
-      - name: Check formatting 🦀
-        id: fmt
-        uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: --all -- --check --verbose --color=always
-
-      - name: Set environment variables 🔢
-        run: |
-          echo "VERSION=$(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))" >> $GITHUB_ENV
-          echo "ARTIFACT_NAME=mini-functions-${{ matrix.target }}" >> $GITHUB_ENV
-          echo "COMMITS=$(git log -20 --oneline | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{labels="";for(i=2;i<=NF;i++){if($i~/^[a-zA-Z]+\([a-zA-Z0-9-_]+\):/)labels=labels" "$i;else break;}printf("-%s %s\n",labels,$0);}' | sort -k1,1)" >> $GITHUB_ENV
-
-      - name: Build libraries 🏗
-        run: |
-          # Check the code base
-
-          cargo check --all
-          # Install cross
-          cargo install cross
-
-          # Clean the build artifacts
-          cargo clean
-
-          # Build the libraries for the target platform and architecture
-          cross build --release --target=${{ matrix.target }} --lib
-
-        shell: /bin/bash -e {0}
-
-      - name: Generate Changelog 📜
-        id: changelog
-        if: github.ref == 'refs/heads/main'
-        run: |
-
-          # Generate the release notes template
-          echo "<img src='https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg' alt='Made with Love' width='100%'/><br>" > ${{ github.workspace }}-CHANGELOG.md
-          echo "<h1>Highly performant utility and wrapper functions library for Rust 🚀</h1><br>" > ${{ github.workspace }}-CHANGELOG.md
-          echo "<img src='https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/banners/banner-mini-functions.svg' alt='Mini Functions Banner' width='100%'/><br>" > ${{ github.workspace }}-CHANGELOG.md
-          echo "<h2>Welcome to Mini Functions 👋</h2><br>" >> ${{ github.workspace }}-CHANGELOG.md
-          echo "Mini Functions is a highly performant utility and wrapper functions library for Rust that has been carefully designed with optimization and efficiency in mind.<br>" >> ${{ github.workspace }}-CHANGELOG.md
-          echo "" >> ${{ github.workspace }}-CHANGELOG.md
-          echo "By providing convenient wrapper functions, our library aims to provide a high-level interface for common tasks while still leveraging the performance benefits of Rust under the hood.<br>" >> ${{ github.workspace }}-CHANGELOG.md
-          echo "" >> ${{ github.workspace }}-CHANGELOG.md
-          echo "These utility functions serve as an essential toolkit for any Rust developer, and the library's design abstractions allow for easy integration into a variety of projects and applications." >> ${{ github.workspace }}-CHANGELOG.md
-          echo "" >> ${{ github.workspace }}-CHANGELOG.md
-          echo "<h2>Key Features 🎯</h2><br>" >> ${{ github.workspace }}-CHANGELOG.md
-          echo "$COMMITS" >> ${{ github.workspace }}-CHANGELOG.md
-          echo "..." >> ${{ github.workspace }}-CHANGELOG.md
-          echo "" >> ${{ github.workspace }}-CHANGELOG.md
-
-      - name: Upload artifacts 📦
-        id: upload
-        if: github.ref == 'refs/heads/main'
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}
-          path: target/release
-
-      - name: Create Release 🚀
-        id: create_release
-        if: github.ref == 'refs/heads/main'
-        uses: softprops/action-gh-release@v1
+          # Apparently, this is the right way to get a tag name. Really?
+          #
+          # See: https://github.community/t5/GitHub-Actions/How-to-get-just-the-tag-name/m-p/32167/highlight/true#M1027
+          echo "CARGO_MINI_FUNCTIONS_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+          echo "version is: ${{ env.CARGO_MINI_FUNCTIONS_VERSION }}"
+      - name: Create GitHub release
+        id: release
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          body_path: ${{ github.workspace }}-CHANGELOG.md
-          draft: true
-          files: |
-            target/release/*
-          name: Mini Functions 🦀 v${{ env.VERSION }}
-          prerelease: false
-          tag_name: v${{ env.VERSION }}
+          tag_name: v${{ env.CARGO_MINI_FUNCTIONS_VERSION }}
+          release_name: v${{ env.CARGO_MINI_FUNCTIONS_VERSION }}
+
+  build-release:
+    name: build-release
+    needs: ["create-release"]
+    runs-on: ${{ matrix.os }}
+    env:
+      # For some builds, we use cross to test on 32-bit and big-endian
+      # systems.
+      CARGO: cargo
+      # When CARGO is set to CROSS, this is set to `--target matrix.target`.
+      TARGET_FLAGS: ""
+      # When CARGO is set to CROSS, TARGET_DIR includes matrix.target.
+      TARGET_DIR: ./target
+      # Emit backtraces on panics.
+      RUST_BACKTRACE: 1
+    strategy:
+      matrix:
+        # build: [linux, linux-arm, macos, win-msvc, win-gnu, win32-msvc]
+        build: [linux, linux-arm, macos]
+        include:
+          - build: linux
+            os: ubuntu-18.04
+            rust: nightly
+            target: x86_64-unknown-linux-musl
+          - build: linux-arm
+            os: ubuntu-18.04
+            rust: nightly
+            target: arm-unknown-linux-gnueabihf
+          - build: macos
+            os: macos-latest
+            rust: nightly
+            target: x86_64-apple-darwin
+        # FIXME: openssl
+        # - build: win-msvc
+        #   os: windows-2019
+        #   rust: nightly
+        #   target: x86_64-pc-windows-msvc
+        # - build: win-gnu
+        #   os: windows-2019
+        #   rust: nightly-x86_64-gnu
+        #   target: x86_64-pc-windows-gnu
+        # - build: win32-msvc
+        #   os: windows-2019
+        #   rust: nightly
+        #   target: i686-pc-windows-msvc
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: Install packages (Ubuntu)
+        if: matrix.os == 'ubuntu-18.04'
+        run: |
+          ci/ubuntu-install-packages
+      - name: Install packages (macOS)
+        if: matrix.os == 'macos-latest'
+        run: |
+          ci/macos-install-packages
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: ${{ matrix.rust }}
+          profile: minimal
+          override: true
+          target: ${{ matrix.target }}
+
+      - name: Use Cross
+        shell: bash
+        run: |
+          cargo install cross
+          echo "CARGO=cross" >> $GITHUB_ENV
+          echo "TARGET_FLAGS=--target ${{ matrix.target }}" >> $GITHUB_ENV
+          echo "TARGET_DIR=./target/${{ matrix.target }}" >> $GITHUB_ENV
+      - name: Show command used for Cargo
+        run: |
+          echo "cargo command is: ${{ env.CARGO }}"
+          echo "target flag is: ${{ env.TARGET_FLAGS }}"
+          echo "target dir is: ${{ env.TARGET_DIR }}"
+      - name: Build release binary
+        run: ${{ env.CARGO }} build --verbose --release ${{ env.TARGET_FLAGS }}
+
+      - name: Strip release binary (linux and macos)
+        if: matrix.build == 'linux' || matrix.build == 'macos'
+        run: strip "target/${{ matrix.target }}/release/mini-functions"
+
+      - name: Strip release binary (arm)
+        if: matrix.build == 'linux-arm'
+        run: |
+          docker run --rm -v \
+            "$PWD/target:/target:Z" \
+            rustembedded/cross:arm-unknown-linux-gnueabihf \
+            arm-linux-gnueabihf-strip \
+            /target/arm-unknown-linux-gnueabihf/release/mini-functions
+      - name: Build archive
+        shell: bash
+        run: |
+          outdir="$(ci/cargo-out-dir "${{ env.TARGET_DIR }}")"
+          staging="mini-functions-v${{ needs.create-release.outputs.cargo_mini_functions_version }}-${{ matrix.target }}"
+          mkdir -p "$staging"/{complete,doc}
+          cp {README.md,LICENSE-APACHE,LICENSE-MIT} "$staging/"
+          cp mini-functions/CHANGELOG.md "$staging/doc/"
+          if [ "${{ matrix.os }}" = "windows-2019" ]; then
+            cp "target/${{ matrix.target }}/release/mini-functions.exe" "$staging/"
+            7z a "$staging.zip" "$staging"
+            echo "ASSET=$staging.zip" >> $GITHUB_ENV
+          else
+            cp "target/${{ matrix.target }}/release/mini-functions" "$staging/"
+            tar czf "$staging.tar.gz" "$staging"
+            echo "ASSET=$staging.tar.gz" >> $GITHUB_ENV
+          fi
+      - name: Upload release archive
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
+          asset_path: ${{ env.ASSET }}
+          asset_name: ${{ env.ASSET }}
+          asset_content_type: application/octet-stream
+# jobs:
+#   create-release:
+#     name: create-release
+
+#     strategy:
+#       fail-fast: false
+#       matrix:
+#         node-version: [16]
+#         target:
+#           - x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+)
+#           - x86_64-pc-windows-gnu # 64-bit Windows (7 or later)
+#           - x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
+#           - aarch64-unknown-linux-gnu # ARM64 Linux (kernel 4.1, glibc 2.17+)
+#           - aarch64-apple-darwin # ARM64 macOS (10.15 Catalina or later)
+#         include:
+#           - target: x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+)
+#             os: ubuntu-latest
+#           - target: x86_64-pc-windows-gnu # 64-bit Windows (7 or later)
+#             os: ubuntu-latest
+#           - target: x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
+#             os: macos-latest
+#           - target: aarch64-unknown-linux-gnu # ARM64 Linux (kernel 4.1, glibc 2.17+)
+#             os: ubuntu-latest
+#           - target: aarch64-apple-darwin # ARM64 macOS (10.15 Catalina or later)
+#             os: macos-latest
+
+#       max-parallel: 5
+
+#     runs-on: ${{ matrix.os }}
+
+#     outputs:
+#       upload_url: ${{ steps.release.outputs.upload_url }}
+#       cargo_mini_functions_version: ${{ env.CARGO_MINI_FUNCTIONS_VERSION }}
+
+#     steps:
+#       - name: Checkout repository 🛎️
+#         id: checkout
+#         uses: actions/checkout@v3
+
+#       - name: Restore dependencies cache 📦
+#         id: cache
+#         uses: actions/cache@v3
+#         with:
+#           path: |
+#             ~/.cargo
+#             ~/.rustup
+#           key: ${{ runner.os }}-cache-${{ hashFiles('**/Cargo.lock') }}
+#           restore-keys: |
+#             ${{ runner.os }}-cargo-
+#             ${{ runner.os }}-rustup-
+
+#       - name: Install Rust 🦀
+#         id: rust
+#         run: |
+#           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
+#       - name: Install rustfmt 🦀
+#         id: install-rustfmt
+#         uses: actions-rs/toolchain@v1
+#         with:
+#           components: rustfmt
+#           override: true
+#           profile: minimal
+#           target: ${{ matrix.target }}
+#           toolchain: stable
+
+#       - name: Run rustfmt 🦀
+#         id: rustfmt
+#         run: rustup component add rustfmt
+
+#       - name: Check formatting 🦀
+#         id: fmt
+#         uses: actions-rs/cargo@v1
+#         with:
+#           command: fmt
+#           args: --all -- --check --verbose --color=always
+
+#       - name: Set environment variables 🔢
+#         run: |
+#           echo "VERSION=$(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))" >> $GITHUB_ENV
+#           echo "ARTIFACT_NAME=mini-functions-${{ matrix.target }}" >> $GITHUB_ENV
+#           echo "COMMITS=$(git log -20 --oneline | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{labels="";for(i=2;i<=NF;i++){if($i~/^[a-zA-Z]+\([a-zA-Z0-9-_]+\):/)labels=labels" "$i;else break;}printf("-%s %s\n",labels,$0);}' | sort -k1,1)" >> $GITHUB_ENV
+
+#       - name: Build libraries 🏗
+#         run: |
+#           # Check the code base
+
+#           cargo check --all
+#           # Install cross
+#           cargo install cross
+
+#           # Clean the build artifacts
+#           cargo clean
+
+#           # Build the libraries for the target platform and architecture
+#           cross build --release --target=${{ matrix.target }} --lib
+
+#         shell: /bin/bash -e {0}
+
+#       - name: Generate Changelog 📜
+#         id: changelog
+#         if: github.ref == 'refs/heads/main'
+#         run: |
+
+#           # Generate the release notes template
+#           echo "<img src='https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg' alt='Made with Love' width='100%'/><br>" > ${{ github.workspace }}-CHANGELOG.md
+#           echo "<h1>Highly performant utility and wrapper functions library for Rust 🚀</h1><br>" > ${{ github.workspace }}-CHANGELOG.md
+#           echo "<img src='https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/banners/banner-mini-functions.svg' alt='Mini Functions Banner' width='100%'/><br>" > ${{ github.workspace }}-CHANGELOG.md
+#           echo "<h2>Welcome to Mini Functions 👋</h2><br>" >> ${{ github.workspace }}-CHANGELOG.md
+#           echo "Mini Functions is a highly performant utility and wrapper functions library for Rust that has been carefully designed with optimization and efficiency in mind.<br>" >> ${{ github.workspace }}-CHANGELOG.md
+#           echo "" >> ${{ github.workspace }}-CHANGELOG.md
+#           echo "By providing convenient wrapper functions, our library aims to provide a high-level interface for common tasks while still leveraging the performance benefits of Rust under the hood.<br>" >> ${{ github.workspace }}-CHANGELOG.md
+#           echo "" >> ${{ github.workspace }}-CHANGELOG.md
+#           echo "These utility functions serve as an essential toolkit for any Rust developer, and the library's design abstractions allow for easy integration into a variety of projects and applications." >> ${{ github.workspace }}-CHANGELOG.md
+#           echo "" >> ${{ github.workspace }}-CHANGELOG.md
+#           echo "<h2>Key Features 🎯</h2><br>" >> ${{ github.workspace }}-CHANGELOG.md
+#           echo "$COMMITS" >> ${{ github.workspace }}-CHANGELOG.md
+#           echo "..." >> ${{ github.workspace }}-CHANGELOG.md
+#           echo "" >> ${{ github.workspace }}-CHANGELOG.md
+
+#       - name: Upload artifacts 📦
+#         id: upload
+#         if: github.ref == 'refs/heads/main'
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: ${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}
+#           path: target/release
+
+#       - name: Create Release 🚀
+#         id: create_release
+#         if: github.ref == 'refs/heads/main'
+#         uses: softprops/action-gh-release@v1
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         with:
+#           body_path: ${{ github.workspace }}-CHANGELOG.md
+#           draft: true
+#           files: |
+#             target/release/*
+#           name: Mini Functions 🦀 v${{ env.VERSION }}
+#           prerelease: false
+#           tag_name: v${{ env.VERSION }}
