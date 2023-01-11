@@ -115,12 +115,6 @@ jobs:
           # echo "COMMITS=$(git log -20 --oneline | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{labels="";for(i=2;i<=NF;i++){if($i~/^[a-zA-Z]+\([a-zA-Z0-9-_]+\):/)labels=labels" "$i;else break;}printf("-%s %s\n",labels,$0);}' | sort -k1,1)" >> $GITHUB_ENV
 
       - name: Build libraries 🏗
-        if: matrix.target == 'x86_64-unknown-linux-gnu'
-          OPENSSL_DIR="/usr/lib/x86_64-linux-gnu"
-          OPENSSL_LIB_DIR="/usr/lib/x86_64-linux-gnu"
-          OPENSSL_INCLUDE_DIR="/usr/include/openssl"
-          OPENSSL_STATIC="1"
-          PKG_CONFIG_ALLOW_CROSS="1"
         id: build
         run: |
           # Check the code base
