@@ -1,12 +1,14 @@
 [workspace]
 resolver = "1"
-
 members = [
     "mini-functions-date",
     "mini-functions-jwt-claims",
     "mini-functions-jwt-errors",
     "mini-functions-jwt",
 ] # List of workspace members
+
+[workspace.package]
+rust-version = "1.64"
 
 [package]
 authors = ["Sebastien Rousseau"]
