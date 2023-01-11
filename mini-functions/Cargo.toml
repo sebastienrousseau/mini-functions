@@ -19,6 +19,7 @@ license = "Apache-2.0 OR MIT"
 name = "mini-functions"
 readme = "README.md"
 repository = "https://github.com/sebastienrousseau/mini-functions.git"
+resolver = "1"
 rust-version = "1.57.0"
 version = "0.0.8"
 
