@@ -14,16 +14,16 @@ jobs:
       matrix:
         node-version: [16]
         target:
-          - x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+)
-          # - x86_64-pc-windows-gnu # 64-bit Windows (7 or later)
-          - x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
+          - x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+) - Tested ✅
+          - x86_64-pc-windows-gnu # 64-bit Windows (7 or later)
+          - x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)  - Tested ✅
           # - aarch64-unknown-linux-gnu # ARM64 Linux (kernel 4.1, glibc 2.17+)
           # - aarch64-apple-darwin # ARM64 macOS (10.15 Catalina or later)
         include:
           - target: x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+)
             os: ubuntu-latest
-          # - target: x86_64-pc-windows-gnu # 64-bit Windows (7 or later)
-          #   os: ubuntu-latest
+          - target: x86_64-pc-windows-gnu # 64-bit Windows (7 or later)
+            os: ubuntu-latest
           - target: x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
             os: macos-latest
           # - target: aarch64-unknown-linux-gnu # ARM64 Linux (kernel 4.1, glibc 2.17+)
@@ -88,6 +88,7 @@ jobs:
       - name: Set environment variables 🔢
         run: |
           echo "VERSION=0.0.8" >> $GITHUB_ENV
+          echo "ARTIFACT_NAME=mini-functions-${{ matrix.target }}" >> $GITHUB_ENV
 
       - name: Build libraries 🏗
         id: build
@@ -102,7 +103,7 @@ jobs:
           cargo clean --verbose
 
           # Build the libraries for the target platform and architecture
-          cargo build --verbose --workspace --release --target ${{ matrix.target }}
+          cargo build --verbose --workspace --release --target ${{ matrix.target }}  --lib
         shell: /bin/bash -e {0}
 
       - name: Package the binary 📦
@@ -136,7 +137,7 @@ jobs:
           echo "<h2>Key Features 🎯</h2><br>" >> ${{ github.workspace }}-CHANGELOG.md
           # echo "$COMMITS" >> ${{ github.workspace }}-CHANGELOG.md
           echo "$cargo changelog > ${{ github.workspace }}-CHANGELOG.md"
-          echo "..." >> ${{ github.workspace }}-CHANGELOG.md
+          echo "" >> ${{ github.workspace }}-CHANGELOG.md
           echo "" >> ${{ github.workspace }}-CHANGELOG.md
 
       - name: Create Release 🚀
@@ -145,8 +146,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: v${{ env.VERSION }}
+          release_name: Mini Functions 🦀 v${{ env.VERSION }}
           body_path: ${{ github.workspace }}-CHANGELOG.md
           draft: true
           prerelease: false
