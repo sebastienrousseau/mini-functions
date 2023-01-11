@@ -114,6 +114,16 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Install packages (Ubuntu) 🐧
+        if: matrix.os == 'ubuntu-18.04'
+        run: |
+          ci/ubuntu-install-packages
+
+      - name: Install packages (macOS) 🍎
+        if: matrix.os == 'macos-latest'
+        run: |
+          ci/macos-install-packages
+
       # - name: Install Rust
       #   uses: actions-rs/toolchain@v1
       #   with:
@@ -176,12 +186,12 @@ jobs:
           ${{ env.CARGO }} build --verbose --lib --release ${{ env.TARGET_FLAGS }}
 
       # - name: Use Cross
-        # shell: bash
-        # run: |
-        #   cargo install cross
-        #   echo "CARGO=cross" >> $GITHUB_ENV
-        #   echo "TARGET_FLAGS=--target ${{ matrix.target }}" >> $GITHUB_ENV
-        #   echo "TARGET_DIR=./target/${{ matrix.target }}" >> $GITHUB_ENV
+      # shell: bash
+      # run: |
+      #   cargo install cross
+      #   echo "CARGO=cross" >> $GITHUB_ENV
+      #   echo "TARGET_FLAGS=--target ${{ matrix.target }}" >> $GITHUB_ENV
+      #   echo "TARGET_DIR=./target/${{ matrix.target }}" >> $GITHUB_ENV
 
       # - name: Show command used for Cargo
       #   run: |
