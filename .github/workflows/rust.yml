@@ -2,6 +2,9 @@ name: ❯ mini_functions_release
 
 on: [push]
 
+env:
+  CARGO_TERM_COLOR: always
+
 jobs:
   mini_functions_release:
     strategy:
@@ -9,26 +12,44 @@ jobs:
       matrix:
         node-version: [16]
         target:
-          - x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+)
-          - x86_64-pc-windows-gnu # 64-bit Windows (7 or later)
-          - x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
-          - aarch64-unknown-linux-gnu # ARM64 Linux (kernel 4.1, glibc 2.17+)
           - aarch64-apple-darwin # ARM64 macOS (10.15 Catalina or later)
+          - aarch64-unknown-linux-gnu # ARM64 Linux (kernel 4.1, glibc 2.17+)
+          - aarch64-unknown-linux-musl # ARM64 Linux (kernel 4.1, musl 1.1.16+)
+          - arm-unknown-linux-gnueabihf # ARMv6 Linux (kernel 2.6.32+, glibc 2.15+)
+          - arm-unknown-linux-musleabihf # ARMv6 Linux (kernel 2.6.32+, musl 1.1.16+)
+          - armv7-unknown-linux-gnueabihf # ARMv7 Linux (kernel 3.2+, glibc 2.15+)
+          - armv7-unknown-linux-musleabihf # ARMv7 Linux (kernel 3.2+, musl 1.1.16+)
+          - x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
+          - x86_64-pc-windows-gnu # 64-bit Windows (7 or later)
+          - x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+)
         include:
-          - target: x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+)
-            os: ubuntu-latest
-          - target: x86_64-pc-windows-gnu # 64-bit Windows (7 or later)
-            os: ubuntu-latest
-          - target: x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
+          - target: aarch64-apple-darwin # ARM64 macOS (10.15 Catalina or later)
             os: macos-latest
           - target: aarch64-unknown-linux-gnu # ARM64 Linux (kernel 4.1, glibc 2.17+)
             os: ubuntu-latest
-          - target: aarch64-apple-darwin # ARM64 macOS (10.15 Catalina or later)
+          - target: aarch64-unknown-linux-musl # ARM64 Linux (kernel 4.1, musl 1.1.16+)
+            os: ubuntu-latest
+          - target: arm-unknown-linux-gnueabihf # ARMv6 Linux (kernel 2.6.32+, glibc 2.15+)
+            os: ubuntu-latest
+          - target: arm-unknown-linux-musleabihf # ARMv6 Linux (kernel 2.6.32+, musl 1.1.16+)
+            os: ubuntu-latest
+          - target: armv7-unknown-linux-gnueabihf # ARMv7 Linux (kernel 3.2+, glibc 2.15+)
+            os: ubuntu-latest
+          - target: armv7-unknown-linux-musleabihf # ARMv7 Linux (kernel 3.2+, musl 1.1.16+)
+            os: ubuntu-latest
+          - target: x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
             os: macos-latest
+          - target: x86_64-pc-windows-gnu # 64-bit Windows (7 or later)
+            os: ubuntu-latest
+          - target: x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+)
+            os: ubuntu-latest
 
-      max-parallel: 5
+      max-parallel: 2
 
     runs-on: ${{ matrix.os }}
+
+    env:
+      CARGO_TERM_COLOR: always
 
     steps:
       - name: Checkout repository 🛎️
@@ -46,6 +67,29 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cargo-
             ${{ runner.os }}-rustup-
+
+      - name: Install and configure dependencies
+        run: |
+          # dependencies are only needed on ubuntu as that's the only place where
+          # we make cross-compilation
+          if [[ $matrix.os == "ubuntu-latest" ]]; then
+            sudo apt-get install -qq crossbuild-essential-arm64 crossbuild-essential-armhf
+          fi
+          # some additional configuration for cross-compilation on linux
+          cat >>~/.cargo/config <<EOF
+          [target.aarch64-unknown-linux-gnu]
+          linker = "aarch64-linux-gnu-gcc"
+          [target.aarch64-unknown-linux-musl]
+          linker = "aarch64-linux-gnu-gcc"
+          [target.armv7-unknown-linux-gnueabihf]
+          linker = "arm-linux-gnueabihf-gcc"
+          [target.armv7-unknown-linux-musleabihf]
+          linker = "arm-linux-gnueabihf-gcc"
+          [target.arm-unknown-linux-gnueabihf]
+          linker = "arm-linux-gnueabihf-gcc"
+          [target.arm-unknown-linux-musleabihf]
+          linker = "arm-linux-gnueabihf-gcc"
+          EOF
 
       - name: Install Rust 🦀
         id: rust-install
@@ -66,17 +110,34 @@ jobs:
 
       - name: Set environment variables 🔢
         run: |
-          echo "VERSION=$(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))" >> $GITHUB_ENV
+          echo "VERSION=$(echo $(grep '^version =' mini-functions/Cargo.toml | sed 's/.*"\(.*\)".*/\1/')" >> $GITHUB_ENV
           echo "ARTIFACT_NAME=mini-functions-${{ matrix.target }}" >> $GITHUB_ENV
-          echo "COMMITS=$(git log -20 --oneline | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{labels="";for(i=2;i<=NF;i++){if($i~/^[a-zA-Z]+\([a-zA-Z0-9-_]+\):/)labels=labels" "$i;else break;}printf("-%s %s\n",labels,$0);}' | sort -k1,1)" >> $GITHUB_ENV
+          # echo "COMMITS=$(git log -20 --oneline | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{labels="";for(i=2;i<=NF;i++){if($i~/^[a-zA-Z]+\([a-zA-Z0-9-_]+\):/)labels=labels" "$i;else break;}printf("-%s %s\n",labels,$0);}' | sort -k1,1)" >> $GITHUB_ENV
+
       - name: Build libraries 🏗
         run: |
           # Check the code base
           cargo check --all
+
           # Install cross
           cargo install cross
+
           # Clean the build artifacts
           cargo clean
+
+          # Set the environment variables
+          if: matrix.target == 'x86_64-unknown-linux-gnu'
+          export OPENSSL_DIR="/usr/lib/x86_64-linux-gnu"
+          export OPENSSL_LIB_DIR="/usr/lib/x86_64-linux-gnu"
+          export OPENSSL_INCLUDE_DIR="/usr/include/openssl"
+          export OPENSSL_STATIC="1"
+          export PKG_CONFIG_ALLOW_CROSS="1"
+
+          if: matrix.target == 'x86_64-pc-windows-gnu'
+          export OPENSSL_DIR="
+
+
+
           # Build the libraries for the target platform and architecture
           cross build --release --target=${{ matrix.target }} --lib
         shell: /bin/bash -e {0}
