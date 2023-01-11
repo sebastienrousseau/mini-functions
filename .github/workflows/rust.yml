@@ -165,6 +165,10 @@ jobs:
       - name: Check formatting 🦀
         id: fmt
         uses: actions-rs/cargo@v1
+        env:
+          TARGET_CC: clang
+          OPENSSL_INCLUDE_DIR: /usr/include/openssl/
+          OPENSSL_DIR: /usr/lib/ssl/
         with:
           command: fmt
           args: --all -- --check --verbose --color=always
@@ -173,8 +177,8 @@ jobs:
         shell: bash
         run: |
           # Install cross
-          # cargo install cross
-          # echo "CARGO=cross" >> $GITHUB_ENV
+          cargo install cross
+          echo "CARGO=cross" >> $GITHUB_ENV
           echo "TARGET_FLAGS=--target ${{ matrix.target }}" >> $GITHUB_ENV
           echo "TARGET_DIR=./target/${{ matrix.target }}" >> $GITHUB_ENV
 
@@ -193,7 +197,7 @@ jobs:
         shell: bash
         run: |
           # Build the libraries for the target platform and architecture
-          cargo build -verbose --release ${{ env.TARGET_FLAGS }} --lib
+          cross build --release --target=${{ matrix.target }} --lib
           # ${{ env.CARGO }} build --verbose --release ${{ env.TARGET_FLAGS }} --lib --all
 
       # - name: Use Cross
