@@ -3,7 +3,8 @@ name: ❯ mini_functions_release
 on: [push]
 
 jobs:
-  build:
+  release:
+    name: release ${{ matrix.target }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -31,12 +32,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cargo-
             ${{ runner.os }}-rustup-
+
       - name: Install Rust 🦀
         id: rust-install
         run: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
           source $HOME/.cargo/env
-      - name: Build the project 🚀
+
+      - name: Run build 🧰
+        run: |
+          rustup default ${{ matrix.rust }}
+          rustup target add ${{ matrix.target }}
+          cargo build --verbose --target ${{ matrix.target }}
+
+      - name: Build the project 🛠️
         id: build
         run: |
           cargo build --release --workspace --target ${{ matrix.target }}
