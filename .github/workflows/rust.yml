@@ -115,7 +115,7 @@ jobs:
           fetch-depth: 1
 
       - name: Install packages (Ubuntu) 🐧
-        if: matrix.os == 'ubuntu-18.04'
+        if: matrix.os == 'ubuntu-latest'
         run: |
           ci/ubuntu-install-packages
 
