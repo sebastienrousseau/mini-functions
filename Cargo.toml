@@ -1,15 +1,3 @@
-[workspace]
-resolver = "1"
-members = [
-    "mini-functions-date",
-    "mini-functions-jwt-claims",
-    "mini-functions-jwt-errors",
-    "mini-functions-jwt",
-] # List of workspace members
-
-[workspace.package]
-rust-version = "1.64"
-
 [package]
 authors = ["Sebastien Rousseau"]
 categories = ["development-tools"]
@@ -34,18 +22,26 @@ repository = "https://github.com/sebastienrousseau/mini-functions.git"
 rust-version = "1.57.0"
 version = "0.0.8"
 
-[badges]
-maintenance = { status = "actively-developed" }
-
-[lib]
-crate-type = ["lib"]
-path = "src/lib.rs"
-
 [dependencies]
 mini-functions-date = { path = "./mini-functions-date" }
 mini-functions-jwt = { path = "./mini-functions-jwt" }
 mini-functions-jwt-claims = { path = "./mini-functions-jwt-claims" }
 mini-functions-jwt-errors = { path = "./mini-functions-jwt-errors" }
+
+[workspace]
+resolver = "1"
+members = [
+    "mini-functions-date",
+    "mini-functions-jwt-claims",
+    "mini-functions-jwt-errors",
+    "mini-functions-jwt",
+] # List of workspace members
+
+[workspace.package]
+rust-version = "1.64"
+
+[badges]
+maintenance = { status = "actively-developed" }
 
 [profile.dev]
 codegen-units = 256
@@ -81,3 +77,13 @@ opt-level = 0
 overflow-checks = true
 rpath = false
 strip = false
+
+[lib]
+crate-type = ["lib"]
+path = "src/lib.rs"
+required-features = [
+    "mini-functions-date",
+    "mini-functions-jwt-claims",
+    "mini-functions-jwt-errors",
+    "mini-functions-jwt"
+]
