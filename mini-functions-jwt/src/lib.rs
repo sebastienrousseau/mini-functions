@@ -240,7 +240,7 @@ pub fn encode(header: &Header, claims: &Claims, secret: &[u8]) -> Result<String,
     let claims_b64 = general_purpose::STANDARD.encode(claims_json);
 
     // Concatenate the encoded header and claims with a period separator
-    let jwt = format!("{}.{}", header_b64, claims_b64);
+    let jwt = format!("{header_b64}.{claims_b64}");
 
     // Sign the JWT with the secret
     type HmacSha256 = Hmac<Sha256>;
@@ -250,7 +250,7 @@ pub fn encode(header: &Header, claims: &Claims, secret: &[u8]) -> Result<String,
     let signature_b64 = general_purpose::STANDARD.encode(signature.into_bytes());
 
     // Concatenate the JWT with the signature, separated by a period
-    let jwt = format!("{}.{}", jwt, signature_b64);
+    let jwt = format!("{jwt}.{signature_b64}");
 
     Ok(jwt)
 }
