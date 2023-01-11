@@ -3,9 +3,7 @@ name: ❯ mini_functions_release
 on: [push]
 
 jobs:
-  release:
-    name: release ${{ matrix.target }}
-    runs-on: ubuntu-latest
+  mini_functions_release:
     strategy:
       fail-fast: false
       matrix:
@@ -16,6 +14,22 @@ jobs:
           - x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
           - aarch64-unknown-linux-gnu # ARM64 Linux (kernel 4.1, glibc 2.17+)
           - aarch64-apple-darwin # ARM64 macOS (10.15 Catalina or later)
+        include:
+          - target: x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+)
+            os: ubuntu-latest
+          - target: x86_64-pc-windows-gnu # 64-bit Windows (7 or later)
+            os: ubuntu-latest
+          - target: x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
+            os: macos-latest
+          - target: aarch64-unknown-linux-gnu # ARM64 Linux (kernel 4.1, glibc 2.17+)
+            os: ubuntu-latest
+          - target: aarch64-apple-darwin # ARM64 macOS (10.15 Catalina or later)
+            os: macos-latest
+
+      max-parallel: 5
+
+    runs-on: ${{ matrix.os }}
+
     steps:
       - name: Checkout repository 🛎️
         id: checkout
@@ -39,16 +53,33 @@ jobs:
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
           source $HOME/.cargo/env
 
-      - name: Run build 🧰
-        run: |
-          rustup default ${{ matrix.rust }}
-          rustup target add ${{ matrix.target }}
-          cargo build --verbose --target ${{ matrix.target }}
+      - name: Run rustfmt 🦀
+        id: rustfmt
+        run: rustup component add rustfmt
 
-      - name: Build the project 🛠️
-        id: build
+      - name: Check formatting 🦀
+        id: fmt
+        uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: --all -- --check --verbose --color=always
+
+      - name: Set environment variables 🔢
         run: |
-          cargo build --release --workspace --target ${{ matrix.target }}
+          echo "VERSION=$(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))" >> $GITHUB_ENV
+          echo "ARTIFACT_NAME=mini-functions-${{ matrix.target }}" >> $GITHUB_ENV
+          echo "COMMITS=$(git log -20 --oneline | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{labels="";for(i=2;i<=NF;i++){if($i~/^[a-zA-Z]+\([a-zA-Z0-9-_]+\):/)labels=labels" "$i;else break;}printf("-%s %s\n",labels,$0);}' | sort -k1,1)" >> $GITHUB_ENV
+      - name: Build libraries 🏗
+        run: |
+          # Check the code base
+          cargo check --all
+          # Install cross
+          cargo install cross
+          # Clean the build artifacts
+          cargo clean
+          # Build the libraries for the target platform and architecture
+          cross build --release --target=${{ matrix.target }} --lib
+        shell: /bin/bash -e {0}
 
       - name: Package the binary 📦
         id: package
@@ -65,8 +96,24 @@ jobs:
 
       - name: Generate Changelog 📜
         id: changelog
+        if: github.ref == 'refs/heads/main'
         run: |
-          cargo changelog > CHANGELOG.md
+          # Generate the release notes template
+          echo "<img src='https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg' alt='Made with Love' width='100%'/><br>" > ${{ github.workspace }}-CHANGELOG.md
+          echo "<h1>Highly performant utility and wrapper functions library for Rust 🚀</h1><br>" > ${{ github.workspace }}-CHANGELOG.md
+          echo "<img src='https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/banners/banner-mini-functions.svg' alt='Mini Functions Banner' width='100%'/><br>" > ${{ github.workspace }}-CHANGELOG.md
+          echo "<h2>Welcome to Mini Functions 👋</h2><br>" >> ${{ github.workspace }}-CHANGELOG.md
+          echo "Mini Functions is a highly performant utility and wrapper functions library for Rust that has been carefully designed with optimization and efficiency in mind.<br>" >> ${{ github.workspace }}-CHANGELOG.md
+          echo "" >> ${{ github.workspace }}-CHANGELOG.md
+          echo "By providing convenient wrapper functions, our library aims to provide a high-level interface for common tasks while still leveraging the performance benefits of Rust under the hood.<br>" >> ${{ github.workspace }}-CHANGELOG.md
+          echo "" >> ${{ github.workspace }}-CHANGELOG.md
+          echo "These utility functions serve as an essential toolkit for any Rust developer, and the library's design abstractions allow for easy integration into a variety of projects and applications." >> ${{ github.workspace }}-CHANGELOG.md
+          echo "" >> ${{ github.workspace }}-CHANGELOG.md
+          echo "<h2>Key Features 🎯</h2><br>" >> ${{ github.workspace }}-CHANGELOG.md
+          # echo "$COMMITS" >> ${{ github.workspace }}-CHANGELOG.md
+          echo "$cargo changelog > ${{ github.workspace }}-CHANGELOG.md"
+          echo "..." >> ${{ github.workspace }}-CHANGELOG.md
+          echo "" >> ${{ github.workspace }}-CHANGELOG.md
 
       - name: Create Release 🚀
         id: create_release
