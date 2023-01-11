@@ -11,6 +11,7 @@ mod tests {
         let date = Date::new().date();
         assert_eq!(date, date);
     }
+
     #[test]
     fn test_day() {
         let day = Date::new().day();
@@ -31,6 +32,7 @@ mod tests {
         let iso_week = Date::new().iso_week();
         assert_eq!(iso_week, iso_week);
     }
+
     #[test]
     fn test_microsecond() {
         let microsecond = Date::new().microsecond();

@@ -21,182 +21,81 @@ use time::OffsetDateTime;
 #[derive(Clone, Debug, PartialEq, PartialOrd)]
 pub struct Date {
     /// The date.
-    date: time::Date,
+    pub date: time::Date,
     /// The day of the month.
-    day: u8,
+    pub day: u8,
     /// The hour of the day.
-    hour: u8,
+    pub hour: u8,
     /// The ISO 8601 date and time.
-    iso_8601: String,
+    pub iso_8601: String,
     /// The ISO week number.
-    iso_week: u8,
+    pub iso_week: u8,
     /// The microsecond.
-    microsecond: u32,
+    pub microsecond: u32,
     /// The millisecond.
-    millisecond: u16,
+    pub millisecond: u16,
     /// The minute.
-    minute: u8,
+    pub minute: u8,
     /// The month.
-    month: String,
+    pub month: String,
     /// The nanosecond.
-    nanosecond: u32,
+    pub nanosecond: u32,
     /// The offset from UTC.
-    offset: time::UtcOffset,
+    pub offset: time::UtcOffset,
     /// The ordinal date.
-    ordinal: u16,
+    pub ordinal: u16,
     /// The second.
-    second: u8,
+    pub second: u8,
     /// The time.
-    time: time::Time,
+    pub time: time::Time,
     /// The weekday.
-    weekday: String,
+    pub weekday: String,
     /// The year.
-    year: i32,
+    pub year: i32,
 }
 
 impl Date {
     /// Create a new Date.
-    ///
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use mini_functions_date::Date;
-    ///
-    /// let date = ;
-    /// assert_eq!(date.date(), );
-    /// ```
     pub fn date(&self) -> time::Date {
         self.date
     }
     /// Create a new Day.
-    ///
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use mini_functions_date::Date;
-    ///
-    /// let date = ;
-    /// assert_eq!(date.day(), );
-    /// ```
     pub fn day(&self) -> u8 {
         self.day
     }
     /// Create a new Hour.
-    ///
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use mini_functions_date::Date;
-    ///
-    /// let date = ;
-    /// assert_eq!(date.hour(), );
-    /// ```
     pub fn hour(&self) -> u8 {
         self.hour
     }
     /// Create a new ISO 8601 date and time.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use mini_functions_date::Date;
-    ///
-    /// let date = ;
-    /// assert_eq!(date.iso_8601(), );
-    /// ```
     pub fn iso_8601(&self) -> String {
         self.iso_8601.clone()
     }
     /// Create a new ISO week number.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use mini_functions_date::Date;
-    ///
-    /// let date = ;
-    /// assert_eq!(date.iso_week(), );
-    /// ```
     pub fn iso_week(&self) -> u8 {
         self.iso_week
     }
     /// Create a new Microsecond.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use mini_functions_date::Date;
-    ///
-    /// let date = ;
-    /// assert_eq!(date.microsecond(), );
-    /// ```
     pub fn microsecond(&self) -> u32 {
         self.microsecond
     }
     /// Create a new Millisecond.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use mini_functions_date::Date;
-    ///
-    /// let date = ;
-    /// assert_eq!(date.millisecond(), );
-    /// ```
     pub fn millisecond(&self) -> u16 {
         self.millisecond
     }
     /// Create a new Minute.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use mini_functions_date::Date;
-    ///
-    /// let date = ;
-    /// assert_eq!(date.minute(), );
-    /// ```
     pub fn minute(&self) -> u8 {
         self.minute
     }
     /// Create a new Month.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use mini_functions_date::Date;
-    ///
-    /// let date = ;
-    /// assert_eq!(date.month(), );
-    /// ```
     pub fn month(&self) -> String {
         self.month.clone()
     }
     /// Create a new Nanosecond.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use mini_functions_date::Date;
-    ///
-    /// let date = ;
-    /// assert_eq!(date.nanosecond(), );
-    /// ```
     pub fn nanosecond(&self) -> u32 {
         self.nanosecond
     }
     /// Create a new Date.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use mini_functions_date::Date;
-    ///
-    /// assert_eq!(Date::new(), );
-    /// ```
     pub fn new() -> Self {
         let now_utc = OffsetDateTime::now_utc();
         let iso_8601 = now_utc.to_string().replace("UTC", "").replace("+00:00", "");
@@ -220,80 +119,26 @@ impl Date {
         }
     }
     /// Create an Offset.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use mini_functions_date::Date;
-    ///
-    /// let date = ;
-    /// assert_eq!(date.offset(), );
-    /// ```
     pub fn offset(&self) -> time::UtcOffset {
         self.offset
     }
     /// Create an Ordinal.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use mini_functions_date::Date;
-    ///
-    /// let date = ;
-    /// assert_eq!(date.ordinal(), );
-    /// ```
     pub fn ordinal(&self) -> u16 {
         self.ordinal
     }
     /// Create a new Second.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use mini_functions_date::Date;
-    ///
-    /// let date = ;
-    /// assert_eq!(date.second(), );
-    /// ```
     pub fn second(&self) -> u8 {
         self.second
     }
     /// Create a new Time.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use mini_functions_date::Date;
-    ///
-    /// let date = ;
-    /// assert_eq!(date.time(), );
-    /// ```
     pub fn time(&self) -> time::Time {
         self.time
     }
     /// Create a new Weekday.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use mini_functions_date::Date;
-    ///
-    /// let date = ;
-    /// assert_eq!(date.weekday(), );
-    /// ```
     pub fn weekday(&self) -> String {
         self.weekday.clone()
     }
     /// Create a new Year.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use mini_functions_date::Date;
-    ///
-    /// let date = ;
-    /// assert_eq!(date.year(), );
-    /// ```
     pub fn year(&self) -> i32 {
         self.year
     }

@@ -7,21 +7,9 @@ extern crate serde_json;
 use base64::DecodeError as B64Error;
 use openssl::error::ErrorStack;
 use serde_json::Error as SJError;
-use std::error;
+use std::error::Error as StdError;
 use std::fmt;
 use std::io::Error as IoError;
-
-// Macro to easily implement the `From` trait for converting from
-// another error type to `Error`.
-macro_rules! impl_error {
-    ($from:ty, $to:path) => {
-        impl From<$from> for JwtError {
-            fn from(e: $from) -> Self {
-                $to(format!("{:?}", e))
-            }
-        }
-    };
-}
 
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 /// Custom error type for JWT. This type is used to represent all
@@ -29,36 +17,58 @@ macro_rules! impl_error {
 /// implemented as an enum with variants for each possible error. It
 /// also implements the `Default`, `Display`, and `Error` traits.
 pub enum JwtError {
-    /// Signature expired.
-    SignatureExpired,
-    /// Signature invalid.
-    SignatureInvalid,
-    /// JWT invalid.
-    JWTInvalid,
-    /// Issuer invalid.
-    IssuerInvalid,
-    /// Expiration invalid.
-    ExpirationInvalid,
-    /// Audience invalid.
-    AudienceInvalid,
-    /// Format invalid.
+    AudienceInvalid(String),
+    ExpirationInvalid(String),
     FormatInvalid(String),
-    /// IO error.
-    IoError(String),
-    /// Invalid header.
-    InvalidHeader(String),
-    /// Invalid payload.
-    InvalidPayload(String),
-    /// Invalid signature.
-    InvalidSignature(String),
-    /// Open SSL error.
-    OpenSslError(String),
-    /// Protocol error.
-    ProtocolError(String),
-    // Token not found.
-    TokenNotFound(String),
-    /// Base 64 error.
     InvalidBase64(String),
+    InvalidHeader(String),
+    InvalidPayload(String),
+    InvalidSignature(String),
+    IoError(String),
+    IssuerInvalid(String),
+    JWTInvalid(String),
+    OpenSslError(String),
+    ProtocolError(String),
+    SignatureExpired(String),
+    SignatureInvalid(String),
+    TokenNotFound(String),
+}
+
+impl StdError for JwtError {}
+
+impl fmt::Display for JwtError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            JwtError::AudienceInvalid(err) => write!(f, "Audience Invalid Error: {}", err),
+            JwtError::ExpirationInvalid(err) => write!(f, "Expiration Invalid Error: {}", err),
+            // implement display for other variants as well
+            _ => write!(f, "Unknown error"),
+        }
+    }
+}
+
+impl From<B64Error> for JwtError {
+    fn from(error: B64Error) -> Self {
+        JwtError::InvalidBase64(error.to_string())
+    }
+}
+
+impl From<SJError> for JwtError {
+    fn from(error: SJError) -> Self {
+        JwtError::InvalidPayload(error.to_string())
+    }
+}
+
+impl From<ErrorStack> for JwtError {
+    fn from(error: ErrorStack) -> Self {
+        JwtError::OpenSslError(error.to_string())
+    }
+}
+
+impl From<IoError> for JwtError {
+    fn from(error: IoError) -> Self {
+        JwtError::IoError(error.to_string())
+    }
 }
 
 impl JwtError {
@@ -66,28 +76,28 @@ impl JwtError {
     pub fn is_signature_error(&self) -> bool {
         matches!(
             self,
-            JwtError::SignatureExpired | JwtError::SignatureInvalid
+            JwtError::SignatureExpired(_) | JwtError::SignatureInvalid(_)
         )
     }
 
     /// Returns `true` if the error is a JWT error.
     pub fn is_jwt_error(&self) -> bool {
-        matches!(self, JwtError::JWTInvalid)
+        matches!(self, JwtError::JWTInvalid(_))
     }
 
     /// Returns `true` if the error is an issuer error.
     pub fn is_issuer_error(&self) -> bool {
-        matches!(self, JwtError::IssuerInvalid)
+        matches!(self, JwtError::IssuerInvalid(_))
     }
 
     /// Returns `true` if the error is an expiration error.
     pub fn is_expiration_error(&self) -> bool {
-        matches!(self, JwtError::ExpirationInvalid)
+        matches!(self, JwtError::ExpirationInvalid(_))
     }
 
     /// Returns `true` if the error is an audience error.
     pub fn is_audience_error(&self) -> bool {
-        matches!(self, JwtError::AudienceInvalid)
+        matches!(self, JwtError::AudienceInvalid(_))
     }
 
     /// Returns `true` if the error is a format error.
@@ -122,44 +132,6 @@ impl JwtError {
 // Implementation of `Default` for `Error` to provide a default error.
 impl Default for JwtError {
     fn default() -> Self {
-        Self::SignatureExpired
+        Self::SignatureExpired("Signature expired.".to_string())
     }
 }
-
-// Implementation of `Display` for `Error` to provide a human-readable error message.
-impl fmt::Display for JwtError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            JwtError::SignatureExpired => write!(f, "Signature expired."),
-            JwtError::SignatureInvalid => write!(f, "Signature invalid."),
-            JwtError::JWTInvalid => write!(f, "JWT invalid."),
-            JwtError::IssuerInvalid => write!(f, "Issuer invalid."),
-            JwtError::ExpirationInvalid => write!(f, "Expiration invalid."),
-            JwtError::AudienceInvalid => write!(f, "Audience invalid."),
-            JwtError::FormatInvalid(msg) => write!(f, "Format invalid: {}.", msg),
-            JwtError::IoError(msg) => write!(f, "IO error: {}.", msg),
-            JwtError::InvalidHeader(msg) => write!(f, "Invalid header: {}.", msg),
-            JwtError::InvalidPayload(msg) => write!(f, "Invalid payload: {}.", msg),
-            JwtError::InvalidSignature(msg) => write!(f, "Invalid signature: {}.", msg),
-            JwtError::OpenSslError(msg) => write!(f, "Open SSL error: {}.", msg),
-            JwtError::ProtocolError(msg) => write!(f, "Protocol error: {}.", msg),
-            JwtError::TokenNotFound(msg) => write!(f, "Token not found: {}.", msg),
-            JwtError::InvalidBase64(msg) => write!(f, "Invalid base 64: {}.", msg),
-        }
-    }
-}
-
-// Implementation of `Error` for `Error` to enable use of `Error` with the `?` operator.
-impl error::Error for JwtError {}
-
-// Uses the `impl_error!` macro to implement the `From` trait for converting from `IoError` to `Error`.
-impl_error! {IoError, JwtError::IoError}
-
-// Uses the `impl_error!` macro to implement the `From` trait for converting from `SJError` to `Error`.
-impl_error! {SJError, JwtError::FormatInvalid}
-
-// Uses the `impl_error!` macro to implement the `From` trait for converting from `ErrorStack` to `Error`.
-impl_error! {ErrorStack, JwtError::OpenSslError}
-
-// Uses the `impl_error!` macro to implement the `From` trait for converting from `B64Error` to `Error`.
-impl_error! {B64Error, JwtError::ProtocolError}

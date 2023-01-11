@@ -39,10 +39,6 @@ pub struct JWT {
     pub signature: Vec<u8>,
     /// The JWT token.
     pub token: String,
-    /// The username associated with the JWT.
-    pub username: String,
-    /// The token password.
-    pub password: String,
 }
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Header {
@@ -117,8 +113,6 @@ impl Default for JWT {
             },
             signature: vec![],
             token: String::new(),
-            username: String::new(),
-            password: String::new(),
         }
     }
 }
@@ -154,15 +148,6 @@ impl JWT {
     /// * `Err(Error)` - An error if the JWT is invalid or if there was
     /// a problem decoding it.
     ///
-    /// # Examples
-    ///
-    /// ```
-    /// use mini_functions_jwt::JWT;
-    ///
-    /// let mut jwt = ;
-    /// assert_eq!(jwt.decode(secret), );
-    /// assert_eq!(jwt, );
-    /// ```
     pub fn decode(&mut self, secret: &[u8]) -> Result<String, JwtError> {
         let jwt = &self.token;
         {
@@ -192,20 +177,18 @@ impl JWT {
 
             // Compare the signature to the signature in the JWT
             if signature_b64 != inner_signature_b64 {
-                return Err(JwtError::SignatureInvalid);
+                return Err(JwtError::SignatureInvalid(signature_b64));
             }
             Ok(jwt.to_string())
         }
     }
     // Generates a JWT token.
-    // pub fn generate() -> Result<String, String> {
-    //     let claims = Claims::default();
-    //     let header = Header::default();
-    //     let password = "password".to_string();
-    //     self::encode(&header, &claims, &password.as_bytes())
-    //         .map_err(|e| e.to_string())
-    //         .and_then(|jwt| Ok(jwt))
-    // }
+    pub fn generate() -> Result<String, String> {
+        let claims = Claims::default();
+        let header = Header::default();
+        let password = "password".to_string();
+        self::encode(&header, &claims, password.as_bytes()).map_err(|e| e.to_string())
+    }
 
     // Returns the token field of the JWT struct.
     //
@@ -213,46 +196,24 @@ impl JWT {
     //
     // * `String` - The token value.
     //
-    // # Examples
-    //
-    // ```
-    // use mini_functions_jwt::JWT;
-    //
-    // let jwt = JWT::default();
-    // assert_eq!(jwt.get_token(), "token");
-    // ```
-    // pub fn get_token() -> String {
-    //     let token: String = JWT::default().token;
-    //     token.clone().to_string()
-    // }
+    pub fn get_token() -> String {
+        JWT::default().token
+    }
 
     // Claims
-    // pub fn claims() -> Claims {
-    //     let claims = Claims::default();
-    //     claims
-    // }
+    pub fn claims() -> Claims {
+        Claims::default()
+    }
 
     // Get the token length.
-    // pub fn get_token_length() -> usize {
-    //     let token: String = JWT::default().token;
-    //     token.len()
-    // }
+    pub fn get_token_length() -> usize {
+        JWT::default().token.len()
+    }
 
-    // Get the token username.
-    // pub fn get_token_username() -> String {
-    //     let username: String = JWT::default().username;
-    //     username.clone().to_string()
-    // }
-    // Get the token password.
-    // pub fn get_token_password() -> String {
-    //     let password: String = JWT::default().password;
-    //     password.clone().to_string()
-    // }
     // Get the token header.
-    // pub fn get_token_header() -> Header {
-    //     let header: Header = JWT::default().header;
-    //     header.clone()
-    // }
+    pub fn get_token_header() -> Header {
+        JWT::default().header
+    }
 }
 
 /// Header
@@ -298,8 +259,8 @@ impl fmt::Display for JWT {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(
             f,
-            "JWT {{ header: {}, claims: {}, signature: {:?}, token: {}, username: {}, password: {} }}",
-            self.header, self.claims, self.signature, self.token, self.username, self.password
+            "JWT {{ header: {}, claims: {}, signature: {:?}, token: {} }}",
+            self.header, self.claims, self.signature, self.token
         )
     }
 }
