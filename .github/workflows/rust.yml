@@ -117,12 +117,16 @@ jobs:
       - name: Install packages (Ubuntu) 🐧
         if: matrix.os == 'ubuntu-latest'
         run: |
-          ci/ubuntu-install-packages
+          # Make sure the script is executable.
+          git update-index --chmod=+x ./.github/ci/ubuntu-install-packages.sh
+
+          # Run the script.
+          .github/ci/ubuntu-install-packages.sh
 
       # - name: Install packages (macOS) 🍎
       #   if: matrix.os == 'macos-latest'
       #   run: |
-      #     ci/macos-install-packages
+      #     .github/ci/macos-install-packages
 
       # - name: Install Rust
       #   uses: actions-rs/toolchain@v1
