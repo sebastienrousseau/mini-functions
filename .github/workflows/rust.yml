@@ -133,7 +133,7 @@ jobs:
         if: matrix.os == 'macos-latest'
         run: |
           chmod +x ./.github/ci/macos-install-packages.sh \
-          ./.github/ci/macos-install-packages
+          ./.github/ci/macos-install-packages.sh
 
       # - name: Install Rust
       #   uses: actions-rs/toolchain@v1
@@ -173,8 +173,8 @@ jobs:
         shell: bash
         run: |
           # Install cross
-          cargo install cross
-          echo "CARGO=cross" >> $GITHUB_ENV
+          # cargo install cross
+          # echo "CARGO=cross" >> $GITHUB_ENV
           echo "TARGET_FLAGS=--target ${{ matrix.target }}" >> $GITHUB_ENV
           echo "TARGET_DIR=./target/${{ matrix.target }}" >> $GITHUB_ENV
 
@@ -193,7 +193,7 @@ jobs:
         shell: bash
         run: |
           # Build the libraries for the target platform and architecture
-          cross build --release --target=${{ matrix.target }} --lib
+          cargo build -verbose --release --target=${{ matrix.target }} --lib --all
           # ${{ env.CARGO }} build --verbose --release ${{ env.TARGET_FLAGS }} --lib --all
 
       # - name: Use Cross
