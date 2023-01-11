@@ -193,7 +193,7 @@ jobs:
         shell: bash
         run: |
           # Build the libraries for the target platform and architecture
-          cargo build -verbose --release --target=${{ matrix.target }} --lib --all
+          cargo build -verbose --release ${{ env.TARGET_FLAGS }} --lib
           # ${{ env.CARGO }} build --verbose --release ${{ env.TARGET_FLAGS }} --lib --all
 
       # - name: Use Cross
