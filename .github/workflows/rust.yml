@@ -3,8 +3,7 @@ name: ❯ mini_functions_release
 on: [push]
 
 jobs:
-  build-release:
-    name: build-release
+  mini_functions_release:
     strategy:
       fail-fast: false
       matrix:
@@ -47,12 +46,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cargo-
             ${{ runner.os }}-rustup-
-
       - name: Install Rust 🦀
         id: rust
         run: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-
       - name: Install rustfmt 🦀
         id: install-rustfmt
         uses: actions-rs/toolchain@v1
@@ -79,46 +76,30 @@ jobs:
           echo "VERSION=$(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))" >> $GITHUB_ENV
           echo "ARTIFACT_NAME=mini-functions-${{ matrix.target }}" >> $GITHUB_ENV
           echo "COMMITS=$(git log -20 --oneline | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{labels="";for(i=2;i<=NF;i++){if($i~/^[a-zA-Z]+\([a-zA-Z0-9-_]+\):/)labels=labels" "$i;else break;}printf("-%s %s\n",labels,$0);}' | sort -k1,1)" >> $GITHUB_ENV
-          echo "TARGET_FLAGS=--target ${{ matrix.target }} --lib" >> $GITHUB_ENV
-          echo "TARGET_DIR=./target/${{ matrix.target }}" >> $GITHUB_ENV
-
-      - name: Print environment variables 📝
-        run: |
-          echo "version is: ${{ env.VERSION }}"
-          echo "artifact name is: ${{ env.ARTIFACT_NAME }}"
-          echo "commits are: ${{ env.COMMITS }}"
-          echo "target flags are: ${{ env.TARGET_FLAGS }}"
-          echo "target dir is: ${{ env.TARGET_DIR }}"
-
       - name: Build libraries 🏗
         run: |
           # Check the code base
-
           cargo check --all
           # Install cross
           cargo install cross
-
           # Clean the build artifacts
           cargo clean
-
           # Build the libraries for the target platform and architecture
-          cross build  --verbose --release ${{ env.TARGET_FLAGS }}
-
+          cross build --release --target=${{ matrix.target }} --lib
         shell: /bin/bash -e {0}
 
       - name: Create release archive 📦
-        shell: bash
         run: |
           # Create the release archive
           mkdir -p ${{ env.TARGET_DIR }}/release
           cp -r ./target/release/* ${{ env.TARGET_DIR }}/release
           tar -czvf ${{ env.ARTIFACT_NAME }}-${{ env.VERSION }}.tar.gz -C ${{ env.TARGET_DIR }}/release .
+        shell: /bin/bash -e {0}
 
       - name: Generate Changelog 📜
         id: changelog
-        # if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         run: |
-
           # Generate the release notes template
           echo "<img src='https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg' alt='Made with Love' width='100%'/><br>" > ${{ github.workspace }}-CHANGELOG.md
           echo "<h1>Highly performant utility and wrapper functions library for Rust 🚀</h1><br>" > ${{ github.workspace }}-CHANGELOG.md
@@ -134,10 +115,9 @@ jobs:
           echo "$COMMITS" >> ${{ github.workspace }}-CHANGELOG.md
           echo "..." >> ${{ github.workspace }}-CHANGELOG.md
           echo "" >> ${{ github.workspace }}-CHANGELOG.md
-
       - name: Upload artifacts 📦
         id: upload
-        # if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}
@@ -145,7 +125,7 @@ jobs:
 
       - name: Create Release 🚀
         id: create_release
-        # if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
