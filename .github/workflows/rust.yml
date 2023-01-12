@@ -63,10 +63,10 @@ jobs:
         run: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
-      - name: Installing cargo-make 🦀
-        id: cargo-make-installation
-        run: |
-          cargo install cargo-make
+      # - name: Installing cargo-make 🦀
+      #   id: cargo-make-installation
+      #   run: |
+      #     cargo install cargo-make
 
       # - name: Installing cargo-audit 🦀
       #   id: cargo-audit-installation
@@ -128,30 +128,31 @@ jobs:
           NEW_VERSION=$(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
           echo "VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
-      # - name: Set environment variables 🔢
-      #   run: |
-      #     echo "VERSION=0.0.8" >> $GITHUB_ENV
-      # - name: Build libraries 🏗
-      #   id: build
-      #   run: |
-      #     # Check the code base
-      #     cargo check --all --all-features --workspace --verbose
-      #     # Install cross
-      #     cargo install cross
-      #     # Clean the build artifacts
-      #     cargo clean --verbose
-      #     # Build the libraries for the target platform and architecture
-      #     cargo build --verbose --workspace --release --target ${{ matrix.target }}
+      - name: Set environment variables 🔢
+        run: |
+          echo "VERSION=0.0.8" >> $GITHUB_ENV
+      - name: Build libraries 🏗
+        id: build
+        run: |
+          # Install cross
+          cargo install cross
+
+          # Clean the build artifacts
+          cargo clean --verbose
+
+          # Build the libraries for the target platform and architecture
+          cargo build --verbose --workspace --release --target ${{ matrix.target }}
+        shell: /bin/bash -e {0}
 
       # build:
       #   name: build
       #   runs-on: ${{ matrix.os }}
       #   needs: [targets, install, run, env]
       #   steps:
-      - name: Build libraries 🏗
-        run: |
-          cargo make build
-        shell: /bin/bash -e {0}
+      # - name: Build libraries 🏗
+      #   run: |
+      #     cargo make build
+      #   shell: /bin/bash -e {0}
 
       # release:
       #   name: release
