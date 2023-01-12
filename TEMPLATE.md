@@ -90,10 +90,6 @@ The Mini Functions Website is distributed under the terms of both the MIT licens
 
 ## What's Changed
 
-- Feature/mini functions by @sebastienrousseau in <https://github.com/sebastienrousseau/mini-functions/pull/20>
-
-**Full Changelog**: <https://github.com/sebastienrousseau/mini-functions/compare/v0.0.5...v0.0.8>
-
 ![divider][divider]
 
 ## Acknowledgements 💙
@@ -113,7 +109,7 @@ A big thank you to all the awesome contributors of [Mini Functions][4] for their
 [banner]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/banners/banner-mini-functions.svg "Mini Functions - Rust 🦀"
 [crates-badge]: https://img.shields.io/crates/v/mini-functions.svg?style=for-the-badge 'Crates.io'
 [divider]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/elements/divider.svg "divider"
-[docs-badge]: https://img.shields.io/docsrs/mini-functions.svg?style=for-the-badge 'Docs.rs'
+[docs-badge]: https://img.shields.io/docsrs/mini-functions.svg?style=for-the-badge 'Docs.rs '
 [libs-badge]: https://img.shields.io/badge/lib.rs-v0.0.8-orange.svg?style=for-the-badge 'Lib.rs'
 [license-badge]: https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge 'License'
 [made-with-rust-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-rust.svg "Made With Rust 🦀"

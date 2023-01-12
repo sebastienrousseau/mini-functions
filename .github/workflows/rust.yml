@@ -1,4 +1,4 @@
-name: ❯ mini_functions_release
+name: ❯ release
 
 on: [push]
 
@@ -7,12 +7,11 @@ env:
 
 jobs:
   targets:
-    name: build_release
+    name: mf_${{ matrix.target }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        node-version: [16]
         target:
           - x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+)
           - x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
@@ -22,7 +21,7 @@ jobs:
           - target: x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
             os: macos-latest
 
-      max-parallel: 2
+      max-parallel: 4
 
     steps:
       - name: Checkout repository 🛎️
@@ -41,38 +40,19 @@ jobs:
           key: ${{ runner.os }}-cache-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
             ${{ runner.os }}-cargo-
-            ${{ runner.os }}-cargo-make-
             ${{ runner.os }}-rustup-
             ${{ runner.os }}-rust-tools-cache-
 
-      # install:
-      #   name: install
-      #   runs-on: ${{ matrix.os }}
-      #   needs: [targets]
-      #   steps:
       - name: Installing Rust 🦀
         id: rust-installation
         run: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-
-      - name: Save cache 💰
-        id: save-cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo
-            ~/.cargo-make
-            ~/.rustup
-          key: ${{ runner.os }}-rust-tools-cache-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Update version number in codebase 📝
         run: |
           NEW_VERSION=$(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
           echo "VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
-      - name: Set environment variables 🔢
-        run: |
-          echo "VERSION=0.0.8" >> $GITHUB_ENV
       - name: Build libraries 🏗
         id: build
         run: |
@@ -86,11 +66,20 @@ jobs:
           cargo build --verbose --workspace --release --target ${{ matrix.target }}
         shell: /bin/bash -e {0}
 
-      # run:
-      #   name: run
-      #   runs-on: ${{ matrix.os }}
-      #   needs: [targets, install]
-      #   steps:
+      - name: Save dependencies cache 💰
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo
+            ~/.cargo-make
+            ~/.rustup
+          key: ${{ runner.os }}-cache-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+            ${{ runner.os }}-rustup-
+            ${{ runner.os }}-rust-tools-cache-
+
       - name: Run Cargo Format 🦀
         id: run-check-format
         run: |
@@ -111,32 +100,6 @@ jobs:
         run: |
           cargo test --all-targets --workspace --all-features
 
-      # - name: Run Cargo Audit 🦀
-      #   id: run-check-audit
-      #   run: |
-      #     cargo audit
-
-      # env:
-      #   name: environment
-      #   runs-on: ${{ matrix.os }}
-      #   needs: [targets, install, run]
-      #   steps:
-
-      # build:
-      #   name: build
-      #   runs-on: ${{ matrix.os }}
-      #   needs: [targets, install, run, env]
-      #   steps:
-      # - name: Build libraries 🏗
-      #   run: |
-      #     cargo make build
-      #   shell: /bin/bash -e {0}
-
-      # release:
-      #   name: release
-      #   runs-on: ${{ matrix.os }}
-      #   needs: [targets, install, run, env, build]
-      # steps:
       - name: Package the binary 📦
         id: package
         run: |
@@ -154,14 +117,16 @@ jobs:
         id: changelog
         # if: github.ref == 'refs/heads/main'
         run: |
+          # Append version information to CHANGELOG.md
+          echo "## [${{ env.VERSION }}] - $(date +'%Y-%m-%d')" >> ${{ github.workspace }}/CHANGELOG.md
           # Copy content of template file to CHANGELOG.md
           cat TEMPLATE.md > ${{ github.workspace }}/CHANGELOG.md
           # Append git log to CHANGELOG.md
           echo "$(git log --pretty=format:'%s' --reverse $(git describe --tags --abbrev=0)..HEAD)" >> ${{ github.workspace }}/CHANGELOG.md
           # Append empty line to CHANGELOG.md
           echo "" >> ${{ github.workspace }}/CHANGELOG.md
-          # Append version information to CHANGELOG.md
-          echo "## [${{ env.VERSION }}] - $(date +'%Y-%m-%d')" >> ${{ github.workspace }}/CHANGELOG.md
+          # Append empty line to CHANGELOG.md
+          echo "" >> ${{ github.workspace }}/CHANGELOG.md
 
       - name: Create Release 🚀
         id: create_release
