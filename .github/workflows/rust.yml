@@ -6,8 +6,8 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  mini_functions_release:
-    name: mini_functions_release
+  targets:
+    name: build_release
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -15,9 +15,9 @@ jobs:
         node-version: [16]
         target:
           - x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+)
-          # - x86_64-pc-windows-gnu # 64-bit Windows (7 or later)
+          - x86_64-pc-windows-gnu # 64-bit Windows (7 or later)
           - x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
-          # - aarch64-unknown-linux-gnu # ARM64 Linux (kernel 4.1, glibc 2.17+)
+          - aarch64-unknown-linux-gnu # ARM64 Linux (kernel 4.1, glibc 2.17+)
           # - aarch64-apple-darwin # ARM64 macOS (10.15 Catalina or later)
         include:
           - target: x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+)
@@ -26,8 +26,8 @@ jobs:
             os: ubuntu-latest
           - target: x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
             os: macos-latest
-          # - target: aarch64-unknown-linux-gnu # ARM64 Linux (kernel 4.1, glibc 2.17+)
-          # os: ubuntu-latest
+          - target: aarch64-unknown-linux-gnu # ARM64 Linux (kernel 4.1, glibc 2.17+)
+            os: ubuntu-latest
           # - target: aarch64-apple-darwin # ARM64 macOS (10.15 Catalina or later)
           # os: macos-latest
 
@@ -39,23 +39,47 @@ jobs:
         uses: actions/checkout@v3
         with: { submodules: true }
 
-      - name: Restore dependencies cache 📦
+      - name: Restore dependencies cache 💰
         id: cache
         uses: actions/cache@v3
         with:
           path: |
             ~/.cargo
+            ~/.cargo-make
             ~/.rustup
           key: ${{ runner.os }}-cache-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
             ${{ runner.os }}-cargo-
+            ${{ runner.os }}-cargo-make-
             ${{ runner.os }}-rustup-
-      - name: Install Rust 🦀
-        id: rust
+
+  install:
+    name: install
+    runs-on: ${{ matrix.os }}
+    needs: [targets]
+    steps:
+      - name: Installing Rust 🦀
+        id: rust-installation
         run: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-      - name: Install rustfmt 🦀
-        id: install-rustfmt
+
+      - name: Installing cargo-make 🦀
+        id: cargo-make-installation
+        run: |
+          cargo install cargo-make
+
+      - name: Installing cargo-audit 🦀
+        id: cargo-audit-installation
+        run: |
+          cargo install cargo-audit
+
+      - name: Installing cargo-watch 🦀
+        id: cargo-watch-installation
+        run: |
+          cargo install cargo-watch
+
+      - name: Installing rustfmt 🦀
+        id: rustfmt-installation
         uses: actions-rs/toolchain@v1
         with:
           components: rustfmt
@@ -64,19 +88,41 @@ jobs:
           target: ${{ matrix.target }}
           toolchain: stable
 
-      - name: Run rustfmt, clippy and tests 🦀
+  run:
+    name: run
+    runs-on: ${{ matrix.os }}
+    needs: [targets, install]
+    steps:
+      - name: Run Cargo Format 🦀
+        id: run-check-format
         run: |
-          # Run rustfmt
-          cargo fmt --all -- --check
-          # Run clippy
+          cargo check --all --all-features --workspace --verbose
+
+      - name: Run Clippy 🦀
+        id: run-check-clippy
+        run: |
           cargo clippy --all-targets --all-features --workspace -- -D warnings
-          # Run tests
-            cargo test --all-targets --workspace --all-features
-          # Run cargo audit
-          cargo audit
-          # Run cargo documentation
+
+      - name: Run Cargo Doc 🦀
+        id: run-check-doc
+        run: |
           cargo doc --all-features --workspace
 
+      - name: Run Cargo Test 🦀
+        id: run-check-test
+        run: |
+          cargo test --all-targets --workspace --all-features
+
+      - name: Run Cargo Audit 🦀
+        id: run-check-audit
+        run: |
+          cargo audit
+
+  env:
+    name: environment
+    runs-on: ${{ matrix.os }}
+    needs: [targets, install, run]
+    steps:
       - name: Update version number in codebase 📝
         run: |
           NEW_VERSION=$(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
@@ -96,11 +142,22 @@ jobs:
       #     cargo clean --verbose
       #     # Build the libraries for the target platform and architecture
       #     cargo build --verbose --workspace --release --target ${{ matrix.target }}
+
+  build:
+    name: build
+    runs-on: ${{ matrix.os }}
+    needs: [targets, install, run, env]
+    steps:
       - name: Build libraries 🏗
         run: |
           cargo make build
         shell: /bin/bash -e {0}
 
+  release:
+    name: release
+    runs-on: ${{ matrix.os }}
+    needs: [targets, install, run, env, build]
+    steps:
       - name: Package the binary 📦
         id: package
         run: |
