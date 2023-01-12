@@ -78,7 +78,7 @@ jobs:
             cargo test --all-targets --workspace --all-features
 
           # Run cargo audit
-          cargo audit --target-os ${{ matrix.os }}
+          cargo audit
 
           # Run cargo documentation
           cargo doc --all-features --workspace
