@@ -24,19 +24,23 @@ version = "0.0.8"
 
 [dependencies]
 mini-functions-date = { path = "./mini-functions-date" }
+mini-functions-games = { path = "./mini-functions-games" }
 mini-functions-jwt = { path = "./mini-functions-jwt" }
 mini-functions-jwt-claims = { path = "./mini-functions-jwt-claims" }
 mini-functions-jwt-errors = { path = "./mini-functions-jwt-errors" }
 mini-functions-log = { path = "./mini-functions-log" }
+mini-functions-random = { path = "./mini-functions-random" }
 
 [workspace]
 resolver = "1"
 members = [
     "mini-functions-date",
+    "mini-functions-games",
     "mini-functions-jwt-claims",
     "mini-functions-jwt-errors",
     "mini-functions-jwt",
     "mini-functions-log",
+    "mini-functions-random",
 ] # List of workspace members
 
 [workspace.package]
@@ -88,5 +92,6 @@ required-features = [
     "mini-functions-jwt-claims",
     "mini-functions-jwt-errors",
     "mini-functions-jwt",
-    "mini-functions-log"
+    "mini-functions-log",
+    "mini-functions-random",
 ]
