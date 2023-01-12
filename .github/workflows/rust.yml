@@ -68,13 +68,7 @@ jobs:
         id: rust-targets-installation
         run: |
           rustup target add ${{ matrix.target }}
-
-      - name: Installing toolchain 🦀
-        id: rust-toolchain-installation
-        run: |
-          rustup toolchain install stable-${{ matrix.target }}
-          rustup component add rustc --toolchain stable-${{ matrix.target }}
-          rustup default stable-${{ matrix.target }}
+          rustup update stable-${{ matrix.target }}
 
       # - name: Installing rustfmt and cargo-watch 🦀
       #   id: rustfmt-installation
