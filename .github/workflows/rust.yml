@@ -50,42 +50,38 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cargo-
             ${{ runner.os }}-rustup-
-      - name: Install Rust 🦀
-        id: rust
+
+      - name: Setup Rust 🦀
+        uses: actions/setup-rust@v2
+        with:
+          toolchain: stable # or another version of rust
+          components: rustfmt, clippy # optional, installs extra components
+          cargo-args: --all-features # optional, extra cargo args
+
+      - name: Restore build artifacts
+        id: restore-build-artifacts
         run: |
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-      - name: Install rustfmt 🦀
-        id: install-rustfmt
-        uses: actions-rs/toolchain@v1
-        with:
-          components: rustfmt
-          override: true
-          profile: minimal
-          target: ${{ matrix.target }}
-          toolchain: stable
+          # Restore the build artifacts from the cache
+          echo "Restoring build artifacts from cache"
+          actions/cache@v2
+            action: restore
+            path: target/${{ matrix.target }}/release
+            key: ${{ runner.os }}-cache-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Run rustfmt 🦀
-        id: rustfmt
-        run: rustup component add rustfmt
+      - name: Run rustfmt, clippy and tests 🦀
+        run: |
+          # Run rustfmt
+          cargo fmt --all -- --check
 
-      - name: Run unit tests 🦀
-        run: cargo test --all-targets --workspace --all-features
-        timeout-minutes: 10
+          # Run clippy
+          cargo clippy --all-targets --all-features --workspace -- -D warnings
 
-      - name: Check formatting 🦀
-        id: fmt
-        uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: --all -- --check --verbose --color=always
+          # Run tests
+          cargo test --all-targets --workspace --all-features
 
       - name: documentation 📚
         id: documentation
         run: cargo doc --all-features --workspace
-
-      - name: clippy 🦀
-        id: clippy
-        run: cargo clippy --all-targets --all-features --workspace -- -D warnings
 
       - name: Set environment variables 🔢
         run: |
@@ -108,6 +104,20 @@ jobs:
         run: |
           mkdir -p target/package
           tar czf target/package/${{ matrix.target }}.tar.gz -C target/${{ matrix.target }}/release .
+
+      - name: Save build artifacts
+        id: save-build-artifacts
+        run: |
+          # Save the build artifacts to the cache
+          # Replace "path/to/artifacts" with the actual path to your build artifacts
+          # Replace "key" with a unique key for this cache
+          echo "Saving build artifacts to cache"
+          echo "${{ hashFiles('path/to/artifacts') }}"
+          actions/cache@v2
+            action: save
+            path: target/${{ matrix.target }}/release
+            key: ${{ runner.os }}-cache-${{ hashFiles('**/Cargo.lock') }}
+
       - name: Deploy 🚀
         id: deploy
         uses: actions/upload-artifact@v3
