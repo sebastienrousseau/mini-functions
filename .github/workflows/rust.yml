@@ -60,10 +60,19 @@ jobs:
         run: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
-      - name: Update version number in codebase 📝
+      - name: Update version number in codebase for Windows 🪟
+        if: matrix.os == 'windows-latest'
+        run: |
+          FOR /F "tokens=2 delims='\"'" %i IN ('findstr /r "version *= *\"[0-9]*\.[0-9]*\.[0-9]*\"" Cargo.toml') DO SET "NEW_VERSION=%i"
+          echo "VERSION=%NEW_VERSION%" >> $GITHUB_ENV
+        shell: cmd
+
+      - name: Update version number in codebase for Linux 🐧 or macOS 🍎
+        if: matrix.os == 'macos-latest' || matrix.os == 'ubuntu-latest'
         run: |
           NEW_VERSION=$(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
           echo "VERSION=$NEW_VERSION" >> $GITHUB_ENV
+        shell: bash
 
       - name: Build libraries 🏗
         id: build
