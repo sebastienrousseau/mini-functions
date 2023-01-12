@@ -15,11 +15,23 @@ jobs:
         target:
           - x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+)
           - x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
+          - i686-unknown-linux-gnu # 32-bit Linux
+          - i686-pc-windows-msvc # 32-bit Windows
+          - x86_64-pc-windows-msvc # 64-bit Windows
+          - aarch64-unknown-linux-gnu # 64-bit Linux systems on ARM architecture
         include:
           - target: x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+)
             os: ubuntu-latest
           - target: x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
             os: macos-latest
+          - target: i686-unknown-linux-gnu # 32-bit Linux
+            os: ubuntu-latest
+          - target: i686-pc-windows-msvc # 32-bit Windows
+            os: windows-latest
+          - target: x86_64-pc-windows-msvc # 64-bit Windows
+            os: windows-latest
+          - target: aarch64-unknown-linux-gnu # 64-bit Linux systems on ARM architecture
+            os: ubuntu-latest
 
       max-parallel: 4
 
