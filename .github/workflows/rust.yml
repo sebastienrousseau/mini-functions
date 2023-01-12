@@ -75,7 +75,8 @@ jobs:
           cargo clippy --all-targets --all-features --workspace -- -D warnings
 
           # Run tests
-          cargo test --all-targets --workspace --all-features
+            cargo test --all --all-targets --workspace --all-features
+        timeout-minutes: 1
 
       - name: documentation 📚
         id: documentation
