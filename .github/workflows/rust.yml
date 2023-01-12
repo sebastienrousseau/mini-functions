@@ -137,7 +137,7 @@ jobs:
             );
             let releaseExists = false;
             releases.forEach((release) => {
-              if (release.tag_name === 'v' + env.VERSION) {
+              if (release.tag_name === 'v' + ${{ env.VERSION }}) {
                 releaseExists = true;
               }
             });
