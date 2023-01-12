@@ -129,23 +129,28 @@ jobs:
         with:
           script: |
             const releases = await github.paginate(
-              github.repos.listReleases,
+            github.repos.listReleases,
               {
-                owner: context.repo.owner,
-                repo: context.repo.repo,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
               }
             );
+
             let releaseExists = false;
-            releases.forEach((release) => {
-              if (release.tag_name === "v".to_string() + &env::var("VERSION").unwrap() {
-                releaseExists = true;
-              }
-            });
-            if (releaseExists) {
-              core.setFailed('A release with this tag name already exists');
-            } else {
-              core.setOutput('create_release', 'true');
+
+            for (const release of releases) {
+                if (release.tag_name === "v" + env.VERSION) {
+                    releaseExists = true;
+                    break;
+                }
             }
+
+            if (releaseExists) {
+                core.setFailed('A release with this tag name already exists');
+            } else {
+                core.setOutput('create_release', 'true');
+            }
+
       - if: steps.check_release.outputs.create_release == 'true'
         name: Create Release
         id: create_release
