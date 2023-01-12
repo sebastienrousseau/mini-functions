@@ -61,14 +61,7 @@ jobs:
       - name: Installing Rust 🦀
         id: rust-installation
         run: |
-          rustup toolchain install stable && \
-          rustup update --no-self-update && \
-          rustup default stable && \
-          rustup target add ${{ matrix.target }}
-          rustup toolchain add stable --profile minimal --component rustfmt,clippy,cargo-watch
-        shell: /bin/bash -e {0}
-        # run: |
-        #   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
       # - name: Installing rustfmt and cargo-watch 🦀
       #   id: rustfmt-installation
