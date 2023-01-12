@@ -41,20 +41,6 @@ jobs:
         uses: actions/checkout@v3
         with: { submodules: true }
 
-      - name: Restore dependencies cache 💰
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo
-            ~/.cargo-make
-            ~/.rustup
-          key: ${{ runner.os }}-cache-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-
-            ${{ runner.os }}-rustup-
-            ${{ runner.os }}-rust-tools-cache-
-
       - name: Installing Rust 🦀
         id: rust-installation
         run: |
