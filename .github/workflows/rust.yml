@@ -61,7 +61,8 @@ jobs:
       - name: Installing Rust 🦀
         id: rust-installation
         run: |
-          rustup update stable --no-self-update && rustup default stable
+          rustup update stable --no-self-update \
+          rustup default stable
             && rustup target add ${{ matrix.target }}
         # run: |
         #   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
