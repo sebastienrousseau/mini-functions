@@ -76,11 +76,12 @@ jobs:
 
           # Run tests
             cargo test --all --all-targets --workspace --all-features
-        timeout-minutes: 5
 
-      - name: documentation 📚
-        id: documentation
-        run: cargo doc --all-features --workspace
+          # Run cargo audit
+          cargo audit --target-os ${{ matrix.os }}
+
+          # Run cargo documentation
+          cargo doc --all-features --workspace
 
       - name: Set environment variables 🔢
         run: |

@@ -28,9 +28,6 @@ mini-functions-jwt = { path = "./mini-functions-jwt" }
 mini-functions-jwt-claims = { path = "./mini-functions-jwt-claims" }
 mini-functions-jwt-errors = { path = "./mini-functions-jwt-errors" }
 
-[dev-dependencies]
-changelog = "0.3.4"
-
 [workspace]
 resolver = "1"
 members = [
