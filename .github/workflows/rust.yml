@@ -79,7 +79,7 @@ jobs:
 
       - name: Update version number in codebase 📝
         run: |
-          NEW_VERSION=$(grep version Cargo.toml | awk '{print $3}' | tr -d '"')
+          NEW_VERSION=$(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
           echo "VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
       # - name: Set environment variables 🔢
