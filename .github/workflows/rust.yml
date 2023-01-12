@@ -129,7 +129,6 @@ jobs:
       - name: Package the binary 📦
         id: package
         run: |
-          outdir="$(ci/cargo-out-dir "${{ env.TARGET_DIR }}")"
           staging="mini-functions-v${{ needs.create-release.outputs.mini_functions_version }}-${{ matrix.target }}"
           mkdir -p "$staging"/{complete,doc}
 
