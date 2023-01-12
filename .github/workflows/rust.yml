@@ -53,11 +53,11 @@ jobs:
             ${{ runner.os }}-cargo-make-
             ${{ runner.os }}-rustup-
 
-  install:
-    name: install
-    runs-on: ${{ matrix.os }}
-    needs: [targets]
-    steps:
+  # install:
+  #   name: install
+  #   runs-on: ${{ matrix.os }}
+  #   needs: [targets]
+  #   steps:
       - name: Installing Rust 🦀
         id: rust-installation
         run: |
@@ -88,11 +88,11 @@ jobs:
           target: ${{ matrix.target }}
           toolchain: stable
 
-  run:
-    name: run
-    runs-on: ${{ matrix.os }}
-    needs: [targets, install]
-    steps:
+  # run:
+  #   name: run
+  #   runs-on: ${{ matrix.os }}
+  #   needs: [targets, install]
+  #   steps:
       - name: Run Cargo Format 🦀
         id: run-check-format
         run: |
@@ -118,11 +118,11 @@ jobs:
         run: |
           cargo audit
 
-  env:
-    name: environment
-    runs-on: ${{ matrix.os }}
-    needs: [targets, install, run]
-    steps:
+  # env:
+  #   name: environment
+  #   runs-on: ${{ matrix.os }}
+  #   needs: [targets, install, run]
+  #   steps:
       - name: Update version number in codebase 📝
         run: |
           NEW_VERSION=$(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
@@ -143,20 +143,20 @@ jobs:
       #     # Build the libraries for the target platform and architecture
       #     cargo build --verbose --workspace --release --target ${{ matrix.target }}
 
-  build:
-    name: build
-    runs-on: ${{ matrix.os }}
-    needs: [targets, install, run, env]
-    steps:
+  # build:
+  #   name: build
+  #   runs-on: ${{ matrix.os }}
+  #   needs: [targets, install, run, env]
+  #   steps:
       - name: Build libraries 🏗
         run: |
           cargo make build
         shell: /bin/bash -e {0}
 
-  release:
-    name: release
-    runs-on: ${{ matrix.os }}
-    needs: [targets, install, run, env, build]
+  # release:
+  #   name: release
+  #   runs-on: ${{ matrix.os }}
+  #   needs: [targets, install, run, env, build]
     steps:
       - name: Package the binary 📦
         id: package
