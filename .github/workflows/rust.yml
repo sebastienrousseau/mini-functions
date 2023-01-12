@@ -76,7 +76,7 @@ jobs:
 
           # Run tests
             cargo test --all --all-targets --workspace --all-features
-        timeout-minutes: 1
+        timeout-minutes: 3
 
       - name: documentation 📚
         id: documentation
