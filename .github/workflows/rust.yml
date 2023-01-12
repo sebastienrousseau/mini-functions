@@ -52,6 +52,7 @@ jobs:
             ${{ runner.os }}-cargo-
             ${{ runner.os }}-cargo-make-
             ${{ runner.os }}-rustup-
+            ${{ runner.os }}-rust-tools-cache-
 
       # install:
       #   name: install
@@ -62,6 +63,17 @@ jobs:
         id: rust-installation
         run: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
+      - name: Installing targets 🦀
+        id: rust-targets-installation
+        run: |
+          rustup target add ${{ matrix.target }}
+
+      - name: Installing toolchain 🦀
+        id: rust-toolchain-installation
+        run: |
+          rustup toolchain install stable-${{ matrix.target }}
+          rustup default stable-${{ matrix.target }}
 
       # - name: Installing rustfmt and cargo-watch 🦀
       #   id: rustfmt-installation
