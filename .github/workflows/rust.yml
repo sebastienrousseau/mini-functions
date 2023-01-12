@@ -164,12 +164,13 @@ jobs:
         run: |
           mkdir -p target/package
           tar czf target/package/${{ matrix.target }}.tar.gz -C target/${{ matrix.target }}/release .
+
       - name: Deploy 🚀
         id: deploy
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.platform }}.tar.gz
-          path: target/package/${{ matrix.platform }}.tar.gz
+          name: ${{ matrix.target }}.tar.gz
+          path: target/package/${{ matrix.target }}.tar.gz
 
       - name: Generate Changelog 📜
         id: changelog
@@ -184,36 +185,7 @@ jobs:
           # Append version information to CHANGELOG.md
           echo "## [${{ env.VERSION }}] - $(date +'%Y-%m-%d')" >> ${{ github.workspace }}/CHANGELOG.md
 
-      - name: Check for existing release ✅
-        id: check_release
-        uses: actions/github-script@v3
-        with:
-          script: |
-            const releases = await github.paginate(
-            github.repos.listReleases,
-              {
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-              }
-            );
-
-            let releaseExists = false;
-
-            for (const release of releases) {
-                if (release.tag_name === "v" + env.VERSION) {
-                    releaseExists = true;
-                    break;
-                }
-            }
-
-            if (releaseExists) {
-                core.setFailed('A release with this tag name already exists');
-            } else {
-                core.setOutput('create_release', 'true');
-            }
-
-      - if: steps.check_release.outputs.create_release == 'true'
-        name: Create Release
+      - name: Create Release 🚀
         id: create_release
         uses: actions/create-release@v1
         env:
