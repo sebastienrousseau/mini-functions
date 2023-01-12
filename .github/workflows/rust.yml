@@ -114,10 +114,11 @@ jobs:
         id: changelog
         # if: github.ref == 'refs/heads/main'
         run: |
-          # Generate the release notes template
-          cat ./.github/template-file.md > ${{ github.workspace }}/CHANGELOG.md
-          echo "$(git log --pretty=format:'%s' --reverse $(git describe --tags --abbrev=0)..HEAD)" >> ${{ github.workspace }}/CHANGELOG.md
-          echo "" >> ${{ github.workspace }}/CHANGELOG.md
+          # Copy content of template file to CHANGELOG.md
+          cat TEMPLATE.md > ${{ github.workspace }}/CHANGELOG.md
+          # Append git log to CHANGELOG.md
+          echo "$(cargo changelog)" >> ${{ github.workspace }}/CHANGELOG.md
+          # Append version information to CHANGELOG.md
           echo "## [${{ env.VERSION }}] - $(date +'%Y-%m-%d')" >> ${{ github.workspace }}/CHANGELOG.md
 
       - name: Create Release 🚀
@@ -128,6 +129,6 @@ jobs:
         with:
           tag_name: v${{ env.VERSION }}
           release_name: Mini Functions 🦀 v${{ env.VERSION }}
-          body_path: ${{ github.workspace }}-CHANGELOG.md
+          body_path: ${{ github.workspace }}/CHANGELOG.md
           draft: true
           prerelease: false
