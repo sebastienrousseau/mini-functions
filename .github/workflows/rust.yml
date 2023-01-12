@@ -61,32 +61,51 @@ jobs:
       - name: Installing Rust 🦀
         id: rust-installation
         run: |
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          rustup update stable --no-self-update && rustup default stable
+            && rustup target add ${{ matrix.target }}
+        # run: |
+        #   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
-      # - name: Installing cargo-make 🦀
-      #   id: cargo-make-installation
-      #   run: |
-      #     cargo install cargo-make
-
-      # - name: Installing cargo-audit 🦀
-      #   id: cargo-audit-installation
-      #   run: |
-      #     cargo install cargo-audit
-
-      - name: Installing cargo-watch 🦀
-        id: cargo-watch-installation
-        run: |
-          cargo install cargo-watch
-
-      - name: Installing rustfmt 🦀
+      - name: Installing rustfmt and cargo-watch 🦀
         id: rustfmt-installation
         uses: actions-rs/toolchain@v1
         with:
-          components: rustfmt
+          components: rustfmt, cargo-watch, clippy
           override: true
           profile: minimal
           target: ${{ matrix.target }}
           toolchain: stable
+
+      - name: Save Rust tools cache 📦
+        id: save-rust-tools-cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo
+            ~/.cargo-make
+            ~/.rustup
+          key: ${{ runner.os }}-rust-tools-cache-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Update version number in codebase 📝
+        run: |
+          NEW_VERSION=$(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
+          echo "VERSION=$NEW_VERSION" >> $GITHUB_ENV
+
+      - name: Set environment variables 🔢
+        run: |
+          echo "VERSION=0.0.8" >> $GITHUB_ENV
+      - name: Build libraries 🏗
+        id: build
+        run: |
+          # Install cross
+          cargo install cross
+
+          # Clean the build artifacts
+          cargo clean --verbose
+
+          # Build the libraries for the target platform and architecture
+          cargo build --verbose --workspace --release --target ${{ matrix.target }}
+        shell: /bin/bash -e {0}
 
       # run:
       #   name: run
@@ -123,26 +142,6 @@ jobs:
       #   runs-on: ${{ matrix.os }}
       #   needs: [targets, install, run]
       #   steps:
-      - name: Update version number in codebase 📝
-        run: |
-          NEW_VERSION=$(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
-          echo "VERSION=$NEW_VERSION" >> $GITHUB_ENV
-
-      - name: Set environment variables 🔢
-        run: |
-          echo "VERSION=0.0.8" >> $GITHUB_ENV
-      - name: Build libraries 🏗
-        id: build
-        run: |
-          # Install cross
-          cargo install cross
-
-          # Clean the build artifacts
-          cargo clean --verbose
-
-          # Build the libraries for the target platform and architecture
-          cargo build --verbose --workspace --release --target ${{ matrix.target }}
-        shell: /bin/bash -e {0}
 
       # build:
       #   name: build
