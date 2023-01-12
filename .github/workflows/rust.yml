@@ -41,27 +41,27 @@ jobs:
         uses: actions/checkout@v3
         with: { submodules: true }
 
-      # - name: Restore dependencies cache 💰
-      #   id: cache
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: |
-      #       ~/.cargo
-      #       ~/.cargo-make
-      #       ~/.rustup
-      #     key: ${{ runner.os }}-cache-${{ hashFiles('**/Cargo.lock') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-cargo-
-      #       ${{ runner.os }}-rustup-
-      #       ${{ runner.os }}-rust-tools-cache-
+      - name: Restore dependencies cache 💰
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo
+            ~/.cargo-make
+            ~/.rustup
+          key: ${{ runner.os }}-cache-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+            ${{ runner.os }}-rustup-
+            ${{ runner.os }}-rust-tools-cache-
 
       - name: Installing Rust 🦀
         id: rust-installation
         run: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
-      - name: Update version number in codebase for Linux 🐧 or macOS 🍎
-        if: matrix.os == 'macos-latest' || matrix.os == 'ubuntu-latest'
+      - name: Update version number 🧮
+        if: github.ref == 'refs/heads/main'
         run: |
           NEW_VERSION=$(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
           echo "VERSION=$NEW_VERSION" >> $GITHUB_ENV
@@ -102,12 +102,14 @@ jobs:
 
       - name: Package the binary 📦
         id: package
+        if: github.ref == 'refs/heads/main'
         run: |
           mkdir -p target/package
           tar czf target/package/${{ matrix.target }}.tar.gz -C target/${{ matrix.target }}/release .
 
       - name: Deploy 🚀
         id: deploy
+        if: github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.target }}.tar.gz
@@ -115,7 +117,7 @@ jobs:
 
       - name: Generate Changelog 📜
         id: changelog
-        # if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         run: |
           # Append version information to CHANGELOG.md
           echo "## [${{ env.VERSION }}] - $(date +'%Y-%m-%d')" >> ${{ github.workspace }}/CHANGELOG.md
@@ -130,12 +132,13 @@ jobs:
 
       - name: Create Release 🚀
         id: create_release
+        if: github.ref == 'refs/heads/main'
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: v${{ env.VERSION }}
-          release_name: Mini Functions 🦀 v${{ env.VERSION }}
+          release_name: Mini Functions 🦀 v${{ env.VERSION }} - ${{ matrix.target }}
           body_path: ${{ github.workspace }}/CHANGELOG.md
           draft: true
           prerelease: false

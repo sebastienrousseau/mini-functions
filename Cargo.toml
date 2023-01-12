@@ -27,23 +27,7 @@ mini-functions-date = { path = "./mini-functions-date" }
 mini-functions-jwt = { path = "./mini-functions-jwt" }
 mini-functions-jwt-claims = { path = "./mini-functions-jwt-claims" }
 mini-functions-jwt-errors = { path = "./mini-functions-jwt-errors" }
-cargo-make = "0.36.3"
-
-[tasks.build]
-description = "Build libraries for target platform and architecture"
-dependencies = ["build-linux", "build-macos", "build-windows"]
-
-[tasks.build-linux]
-description = "Build libraries for Linux"
-command = "cargo build --target x86_64-unknown-linux-gnu"
-
-[tasks.build-macos]
-description = "Build libraries for macOS"
-command = "cargo build --target x86_64-apple-darwin"
-
-[tasks.build-windows]
-description = "Build libraries for Windows"
-command = "cargo build --target x86_64-pc-windows-gnu"
+mini-functions-log = { path = "./mini-functions-log" }
 
 [workspace]
 resolver = "1"
@@ -52,6 +36,7 @@ members = [
     "mini-functions-jwt-claims",
     "mini-functions-jwt-errors",
     "mini-functions-jwt",
+    "mini-functions-log",
 ] # List of workspace members
 
 [workspace.package]
@@ -102,5 +87,6 @@ required-features = [
     "mini-functions-date",
     "mini-functions-jwt-claims",
     "mini-functions-jwt-errors",
-    "mini-functions-jwt"
+    "mini-functions-jwt",
+    "mini-functions-log"
 ]
