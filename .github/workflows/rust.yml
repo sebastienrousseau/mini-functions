@@ -3,16 +3,6 @@ name: ❯ mini_functions_release
 on: [push]
 
 env:
-  # For some builds, we use cross to test on 32-bit and big-endian
-  # systems.
-  CARGO: cargo
-  # When CARGO is set to CROSS, this is set to `--target matrix.target`.
-  TARGET_FLAGS: ""
-  # When CARGO is set to CROSS, TARGET_DIR includes matrix.target.
-  TARGET_DIR: ./target
-  # Emit backtraces on panics.
-  RUST_BACKTRACE: 1
-  # Enable colored output.
   CARGO_TERM_COLOR: always
 
 jobs:
@@ -60,12 +50,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cargo-
             ${{ runner.os }}-rustup-
-
       - name: Install Rust 🦀
         id: rust
         run: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-
       - name: Install rustfmt 🦀
         id: install-rustfmt
         uses: actions-rs/toolchain@v1
@@ -76,41 +64,21 @@ jobs:
           target: ${{ matrix.target }}
           toolchain: stable
 
-      - name: Use Cross
-        shell: bash
-        run: |
-          cargo install cross
-          echo "CARGO=cross" >> $GITHUB_ENV
-          echo "TARGET_FLAGS=--target ${{ matrix.target }}" >> $GITHUB_ENV
-          echo "TARGET_DIR=./target/${{ matrix.target }}" >> $GITHUB_ENV
-
-      - name: Show command used for Cargo
-        run: |
-          echo "cargo command is: ${{ env.CARGO }}"
-          echo "target flag is: ${{ env.TARGET_FLAGS }}"
-          echo "target dir is: ${{ env.TARGET_DIR }}"
-
       - name: Run rustfmt, clippy and tests 🦀
         run: |
           # Run rustfmt
           cargo fmt --all -- --check
-
           # Run clippy
           cargo clippy --all-targets --all-features --workspace -- -D warnings
-
           # Run tests
             cargo test --all-targets --workspace --all-features
-
           # Run cargo audit
           cargo audit
-
           # Run cargo documentation
           cargo doc --all-features --workspace
-
       - name: Set environment variables 🔢
         run: |
           echo "VERSION=0.0.8" >> $GITHUB_ENV
-
       - name: Build libraries 🏗
         id: build
         run: |
@@ -121,27 +89,20 @@ jobs:
           # Clean the build artifacts
           cargo clean --verbose
           # Build the libraries for the target platform and architecture
-          # cargo build --verbose --workspace --release --target ${{ matrix.target }}
-          ${{ env.CARGO }} build --lib --verbose --workspace --release ${{ env.TARGET_FLAGS }}
-
+          cargo build --verbose --workspace --release --target ${{ matrix.target }}
         shell: /bin/bash -e {0}
 
       - name: Package the binary 📦
         id: package
         run: |
-          staging="mini-functions-v${{ needs.create-release.outputs.mini_functions_version }}-${{ matrix.target }}"
-          mkdir -p "$staging"/{complete,doc}
-
-          cp "target/${{ matrix.target }}/release/mini-functions" "$staging/"
-          tar czf "$staging.tar.gz" "$staging"
-          echo "ASSET=$staging.tar.gz" >> $GITHUB_ENV
-
-      # - name: Deploy 🚀
-      #   id: deploy
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: ${{ matrix.platform }}.tar.gz
-      #     path: target/package/${{ matrix.platform }}.tar.gz
+          mkdir -p target/package
+          tar czf target/package/${{ matrix.target }}.tar.gz -C target/${{ matrix.target }}/release .
+      - name: Deploy 🚀
+        id: deploy
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.platform }}.tar.gz
+          path: target/package/${{ matrix.platform }}.tar.gz
 
       - name: Generate Changelog 📜
         id: changelog
@@ -155,24 +116,12 @@ jobs:
           echo "" >> ${{ github.workspace }}/CHANGELOG.md
           # Append version information to CHANGELOG.md
           echo "## [${{ env.VERSION }}] - $(date +'%Y-%m-%d')" >> ${{ github.workspace }}/CHANGELOG.md
-
-      - name: Get the release version from the tag
-        shell: bash
-        if: env.CARGO_MINI_FUNCTIONS_VERSION == ''
-        run: |
-          # Apparently, this is the right way to get a tag name. Really?
-          #
-          # See: https://github.community/t5/GitHub-Actions/How-to-get-just-the-tag-name/m-p/32167/highlight/true#M1027
-          echo "CARGO_MINI_FUNCTIONS_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
-          echo "version is: ${{ env.CARGO_MINI_FUNCTIONS_VERSION }}"
-
       - name: Create Release 🚀
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} (v${{ env.CARGO_MINI_FUNCTIONS_VERSION }})
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ needs.create-release.outputs.upload_url }}
           tag_name: v${{ env.VERSION }}
           release_name: Mini Functions 🦀 v${{ env.VERSION }}
           body_path: ${{ github.workspace }}/CHANGELOG.md
