@@ -66,20 +66,6 @@ jobs:
           cargo build --verbose --workspace --release --target ${{ matrix.target }}
         shell: /bin/bash -e {0}
 
-      - name: Save dependencies cache 💰
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo
-            ~/.cargo-make
-            ~/.rustup
-          key: ${{ runner.os }}-cache-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-
-            ${{ runner.os }}-rustup-
-            ${{ runner.os }}-rust-tools-cache-
-
       - name: Run Cargo Format 🦀
         id: run-check-format
         run: |
