@@ -112,33 +112,13 @@ jobs:
 
       - name: Generate Changelog 📜
         id: changelog
+        # if: github.ref == 'refs/heads/main'
         run: |
-          echo "$(cargo changelog)" >> ${{ github.workspace }}/CHANGELOG.md
-          cat ./.github/template-file.md >> ${{ github.workspace }}/CHANGELOG.md
-
-      - name: Append cargo changelog to CHANGELOG.md 📜
-        run: echo "$(cargo changelog)" >> CHANGELOG.md
-
-      # - name: Generate Changelog 📜
-      #   id: changelog
-      # if: github.ref == 'refs/heads/main'
-      # run: |
-      #   echo "$(cargo changelog)" >> ${{ github.workspace }}/CHANGELOG.md
-      #   # Generate the release notes template
-      #   echo "<img src='https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg' alt='Made with Love' width='100%'/><br>" > ${{ github.workspace }}-CHANGELOG.md
-      #   echo "<h1>Highly performant utility and wrapper functions library for Rust 🚀</h1><br>" > ${{ github.workspace }}-CHANGELOG.md
-      #   echo "<img src='https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/banners/banner-mini-functions.svg' alt='Mini Functions Banner' width='100%'/><br>" > ${{ github.workspace }}-CHANGELOG.md
-      #   echo "<h2>Welcome to Mini Functions 👋</h2><br>" >> ${{ github.workspace }}-CHANGELOG.md
-      #   echo "Mini Functions is a highly performant utility and wrapper functions library for Rust that has been carefully designed with optimization and efficiency in mind.<br>" >> ${{ github.workspace }}-CHANGELOG.md
-      #   echo "" >> ${{ github.workspace }}-CHANGELOG.md
-      #   echo "By providing convenient wrapper functions, our library aims to provide a high-level interface for common tasks while still leveraging the performance benefits of Rust under the hood.<br>" >> ${{ github.workspace }}-CHANGELOG.md
-      #   echo "" >> ${{ github.workspace }}-CHANGELOG.md
-      #   echo "These utility functions serve as an essential toolkit for any Rust developer, and the library's design abstractions allow for easy integration into a variety of projects and applications." >> ${{ github.workspace }}-CHANGELOG.md
-      #   echo "" >> ${{ github.workspace }}-CHANGELOG.md
-      #   echo "<h2>Key Features 🎯</h2><br>" >> ${{ github.workspace }}-CHANGELOG.md
-      #   # echo "$COMMITS" >> ${{ github.workspace }}-CHANGELOG.md
-      #   echo "$(cargo changelog)" >> ${{ github.workspace }}/CHANGELOG.md
-      #   echo "" >> ${{ github.workspace }}-CHANGELOG.md
+          # Generate the release notes template
+          cat ./.github/template-file.md > ${{ github.workspace }}/CHANGELOG.md
+          echo "$(git log --pretty=format:'%s' --reverse $(git describe --tags --abbrev=0)..HEAD)" >> ${{ github.workspace }}/CHANGELOG.md
+          echo "" >> ${{ github.workspace }}/CHANGELOG.md
+          echo "## [${{ env.VERSION }}] - $(date +'%Y-%m-%d')" >> ${{ github.workspace }}/CHANGELOG.md
 
       - name: Create Release 🚀
         id: create_release
