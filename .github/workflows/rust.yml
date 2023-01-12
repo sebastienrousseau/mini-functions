@@ -122,7 +122,7 @@ jobs:
           cargo clean --verbose
           # Build the libraries for the target platform and architecture
           # cargo build --verbose --workspace --release --target ${{ matrix.target }}
-          ${{ env.CARGO }} build --lib ---verbose --workspace --release ${{ env.TARGET_FLAGS }}
+          ${{ env.CARGO }} build --lib --verbose --workspace --release ${{ env.TARGET_FLAGS }}
 
         shell: /bin/bash -e {0}
 
