@@ -137,7 +137,7 @@ jobs:
             );
             let releaseExists = false;
             releases.forEach((release) => {
-              if (release.tag_name === format!("v{}", env::var("VERSION").unwrap().to_string()) {
+              if (release.tag_name === "v".to_string() + &env::var("VERSION").unwrap() {
                 releaseExists = true;
               }
             });
