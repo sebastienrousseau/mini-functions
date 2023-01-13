@@ -45,6 +45,16 @@ impl Deck {
         }
     }
 
+    /// Displays the current balance to the player
+    pub fn display_balance(&self) {
+        println!("💰 Your current balance is: ${}", self.balance);
+    }
+
+    /// Displays the current bet to the player
+    pub fn display_bet(&self) {
+        println!("💰 Your current bet is: ${}", self.bet);
+    }
+
     /// Draws a card from the top of the deck and returns it as a string.
     /// If the deck is empty, returns None.
     pub fn draw(&mut self) -> Option<String> {
@@ -64,12 +74,14 @@ impl Deck {
 
     /// Determines if the player has a winning hand, which is defined as three cards of the same suit.
     pub fn has_winning_hand(&self, card1: String, card2: String, card3: String) -> bool {
-        let card1_suit = card1.split(" ").last().unwrap();
-        let card2_suit = card2.split(" ").last().unwrap();
-        let card3_suit = card3.split(" ").last().unwrap();
+        let card1_split = card1.split(' ').collect::<Vec<&str>>();
+        let card2_split = card2.split(' ').collect::<Vec<&str>>();
+        let card3_split = card3.split(' ').collect::<Vec<&str>>();
+        let card1_suit = card1_split[2].chars().nth(0).unwrap();
+        let card2_suit = card2_split[2].chars().nth(0).unwrap();
+        let card3_suit = card3_split[2].chars().nth(0).unwrap();
 
-        card1_suit.trim_end_matches(")") == card2_suit.trim_end_matches(")")
-            && card2_suit.trim_end_matches(")") == card3_suit.trim_end_matches(")")
+        card1_suit == card2_suit && card2_suit == card3_suit
     }
 
     /// Creates a new deck of cards and shuffles it using the
@@ -99,6 +111,35 @@ impl Deck {
             println!("🎲 You placed a bet of ${}", bet);
         } else {
             println!("🎲 You do not have enough funds to place a bet of ${}", bet);
+        }
+    }
+
+    /// Allows the player to play again or quit the game
+    pub fn play_again_or_quit(&mut self) {
+        loop {
+            println!(
+                "Would you like to play again or quit? (Enter 'p' to play again or 'q' to quit)"
+            );
+            let mut input = String::new();
+            std::io::stdin().read_line(&mut input).unwrap();
+            let input = input.trim();
+            match input {
+                "p" => {
+                    self.bet = 0;
+                    self.display_balance();
+                    if self.balance < 5 {
+                        println!("You don't have enough funds to play again!");
+                        println!("Thanks for playing!");
+                        std::process::exit(0);
+                    }
+                    return;
+                }
+                "q" => {
+                    println!("Thanks for playing!");
+                    std::process::exit(0);
+                }
+                _ => println!("Invalid input, please enter 'p' to play again or 'q' to quit"),
+            }
         }
     }
 }
