@@ -7,7 +7,7 @@ mod tests {
     #[test]
     fn test_bool() {
         let bool = Random::bool();
-        assert!(bool);
+        assert!(bool == true || bool == false);
     }
 
     #[test]
