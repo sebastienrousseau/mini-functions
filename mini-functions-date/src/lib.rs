@@ -1,6 +1,7 @@
 //! # Core Date functionality
 //!
 //! This crate provides an easy way to get the current date and time in multiple formats.
+//! It is a thread-safe, optimized for speed and memory usage.
 //!
 //!
 
@@ -10,136 +11,71 @@
 
 extern crate time;
 use std::fmt;
+use std::sync::RwLock;
 use time::OffsetDateTime;
 
-/// Date Utility
+/// Date struct for getting the current date and time.
 ///
-/// Provides an easy way to get the current date and time in multiple
-/// formats. The date and time are based on the UTC timezone.
+/// This struct represents a date and time value with various fields,
+/// such as the date, day, hour, ISO 8601 date and time, ISO week number,
+/// minute, month, offset, ordinal, second, time, weekday, and year.
+// Each field is wrapped in a Mutex to make the struct thread-safe and
+// allow for concurrent access.
 ///
-#[derive(Clone, Debug, PartialEq, PartialOrd)]
+#[derive(Debug)]
 pub struct Date {
-    /// The date.
-    pub date: time::Date,
-    /// The day of the month.
-    pub day: u8,
-    /// The hour of the day.
-    pub hour: u8,
-    /// The ISO 8601 date and time.
-    pub iso_8601: String,
-    /// The ISO week number.
-    pub iso_week: u8,
-    /// The microsecond.
-    pub microsecond: u32,
-    /// The millisecond.
-    pub millisecond: u16,
-    /// The minute.
-    pub minute: u8,
-    /// The month.
-    pub month: String,
-    /// The nanosecond.
-    pub nanosecond: u32,
-    /// The offset from UTC.
-    pub offset: time::UtcOffset,
-    /// The ordinal date.
-    pub ordinal: u16,
-    /// The second.
-    pub second: u8,
-    /// The time.
-    pub time: time::Time,
-    /// The weekday.
-    pub weekday: String,
-    /// The year.
-    pub year: i32,
+    // The date represented as a time::Date object
+    pub date: RwLock<time::Date>,
+    // The day of the month as a number (1-31)
+    pub day: RwLock<u8>,
+    // The hour of the day as a number (0-23)
+    pub hour: RwLock<u8>,
+    // The ISO 8601 date and time as a string
+    pub iso_8601: RwLock<String>,
+    // The ISO week number as a number
+    pub iso_week: RwLock<u8>,
+    // The minute of the hour as a number (0-59)
+    pub minute: RwLock<u8>,
+    // The month as a string (e.g. "January")
+    pub month: RwLock<String>,
+    // The offset from UTC as a time::UtcOffset object
+    pub offset: RwLock<time::UtcOffset>,
+    // The ordinal date as a number
+    pub ordinal: RwLock<u16>,
+    // The second of the minute as a number (0-59)
+    pub second: RwLock<u8>,
+    // The time represented as a time::Time object
+    pub time: RwLock<time::Time>,
+    // The weekday as a string (e.g. "Monday")
+    pub weekday: RwLock<String>,
+    // The year as a number
+    pub year: RwLock<i32>,
 }
 
 impl Date {
-    /// Create a new Date.
-    pub fn date(&self) -> time::Date {
-        self.date
-    }
-    /// Create a new Day.
-    pub fn day(&self) -> u8 {
-        self.day
-    }
-    /// Create a new Hour.
-    pub fn hour(&self) -> u8 {
-        self.hour
-    }
-    /// Create a new ISO 8601 date and time.
-    pub fn iso_8601(&self) -> String {
-        self.iso_8601.clone()
-    }
-    /// Create a new ISO week number.
-    pub fn iso_week(&self) -> u8 {
-        self.iso_week
-    }
-    /// Create a new Microsecond.
-    pub fn microsecond(&self) -> u32 {
-        self.microsecond
-    }
-    /// Create a new Millisecond.
-    pub fn millisecond(&self) -> u16 {
-        self.millisecond
-    }
-    /// Create a new Minute.
-    pub fn minute(&self) -> u8 {
-        self.minute
-    }
-    /// Create a new Month.
-    pub fn month(&self) -> String {
-        self.month.clone()
-    }
-    /// Create a new Nanosecond.
-    pub fn nanosecond(&self) -> u32 {
-        self.nanosecond
-    }
-    /// Create a new Date.
+    /// Create a new instance of the `Date` struct with the current date and time.
+    /// This struct is thread-safe, so it can be shared across multiple threads.
     pub fn new() -> Self {
+        // Get the current date and time in UTC
         let now_utc = OffsetDateTime::now_utc();
-        let iso_8601 = now_utc.to_string().replace("UTC", "").replace("+00:00", "");
+        // Convert the date and time to an ISO 8601 string
+        let iso_8601 = now_utc.to_string();
+        // Create a new instance of the `Date` struct and initialize its fields
         Self {
-            date: now_utc.date(),
-            day: now_utc.day(),
-            hour: now_utc.hour(),
-            iso_8601,
-            iso_week: now_utc.iso_week(),
-            microsecond: now_utc.microsecond(),
-            millisecond: now_utc.millisecond(),
-            minute: now_utc.minute(),
-            month: now_utc.month().to_string(),
-            nanosecond: now_utc.nanosecond(),
-            offset: now_utc.offset(),
-            ordinal: now_utc.ordinal(),
-            second: now_utc.second(),
-            time: now_utc.time(),
-            weekday: now_utc.weekday().to_string(),
-            year: now_utc.year(),
+            date: now_utc.date().into(),
+            day: now_utc.day().into(),
+            hour: now_utc.hour().into(),
+            iso_8601: iso_8601.into(),
+            iso_week: now_utc.iso_week().into(),
+            minute: now_utc.minute().into(),
+            month: now_utc.month().to_string().into(),
+            offset: now_utc.offset().into(),
+            ordinal: now_utc.ordinal().into(),
+            second: now_utc.second().into(),
+            time: now_utc.time().into(),
+            weekday: now_utc.weekday().to_string().into(),
+            year: now_utc.year().into(),
         }
-    }
-    /// Create an Offset.
-    pub fn offset(&self) -> time::UtcOffset {
-        self.offset
-    }
-    /// Create an Ordinal.
-    pub fn ordinal(&self) -> u16 {
-        self.ordinal
-    }
-    /// Create a new Second.
-    pub fn second(&self) -> u8 {
-        self.second
-    }
-    /// Create a new Time.
-    pub fn time(&self) -> time::Time {
-        self.time
-    }
-    /// Create a new Weekday.
-    pub fn weekday(&self) -> String {
-        self.weekday.clone()
-    }
-    /// Create a new Year.
-    pub fn year(&self) -> i32 {
-        self.year
     }
 }
 
@@ -151,11 +87,24 @@ impl Default for Date {
     }
 }
 
-/// Display implementation for Date.
-/// Returns a formatted String.
+// Display implementation for Date.
+// Returns a formatted String.
 impl fmt::Display for Date {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Date {{ date: {:?}, iso_8601: {}, iso_week: {}, day: {}, hour: {}, microsecond: {}, milliseconds: {}, minute: {}, month: {:?}, nanosecond: {}, offset: {:?}, ordinal: {}, second: {}, time: {:?}, weekday: {:?}, year: {} }}",
-        self.date, self.iso_8601, self.iso_week, self.day, self.hour, self.microsecond, self.millisecond, self.minute, self.month, self.nanosecond, self.offset, self.ordinal, self.second, self.time, self.weekday, self.year)
+        write!(f, "date: {}\nday: {}\nhour: {}\niso_8601: {}\niso_week: {}\nminute: {}\nmonth: {}\noffset: {}\nordinal: {}\nsecond: {}\ntime: {}\nweekday: {}\nyear: {}",
+            self.date.read().unwrap(),
+            self.day.read().unwrap(),
+            self.hour.read().unwrap(),
+            self.iso_8601.read().unwrap(),
+            self.iso_week.read().unwrap(),
+            self.minute.read().unwrap(),
+            self.month.read().unwrap(),
+            self.offset.read().unwrap(),
+            self.ordinal.read().unwrap(),
+            self.second.read().unwrap(),
+            self.time.read().unwrap(),
+            self.weekday.read().unwrap(),
+            self.year.read().unwrap()
+        )
     }
 }
