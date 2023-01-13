@@ -13,8 +13,6 @@ mod tests {
     #[test]
     fn test_new() {
         let mut rng = Random::new();
-        // We cannot directly access the `seed` field, so we will check
-        // if the `random` function returns a valid value instead
         assert!(rng.random() > 0);
     }
 
