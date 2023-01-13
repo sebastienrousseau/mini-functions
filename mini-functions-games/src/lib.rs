@@ -77,9 +77,9 @@ impl Deck {
         let card1_split = card1.split(' ').collect::<Vec<&str>>();
         let card2_split = card2.split(' ').collect::<Vec<&str>>();
         let card3_split = card3.split(' ').collect::<Vec<&str>>();
-        let card1_suit = card1_split[2].chars().nth(0).unwrap();
-        let card2_suit = card2_split[2].chars().nth(0).unwrap();
-        let card3_suit = card3_split[2].chars().nth(0).unwrap();
+        let card1_suit = card1_split[2].chars().next().unwrap();
+        let card2_suit = card2_split[2].chars().next().unwrap();
+        let card3_suit = card3_split[2].chars().next().unwrap();
 
         card1_suit == card2_suit && card2_suit == card3_suit
     }
