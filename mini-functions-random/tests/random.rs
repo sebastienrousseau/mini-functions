@@ -57,7 +57,7 @@ mod tests {
         let rng = Random::new();
         let s = format!("{}", rng);
         assert!(s.starts_with("Random { seed: "));
-        assert!(s.ends_with("}"));
+        assert!(s.chars().last().unwrap() == '}');
     }
 
     #[test]
@@ -81,18 +81,20 @@ mod tests {
     #[test]
     fn test_random_is_within_range() {
         let mut rng = Random::new();
+        let mut sum = 0;
         for _ in 0..100 {
-            let random = rng.random();
-            assert!(random <= std::u32::MAX);
+            sum += rng.random();
         }
+        assert!(sum > 0);
     }
     #[test]
     fn test_pseudo_is_within_range() {
         let mut rng = Random::new();
+        let mut sum = 0;
         for _ in 0..100 {
-            let pseudo = rng.pseudo();
-            assert!(pseudo <= std::u32::MAX);
+            sum += rng.pseudo();
         }
+        assert!(sum > 0);
     }
     #[test]
     fn integration_test_pseudo_and_random_are_different() {
