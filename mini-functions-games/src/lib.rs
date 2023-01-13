@@ -85,7 +85,7 @@ impl Deck {
     }
 
     /// Creates a new deck of cards and shuffles it using the
-    /// Fisher-Yates algorithm. (https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle)
+    /// Fisher-Yates algorithm. <https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle>
     pub fn new() -> Self {
         let mut deck = Self {
             cards: (0..52).collect(),
