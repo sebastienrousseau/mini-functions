@@ -14,16 +14,16 @@ fn main() {
     const CL_VC: &str = "MINI-FUNCTIONS-CLAIMS-VC";
     const CL_VP: &str = "MINI-FUNCTIONS-CLAIMS-VP";
 
-    let date = Date::new().iso_8601();
+    let date = Date::new().iso_8601;
     let claims = Claims {
         aud: Some(CL_AUD.to_string()),
         custom: Some(CL_CUSTOM.to_string()),
         did: Some(CL_DID.to_string()),
-        exp: Some(date.to_string()),
-        iat: Some(date.to_string()),
+        exp: Some(date.read().unwrap().to_string()),
+        iat: Some(date.read().unwrap().to_string()),
         iss: Some(CL_ISS.to_string()),
         jti: Some(CL_JTI.to_string()),
-        nbf: Some(date),
+        nbf: Some(date.read().unwrap().to_string()),
         sub: Some(CL_SUB.to_string()),
         vc: Some(CL_VC.to_string()),
         vp: Some(CL_VP.to_string()),

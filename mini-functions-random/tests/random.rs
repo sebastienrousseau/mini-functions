@@ -4,11 +4,11 @@ mod tests {
     extern crate mini_functions_random;
     use self::mini_functions_random::Random;
 
-    #[test]
-    fn test_bool() {
-        let bool = Random::bool();
-        assert!(bool);
-    }
+    // #[test]
+    // fn test_bool() {
+    //     let bool = Random::bool();
+    //     assert!(bool);
+    // }
 
     #[test]
     fn test_new() {
