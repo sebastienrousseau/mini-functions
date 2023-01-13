@@ -57,7 +57,7 @@ mod tests {
         let rng = Random::new();
         let s = format!("{}", rng);
         assert!(s.starts_with("Random { seed: "));
-        assert!(s.chars().last().unwrap() == '}');
+        assert!(s.ends_with('}'));
     }
 
     #[test]
