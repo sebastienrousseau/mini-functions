@@ -107,6 +107,12 @@ impl Random {
         let mut rng = thread_rng();
         rng.gen_range(min..max)
     }
+    /// Generates a random number between the min and max values using
+    /// the rand `crate` to produce cryptographically secure random
+    /// numbers.
+    pub fn random_range(&mut self, min: u32, max: u32) -> u32 {
+        min + self.random() % (max - min)
+    }
 }
 
 impl std::fmt::Display for Random {

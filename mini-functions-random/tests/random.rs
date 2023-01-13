@@ -110,8 +110,8 @@ mod tests {
     fn integration_test_random_values_are_within_range() {
         let mut rng = Random::new();
         for _ in 0..100 {
-            let random = rng.random();
-            assert!(random <= std::u32::MAX);
+            let random = rng.random_range(0, std::u32::MAX);
+            assert!(random < std::u32::MAX);
         }
     }
 
@@ -119,8 +119,8 @@ mod tests {
     fn integration_test_pseudo_values_are_within_range() {
         let mut rng = Random::new();
         for _ in 0..100 {
-            let pseudo = rng.pseudo();
-            assert!(pseudo <= std::u32::MAX);
+            let pseudo = rng.random_range(0, std::u32::MAX);
+            assert!(pseudo < std::u32::MAX);
         }
     }
 
