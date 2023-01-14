@@ -88,6 +88,6 @@ mod tests {
     fn test_to_svg() {
         let data = vec![0x61, 0x62, 0x63];
         let qrcode = QRCode::from_bytes(data);
-        assert_eq!(qrcode.data != vec![], true);
+        assert!(qrcode.data != vec![], true);
     }
 }
