@@ -59,7 +59,7 @@ mod tests {
         let red_qrcode = qrcode.colorize(Rgb([255, 0, 0]));
 
         // Convert the QR code to a PNG image and assert that all of the dark cells are red.
-        let image: RgbImage = red_qrcode.try_into().unwrap();
+        let image: RgbImage = red_qrcode.unwrap();
         for (x, y, pixel) in image.enumerate_pixels() {
             let expected_color =
                 if qrcode.to_qrcode()[(x as usize, y as usize)] == qrcode::Color::Dark {
@@ -88,6 +88,6 @@ mod tests {
     fn test_to_svg() {
         let data = vec![0x61, 0x62, 0x63];
         let qrcode = QRCode::from_bytes(data);
-        assert!(qrcode.data != vec![], true);
+        assert!(qrcode.data != vec![], "{}", true);
     }
 }
