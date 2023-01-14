@@ -2,7 +2,6 @@ extern crate image;
 use image::{ImageBuffer, Rgb, RgbImage}; // Import the ImageBuffer and Rgb structs from the image crate
 extern crate mini_functions_qrcode;
 use self::mini_functions_qrcode::QRCode;
-use std::convert::TryInto;
 use std::fs; // Import the fs module from the standard library // Import the QRCode struct from the mini_functions crate
 
 fn main() {
@@ -38,7 +37,7 @@ fn main() {
     // Create a new QRCode using the QRCode::from_string() function and convert it to a PNG representation with a custom color
     let qrcode = QRCode::new(vec![0, 1, 2, 3]); // Create a new QR code with some data.
     let red_qrcode = qrcode.colorize(Rgb([255, 0, 0])); // Colorize the QR code with a red color.
-    let image: ImageBuffer<Rgb<u8>, Vec<u8>> = red_qrcode.unwrap(); // Convert the colorized QR code to a PNG image.
+    let image: ImageBuffer<Rgb<u8>, Vec<u8>> = red_qrcode; // Convert the colorized QR code to a PNG image.
     println!(
         "🦀 fn colorize():         ✅ {:?}",
         image.save("qrcode_colorized.png")
@@ -50,7 +49,7 @@ fn main() {
 
     // Create a new QRCode using the QRCode::from_string() function and convert it to a PNG representation with a custom size
     let qrcode = QRCode::new(vec![0x61, 0x62, 0x63]);
-    let resized_image: RgbImage = qrcode.resize(512, 512).unwrap();
+    let resized_image: RgbImage = qrcode.resize(512, 512);
     println!(
         "🦀 fn resize():           ✅ {:?}",
         resized_image.save("qrcode_resized.png")
