@@ -80,14 +80,14 @@ mod tests {
         let resized_qrcode = qrcode.resize(42, 42);
 
         // Convert the QR code to a PNG image and assert that the dimensions are correct.
-        let image: RgbImage = resized_qrcode.unwrap();
+        let image: RgbImage = resized_qrcode;
         assert_eq!(image.dimensions(), (42, 42));
     }
 
     #[test]
     fn test_to_svg() {
         let data = vec![0x61, 0x62, 0x63];
-        let qrcode = QRCode::from_bytes(data.clone());
+        let qrcode = QRCode::from_bytes(data);
         assert_eq!(qrcode.data, data);
     }
 }
