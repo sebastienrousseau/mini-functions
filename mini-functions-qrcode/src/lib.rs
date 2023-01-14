@@ -71,11 +71,11 @@ impl QRCode {
 
     /// The `to_svg` method creates a new SVG image of the QR code using
     /// the data stored in the QRCode
-    pub fn to_svg(&self) -> String {
+    pub fn to_svg(&self, width: u32) -> String {
         let qrcode = self.to_qrcode();
         let svg_string = qrcode
             .render::<svg::Color>()
-            .min_dimensions(200, 200)
+            .min_dimensions(width, width)
             .dark_color(svg::Color("#000000"))
             .light_color(svg::Color("#FFFFFF"))
             .build();

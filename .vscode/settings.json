@@ -26,6 +26,7 @@
         "hdrv",
         "hmac",
         "Hmac",
+        "imageops",
         "jdrv",
         "jsonwebtoken",
         "JWSs",
