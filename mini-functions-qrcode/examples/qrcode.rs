@@ -38,19 +38,19 @@ fn main() {
     // Create a new QRCode using the QRCode::from_string() function and convert it to a PNG representation with a custom color
     let qrcode = QRCode::new(vec![0, 1, 2, 3]); // Create a new QR code with some data.
     let red_qrcode = qrcode.colorize(Rgb([255, 0, 0])); // Colorize the QR code with a red color.
-    let image: ImageBuffer<Rgb<u8>, Vec<u8>> = red_qrcode.try_into().unwrap(); // Convert the colorized QR code to a PNG image.
+    let image: ImageBuffer<Rgb<u8>, Vec<u8>> = red_qrcode.unwrap(); // Convert the colorized QR code to a PNG image.
     println!(
         "🦀 fn colorize():         ✅ {:?}",
         image.save("qrcode_colorized.png")
     ); // Print the PNG representation of the QRCode
     image.save("qrcode_colorized.png").unwrap(); // Save the image to a file.
-    println!("🦀 file created:          ✅ {}", "qrcode_colorized.png"); // Print the path to the PNG representation of the QRCode that was saved to a file called "qrcode.png"
+    println!("🦀 file created:          ✅ qrcode_colorized.png"); // Print the path to the PNG representation of the QRCode that was saved to a file called "qrcode.png"
     fs::remove_file("qrcode_colorized.png").unwrap(); // Remove the file that was created after the test.
     println!("🦀 file removed:          ✅ qrcode_colorized.png"); // Print the path to the PNG representation of the QRCode that was saved to a file called "qrcode.png"
 
     // Create a new QRCode using the QRCode::from_string() function and convert it to a PNG representation with a custom size
     let qrcode = QRCode::new(vec![0x61, 0x62, 0x63]);
-    let resized_image: RgbImage = qrcode.resize(512, 512).try_into().unwrap();
+    let resized_image: RgbImage = qrcode.resize(512, 512).unwrap();
     println!(
         "🦀 fn resize():           ✅ {:?}",
         resized_image.save("qrcode_resized.png")
