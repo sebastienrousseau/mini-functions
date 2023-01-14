@@ -80,7 +80,7 @@ mod tests {
         let resized_qrcode = qrcode.resize(42, 42);
 
         // Convert the QR code to a PNG image and assert that the dimensions are correct.
-        let image: RgbImage = resized_qrcode.try_into().unwrap();
+        let image: RgbImage = resized_qrcode.unwrap();
         assert_eq!(image.dimensions(), (42, 42));
     }
 
