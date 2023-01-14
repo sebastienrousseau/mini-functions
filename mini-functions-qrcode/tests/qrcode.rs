@@ -6,8 +6,6 @@ mod tests {
     extern crate mini_functions_qrcode;
     use self::mini_functions_qrcode::QRCode;
 
-    use std::convert::TryInto;
-
     #[test]
     fn test_new() {
         let data = vec![0x61, 0x62, 0x63];
@@ -59,7 +57,7 @@ mod tests {
         let red_qrcode = qrcode.colorize(Rgb([255, 0, 0]));
 
         // Convert the QR code to a PNG image and assert that all of the dark cells are red.
-        let image: RgbImage = red_qrcode.unwrap();
+        let image: RgbImage = red_qrcode;
         for (x, y, pixel) in image.enumerate_pixels() {
             let expected_color =
                 if qrcode.to_qrcode()[(x as usize, y as usize)] == qrcode::Color::Dark {
