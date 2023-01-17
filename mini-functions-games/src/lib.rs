@@ -2,8 +2,8 @@
 //!
 //! A struct representing a deck of cards and the methods to draw cards from the deck.
 
-extern crate mini_functions_random;
-use self::mini_functions_random::Random;
+extern crate random;
+use self::random::Random;
 
 /// Represents a deck of cards. The cards are represented as integers
 /// from 0 to 51. The first 13 integers represent the 2 through

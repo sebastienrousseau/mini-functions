@@ -8,7 +8,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
-#![doc(html_root_url = "https://docs.rs/mini-functions-random/0.1.0")]
+#![doc(html_root_url = "https://docs.rs/random/0.1.0")]
 extern crate rand;
 use rand::{thread_rng, Rng};
 

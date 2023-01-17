@@ -1,5 +1,5 @@
-extern crate mini_functions_random;
-use self::mini_functions_random::Random;
+extern crate random;
+use self::random::Random;
 
 fn main() {
     // Create a new random boolean

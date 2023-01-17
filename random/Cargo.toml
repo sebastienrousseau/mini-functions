@@ -1,5 +1,5 @@
 [package]
-name = "mini-functions-random"
+name = "random"
 version = "0.0.1"
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 description = "Random provides a random number generator based on the linear congruential generator algorithm with the golden ratio as the multiplier."
@@ -19,6 +19,7 @@ rand = "0.8.5"
 
 [lib]
 crate-type = ["lib"]
+name = "random"
 path = "src/lib.rs"
 
 [features]

@@ -15,7 +15,7 @@ include = [
 ]
 
 [dependencies]
-mini-functions-random = { path = "../mini-functions-random" }
+random = { path = "../random" }
 
 [lib]
 crate-type = ["lib"]

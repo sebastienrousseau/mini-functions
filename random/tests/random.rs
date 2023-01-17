@@ -1,8 +1,8 @@
 #[cfg(test)]
 mod tests {
 
-    extern crate mini_functions_random;
-    use self::mini_functions_random::Random;
+    extern crate random;
+    use self::random::Random;
 
     // #[test]
     // fn test_bool() {
