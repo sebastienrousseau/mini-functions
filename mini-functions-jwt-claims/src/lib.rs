@@ -7,7 +7,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
-extern crate mini_functions_date;
+extern crate date;
 extern crate serde;
 
 use serde::{Deserialize, Serialize};

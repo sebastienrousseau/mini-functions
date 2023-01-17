@@ -1,7 +1,7 @@
-extern crate mini_functions_date;
+extern crate date;
 extern crate mini_functions_jwt_claims;
 
-use self::mini_functions_date::Date;
+use self::date::Date;
 use self::mini_functions_jwt_claims::Claims;
 
 fn main() {

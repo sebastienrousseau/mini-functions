@@ -2,9 +2,9 @@
 
 mod tests {
 
-    extern crate mini_functions_date;
+    extern crate date;
 
-    use self::mini_functions_date::Date;
+    use self::date::Date;
 
     #[test]
     fn test_date() {

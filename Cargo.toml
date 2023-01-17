@@ -23,7 +23,7 @@ rust-version = "1.57.0"
 version = "0.0.8"
 
 [dependencies]
-mini-functions-date = { path = "./mini-functions-date" }
+date = { path = "./date" }
 mini-functions-games = { path = "./mini-functions-games" }
 mini-functions-hash = { path = "./mini-functions-hash" }
 mini-functions-jwt = { path = "./mini-functions-jwt" }
@@ -37,7 +37,7 @@ md5 = { path = "./md5" }
 [workspace]
 resolver = "1"
 members = [
-    "mini-functions-date",
+    "date",
     "mini-functions-games",
     "mini-functions-hash",
     "mini-functions-jwt-claims",
@@ -94,7 +94,7 @@ strip = false
 crate-type = ["lib"]
 path = "src/lib.rs"
 required-features = [
-    "mini-functions-date",
+    "date",
     "mini-functions-hash",
     "mini-functions-jwt-claims",
     "mini-functions-jwt-errors",

@@ -8,9 +8,9 @@
 // SPDX-License-Identifier: MIT
 
 extern crate base64;
+extern crate date;
 extern crate hmac;
 extern crate jwt;
-extern crate mini_functions_date;
 extern crate mini_functions_jwt_claims;
 extern crate mini_functions_jwt_errors;
 extern crate serde;

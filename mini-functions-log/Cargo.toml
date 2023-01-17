@@ -15,7 +15,7 @@ include = [
 ]
 
 [dependencies]
-mini-functions-date = { path = "../mini-functions-date" }
+date = { path = "../date" }
 
 [lib]
 crate-type = ["lib"]

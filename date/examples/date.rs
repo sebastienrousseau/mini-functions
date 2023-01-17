@@ -1,5 +1,5 @@
-extern crate mini_functions_date;
-use self::mini_functions_date::Date;
+extern crate date;
+use self::date::Date;
 
 pub fn main() {
     let date = Date::new();

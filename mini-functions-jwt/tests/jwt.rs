@@ -7,9 +7,9 @@ mod tests {
     // use self::mini_functions_jwt::JWT;
 
     extern crate base64;
+    extern crate date;
     extern crate hmac;
     extern crate jwt;
-    extern crate mini_functions_date;
     extern crate mini_functions_jwt_claims;
     extern crate mini_functions_jwt_errors;
 
@@ -17,7 +17,7 @@ mod tests {
     extern crate serde_json;
     extern crate sha2;
 
-    // use self::mini_functions_date::Date;
+    // use self::date::Date;
     // use self::mini_functions_jwt_claims::Claims;
     // use self::mini_functions_jwt_errors::JwtError;
     // use base64::{engine::general_purpose, Engine as _};

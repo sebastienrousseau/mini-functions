@@ -15,7 +15,7 @@ include = [
 ]
 
 [dependencies]
-mini-functions-date = { path = "../mini-functions-date" }
+date = { path = "../date" }
 mini-functions-jwt-claims = { path = "../mini-functions-jwt-claims" }
 mini-functions-jwt-errors = { path = "../mini-functions-jwt-errors" }
 base64 = "0.21.0"
