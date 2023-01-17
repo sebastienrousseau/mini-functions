@@ -3,8 +3,8 @@ mod tests {
     extern crate image;
     use image::{Rgb, RgbImage};
 
-    extern crate mini_functions_qrcode;
-    use self::mini_functions_qrcode::QRCode;
+    extern crate qr;
+    use self::qr::QRCode;
 
     #[test]
     fn test_new() {

@@ -2,10 +2,10 @@
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 categories = ["Algorithms", "Encoding", "Images", "Multimedia", "Rendering", "Visualization"]
 description = "Highly Performant QR Code Generator Library For Rust"
-documentation = "https://docs.rs/mini-functions-qrcode"
+documentation = "https://docs.rs/qrcode"
 edition = "2018"
 license = "MIT OR Apache-2.0"
-name = "mini-functions-qrcode"
+name = "qr"
 version = "0.0.1"
 include = [
     "/build.rs",
@@ -24,6 +24,7 @@ qrcode = "0.12.0"
 
 [lib]
 crate-type = ["lib"]
+name = "qr"
 path = "src/lib.rs"
 
 [features]

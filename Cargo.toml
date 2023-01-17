@@ -30,7 +30,7 @@ mini-functions-jwt = { path = "./mini-functions-jwt" }
 mini-functions-jwt-claims = { path = "./mini-functions-jwt-claims" }
 mini-functions-jwt-errors = { path = "./mini-functions-jwt-errors" }
 mini-functions-log = { path = "./mini-functions-log" }
-mini-functions-qrcode = { path = "./mini-functions-qrcode" }
+qr = { path = "./qr" }
 random = { path = "./random" }
 md5 = { path = "./md5" }
 
@@ -44,7 +44,7 @@ members = [
     "mini-functions-jwt-errors",
     "mini-functions-jwt",
     "mini-functions-log",
-    "mini-functions-qrcode",
+    "qr",
     "random",
     "md5",
 ] # List of workspace members
@@ -100,7 +100,7 @@ required-features = [
     "mini-functions-jwt-errors",
     "mini-functions-jwt",
     "mini-functions-log",
-    "mini-functions-qrcode",
+    "qrcode",
     "random",
     "md5",
 ]

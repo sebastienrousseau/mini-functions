@@ -39,7 +39,7 @@ pub fn f(params: &mut MD5Params) -> u32 {
     params.a = rotate_left(params.a, params.s.into());
     params.a = params.a.wrapping_add(params.b);
 
-    return b.wrapping_add(res);
+    b.wrapping_add(res)
 }
 
 pub fn g(params: &mut MD5Params) -> u32 {
@@ -57,7 +57,7 @@ pub fn g(params: &mut MD5Params) -> u32 {
     params.a = rotate_left(params.a, params.s.into());
     params.a = params.a.wrapping_add(params.b);
 
-    return b.wrapping_add(!d & c);
+    b.wrapping_add(!d & c)
 }
 
 pub fn h(params: &mut MD5Params) -> u32 {
@@ -74,7 +74,7 @@ pub fn h(params: &mut MD5Params) -> u32 {
     params.a = rotate_left(params.a, params.s.into());
     params.a = params.a.wrapping_add(params.b);
 
-    return b.wrapping_add(b ^ c ^ d);
+    b.wrapping_add(b ^ c ^ d)
 }
 
 pub fn i(params: &mut MD5Params) -> u32 {
@@ -91,7 +91,7 @@ pub fn i(params: &mut MD5Params) -> u32 {
     params.a = rotate_left(params.a, params.s.into());
     params.a = params.a.wrapping_add(params.b);
 
-    return b.wrapping_add(c ^ (d | !b));
+    b.wrapping_add(c ^ (d | !b))
 }
 #[inline(always)]
 pub fn md5_f(x: u32, y: u32, z: u32) -> u32 {
