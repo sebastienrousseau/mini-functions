@@ -24,6 +24,7 @@ fn main() {
         Ok(_) => println!("🦀 png file removed:           ✅ qrcode.png"), // Print the path to the PNG representation of the QRCode that was saved to a file called "qrcode1.png"
         Err(e) => println!("🦀 png file removed:           ❌ qrcode.png: {}", e), // Print the path to the PNG representation of the QRCode that was saved to a file called "qrcode1.png"
     }
+
     // Create a new QRCode using the QRCode::from_string() function and convert it to a PNG representation with a custom color
     let qrcode = QRCode::from_string(URL.to_string());
     let red_qrcode = qrcode.colorize(Rgb([255, 0, 0])); // Colorize the QR code with a red color.
@@ -50,6 +51,7 @@ fn main() {
             e
         ), // Print the path to the PNG representation of the QRCode that was saved to a file called "qrcode.png"
     }
+
     // Create a new QRCode using the QRCode::from_string() function and convert it to an SVG representation
     let qrcode = QRCode::from_string(URL.to_string());
     let qrcode_svg = qrcode.to_svg(512); // Convert the QRCode into an SVG representation
@@ -61,6 +63,7 @@ fn main() {
         Ok(_) => println!("🦀 svg file removed:           ✅ qrcode.svg"), // Print the path to the SVG representation of the QRCode that was saved to a file called "qrcode.svg"
         Err(e) => println!("🦀 svg file removed:           ❌ qrcode.svg: {}", e), // Print the path to the SVG representation of the QRCode that was saved to a file called "qrcode.svg"
     }
+
     // Create a new QRCode using the QRCode::from_string() function and convert it to a PNG representation with a custom size
     let qrcode = QRCode::new(vec![0x61, 0x62, 0x63]);
     let resized_image: RgbImage = qrcode.resize(512, 512);

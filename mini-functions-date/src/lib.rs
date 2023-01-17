@@ -1,6 +1,6 @@
 //! # Core Date functionality
 //!
-//! This crate provides an easy way to get the current date and time in multiple formats.
+//! Date provides an easy way to get the current date and time in multiple formats.
 //! It is a thread-safe, optimized for speed and memory usage.
 //!
 //!

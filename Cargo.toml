@@ -32,6 +32,7 @@ mini-functions-jwt-errors = { path = "./mini-functions-jwt-errors" }
 mini-functions-log = { path = "./mini-functions-log" }
 mini-functions-qrcode = { path = "./mini-functions-qrcode" }
 mini-functions-random = { path = "./mini-functions-random" }
+md5 = { path = "./md5" }
 
 [workspace]
 resolver = "1"
@@ -45,6 +46,7 @@ members = [
     "mini-functions-log",
     "mini-functions-qrcode",
     "mini-functions-random",
+    "md5",
 ] # List of workspace members
 
 [workspace.package]
@@ -100,4 +102,5 @@ required-features = [
     "mini-functions-log",
     "mini-functions-qrcode",
     "mini-functions-random",
+    "md5",
 ]

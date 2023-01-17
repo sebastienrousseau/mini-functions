@@ -17,7 +17,15 @@ use qrcode::QrCode;
 
 #[non_exhaustive]
 #[derive(Debug, Clone, Default, PartialEq)]
-/// The `QRCode` struct represents a QR code image.
+/// The `QRCode` struct for generating an image in PNG or SVG format.
+///
+/// This struct represents a QR code image from a given data.
+///
+/// - It can be used to generate a QR code image in PNG or SVG format.
+/// - The data is a string or a vector of bytes.
+/// - The QR code image can be in black and white or in color.
+/// - It can be resized, colorized and converted to an image.
+///
 pub struct QRCode {
     /// The `data` field holds the data to be encoded in the QR code.
     pub data: Vec<u8>,
