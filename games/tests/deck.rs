@@ -1,8 +1,8 @@
 #[cfg(test)]
 mod tests {
 
-    extern crate mini_functions_games;
-    use self::mini_functions_games::Deck;
+    extern crate games;
+    use self::games::Deck;
 
     #[test]
 

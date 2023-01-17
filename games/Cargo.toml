@@ -1,5 +1,5 @@
 [package]
-name = "mini-functions-games"
+name = "games"
 version = "0.0.1"
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 description = "Games provides a suit of mini games that use the mini-functions libraries."
@@ -19,6 +19,7 @@ random = { path = "../random" }
 
 [lib]
 crate-type = ["lib"]
+name = "games"
 path = "src/lib.rs"
 
 [features]

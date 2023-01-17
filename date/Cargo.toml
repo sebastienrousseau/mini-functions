@@ -23,6 +23,7 @@ time = "0.3.17"
 
 [lib]
 crate-type = ["lib"]
+name = "date"
 path = "src/lib.rs"
 
 [features]

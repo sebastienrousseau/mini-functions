@@ -1,5 +1,5 @@
-extern crate mini_functions_games;
-use self::mini_functions_games::Deck;
+extern crate games;
+use self::games::Deck;
 fn main() {
     println!("\nWelcome to Three Card Draw Poker! 🃏");
     println!(
