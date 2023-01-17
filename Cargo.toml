@@ -25,7 +25,7 @@ version = "0.0.8"
 [dependencies]
 date = { path = "./date" }
 games = { path = "./games" }
-mini-functions-hash = { path = "./mini-functions-hash" }
+hash = { path = "./hash" }
 mini-functions-jwt = { path = "./mini-functions-jwt" }
 mini-functions-jwt-claims = { path = "./mini-functions-jwt-claims" }
 mini-functions-jwt-errors = { path = "./mini-functions-jwt-errors" }
@@ -39,7 +39,7 @@ resolver = "1"
 members = [
     "date",
     "games",
-    "mini-functions-hash",
+    "hash",
     "mini-functions-jwt-claims",
     "mini-functions-jwt-errors",
     "mini-functions-jwt",
@@ -95,7 +95,7 @@ crate-type = ["lib"]
 path = "src/lib.rs"
 required-features = [
     "date",
-    "mini-functions-hash",
+    "hash",
     "mini-functions-jwt-claims",
     "mini-functions-jwt-errors",
     "mini-functions-jwt",

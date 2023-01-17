@@ -1,8 +1,7 @@
 #[cfg(test)]
 mod tests {
-    extern crate mini_functions_hash;
-
-    use self::mini_functions_hash::Hash;
+    extern crate hash;
+    use self::hash::Hash;
 
     #[test]
     fn test_new() {

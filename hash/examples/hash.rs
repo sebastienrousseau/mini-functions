@@ -1,6 +1,5 @@
-extern crate mini_functions_hash;
-
-use self::mini_functions_hash::Hash;
+extern crate hash;
+use self::hash::Hash;
 
 fn main() {
     let mut hash = Hash::new();
