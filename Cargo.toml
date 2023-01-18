@@ -29,7 +29,7 @@ hash = { path = "./hash" }
 mini-functions-jwt = { path = "./mini-functions-jwt" }
 mini-functions-jwt-claims = { path = "./mini-functions-jwt-claims" }
 mini-functions-jwt-errors = { path = "./mini-functions-jwt-errors" }
-mini-functions-log = { path = "./mini-functions-log" }
+logger = { path = "./logger" }
 qr = { path = "./qr" }
 random = { path = "./random" }
 md5 = { path = "./md5" }
@@ -43,7 +43,7 @@ members = [
     "mini-functions-jwt-claims",
     "mini-functions-jwt-errors",
     "mini-functions-jwt",
-    "mini-functions-log",
+    "logger",
     "qr",
     "random",
     "md5",
@@ -99,7 +99,7 @@ required-features = [
     "mini-functions-jwt-claims",
     "mini-functions-jwt-errors",
     "mini-functions-jwt",
-    "mini-functions-log",
+    "logger",
     "qrcode",
     "random",
     "md5",

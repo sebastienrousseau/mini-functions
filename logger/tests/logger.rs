@@ -2,10 +2,10 @@
 mod tests {
 
     extern crate date;
-    extern crate mini_functions_log;
+    extern crate logger;
 
     use self::date::Date;
-    use self::mini_functions_log::Log;
+    use self::logger::{Log, LogLevel};
 
     #[test]
     fn test_log() {
@@ -13,7 +13,7 @@ mod tests {
         let log = Log::new(
             "12345678-1234-1234-1234-1234567890ab",
             &date.read().unwrap().to_string(),
-            "INFO",
+            &LogLevel::INFO,
             "SystemTrayEvent",
             "Showing main window",
         );
@@ -25,7 +25,7 @@ mod tests {
         let log = Log::new(
             "12345678-1234-1234-1234-1234567890ab",
             &date.read().unwrap().to_string(),
-            "INFO",
+            &LogLevel::INFO,
             "SystemTrayEvent",
             "Showing main window",
         );
@@ -37,7 +37,7 @@ mod tests {
         let log = Log::new(
             "12345678-1234-1234-1234-1234567890ab",
             &date.read().unwrap().to_string(),
-            "INFO",
+            &LogLevel::INFO,
             "SystemTrayEvent",
             "Showing main window",
         );
@@ -49,7 +49,7 @@ mod tests {
         let log = Log::new(
             "12345678-1234-1234-1234-1234567890ab",
             &date.read().unwrap().to_string(),
-            "INFO",
+            &LogLevel::INFO,
             "SystemTrayEvent",
             "Showing main window",
         );
@@ -61,7 +61,7 @@ mod tests {
         let log = Log::new(
             "12345678-1234-1234-1234-1234567890ab",
             &date.read().unwrap().to_string(),
-            "INFO",
+            &LogLevel::INFO,
             "SystemTrayEvent",
             "Showing main window",
         );
@@ -73,7 +73,7 @@ mod tests {
         let log = Log::new(
             "12345678-1234-1234-1234-1234567890ab",
             &date.read().unwrap().to_string(),
-            "INFO",
+            &LogLevel::INFO,
             "SystemTrayEvent",
             "Showing main window",
         );

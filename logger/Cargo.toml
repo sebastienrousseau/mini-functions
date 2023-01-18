@@ -1,5 +1,5 @@
 [package]
-name = "mini-functions-log"
+name = "logger"
 version = "0.0.1"
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 description = "Log provides an easy way to log a message to the console with a simple, readable output format."
@@ -19,6 +19,7 @@ date = { path = "../date" }
 
 [lib]
 crate-type = ["lib"]
+name = "logger"
 path = "src/lib.rs"
 
 [features]
