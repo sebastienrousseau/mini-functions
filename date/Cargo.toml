@@ -2,10 +2,12 @@
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 categories = ["Date and time"]
 description = "Highly Performant Date and Time Functions Library For Rust"
-documentation = "https://docs.rs/date"
 edition = "2018"
+homepage = "https://minifunctions.com/"
+keywords = ["calendar", "date", "duration", "mini-functions", "time"]
 license = "MIT OR Apache-2.0"
 name = "date"
+repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/date/"
 version = "0.0.1"
 include = [
     "/build.rs",

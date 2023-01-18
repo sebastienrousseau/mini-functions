@@ -1,8 +1,14 @@
 [package]
-name = "jot"
-version = "0.0.1"
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
+categories = ["Authentication", "Cryptography", "Development tools", "Encoding", "WebAssembly", "Web programming"]
 description = "JWT provides a set of utility functions for working with JSON Web Tokens (JWTs) and JSON Web Signatures (JWSs)."
+edition = "2018"
+homepage = "https://minifunctions.com/"
+keywords = ["api", "jot", "jws", "jwt", "mini-functions"]
+license = "MIT OR Apache-2.0"
+name = "jot"
+repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/jot/"
+version = "0.0.1"
 include = [
     # "/build.rs",
     "/Cargo.toml",

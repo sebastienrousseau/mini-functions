@@ -2,11 +2,12 @@
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 categories = ["cryptography", "encoding", "algorithms"]
 description = "Highly Performant MD5 Functions Library For Rust"
-documentation = "https://docs.rs/md5"
 edition = "2018"
-keywords = ["crypto", "md5", "hash", "digest"]
+homepage = "https://minifunctions.com/"
+keywords = ["crypto", "digest", "hash", "md5", "mini-functions"]
 license = "MIT OR Apache-2.0"
 name = "md5"
+repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/md5/"
 version = "0.0.1"
 include = [
     "/build.rs",

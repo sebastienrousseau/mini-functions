@@ -1,8 +1,14 @@
 [package]
-name = "games"
-version = "0.0.1"
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
-description = "Games provides a suit of mini games that use the mini-functions libraries."
+categories = ["Games", "Game development", "Game engines"]
+description = "Games provides a set of easy-to-play mini-games that are built on top of the mini-functions libraries."
+edition = "2018"
+homepage = "https://minifunctions.com/"
+keywords = ["cards", "examples", "game", "mini-functions", "poker"]
+license = "MIT OR Apache-2.0"
+name = "games"
+repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/games/"
+version = "0.0.1"
 include = [
     "/build.rs",
     "/Cargo.toml",

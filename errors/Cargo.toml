@@ -1,10 +1,16 @@
 [package]
-name = "errors"
-version = "0.0.1"
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
-description = "JWT provides a set of utility functions for working with JSON Web Tokens (JWTs) and JSON Web Signatures (JWSs)."
+categories = ["Authentication", "Cryptography", "Datastructures", "Developmenttools", "Encoding", "Rustpatterns", "Valueformatting", "WebAssembly", "Webprogramming"]
+description = "Errors is a library that provides a set of error types for working with JSON Web Tokens (JWTs) and JSON Web Signatures (JWSs)."
+edition = "2018"
+homepage = "https://minifunctions.com/"
+keywords = ["error-handling", "error", "failure", "macro", "mini-functions"]
+license = "MIT OR Apache-2.0"
+name = "errors"
+repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/errors/"
+version = "0.0.1"
 include = [
-    # "/build.rs",
+    "/build.rs",
     "/Cargo.toml",
     "../../LICENSE-APACHE",
     "../../LICENSE-MIT",

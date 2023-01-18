@@ -1,8 +1,14 @@
 [package]
-name = "claims"
-version = "0.0.1"
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
-description = "Claims is a struct that holds the claims defined in the RFC 7519."
+categories = ["Authentication", "Cryptography", "Development tools", "WebAssembly", "Webprogramming"]
+description = "`Claims` is a struct that holds the claims defined in the RFC 7519, encoded as JSON object in JWS/JWE, allowing digital signing/integrity protection and/or encryption."
+edition = "2018"
+homepage = "https://minifunctions.com/"
+keywords = ["claims", "jwt", "mini-functions", "token", "web"]
+license = "MIT OR Apache-2.0"
+name = "claims"
+repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/claims/"
+version = "0.0.1"
 include = [
     # "/build.rs",
     "/Cargo.toml",

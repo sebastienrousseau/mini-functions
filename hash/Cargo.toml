@@ -1,8 +1,14 @@
 [package]
-name = "hash"
-version = "0.0.1"
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
+categories = ["Algorithms", "Data structures", "Cryptography"]
 description = "Hash is a struct that provides an easy way to hash and verify passwords using the [blake3](https://crates.io/crates/blake3) crate."
+edition = "2018"
+homepage = "https://minifunctions.com/"
+keywords = ["blake3", "crypto", "hash", "hasher", "mini-functions"]
+license = "MIT OR Apache-2.0"
+name = "hash"
+repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/hash/"
+version = "0.0.1"
 include = [
     "/build.rs",
     "/Cargo.toml",
