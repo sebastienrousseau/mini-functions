@@ -1,5 +1,5 @@
 [package]
-name = "mini-functions-jwt-errors"
+name = "errors"
 version = "0.0.1"
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 description = "JWT provides a set of utility functions for working with JSON Web Tokens (JWTs) and JSON Web Signatures (JWSs)."
@@ -28,6 +28,7 @@ serde_json = "1.0.91"
 
 [lib]
 crate-type = ["lib"]
+name = "errors"
 path = "src/lib.rs"
 
 [features]

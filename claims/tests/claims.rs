@@ -2,11 +2,11 @@
 
 mod tests {
 
+    extern crate claims;
     extern crate date;
-    extern crate mini_functions_jwt_claims;
 
     // use self::date::Date;
-    use self::mini_functions_jwt_claims::Claims;
+    use self::claims::Claims;
 
     #[test]
     fn test_claims() {

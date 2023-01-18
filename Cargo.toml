@@ -26,9 +26,9 @@ version = "0.0.8"
 date = { path = "./date" }
 games = { path = "./games" }
 hash = { path = "./hash" }
-mini-functions-jwt = { path = "./mini-functions-jwt" }
-mini-functions-jwt-claims = { path = "./mini-functions-jwt-claims" }
-mini-functions-jwt-errors = { path = "./mini-functions-jwt-errors" }
+jot = { path = "./jot" }
+claims = { path = "./claims" }
+errors = { path = "./errors" }
 logger = { path = "./logger" }
 qr = { path = "./qr" }
 random = { path = "./random" }
@@ -40,9 +40,9 @@ members = [
     "date",
     "games",
     "hash",
-    "mini-functions-jwt-claims",
-    "mini-functions-jwt-errors",
-    "mini-functions-jwt",
+    "claims",
+    "errors",
+    "jot",
     "logger",
     "qr",
     "random",
@@ -96,9 +96,9 @@ path = "src/lib.rs"
 required-features = [
     "date",
     "hash",
-    "mini-functions-jwt-claims",
-    "mini-functions-jwt-errors",
-    "mini-functions-jwt",
+    "claims",
+    "errors",
+    "jot",
     "logger",
     "qrcode",
     "random",

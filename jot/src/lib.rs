@@ -8,17 +8,17 @@
 // SPDX-License-Identifier: MIT
 
 extern crate base64;
+extern crate claims;
 extern crate date;
+extern crate errors;
 extern crate hmac;
 extern crate jwt;
-extern crate mini_functions_jwt_claims;
-extern crate mini_functions_jwt_errors;
 extern crate serde;
 extern crate serde_json;
 extern crate sha2;
 
-use self::mini_functions_jwt_claims::Claims;
-use self::mini_functions_jwt_errors::JwtError;
+use self::claims::Claims;
+use self::errors::JwtError;
 
 use base64::{engine::general_purpose, Engine as _};
 use hmac::{Hmac, Mac};

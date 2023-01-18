@@ -1,8 +1,8 @@
+extern crate claims;
 extern crate date;
-extern crate mini_functions_jwt_claims;
 
+use self::claims::Claims;
 use self::date::Date;
-use self::mini_functions_jwt_claims::Claims;
 
 fn main() {
     const CL_AUD: &str = "MINI-FUNCTIONS-CLAIMS-AUD";

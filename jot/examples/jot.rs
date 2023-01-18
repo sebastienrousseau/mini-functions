@@ -1,15 +1,14 @@
+extern crate jot;
 extern crate jwt;
-extern crate mini_functions_jwt;
 
-use self::mini_functions_jwt::{Header, JWT};
-use mini_functions_jwt::Algorithm;
+use self::jot::{Algorithm, Header, JWT};
 
 fn main() {
     // Constants for the JWT struct examples.
     const HD_ALG: Algorithm = Algorithm::HS384;
-    const HD_KID: &str = "mini-functions-jwt-kid";
-    const HD_TYP: &str = "mini-functions-jwt-typ";
-    const HD_CTY: &str = "mini-functions-jwt-cty";
+    const HD_KID: &str = "jwt-kid";
+    const HD_TYP: &str = "jwt-typ";
+    const HD_CTY: &str = "jwt-cty";
 
     // Create a Header struct with default method.
     let hd: Header = Header::default();

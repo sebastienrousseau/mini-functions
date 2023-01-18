@@ -1,5 +1,5 @@
 [package]
-name = "mini-functions-jwt"
+name = "jot"
 version = "0.0.1"
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 description = "JWT provides a set of utility functions for working with JSON Web Tokens (JWTs) and JSON Web Signatures (JWSs)."
@@ -16,8 +16,8 @@ include = [
 
 [dependencies]
 date = { path = "../date" }
-mini-functions-jwt-claims = { path = "../mini-functions-jwt-claims" }
-mini-functions-jwt-errors = { path = "../mini-functions-jwt-errors" }
+claims = { path = "../claims" }
+errors = { path = "../errors" }
 base64 = "0.21.0"
 jwt = "0.16.0"
 jsonwebtoken = "8.2.0"
@@ -30,6 +30,7 @@ serde_json = "1.0.91"
 
 [lib]
 crate-type = ["lib"]
+name = "jot"
 path = "src/lib.rs"
 
 [features]

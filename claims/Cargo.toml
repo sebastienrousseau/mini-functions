@@ -1,5 +1,5 @@
 [package]
-name = "mini-functions-jwt-claims"
+name = "claims"
 version = "0.0.1"
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 description = "Claims is a struct that holds the claims defined in the RFC 7519."
@@ -21,6 +21,7 @@ serde_json = "1.0.91"
 
 [lib]
 crate-type = ["lib"]
+name = "claims"
 path = "src/lib.rs"
 
 [features]
