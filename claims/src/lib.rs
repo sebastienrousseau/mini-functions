@@ -11,6 +11,7 @@ extern crate date;
 extern crate serde;
 
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 /// # Claims
 /// Claims is a struct that holds the claims defined in the RFC 7519.
@@ -36,70 +37,65 @@ use serde::{Deserialize, Serialize};
 /// * `vc` - A string slice that holds the vc.
 /// * `vp` - A string slice that holds the vp.
 ///
-#[derive(Serialize, Deserialize, Debug)]
+
+#[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Claims {
-    /// The audience of the JWT.
-    pub aud: Option<String>,
-    /// The custom of the JWT.
-    pub custom: Option<String>,
-    /// The did of the JWT.
-    pub did: Option<String>,
-    /// The expiration time of the JWT.
-    pub exp: Option<String>,
-    /// The time at which the JWT was issued.
-    pub iat: Option<String>,
-    /// The issuer of the JWT.
-    pub iss: Option<String>,
-    /// The time at which the JWT was last updated.
-    pub jti: Option<String>,
-    /// The not-before time of the JWT.
-    pub nbf: Option<String>,
-    /// The subject of the JWT.
-    pub sub: Option<String>,
-    /// The vc of the JWT.
-    pub vc: Option<String>,
-    /// The vp of the JWT.
-    pub vp: Option<String>,
+    /// The claims of the JWT as a HashMap.
+    pub claims: HashMap<String, String>,
 }
 
-impl Claims {}
+impl Claims {
+    /// Create a new instance of `Claims`.
+    pub fn new() -> Claims {
+        Claims {
+            claims: HashMap::new(),
+        }
+    }
+    /// Set a claim.
+    pub fn set_claim(&mut self, key: &str, value: &str) {
+        self.claims.insert(key.to_string(), value.to_string());
+    }
+    /// Get a claim.
+    pub fn get_claim(&self, key: &str) -> Option<&String> {
+        self.claims.get(key)
+    }
+    /// Remove a claim.
+    pub fn remove_claim(&mut self, key: &str) {
+        self.claims.remove(key);
+    }
+    /// Clear all claims.
+    pub fn clear_claims(&mut self) {
+        self.claims.clear();
+    }
+    /// Has a claim.
+    pub fn has_claim(&self, key: &str) -> bool {
+        self.claims.contains_key(key)
+    }
+    /// Get the number of claims.
+    pub fn len(&self) -> usize {
+        self.claims.len()
+    }
+}
 
 /// Implement the `Display` trait for `Claims`.
 impl std::fmt::Display for Claims {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            f,
-            "Claims {{ aud: {:?}, exp: {:?}, iat: {:?}, iss: {:?}, jti: {:?}, nbf: {:?}, sub: {:?}, did: {:?}, vc: {:?}, vp: {:?}, custom: {:?} }}",
-            self.aud.as_ref().unwrap(),
-            self.custom.as_ref().unwrap(),
-            self.did.as_ref().unwrap(),
-            self.exp.as_ref().unwrap(),
-            self.iat.as_ref().unwrap(),
-            self.iss.as_ref().unwrap(),
-            self.jti.as_ref().unwrap(),
-            self.nbf.as_ref().unwrap(),
-            self.sub.as_ref().unwrap(),
-            self.vc.as_ref().unwrap(),
-            self.vp.as_ref().unwrap(),
-        )
+        let claims: Vec<String> = self
+            .claims
+            .iter()
+            .map(|(k, v)| format!("{}: {}", k, v))
+            .collect();
+
+        write!(f, "Claims {{ {} }}", claims.join(", "))
     }
 }
 
 /// Implement the `Default` trait for `Claims`.
 impl Default for Claims {
+    /// Create a new instance of `Claims`.
     fn default() -> Self {
         Claims {
-            aud: Some("".to_string()),
-            custom: Some("".to_string()),
-            did: Some("".to_string()),
-            exp: Some("".to_string()),
-            iat: Some("".to_string()),
-            iss: Some("".to_string()),
-            jti: Some("".to_string()),
-            nbf: Some("".to_string()),
-            sub: Some("".to_string()),
-            vc: Some("".to_string()),
-            vp: Some("".to_string()),
+            claims: HashMap::new(),
         }
     }
 }

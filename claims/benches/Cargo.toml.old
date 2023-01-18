@@ -1,10 +1,10 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
-description = "Criterion benchmark suite for claims."
+description = "Criterion benchmark suite for Mini Functions."
 edition = "2018"
 homepage = "https://minifunctions.com/"
 license = "MIT OR Apache-2.0"
-name = "claims-bench"
+name = "mini-functions-bench"
 publish = false
 repository = "https://github.com/sebastienrousseau/mini-functions"
 version = "0.0.1"
@@ -14,10 +14,10 @@ workspace = ".."
 bench = false
 
 [[bench]]
-name = "claims-bench"
+name = "mini-functions-bench"
 harness = false
-path = "src/bench.rs"
+path = "claims.rs"
 
 [dependencies]
 criterion = "0.4.0"
-claims = { version = "*", path = ".." }
+claims = { path = "./claims"}

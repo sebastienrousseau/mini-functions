@@ -15,18 +15,19 @@ fn main() {
     const CL_VP: &str = "MINI-FUNCTIONS-CLAIMS-VP";
 
     let date = Date::new().iso_8601;
-    let claims = Claims {
-        aud: Some(CL_AUD.to_string()),
-        custom: Some(CL_CUSTOM.to_string()),
-        did: Some(CL_DID.to_string()),
-        exp: Some(date.read().unwrap().to_string()),
-        iat: Some(date.read().unwrap().to_string()),
-        iss: Some(CL_ISS.to_string()),
-        jti: Some(CL_JTI.to_string()),
-        nbf: Some(date.read().unwrap().to_string()),
-        sub: Some(CL_SUB.to_string()),
-        vc: Some(CL_VC.to_string()),
-        vp: Some(CL_VP.to_string()),
-    };
-    println!("{}", claims);
+
+    let mut claims = Claims::new();
+    claims.set_claim("aud", CL_AUD);
+    claims.set_claim("custom", CL_CUSTOM);
+    claims.set_claim("did", CL_DID);
+    claims.set_claim("exp", &date.read().unwrap().to_string());
+    claims.set_claim("iat", &date.read().unwrap().to_string());
+    claims.set_claim("iss", CL_ISS);
+    claims.set_claim("jti", CL_JTI);
+    claims.set_claim("nbf", &date.read().unwrap().to_string());
+    claims.set_claim("sub", CL_SUB);
+    claims.set_claim("vc", CL_VC);
+    claims.set_claim("vp", CL_VP);
+
+    print!("🦀 Claims::new():                 ✅ {}\n", claims);
 }

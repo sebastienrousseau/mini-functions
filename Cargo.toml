@@ -23,16 +23,16 @@ rust-version = "1.57.0"
 version = "0.0.8"
 
 [dependencies]
+claims = { path = "./claims" }
 date = { path = "./date" }
+errors = { path = "./errors" }
 games = { path = "./games" }
 hash = { path = "./hash" }
 jot = { path = "./jot" }
-claims = { path = "./claims" }
-errors = { path = "./errors" }
 logger = { path = "./logger" }
+md5 = { path = "./md5" }
 qr = { path = "./qr" }
 random = { path = "./random" }
-md5 = { path = "./md5" }
 
 [workspace]
 resolver = "1"
@@ -94,13 +94,13 @@ strip = false
 crate-type = ["lib"]
 path = "src/lib.rs"
 required-features = [
-    "date",
-    "hash",
     "claims",
+    "date",
     "errors",
+    "hash",
     "jot",
     "logger",
+    "md5",
     "qrcode",
     "random",
-    "md5",
 ]
