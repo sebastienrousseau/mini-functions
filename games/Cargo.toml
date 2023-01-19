@@ -23,6 +23,9 @@ include = [
 [dependencies]
 random = { path = "../random" }
 
+[dev-dependencies]
+criterion = "0.4.0"
+
 [lib]
 crate-type = ["lib"]
 name = "games"

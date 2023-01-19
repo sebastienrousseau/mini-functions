@@ -20,8 +20,16 @@ include = [
     "/examples/**",
 ]
 
+[[bench]]
+name = "date"
+harness = false
+path = "benches/date.rs"
+
 [dependencies]
 time = "0.3.17"
+
+[dev-dependencies]
+criterion = "0.4.0"
 
 [lib]
 crate-type = ["lib"]

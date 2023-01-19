@@ -22,6 +22,9 @@ include = [
 
 [dependencies]
 
+[dev-dependencies]
+criterion = "0.4.0"
+
 [lib]
 name = "md5"
 crate-type = ["lib"]

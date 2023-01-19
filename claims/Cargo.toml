@@ -1,6 +1,12 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
-categories = ["Authentication", "Cryptography", "Development tools", "WebAssembly", "Webprogramming"]
+categories = [
+    "Authentication",
+    "Cryptography",
+    "Development tools",
+    "WebAssembly",
+    "Webprogramming",
+]
 description = "`Claims` is a struct that holds the claims defined in the RFC 7519, encoded as JSON object in JWS/JWE, allowing digital signing/integrity protection and/or encryption."
 edition = "2018"
 homepage = "https://minifunctions.com/"

@@ -87,6 +87,80 @@ impl Default for Date {
     }
 }
 
+/// Clone implementation for Date.
+impl Clone for Date {
+    fn clone(&self) -> Self {
+        let date = match self.date.try_read() {
+            Ok(guard) => *guard,
+            _ => Date::new().date.into_inner().unwrap(),
+        };
+        let day = match self.day.try_read() {
+            Ok(guard) => *guard,
+            _ => 0,
+        };
+        let hour = match self.hour.try_read() {
+            Ok(guard) => *guard,
+            _ => 0,
+        };
+        let iso_8601 = match self.iso_8601.try_read() {
+            Ok(guard) => guard.clone(),
+            _ => "".to_string(),
+        };
+        let iso_week = match self.iso_week.try_read() {
+            Ok(guard) => *guard,
+            _ => 0,
+        };
+        let minute = match self.minute.try_read() {
+            Ok(guard) => *guard,
+            _ => 0,
+        };
+        let month = match self.month.try_read() {
+            Ok(guard) => guard.clone(),
+            _ => "".to_string(),
+        };
+        let offset = match self.offset.try_read() {
+            Ok(guard) => *guard,
+            _ => Date::new().offset.into_inner().unwrap(),
+        };
+        let ordinal = match self.ordinal.try_read() {
+            Ok(guard) => *guard,
+            _ => 0,
+        };
+        let second = match self.second.try_read() {
+            Ok(guard) => *guard,
+            _ => 0,
+        };
+        let time = match self.time.try_read() {
+            Ok(guard) => *guard,
+            _ => Date::new().time.into_inner().unwrap(),
+        };
+        let weekday = match self.weekday.try_read() {
+            Ok(guard) => guard.clone(),
+            _ => "".to_string(),
+        };
+        let year = match self.year.try_read() {
+            Ok(guard) => *guard,
+            _ => 0,
+        };
+
+        Self {
+            date: date.into(),
+            day: day.into(),
+            hour: hour.into(),
+            iso_8601: iso_8601.into(),
+            iso_week: iso_week.into(),
+            minute: minute.into(),
+            month: month.into(),
+            offset: offset.into(),
+            ordinal: ordinal.into(),
+            second: second.into(),
+            time: time.into(),
+            weekday: weekday.into(),
+            year: year.into(),
+        }
+    }
+}
+
 // Display implementation for Date.
 // Returns a formatted String.
 impl fmt::Display for Date {

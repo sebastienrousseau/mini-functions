@@ -23,6 +23,9 @@ include = [
 [dependencies]
 date = { path = "../date" }
 
+[dev-dependencies]
+criterion = "0.4.0"
+
 [lib]
 crate-type = ["lib"]
 name = "logger"

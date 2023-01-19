@@ -1,6 +1,16 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
-categories = ["Authentication", "Cryptography", "Datastructures", "Developmenttools", "Encoding", "Rustpatterns", "Valueformatting", "WebAssembly", "Webprogramming"]
+categories = [
+    "Authentication",
+    "Cryptography",
+    "Datastructures",
+    "Developmenttools",
+    "Encoding",
+    "Rustpatterns",
+    "Valueformatting",
+    "WebAssembly",
+    "Webprogramming",
+]
 description = "Errors is a library that provides a set of error types for working with JSON Web Tokens (JWTs) and JSON Web Signatures (JWSs)."
 edition = "2018"
 homepage = "https://minifunctions.com/"
@@ -31,6 +41,9 @@ sha2 = "0.10.6"
 hmac = "0.12.1"
 serde = "1.0.152"
 serde_json = "1.0.91"
+
+[dev-dependencies]
+criterion = "0.4.0"
 
 [lib]
 crate-type = ["lib"]

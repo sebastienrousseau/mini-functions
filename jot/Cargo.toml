@@ -1,6 +1,13 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
-categories = ["Authentication", "Cryptography", "Development tools", "Encoding", "WebAssembly", "Web programming"]
+categories = [
+    "Authentication",
+    "Cryptography",
+    "Development tools",
+    "Encoding",
+    "WebAssembly",
+    "Web programming",
+]
 description = "JWT provides a set of utility functions for working with JSON Web Tokens (JWTs) and JSON Web Signatures (JWSs)."
 edition = "2018"
 homepage = "https://minifunctions.com/"
@@ -33,6 +40,9 @@ sha2 = "0.10.6"
 hmac = "0.12.1"
 serde = "1.0.152"
 serde_json = "1.0.91"
+
+[dev-dependencies]
+criterion = "0.4.0"
 
 [lib]
 crate-type = ["lib"]
