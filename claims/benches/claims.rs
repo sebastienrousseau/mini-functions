@@ -4,8 +4,6 @@ use self::claims::Claims;
 extern crate criterion;
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
-use std::collections::HashMap;
-
 fn memory_usage_benchmark(c: &mut Criterion) {
     c.bench_function("memory_usage", |b| {
         let mut claims = Claims::new();
@@ -70,90 +68,72 @@ fn has_claim_benchmark(c: &mut Criterion) {
     });
 }
 
-fn bench_10_claims(c: &mut Criterion) {
-    let mut claims: HashMap<String, Claims> = HashMap::new();
-    c.bench_function("Benchmarking 10 claims", |b| {
+fn clear_claims_benchmark(c: &mut Criterion) {
+    c.bench_function("clear_claims", |b| {
+        let mut claims = Claims::new();
+        let key = "key";
+        let value = "value";
+        claims.set_claim(key, value);
+
         b.iter(|| {
-            for _ in 0..10 {
-                let claim = Claims::default();
-                claims.insert(claim.to_string(), claim);
-            }
+            claims.clear_claims();
         });
     });
 }
 
-fn bench_100_claims(c: &mut Criterion) {
-    let mut claims: HashMap<String, Claims> = HashMap::new();
-    c.bench_function("Benchmarking 100 claims", |b| {
+fn len_benchmark(c: &mut Criterion) {
+    c.bench_function("len", |b| {
+        let mut claims = Claims::new();
+        let key = "key";
+        let value = "value";
+        claims.set_claim(key, value);
+
         b.iter(|| {
-            for _ in 0..100 {
-                let claim = Claims::default();
-                claims.insert(claim.to_string(), claim);
-            }
+            claims.len();
         });
     });
 }
 
-fn bench_1000_claims(c: &mut Criterion) {
-    let mut claims: HashMap<String, Claims> = HashMap::new();
-    c.bench_function("Benchmarking 1000 claims", |b| {
+fn is_empty_benchmark(c: &mut Criterion) {
+    c.bench_function("is_empty", |b| {
+        let mut claims = Claims::new();
+        let key = "key";
+        let value = "value";
+        claims.set_claim(key, value);
+
         b.iter(|| {
-            for _ in 0..1000 {
-                let claim = Claims::default();
-                claims.insert(claim.to_string(), claim);
-            }
+            claims.is_empty();
         });
     });
 }
 
-fn bench_10000_claims(c: &mut Criterion) {
-    let mut claims: HashMap<String, Claims> = HashMap::new();
-    c.bench_function("Benchmarking 10000 claims", |b| {
-        b.iter(|| {
-            for _ in 0..10000 {
-                let claim = Claims::default();
-                claims.insert(claim.to_string(), claim);
-            }
+fn scale_claim_benchmark(c: &mut Criterion) {
+    let mut group = c.benchmark_group("set_claim");
+    for i in [10, 100, 1000, 10000, 100000].iter() {
+        group.bench_with_input(format!("{} claims", i), i, |b, i| {
+            let mut claims = Claims::new();
+            let key = "key";
+            let value = "value";
+            b.iter(|| {
+                for _ in 0..*i {
+                    claims.set_claim(key, value);
+                }
+            });
         });
-    });
-}
-
-fn bench_100000_claims(c: &mut Criterion) {
-    let mut claims: HashMap<String, Claims> = HashMap::new();
-    c.bench_function("Benchmarking 100000 claims", |b| {
-        b.iter(|| {
-            for _ in 0..100000 {
-                let claim = Claims::default();
-                claims.insert(claim.to_string(), claim);
-            }
-        });
-    });
-}
-
-fn bench_1000000_claims(c: &mut Criterion) {
-    let mut claims: HashMap<String, Claims> = HashMap::new();
-    c.bench_function("Benchmarking 1000000 claims", |b| {
-        b.iter(|| {
-            for _ in 0..1000000 {
-                let claim = Claims::default();
-                claims.insert(claim.to_string(), claim);
-            }
-        });
-    });
+    }
+    group.finish();
 }
 
 criterion_group!(
     benches,
-    memory_usage_benchmark,
-    set_claim_benchmark,
+    clear_claims_benchmark,
     get_claim_benchmark,
-    remove_claim_benchmark,
     has_claim_benchmark,
-    bench_10_claims,
-    bench_100_claims,
-    bench_1000_claims,
-    bench_10000_claims,
-    bench_100000_claims,
-    bench_1000000_claims
+    is_empty_benchmark,
+    len_benchmark,
+    memory_usage_benchmark,
+    remove_claim_benchmark,
+    scale_claim_benchmark,
+    set_claim_benchmark,
 );
 criterion_main!(benches);
