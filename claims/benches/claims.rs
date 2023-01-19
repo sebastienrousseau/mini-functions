@@ -81,8 +81,8 @@ fn clear_claims_benchmark(c: &mut Criterion) {
     });
 }
 
-fn len_benchmark(c: &mut Criterion) {
-    c.bench_function("len", |b| {
+fn len_and_is_empty_benchmark(c: &mut Criterion) {
+    c.bench_function("len_and_is_empty", |b| {
         let mut claims = Claims::new();
         let key = "key";
         let value = "value";
@@ -90,18 +90,6 @@ fn len_benchmark(c: &mut Criterion) {
 
         b.iter(|| {
             claims.len();
-        });
-    });
-}
-
-fn is_empty_benchmark(c: &mut Criterion) {
-    c.bench_function("is_empty", |b| {
-        let mut claims = Claims::new();
-        let key = "key";
-        let value = "value";
-        claims.set_claim(key, value);
-
-        b.iter(|| {
             claims.is_empty();
         });
     });
