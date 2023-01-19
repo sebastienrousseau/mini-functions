@@ -24,9 +24,7 @@ pub struct Hash {
 
 impl Hash {
     /// Calculates the entropy of the hash in bits based on the Shannon
-    /// entropy formula.
-    /// https://en.wikipedia.org/wiki/Entropy_(information_theory)
-    ///
+    /// entropy formula. <https://en.wikipedia.org/wiki/Entropy>`
     pub fn entropy(&self) -> f64 {
         // Shannon entropy formula in bits.
         let mut entropy = 0.0;
