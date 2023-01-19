@@ -75,6 +75,14 @@ impl Claims {
     pub fn len(&self) -> usize {
         self.claims.len()
     }
+    /// Is the claims empty.
+    pub fn is_empty(&self) -> bool {
+        self.claims.is_empty()
+    }
+    /// Get the claims as a HashMap.
+    pub fn get_claims(&self) -> &HashMap<String, String> {
+        &self.claims
+    }
 }
 
 /// Implement the `Display` trait for `Claims`.
