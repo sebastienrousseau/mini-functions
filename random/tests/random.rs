@@ -48,7 +48,7 @@ mod tests {
     fn test_int() {
         let mut rng = Random::new();
         let i = rng.int(0, 10);
-        assert!(i >= 0 && i <= 10);
+        assert!((0..=10).contains(&i));
     }
     #[test]
     fn test_pseudo() {
@@ -60,7 +60,7 @@ mod tests {
     fn test_range() {
         let mut rng = Random::new();
         let r = Random::range(&mut rng, 0, 10);
-        assert!(r >= 0 && r <= 10);
+        assert!((0..=10).contains(&r));
     }
     #[test]
     pub fn test_new() {

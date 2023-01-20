@@ -145,9 +145,13 @@ impl Random {
 
     /// Returns a random number within a given range
     pub fn range(&mut self, min: i32, max: i32) -> i32 {
-        let range = max - min + 1;
+        let range = max - min;
         (self.rand() as i32 % range) + min
     }
+    // pub fn range(&mut self, min: i32, max: i32) -> i32 {
+    //     let range = max - min + 1;
+    //     (self.rand() as i32 % range) + min
+    // }
 
     /// Seeds the random number generator with a given value
     pub fn seed(&mut self, seed: u32) {
