@@ -58,9 +58,6 @@ impl Random {
     pub fn bool(&mut self, probability: f64) -> bool {
         thread_rng().gen_bool(probability)
     }
-    // pub fn bool(&mut self) -> bool {
-    //     thread_rng().gen_bool(0.5)
-    // }
 
     /// Returns a vector of random bytes of the given length
     pub fn bytes(&mut self, len: usize) -> Vec<u8> {
@@ -153,10 +150,6 @@ impl Random {
     pub fn range(&mut self, min: i32, max: i32) -> i32 {
         thread_rng().gen_range(min..max + 1)
     }
-    // pub fn range(&mut self, min: i32, max: i32) -> i32 {
-    //     let range = max - min + 1;
-    //     (self.rand() as i32 % range) + min
-    // }
 
     /// Seeds the random number generator with a given value
     pub fn seed(&mut self, seed: u32) {

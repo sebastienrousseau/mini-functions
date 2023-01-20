@@ -6,12 +6,6 @@ mod tests {
 
     const N: usize = 624;
 
-    // #[test]
-    // fn test_bool() {
-    //     let mut rng = Random::new();
-    //     let b = Random::bool(&mut rng);
-    //     assert!(b);
-    // }
     #[test]
     fn test_bool() {
         let mut rng = Random::new();
@@ -24,7 +18,6 @@ mod tests {
         }
         assert!((count_of_true as f64 / 1000.0 - 0.5).abs() <= 0.05);
     }
-
     #[test]
     fn test_bytes() {
         let mut rng = Random::new();
@@ -69,12 +62,6 @@ mod tests {
         let p = Random::pseudo(&mut rng);
         assert!(p < 4294967295);
     }
-    // #[test]
-    // fn test_range() {
-    //     let mut rng = Random::new();
-    //     let r = Random::range(&mut rng, 0, 10);
-    //     assert!((0..=10).contains(&r));
-    // }
     #[test]
     fn test_range() {
         let mut rng = Random::new();
