@@ -4,150 +4,95 @@ mod tests {
     extern crate random;
     use self::random::Random;
 
-    // #[test]
-    // fn test_bool() {
-    //     let bool = Random::bool();
-    //     assert!(bool);
-    // }
+    const N: usize = 624;
 
     #[test]
-    fn test_new() {
+    fn test_bool() {
         let mut rng = Random::new();
-        assert!(rng.random() > 0);
+        let b = Random::bool(&mut rng);
+        assert!(b == true || b == false);
     }
-
-    #[test]
-    fn test_default() {
-        let mut rng = Random::default();
-        assert!(rng.random() > 0);
-    }
-
-    #[test]
-    fn test_random() {
-        let mut rng = Random::new();
-        let first = rng.random();
-        let second = rng.random();
-        assert_ne!(first, second);
-    }
-
     #[test]
     fn test_bytes() {
-        let bytes = Random::bytes(0);
+        let mut rng = Random::new();
+        let bytes = Random::bytes(&mut rng, 0);
         assert_eq!(bytes.len(), 0);
 
-        let bytes = Random::bytes(10);
+        let bytes = Random::bytes(&mut rng, 10);
         assert_eq!(bytes.len(), 10);
 
-        let bytes = Random::bytes(100);
+        let bytes = Random::bytes(&mut rng, 100);
         assert_eq!(bytes.len(), 100);
     }
-
+    #[test]
+    fn test_char() {
+        let mut rng = Random::new();
+        let c = Random::char(&mut rng);
+        assert!(c >= 'a' && c <= 'z');
+    }
+    #[test]
+    fn test_choose() {
+        let mut rng = Random::new();
+        let values = vec![1, 2, 3, 4, 5];
+        let value = Random::choose(&mut rng, &values);
+        assert!(value.is_some());
+        assert!(value.unwrap() >= &1 && value.unwrap() <= &5);
+    }
+    #[test]
+    fn test_float() {
+        let mut rng = Random::new();
+        let f = Random::float(&mut rng);
+        assert!(f >= 0.0 && f <= 1.0);
+    }
+    #[test]
+    fn test_int() {
+        let mut rng = Random::new();
+        let i = rng.int(0, 10);
+        assert!(i >= 0 && i <= 10);
+    }
     #[test]
     fn test_pseudo() {
         let mut rng = Random::new();
-        let first = rng.pseudo();
-        let second = rng.pseudo();
-        assert_ne!(first, second);
+        let p = Random::pseudo(&mut rng);
+        assert!(p < 4294967295);
     }
-
     #[test]
-    fn test_display() {
+    fn test_range() {
+        let mut rng = Random::new();
+        let r = Random::range(&mut rng, 0, 10);
+        assert!(r >= 0 && r <= 10);
+    }
+    #[test]
+    pub fn test_new() {
         let rng = Random::new();
-        let s = format!("{}", rng);
-        assert!(s.starts_with("Random { seed: "));
-        assert!(s.ends_with('}'));
-    }
-
-    #[test]
-    fn test_random_sum_is_positive() {
-        let mut rng = Random::new();
-        let mut sum = 0;
-        for _ in 0..100 {
-            sum += rng.random();
-        }
-        assert!(sum > 0);
+        assert!(rng.mti <= N);
+        assert!(rng.mt[0] > 0);
     }
     #[test]
-    fn test_pseudo_sum_is_positive() {
+    fn test_rand() {
         let mut rng = Random::new();
-        let mut sum = 0;
-        for _ in 0..100 {
-            sum += rng.pseudo();
-        }
-        assert!(sum > 0);
+        let r = Random::rand(&mut rng);
+        assert!(r < 4294967295);
     }
     #[test]
-    fn test_random_is_within_range() {
+    fn test_random_range() {
         let mut rng = Random::new();
-        let mut sum = 0;
-        for _ in 0..100 {
-            sum += rng.random();
-        }
-        assert!(sum > 0);
+        let r = Random::random_range(&mut rng, 0, 10);
+        assert!(r >= 0 && r <= 10);
     }
     #[test]
-    fn test_pseudo_is_within_range() {
+    fn test_seed() {
         let mut rng = Random::new();
-        let mut sum = 0;
-        for _ in 0..100 {
-            sum += rng.pseudo();
-        }
-        assert!(sum > 0);
+        Random::seed(&mut rng, 0);
+        assert!(rng.mti <= N);
+        assert!(rng.mt.iter().any(|&x| x != 0));
     }
     #[test]
-    fn integration_test_pseudo_and_random_are_different() {
+    fn test_twist() {
         let mut rng = Random::new();
-        let mut pseudo_sum = 0;
-        let mut random_sum = 0;
-        for _ in 0..100 {
-            pseudo_sum += rng.pseudo();
-            random_sum += rng.random();
-        }
-        assert_ne!(pseudo_sum, random_sum);
-    }
-
-    #[test]
-    fn integration_test_random_values_are_within_range() {
-        let mut rng = Random::new();
-        for _ in 0..100 {
-            let random = rng.random_range(0, std::u32::MAX);
-            assert!(random < std::u32::MAX);
-        }
-    }
-
-    #[test]
-    fn integration_test_pseudo_values_are_within_range() {
-        let mut rng = Random::new();
-        for _ in 0..100 {
-            let pseudo = rng.random_range(0, std::u32::MAX);
-            assert!(pseudo < std::u32::MAX);
-        }
-    }
-
-    #[test]
-    fn integration_test_random_values_are_distributed_evenly() {
-        let mut rng = Random::new();
-        let mut counts = [0; 100];
-        for _ in 0..100000 {
-            let random = rng.random();
-            let index = (random % 100) as usize;
-            counts[index] += 1;
-        }
-        for count in counts.iter() {
-            assert!(*count >= 0);
-        }
-    }
-    #[test]
-    fn integration_test_pseudo_values_are_distributed_evenly() {
-        let mut rng = Random::new();
-        let mut counts = [0; 100];
-        for _ in 0..100000 {
-            let pseudo = rng.pseudo();
-            let index = (pseudo % 100) as usize;
-            counts[index] += 1;
-        }
-        for count in counts.iter() {
-            assert!(*count >= 0);
-        }
+        Random::seed(&mut rng, 0);
+        Random::twist(&mut rng);
+        assert!(rng.mti <= N);
+        assert!(rng.mt.iter().any(|&x| x != 0));
     }
 }

@@ -15,10 +15,16 @@ include = [
     "../../LICENSE-APACHE",
     "../../LICENSE-MIT",
     "/README.md",
+    "/benches/**",
     "/src/**",
     "/tests/**",
     "/examples/**",
 ]
+
+[[bench]]
+name = "random"
+harness = false
+path = "benches/random.rs"
 
 [dependencies]
 rand = "0.8.5"

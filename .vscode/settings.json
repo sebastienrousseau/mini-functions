@@ -42,6 +42,8 @@
         "libexec",
         "libmini",
         "linux",
+        "mant",
+        "Mersenne",
         "msvc",
         "musleabihf",
         "mysecret",

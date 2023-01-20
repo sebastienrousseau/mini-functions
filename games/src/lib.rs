@@ -96,7 +96,7 @@ impl Deck {
 
         // Shuffle the deck using the Fisher-Yates algorithm
         for i in (1..52).rev() {
-            let j = deck.rng.random() as usize % (i + 1);
+            let j = deck.rng.rand() as usize % (i + 1);
             deck.cards.swap(i, j);
         }
         deck
