@@ -22,7 +22,7 @@ fn main() {
     // Expected 6cd3556deb0da54bca060b4c39479839
 
     // Example using MD5::hexdigest() for a file input
-    let digest = MD5::hexdigest_file("file.txt"); // file.txt contains "Hello, world!"
+    let digest = MD5::hexdigest_file("../file.txt"); // file.txt contains "Hello, world!"
     println!(
         "🦀 MD5::hexdigest_file() for a file input:         ✅ {}",
         digest
@@ -60,7 +60,7 @@ fn main() {
         md5.finalize()
     );
     // Expected d41d8cd98f00b204e9800998ecf8427e
-    md5.update_file("update.txt"); // update.txt contains "Coucou, le monde!"
+    md5.update_file("../update.txt"); // update.txt contains "Coucou, le monde!"
     let digest = md5.finalize();
     println!(
         "🦀 MD5::update_file() is:                          ✅ {}",
@@ -80,37 +80,4 @@ fn main() {
         md5.reset()
     );
     // Expected 00000000000000000000000000000000
-
-    // Example using MD5::digest() for a larger input
-    // let input = [0; 1024];
-    // let digest = MD5::digest(&input);
-    // println!("🦀 MD5::digest() for a larger input: ✅ {:?}", digest);
-
-    // Example using MD5::default() to create a new MD5 object
-    // let gen = MD5::default();
-    // println!(
-    //     "🦀 MD5::default() to create a new MD5 object: ✅ {:?}",
-    //     gen.to_string()
-    // );
-
-    // Example using MD5::finalize() to finalize the MD5 object
-    // let finalize = MD5::finalize(gen, 13);
-    // println!(
-    //     "🦀 MD5::finalize() to finalize the MD5 object: ✅ {:?}",
-    //     finalize
-    // );
-
-    // Example using MD5::finalize() to retrieve the digest
-    // println!(
-    //     "🦀 MD5::digest() to retrieve the digest: ✅ {:?}",
-    //     MD5::digest(&finalize)
-    // );
-
-    // Example using MD5::new_with_string() for a string input
-    // let the_digest = b"123456";
-    // let the_result = MD5::digest(the_digest);
-    // println!(
-    //     "🦀 MD5::the_digest(): ✅ {:?}",
-    //     MD5::to_hex_string(&the_result)
-    // );
 }

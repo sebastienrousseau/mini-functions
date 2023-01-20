@@ -64,10 +64,10 @@ use std::io::Read;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct MD5 {
-    buffer: [u8; BLOCK_LENGTH],
-    count: [u32; 2],
-    digest: [u8; DIGEST_LENGTH],
-    state: [u32; 4],
+    pub buffer: [u8; BLOCK_LENGTH],
+    pub count: [u32; 2],
+    pub digest: [u8; DIGEST_LENGTH],
+    pub state: [u32; 4],
 }
 
 impl MD5 {
@@ -108,7 +108,7 @@ impl MD5 {
         }
     }
     /// Update the internal state of the MD5 object with new data.
-    fn transform(&mut self, data: &[u8]) -> &mut Self {
+    pub fn transform(&mut self, data: &[u8]) -> &mut Self {
         const fn f(x: u32, y: u32, z: u32) -> u32 {
             (x & y) | (!x & z)
         }

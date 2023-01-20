@@ -20,6 +20,11 @@ include = [
     "/examples/**",
 ]
 
+[[bench]]
+name = "md5"
+harness = false
+path = "benches/md5.rs"
+
 [dependencies]
 
 [dev-dependencies]
