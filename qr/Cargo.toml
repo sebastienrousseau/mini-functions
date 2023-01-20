@@ -27,6 +27,11 @@ include = [
     "/examples/**",
 ]
 
+[[bench]]
+name = "qr"
+harness = false
+path = "benches/qr.rs"
+
 [dependencies]
 image = "0.24.5"
 qrcode = "0.12.0"
