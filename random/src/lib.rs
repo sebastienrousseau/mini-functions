@@ -7,7 +7,6 @@
 //! (LFSR) and is designed to have a period of 2^19937-1. It is one of
 //! the most widely used PRNGs in scientific computing.
 //!
-//!
 
 // Copyright © 2022-2023 Mini Functions. All rights reserved.
 // SPDX-License-Identifier: Apache-2.0

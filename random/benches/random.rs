@@ -39,7 +39,7 @@ fn benchmark_random(c: &mut Criterion) {
     });
 
     // Benchmark the random new function
-    c.bench_function("Random new", |b| b.iter(|| Random::new()));
+    c.bench_function("Random new", |b| b.iter(|| Random::new));
 
     // Benchmark the random pseudo function
     c.bench_function("Random pseudo", |b| {

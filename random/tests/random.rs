@@ -10,7 +10,7 @@ mod tests {
     fn test_bool() {
         let mut rng = Random::new();
         let b = Random::bool(&mut rng);
-        assert!(b == true || b == false);
+        assert!(b);
     }
     #[test]
     fn test_bytes() {
@@ -28,7 +28,7 @@ mod tests {
     fn test_char() {
         let mut rng = Random::new();
         let c = Random::char(&mut rng);
-        assert!(c >= 'a' && c <= 'z');
+        assert!(('a'..='z').contains(&c));
     }
     #[test]
     fn test_choose() {
@@ -42,7 +42,7 @@ mod tests {
     fn test_float() {
         let mut rng = Random::new();
         let f = Random::float(&mut rng);
-        assert!(f >= 0.0 && f <= 1.0);
+        assert!((0.0..=1.0).contains(&f));
     }
     #[test]
     fn test_int() {
@@ -78,7 +78,7 @@ mod tests {
     fn test_random_range() {
         let mut rng = Random::new();
         let r = Random::random_range(&mut rng, 0, 10);
-        assert!(r >= 0 && r <= 10);
+        assert!(r <= 10);
     }
     #[test]
     fn test_seed() {
