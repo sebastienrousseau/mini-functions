@@ -3,7 +3,7 @@ use self::random::Random;
 
 fn main() {
     // Create a new random boolean
-    let bool: bool = Random::bool(&mut Random::new());
+    let bool: bool = Random::bool(&mut Random::new(), 0.5);
     println!("🦀 Random::bool():        ✅ {}", bool);
 
     // Create a new random number generator

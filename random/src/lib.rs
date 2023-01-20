@@ -54,10 +54,13 @@ pub struct Random {
 }
 
 impl Random {
-    /// Returns a random bool with a probability of 0.5
-    pub fn bool(&mut self) -> bool {
-        thread_rng().gen_bool(0.5)
+    /// Returns a random bool with a probability that can be set
+    pub fn bool(&mut self, probability: f64) -> bool {
+        thread_rng().gen_bool(probability)
     }
+    // pub fn bool(&mut self) -> bool {
+    //     thread_rng().gen_bool(0.5)
+    // }
 
     /// Returns a vector of random bytes of the given length
     pub fn bytes(&mut self, len: usize) -> Vec<u8> {
@@ -91,8 +94,11 @@ impl Random {
 
     /// Returns a random integer within the given range
     pub fn int(&mut self, min: i32, max: i32) -> i32 {
-        self.range(min, max)
+        thread_rng().gen_range(min..max + 1)
     }
+    // pub fn int(&mut self, min: i32, max: i32) -> i32 {
+    //     self.range(min, max)
+    // }
 
     // Returns new random number generator
     pub fn new() -> Self {
@@ -145,8 +151,7 @@ impl Random {
 
     /// Returns a random number within a given range
     pub fn range(&mut self, min: i32, max: i32) -> i32 {
-        let range = max - min;
-        (self.rand() as i32 % range) + min
+        thread_rng().gen_range(min..max + 1)
     }
     // pub fn range(&mut self, min: i32, max: i32) -> i32 {
     //     let range = max - min + 1;

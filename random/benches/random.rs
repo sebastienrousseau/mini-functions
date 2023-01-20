@@ -6,7 +6,7 @@ use criterion::{black_box, criterion_group, criterion_main, Criterion};
 fn benchmark_random(c: &mut Criterion) {
     // Benchmark the random bool function
     c.bench_function("Random bool", |b| {
-        b.iter(|| Random::bool(&mut Random::new()))
+        b.iter(|| Random::bool(&mut Random::new(), black_box(0.5)))
     });
 
     // Benchmark the random bytes function
