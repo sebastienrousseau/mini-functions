@@ -1,4 +1,5 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use image::Rgb;
 extern crate qr;
 use self::qr::QRCode;
 
