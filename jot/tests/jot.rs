@@ -13,7 +13,7 @@ mod tests {
         let header = Header::default();
         let claims = Claims::default();
         let result = JWT::encode(header, claims, secret);
-        assert_eq!(result.is_ok(), true);
+        assert!(result.is_ok(), "{}", true);
     }
     #[test]
     fn test_default() {

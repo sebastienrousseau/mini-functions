@@ -12,7 +12,7 @@ fn bench_to_string_benchmark(c: &mut Criterion) {
 }
 
 fn bench_default_benchmark(c: &mut Criterion) {
-    c.bench_function("default", |b| b.iter(|| JWT::default()));
+    c.bench_function("default", |b| b.iter(|| JWT::default));
 }
 
 fn bench_decode_benchmark(c: &mut Criterion) {
@@ -54,7 +54,7 @@ fn bench_get_token_benchmark(c: &mut Criterion) {
 }
 
 fn bench_claims_benchmark(c: &mut Criterion) {
-    c.bench_function("claims", move |b| b.iter(|| JWT::claims()));
+    c.bench_function("claims", move |b| b.iter(|| JWT::claims));
 }
 
 fn bench_get_token_length_benchmark(c: &mut Criterion) {
@@ -65,7 +65,7 @@ fn bench_get_token_length_benchmark(c: &mut Criterion) {
         token: "example_token".to_owned(),
     };
     let result = JWT::get_token_length(jwt);
-    c.bench_function("get_token_length", move |b| b.iter(|| result.clone()));
+    c.bench_function("get_token_length", move |b| b.iter(|| result));
 }
 
 fn bench_get_token_header_benchmark(c: &mut Criterion) {
