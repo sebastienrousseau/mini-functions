@@ -12,14 +12,14 @@ fn finalize_benchmark(c: &mut Criterion) {
 
         b.iter(|| {
             md5.finalize();
-            md5.digest;
+            // md5.digest;
         });
     });
 }
 
 fn new_benchmark(c: &mut Criterion) {
     c.bench_function("new", |b| {
-        b.iter(|| MD5::new());
+        b.iter(|| MD5::new);
     });
 }
 
