@@ -20,6 +20,11 @@ include = [
     "/examples/**",
 ]
 
+[[bench]]
+name = "logger"
+harness = false
+path = "benches/logger.rs"
+
 [dependencies]
 date = { path = "../date" }
 
