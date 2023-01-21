@@ -15,6 +15,7 @@ include = [
     "../../LICENSE-APACHE",
     "../../LICENSE-MIT",
     "/README.md",
+    "/benches/**",
     "/src/**",
     "/tests/**",
     "/examples/**",

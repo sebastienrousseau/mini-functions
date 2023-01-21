@@ -17,15 +17,21 @@ name = "jot"
 repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/jot/"
 version = "0.0.1"
 include = [
-    # "/build.rs",
+    "/build.rs",
     "/Cargo.toml",
     "../../LICENSE-APACHE",
     "../../LICENSE-MIT",
     "/README.md",
+    "/benches/**",
     "/src/**",
     "/tests/**",
     "/examples/**",
 ]
+
+[[bench]]
+name = "jot"
+harness = false
+path = "benches/jot.rs"
 
 [dependencies]
 date = { path = "../date" }

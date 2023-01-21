@@ -1,0 +1,86 @@
+extern crate criterion;
+use claims::Claims;
+use criterion::{black_box, criterion_group, criterion_main, Criterion};
+
+extern crate jot;
+use jot::{Header, JWT};
+
+fn bench_to_string_benchmark(c: &mut Criterion) {
+    let jwt = JWT::default();
+
+    c.bench_function("to_string", move |b| b.iter(|| jwt.to_string()));
+}
+
+fn bench_default_benchmark(c: &mut Criterion) {
+    c.bench_function("default", |b| b.iter(|| JWT::default()));
+}
+
+fn bench_decode_benchmark(c: &mut Criterion) {
+    let secret: &[u8; 6] = b"secret";
+    let header = Header::default();
+    let claims = Claims::default();
+
+    let token = JWT::encode(header, claims, secret).unwrap();
+    let mut jwt = JWT {
+        header: Header::default(),
+        claims: Claims::default(),
+        signature: vec![],
+        token,
+    };
+
+    c.bench_function("decode", move |b| b.iter(|| jwt.decode(secret)));
+}
+
+fn bench_generate_benchmark(c: &mut Criterion) {
+    c.bench_function("generate", |b| b.iter(|| JWT::generate()));
+}
+
+fn bench_get_token_benchmark(c: &mut Criterion) {
+    c.bench_function("get_token", move |b| b.iter(|| JWT::get_token()));
+}
+
+fn bench_claims_benchmark(c: &mut Criterion) {
+    c.bench_function("claims", move |b| b.iter(|| JWT::claims()));
+}
+
+fn bench_get_token_length_benchmark(c: &mut Criterion) {
+    c.bench_function("get_token_length", move |b| {
+        b.iter(|| JWT::get_token_length())
+    });
+}
+
+fn bench_get_token_header_benchmark(c: &mut Criterion) {
+    c.bench_function("get_token_header", move |b| {
+        b.iter(|| JWT::get_token_header())
+    });
+}
+
+fn bench_encode_benchmark(c: &mut Criterion) {
+    let secret = b"secret";
+    let header = JWT::default().header;
+    let claims = JWT::default().claims;
+
+    c.bench_function("encode", move |b| {
+        b.iter(|| {
+            JWT::encode(
+                black_box(header.clone()),
+                black_box(claims.clone()),
+                black_box(secret),
+            )
+        })
+    });
+}
+
+criterion_group!(
+    benches,
+    bench_claims_benchmark,
+    bench_decode_benchmark,
+    bench_default_benchmark,
+    bench_encode_benchmark,
+    bench_generate_benchmark,
+    bench_get_token_benchmark,
+    bench_get_token_header_benchmark,
+    bench_get_token_length_benchmark,
+    bench_to_string_benchmark,
+);
+criterion_main!(benches);

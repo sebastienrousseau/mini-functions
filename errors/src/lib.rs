@@ -4,8 +4,9 @@ extern crate base64;
 // extern crate openssl;
 extern crate serde_json;
 
-use base64::DecodeError as B64Error;
 // use openssl::error::ErrorStack;
+use base64::DecodeError as B64Error;
+use hmac::digest::InvalidLength as InvLen;
 use serde_json::Error as SJError;
 use std::error::Error as StdError;
 use std::fmt;
@@ -24,6 +25,7 @@ pub enum JwtError {
     InvalidHeader(String),
     InvalidPayload(String),
     InvalidSignature(String),
+    InvalidLength(String),
     IoError(String),
     IssuerInvalid(String),
     JWTInvalid(String),
@@ -47,6 +49,7 @@ impl fmt::Display for JwtError {
     }
 }
 
+
 impl From<B64Error> for JwtError {
     fn from(error: B64Error) -> Self {
         JwtError::InvalidBase64(error.to_string())
@@ -56,6 +59,12 @@ impl From<B64Error> for JwtError {
 impl From<SJError> for JwtError {
     fn from(error: SJError) -> Self {
         JwtError::InvalidPayload(error.to_string())
+    }
+}
+
+impl From<InvLen> for JwtError {
+    fn from(error: InvLen) -> Self {
+        JwtError::InvalidLength(error.to_string())
     }
 }
 
@@ -103,6 +112,11 @@ impl JwtError {
     /// Returns `true` if the error is a format error.
     pub fn is_format_error(&self) -> bool {
         matches!(self, JwtError::FormatInvalid(_))
+    }
+
+    /// Returns `true` if the error is a header error.
+    pub fn is_invalid_length_error(&self) -> bool {
+        matches!(self, JwtError::InvalidLength(_))
     }
 
     /// Returns `true` if the error is an IO error.
