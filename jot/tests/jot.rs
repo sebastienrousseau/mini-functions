@@ -30,7 +30,7 @@ mod tests {
         let secret: &[u8; 6] = b"secret";
         let header = Header::default();
         let claims = Claims::default();
-        let encoded_result = JWT::encode(header.clone(), claims.clone(), secret);
+        let encoded_result = JWT::encode(header, claims, secret);
         let encoded = encoded_result.unwrap();
         jwt.token = encoded.clone();
         let decoded = JWT::decode(&mut jwt, secret);
