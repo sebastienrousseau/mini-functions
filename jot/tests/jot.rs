@@ -97,4 +97,24 @@ mod tests {
         let result = JWT::get_token_length(jwt);
         assert_eq!(result, 5);
     }
+    #[test]
+    fn test_validate_with_empty_signature() {
+        // Create a JWT with valid claims and an empty signature
+        let secret = b"secret";
+        let jwt = JWT {
+            header: Header {
+                alg: Some(Algorithm::HS256),
+                kid: Some("example_kid".to_string()),
+                typ: Some("example_type".to_string()),
+                cty: Some("example_cty".to_string()),
+            },
+            claims: Claims::default(),
+            signature: vec![],
+            token: "example_token".to_owned(),
+        };
+
+        // Test validating the JWT
+        let result = jwt.validate(secret);
+        assert!(result.is_err());
+    }
 }

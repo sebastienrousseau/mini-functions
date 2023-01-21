@@ -101,6 +101,24 @@ fn bench_encode_benchmark(c: &mut Criterion) {
         })
     });
 }
+fn bench_validate_benchmark(c: &mut Criterion) {
+    let secret = b"secret";
+    let jwt = JWT {
+        header: Header {
+            alg: Some(Algorithm::HS256),
+            kid: Some("example_kid".to_string()),
+            typ: Some("example_type".to_string()),
+            cty: Some("example_cty".to_string()),
+        },
+        claims: Claims::default(),
+        signature: vec![],
+        token: "example_token".to_owned(),
+    };
+
+    c.bench_function("validate", move |b| {
+        b.iter(|| JWT::validate(black_box(&jwt), black_box(secret)));
+    });
+}
 
 criterion_group!(
     benches,
@@ -113,5 +131,6 @@ criterion_group!(
     bench_get_token_header_benchmark,
     bench_get_token_length_benchmark,
     bench_to_string_benchmark,
+    bench_validate_benchmark,
 );
 criterion_main!(benches);

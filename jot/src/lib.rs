@@ -148,7 +148,7 @@ impl JWT {
             // let (header_b64, claims_b64_signature_b64) = jwt.split_once('.').unwrap();
             let (header_b64, claims_b64_signature_b64) = match jwt.split_once('.') {
                 Some(tuple) => tuple,
-                None => return Err(JwtError::DecodeError("Invalid JWT".to_string())),   
+                None => return Err(JwtError::DecodeError("Invalid JWT".to_string())),
             };
 
             let (claims_b64, inner_signature_b64) =
@@ -232,6 +232,49 @@ impl JWT {
     // Get the token length.
     pub fn get_token_length(jwt: JWT) -> usize {
         jwt.token.len()
+    }
+
+    // Validates a JWT token.
+    pub fn validate(&self, secret: &[u8]) -> Result<(), JwtError> {
+        let jwt = &self.token;
+        {
+            // Split the JWT into its header, claims, and signature
+            // let (header_b64, claims_b64_signature_b64) = jwt.split_once('.').unwrap();
+            let (header_b64, claims_b64_signature_b64) = match jwt.split_once('.') {
+                Some(tuple) => tuple,
+                None => return Err(JwtError::DecodeError("Invalid JWT".to_string())),
+            };
+
+            let (claims_b64, inner_signature_b64) =
+                claims_b64_signature_b64.split_once('.').unwrap();
+
+            // Base64-decode the header and claims
+            let header_json = general_purpose::STANDARD.decode(header_b64)?;
+            let claims_json = general_purpose::STANDARD.decode(claims_b64)?;
+
+            // Allocate Vec of references to slices
+            let header_json_tmp = header_json.as_slice();
+            let claims_json = claims_json.as_slice();
+
+            // Deserialize the header and claims from JSON
+            let _decoded_header: Header = serde_json::from_slice(header_json_tmp)?;
+            let _decoded_claims: Claims = serde_json::from_slice(claims_json)?;
+
+            // Sign the JWT with the secret
+            type HmacSha256 = Hmac<Sha256>;
+            let mut hmac = HmacSha256::new_from_slice(secret)?;
+            hmac.update(jwt.as_bytes());
+            let signature = hmac.finalize();
+
+            // Verify the signature
+            let mut hmac = HmacSha256::new_from_slice(secret)?;
+            hmac.update(inner_signature_b64.as_bytes());
+            let inner_signature = hmac.finalize();
+            if signature != inner_signature {
+                return Err(JwtError::InvalidSignature("Invalid signature".to_string()));
+            }
+        }
+        Ok(())
     }
 }
 
