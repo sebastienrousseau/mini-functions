@@ -8,6 +8,15 @@ mod tests {
     use self::jot::{Algorithm, Header, JWT};
 
     #[test]
+    fn test_header_default() {
+        let header = Header::default();
+        assert_eq!(header.alg, Some(Algorithm::HS256));
+        assert_eq!(header.kid, None);
+        assert_eq!(header.typ, Some("JWT".to_string()));
+        assert_eq!(header.cty, None);
+    }
+
+    #[test]
     fn test_encode() {
         let secret: &[u8; 6] = b"secret";
         let header = Header::default();
@@ -15,6 +24,21 @@ mod tests {
         let result = JWT::encode(header, claims, secret);
         assert!(result.is_ok(), "{}", true);
     }
+    #[test]
+    fn test_decode() {
+        let mut jwt = JWT::default();
+        let secret: &[u8; 6] = b"secret";
+        let header = Header::default();
+        let claims = Claims::default();
+        let encoded_result = JWT::encode(header.clone(), claims.clone(), secret);
+        let encoded = encoded_result.unwrap();
+        jwt.token = encoded.clone();
+        let decoded = JWT::decode(&mut jwt, secret);
+        if let Ok(decoded_token) = decoded {
+            assert_eq!(decoded_token, encoded);
+        }
+    }
+
     #[test]
     fn test_default() {
         let jwt = JWT::default();

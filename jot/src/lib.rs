@@ -29,7 +29,7 @@ use std::{fmt, string::ToString};
 /// JWT is a struct that holds the JWT token and its associated claims.
 /// Provides a set of utility functions for working with JSON Web Tokens
 /// (JWTs) and JSON Web Signatures (JWSs).
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct JWT {
     /// The header of the JWT.
     pub header: Header,
@@ -104,6 +104,7 @@ impl Default for JWT {
         }
     }
 }
+
 impl Default for Header {
     fn default() -> Self {
         Header {
@@ -144,7 +145,12 @@ impl JWT {
         let jwt = &self.token;
         {
             // Split the JWT into its header, claims, and signature
-            let (header_b64, claims_b64_signature_b64) = jwt.split_once('.').unwrap();
+            // let (header_b64, claims_b64_signature_b64) = jwt.split_once('.').unwrap();
+            let (header_b64, claims_b64_signature_b64) = match jwt.split_once('.') {
+                Some(tuple) => tuple,
+                None => return Err(JwtError::DecodeError("Invalid JWT".to_string())),   
+            };
+
             let (claims_b64, inner_signature_b64) =
                 claims_b64_signature_b64.split_once('.').unwrap();
 

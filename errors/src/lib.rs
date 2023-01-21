@@ -5,7 +5,7 @@ extern crate base64;
 extern crate serde_json;
 
 // use openssl::error::ErrorStack;
-use base64::DecodeError as B64Error;
+use base64::DecodeError;
 use hmac::digest::InvalidLength as InvLen;
 use serde_json::Error as SJError;
 use std::error::Error as StdError;
@@ -19,9 +19,9 @@ use std::io::Error as IoError;
 /// also implements the `Default`, `Display`, and `Error` traits.
 pub enum JwtError {
     AudienceInvalid(String),
+    DecodeError(String),
     ExpirationInvalid(String),
     FormatInvalid(String),
-    InvalidBase64(String),
     InvalidHeader(String),
     InvalidPayload(String),
     InvalidSignature(String),
@@ -49,10 +49,9 @@ impl fmt::Display for JwtError {
     }
 }
 
-
-impl From<B64Error> for JwtError {
-    fn from(error: B64Error) -> Self {
-        JwtError::InvalidBase64(error.to_string())
+impl From<DecodeError> for JwtError {
+    fn from(error: DecodeError) -> Self {
+        JwtError::DecodeError(error.to_string())
     }
 }
 
@@ -139,7 +138,7 @@ impl JwtError {
     }
     /// Returns `true` if the error is an invalid base 64.
     pub fn is_base64_error(&self) -> bool {
-        matches!(self, JwtError::InvalidBase64(_))
+        matches!(self, JwtError::DecodeError(_))
     }
 }
 
