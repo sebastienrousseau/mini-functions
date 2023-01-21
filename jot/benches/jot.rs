@@ -3,7 +3,7 @@ use claims::Claims;
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
 extern crate jot;
-use jot::{Header, JWT};
+use self::jot::{Algorithm, Header, JWT};
 
 fn bench_to_string_benchmark(c: &mut Criterion) {
     let jwt = JWT::default();
@@ -36,7 +36,14 @@ fn bench_generate_benchmark(c: &mut Criterion) {
 }
 
 fn bench_get_token_benchmark(c: &mut Criterion) {
-    c.bench_function("get_token", move |b| b.iter(|| JWT::get_token()));
+    let jwt = JWT {
+        header: Header::default(),
+        claims: Claims::default(),
+        signature: vec![],
+        token: "example_token".to_owned(),
+    };
+    let result = JWT::get_token(jwt);
+    c.bench_function("get_token", move |b| b.iter(|| result.clone()));
 }
 
 fn bench_claims_benchmark(c: &mut Criterion) {
@@ -44,14 +51,31 @@ fn bench_claims_benchmark(c: &mut Criterion) {
 }
 
 fn bench_get_token_length_benchmark(c: &mut Criterion) {
-    c.bench_function("get_token_length", move |b| {
-        b.iter(|| JWT::get_token_length())
-    });
+    let jwt = JWT {
+        header: Header::default(),
+        claims: Claims::default(),
+        signature: vec![],
+        token: "example_token".to_owned(),
+    };
+    let result = JWT::get_token_length(jwt);
+    c.bench_function("get_token_length", move |b| b.iter(|| result.clone()));
 }
 
 fn bench_get_token_header_benchmark(c: &mut Criterion) {
     c.bench_function("get_token_header", move |b| {
-        b.iter(|| JWT::get_token_header())
+        let jwt = JWT {
+            header: Header {
+                alg: Some(Algorithm::HS256),
+                kid: Some("example_kid".to_string()),
+                typ: Some("example_type".to_string()),
+                cty: Some("example_cty".to_string()),
+            },
+            claims: Claims::default(),
+            signature: vec![],
+            token: "example_token".to_owned(),
+        };
+        let result = JWT::get_token_header(jwt);
+        b.iter(|| result.clone())
     });
 }
 
