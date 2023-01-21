@@ -22,6 +22,15 @@ mod tests {
     }
 
     #[test]
+    fn test_generate() {
+        let secret = b"secret";
+        let jwt = JWT::generate(secret);
+        assert!(jwt.is_ok());
+        let token = jwt.unwrap();
+        assert!(!token.is_empty());
+    }
+
+    #[test]
     fn test_get_token() {
         let jwt = JWT {
             header: Header::default(),
@@ -34,7 +43,7 @@ mod tests {
     }
 
     #[test]
-    fn test_get_header() {
+    fn test_get_token_header() {
         let jwt = JWT {
             header: Header {
                 alg: Some(Algorithm::HS256),

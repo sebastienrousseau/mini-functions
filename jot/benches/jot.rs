@@ -32,8 +32,15 @@ fn bench_decode_benchmark(c: &mut Criterion) {
 }
 
 fn bench_generate_benchmark(c: &mut Criterion) {
-    c.bench_function("generate", |b| b.iter(|| JWT::generate()));
+    let secret = b"secret";
+    c.bench_function("generate", |b| {
+        b.iter(|| JWT::generate(black_box(secret)).unwrap())
+    });
 }
+
+// fn bench_generate_benchmark(c: &mut Criterion) {
+//     c.bench_function("generate", |b| b.iter(|| JWT::generate()));
+// }
 
 fn bench_get_token_benchmark(c: &mut Criterion) {
     let jwt = JWT {

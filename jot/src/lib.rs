@@ -207,12 +207,10 @@ impl JWT {
     }
 
     // Generates a JWT token.
-    pub fn generate() -> String {
+    pub fn generate(secret: &[u8]) -> Result<String, JwtError> {
         let claims = Claims::default();
         let header = Header::default();
-        let password = "password".to_string();
-        let secret = password.as_bytes();
-        JWT::encode(header, claims, &secret).unwrap()
+        JWT::encode(header, claims, secret)
     }
 
     // Returns the token field of the JWT struct.
