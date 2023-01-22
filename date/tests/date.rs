@@ -111,4 +111,103 @@ mod tests {
             year.read().unwrap().to_string()
         );
     }
+    #[test]
+    fn test_default() {
+        let date1 = Date::default();
+        let date2 = Date::new();
+        assert_eq!(
+            date1.date.read().unwrap().to_string(),
+            date2.date.read().unwrap().to_string()
+        );
+    }
+    #[test]
+    fn test_clone() {
+        let date1 = Date::new();
+        let date2 = date1.clone();
+
+        assert_eq!(
+            date1.date.read().unwrap().to_string(),
+            date2.date.read().unwrap().to_string()
+        );
+        assert_ne!(
+            &date1.date.try_read().unwrap() as *const _,
+            &date2.date.try_read().unwrap() as *const _
+        );
+        assert_ne!(
+            &date1.day.try_read().unwrap() as *const _,
+            &date2.day.try_read().unwrap() as *const _
+        );
+        assert_ne!(
+            &date1.hour.try_read().unwrap() as *const _,
+            &date2.hour.try_read().unwrap() as *const _
+        );
+        assert_ne!(
+            &date1.iso_8601.try_read().unwrap() as *const _,
+            &date2.iso_8601.try_read().unwrap() as *const _
+        );
+        assert_ne!(
+            &date1.iso_week.try_read().unwrap() as *const _,
+            &date2.iso_week.try_read().unwrap() as *const _
+        );
+        assert_ne!(
+            &date1.minute.try_read().unwrap() as *const _,
+            &date2.minute.try_read().unwrap() as *const _
+        );
+        assert_ne!(
+            &date1.month.try_read().unwrap() as *const _,
+            &date2.month.try_read().unwrap() as *const _
+        );
+        assert_ne!(
+            &date1.offset.try_read().unwrap() as *const _,
+            &date2.offset.try_read().unwrap() as *const _
+        );
+        assert_ne!(
+            &date1.ordinal.try_read().unwrap() as *const _,
+            &date2.ordinal.try_read().unwrap() as *const _
+        );
+        assert_ne!(
+            &date1.second.try_read().unwrap() as *const _,
+            &date2.second.try_read().unwrap() as *const _
+        );
+        assert_ne!(
+            &date1.time.try_read().unwrap() as *const _,
+            &date2.time.try_read().unwrap() as *const _
+        );
+        assert_ne!(
+            &date1.weekday.try_read().unwrap() as *const _,
+            &date2.weekday.try_read().unwrap() as *const _
+        );
+        assert_ne!(
+            &date1.year.try_read().unwrap() as *const _,
+            &date2.year.try_read().unwrap() as *const _
+        );
+    }
+    #[test]
+    fn test_display() {
+        let date = Date::new();
+        let display = format!("{}", date);
+
+        assert!(display.contains("date: "));
+        assert!(display.contains("day: "));
+        assert!(display.contains("hour: "));
+        assert!(display.contains("iso_8601: "));
+        assert!(display.contains("iso_week: "));
+        assert!(display.contains("minute: "));
+        assert!(display.contains("month: "));
+        assert!(display.contains("offset: "));
+        assert!(display.contains("ordinal: "));
+        assert!(display.contains("second: "));
+        assert!(display.contains("time: "));
+        assert!(display.contains("weekday: "));
+        assert!(display.contains("year: "));
+    }
+
+    #[test]
+    fn test_display_with_write_lock() {
+        let date = Date::new();
+        *date.year.write().unwrap() = 2020;
+        let display = format!("{}", date);
+
+        assert!(display.contains("year: 2020"));
+    }
 }
