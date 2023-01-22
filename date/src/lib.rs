@@ -62,19 +62,19 @@ impl Date {
         let iso_8601 = now_utc.to_string();
         // Create a new instance of the `Date` struct and initialize its fields
         Self {
-            date: RwLock::new(now_utc.date().into()),
-            day: RwLock::new(now_utc.day().into()),
-            hour: RwLock::new(now_utc.hour().into()),
-            iso_8601: RwLock::new(iso_8601.into()),
-            iso_week: RwLock::new(now_utc.iso_week().into()),
-            minute: RwLock::new(now_utc.minute().into()),
-            month: RwLock::new(now_utc.month().to_string().into()),
-            offset: RwLock::new(now_utc.offset().into()),
-            ordinal: RwLock::new(now_utc.ordinal().into()),
-            second: RwLock::new(now_utc.second().into()),
-            time: RwLock::new(now_utc.time().into()),
-            weekday: RwLock::new(now_utc.weekday().to_string().into()),
-            year: RwLock::new(now_utc.year().into()),
+            date: RwLock::new(now_utc.date()),
+            day: RwLock::new(now_utc.day()),
+            hour: RwLock::new(now_utc.hour()),
+            iso_8601: RwLock::new(iso_8601),
+            iso_week: RwLock::new(now_utc.iso_week()),
+            minute: RwLock::new(now_utc.minute()),
+            month: RwLock::new(now_utc.month().to_string()),
+            offset: RwLock::new(now_utc.offset()),
+            ordinal: RwLock::new(now_utc.ordinal()),
+            second: RwLock::new(now_utc.second()),
+            time: RwLock::new(now_utc.time()),
+            weekday: RwLock::new(now_utc.weekday().to_string()),
+            year: RwLock::new(now_utc.year()),
         }
     }
 }
