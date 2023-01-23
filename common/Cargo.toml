@@ -4,20 +4,32 @@ categories = ["Configuration"]
 description = "Highly Performant Common Configurations For Mini Functions"
 edition = "2018"
 homepage = "https://minifunctions.com/"
-keywords = ["common", "config", "configurations", "constants", "mini-functions"]
+keywords = [
+    "common",
+    "config",
+    "configurations",
+    "constants",
+    "helper",
+    "mini-functions",
+    "shared",
+    "toolkit",
+    "utility",
+]
 license = "MIT OR Apache-2.0"
 name = "common"
 repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/date/"
+rust-version = "1.66.1"
 version = "0.0.1"
 include = [
-    "/build.rs",
-    "/Cargo.toml",
     "../../LICENSE-APACHE",
     "../../LICENSE-MIT",
+    "/benches/**",
+    "/build.rs",
+    "/Cargo.toml",
+    "/examples/**",
     "/README.md",
     "/src/**",
     "/tests/**",
-    "/examples/**",
 ]
 
 [[bench]]

@@ -1,24 +1,40 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
-categories = ["Algorithms"]
+categories = [
+    "Algorithms",
+    "Cryptography",
+    "Development Tools",
+    "Encoding",
+    "Security",
+]
 description = "Random provides a random number generator based on the linear congruential generator algorithm with the golden ratio as the multiplier."
 edition = "2018"
 homepage = "https://minifunctions.com/"
-keywords = ["entropy", "mini-functions", "rand", "random"]
+keywords = [
+    "entropy",
+    "mini-functions",
+    "pseudo-random",
+    "rand",
+    "random-generation",
+    "random-number",
+    "random",
+    "randomness",
+]
 license = "MIT OR Apache-2.0"
 name = "random"
 repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/random/"
+rust-version = "1.66.1"
 version = "0.0.1"
 include = [
-    "/build.rs",
-    "/Cargo.toml",
     "../../LICENSE-APACHE",
     "../../LICENSE-MIT",
-    "/README.md",
     "/benches/**",
+    "/build.rs",
+    "/Cargo.toml",
+    "/examples/**",
+    "/README.md",
     "/src/**",
     "/tests/**",
-    "/examples/**",
 ]
 
 [[bench]]

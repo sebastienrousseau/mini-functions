@@ -4,21 +4,32 @@ categories = ["Algorithms", "Data structures", "Cryptography"]
 description = "Hash is a struct that provides an easy way to hash and verify passwords using the [blake3](https://crates.io/crates/blake3) crate."
 edition = "2018"
 homepage = "https://minifunctions.com/"
-keywords = ["blake3", "crypto", "hash", "hasher", "mini-functions"]
+keywords = [
+    "blake3",
+    "checksum",
+    "crypto",
+    "cryptography",
+    "digest",
+    "encryption",
+    "hash",
+    "hasher",
+    "mini-functions",
+]
 license = "MIT OR Apache-2.0"
 name = "hash"
 repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/hash/"
+rust-version = "1.66.1"
 version = "0.0.1"
 include = [
-    "/build.rs",
-    "/Cargo.toml",
     "../../LICENSE-APACHE",
     "../../LICENSE-MIT",
-    "/README.md",
     "/benches/**",
+    "/build.rs",
+    "/Cargo.toml",
+    "/examples/**",
+    "/README.md",
     "/src/**",
     "/tests/**",
-    "/examples/**",
 ]
 
 [[bench]]

@@ -6,29 +6,34 @@ categories = [
     "Datastructures",
     "Developmenttools",
     "Encoding",
-    "Rustpatterns",
-    "Valueformatting",
-    "WebAssembly",
-    "Webprogramming",
 ]
 description = "Errors is a library that provides a set of error types for working with JSON Web Tokens (JWTs) and JSON Web Signatures (JWSs)."
 edition = "2018"
 homepage = "https://minifunctions.com/"
-keywords = ["error-handling", "error", "failure", "macro", "mini-functions"]
+keywords = [
+    "error-handling",
+    "error",
+    "exception-handling",
+    "failure",
+    "handling",
+    "macro",
+    "mini-functions",
+]
 license = "MIT OR Apache-2.0"
 name = "errors"
 repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/errors/"
+rust-version = "1.66.1"
 version = "0.0.1"
 include = [
-    "/build.rs",
-    "/Cargo.toml",
     "../../LICENSE-APACHE",
     "../../LICENSE-MIT",
+    "/benches/**",
+    "/build.rs",
+    "/Cargo.toml",
+    "/examples/**",
     "/README.md",
     "/src/**",
-    "/mini-functions*/**",
     "/tests/**",
-    "/examples/**",
 ]
 
 [dependencies]

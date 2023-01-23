@@ -4,20 +4,30 @@ categories = ["Date and time"]
 description = "Highly Performant Date and Time Functions Library For Rust"
 edition = "2018"
 homepage = "https://minifunctions.com/"
-keywords = ["calendar", "date", "duration", "mini-functions", "time"]
+keywords = [
+    "calendar",
+    "date",
+    "datetime",
+    "duration",
+    "mini-functions",
+    "time",
+    "timezone",
+]
 license = "MIT OR Apache-2.0"
 name = "date"
 repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/date/"
+rust-version = "1.66.1"
 version = "0.0.1"
 include = [
-    "/build.rs",
-    "/Cargo.toml",
     "../../LICENSE-APACHE",
     "../../LICENSE-MIT",
+    "/benches/**",
+    "/build.rs",
+    "/Cargo.toml",
+    "/examples/**",
     "/README.md",
     "/src/**",
     "/tests/**",
-    "/examples/**",
 ]
 
 [[bench]]

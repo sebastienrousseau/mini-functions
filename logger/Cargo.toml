@@ -1,23 +1,40 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
-categories = ["Asynchronous", "Debugging", "Development tools"]
+categories = [
+    "Asynchronous",
+    "Debugging",
+    "Development tools",
+    "Logging",
+    "Tracing",
+]
 description = "Log provides an easy way to log a message to the console with a simple, readable output format."
 edition = "2018"
 homepage = "https://minifunctions.com/"
-keywords = ["async", "log", "logger", "logging", "mini-functions", "tracing"]
+keywords = [
+    "async",
+    "debugging",
+    "log",
+    "logger",
+    "logging",
+    "logging",
+    "mini-functions",
+    "tracing",
+]
 license = "MIT OR Apache-2.0"
 name = "logger"
 repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/logger/"
+rust-version = "1.66.1"
 version = "0.0.1"
 include = [
-    "/build.rs",
-    "/Cargo.toml",
     "../../LICENSE-APACHE",
     "../../LICENSE-MIT",
+    "/benches/**",
+    "/build.rs",
+    "/Cargo.toml",
+    "/examples/**",
     "/README.md",
     "/src/**",
     "/tests/**",
-    "/examples/**",
 ]
 
 [[bench]]

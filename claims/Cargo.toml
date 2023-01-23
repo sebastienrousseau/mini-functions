@@ -10,21 +10,31 @@ categories = [
 description = "`Claims` is a struct that holds the claims defined in the RFC 7519, encoded as JSON object in JWS/JWE, allowing digital signing/integrity protection and/or encryption."
 edition = "2018"
 homepage = "https://minifunctions.com/"
-keywords = ["claims", "jwt", "mini-functions", "token", "web"]
+keywords = [
+    "authentication",
+    "authorization",
+    "claims",
+    "jwt",
+    "mini-functions",
+    "security",
+    "token",
+    "web",
+]
 license = "MIT OR Apache-2.0"
 name = "claims"
 repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/claims/"
+rust-version = "1.66.1"
 version = "0.0.1"
 include = [
-    # "/build.rs",
-    "/Cargo.toml",
     "../../LICENSE-APACHE",
     "../../LICENSE-MIT",
-    "/README.md",
     "/benches/**",
+    "/build.rs",
+    "/Cargo.toml",
+    "/examples/**",
+    "/README.md",
     "/src/**",
     "/tests/**",
-    "/examples/**",
 ]
 
 [[bench]]

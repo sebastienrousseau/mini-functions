@@ -1,6 +1,6 @@
 [package]
 authors = ["Sebastien Rousseau"]
-categories = ["development-tools"]
+categories = ["development-tools", "parsing", "randomness", "security", "time"]
 description = "Highly Performant Utility And Wrapper Functions Library For Rust"
 documentation = "https://docs.rs/mini-functions"
 edition = "2021"
@@ -25,16 +25,56 @@ include = [
     "/src/**",
     "/tests/**",
 ]
-keywords = ["functions"]
+keywords = [
+    "functions",
+    "helper",
+    "libraries",
+    "mini-functions",
+    "toolkit",
+    "utilities",
+    "barcode",
+    "checksum",
+    "claims",
+    "cryptography",
+    "date",
+    "datetime",
+    "debugging",
+    "digest",
+    "encoding",
+    "encryption",
+    "error-handling",
+    "error",
+    "exception-handling",
+    "exception",
+    "handling",
+    "hash",
+    "hashing",
+    "jot",
+    "json",
+    "jwt",
+    "log",
+    "logger",
+    "logging",
+    "pseudo-random",
+    "qr",
+    "qrcode",
+    "random-generation",
+    "random-number",
+    "random",
+    "security",
+    "time",
+    "tracing",
+]
 license = "Apache-2.0 OR MIT"
 name = "mini-functions"
 readme = "README.md"
 repository = "https://github.com/sebastienrousseau/mini-functions.git"
-rust-version = "1.57.0"
+rust-version = "1.66.1"
 version = "0.0.8"
 
 [dependencies]
 claims = { path = "./claims" }
+common = { path = "./common" }
 date = { path = "./date" }
 errors = { path = "./errors" }
 games = { path = "./games" }
@@ -46,7 +86,8 @@ qr = { path = "./qr" }
 random = { path = "./random" }
 
 [workspace]
-resolver = "1"
+exclude = ["src"]
+resolver = "2"
 members = [
     "claims",
     "common",
@@ -62,7 +103,7 @@ members = [
 ] # List of workspace members
 
 [workspace.package]
-rust-version = "1.64"
+rust-version = "1.66.1"
 
 [badges]
 maintenance = { status = "actively-developed" }
@@ -114,6 +155,6 @@ required-features = [
     "jot",
     "logger",
     "md5",
-    "qrcode",
+    "qr",
     "random",
 ]
