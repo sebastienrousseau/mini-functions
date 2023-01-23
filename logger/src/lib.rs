@@ -95,11 +95,11 @@ impl fmt::Display for LogLevel {
 /// * `description` - A string that holds the description of the log message.
 ///
 pub struct Log {
-    session_id: String,
-    time: String,
-    level: LogLevel,
-    component: String,
-    description: String,
+    pub session_id: String,
+    pub time: String,
+    pub level: LogLevel,
+    pub component: String,
+    pub description: String,
 }
 
 /// This implementation allows the Log struct to be created with default
