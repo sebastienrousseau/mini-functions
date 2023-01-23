@@ -84,7 +84,7 @@ impl MD5 {
         // Pad out to 56 mod 64
         let index = (self.count[0] >> 3) & 63;
         let pad_len = if index < 56 { 56 - index } else { 120 - index };
-        self.update_with_len(&PADDING, Some(pad_len as usize));
+        self.update_with_len(&PADDING, pad_len as usize);
 
         // Append the length
         self.update(&bits);
@@ -156,45 +156,49 @@ impl MD5 {
 
         self
     }
-    /// Update the internal state of the MD5 object with new data.
-    pub fn update_with_len(&mut self, value: &[u8], nbytes: Option<usize>) -> &mut Self {
-        // Compute number of bytes mod 64
-        let mut offset = ((self.count[0] >> 3) & 63) as usize;
-        let nbytes = nbytes.unwrap_or(value.len());
-        let nbits = (nbytes << 3) as u32;
-        let p = value;
+    // Update the internal state of the MD5 object with new data.
+pub fn update_with_len(&mut self, value: &[u8], nbytes: usize) -> &mut Self {
+    // Compute number of bytes mod 64
+    let mut offset = ((self.count[0] >> 3) & 63) as usize;
+    let nbits = (nbytes << 3) as u32;
+    let p = value;
 
-        if nbytes == 0 {
-            return self;
-        }
+    if nbytes == 0 {
+        return self;
+    }
 
-        // Update the number of bits
-        self.count[0] += nbits;
-        if self.count[0] < nbits {
-            self.count[1] += 1;
-        }
-        self.count[1] += (nbytes >> 29) as u32;
+    // Update the number of bits
+    self.count[0] += nbits;
+    if self.count[0] < nbits {
+        self.count[1] += 1;
+    }
+    self.count[1] += (nbytes >> 29) as u32;
 
-        let part_len = BLOCK_LENGTH - offset;
-        let mut i = part_len;
+    let part_len = BLOCK_LENGTH - offset;
+    let mut i = part_len;
 
-        // Transform as many times as possible
-        if nbytes >= part_len {
-            self.buffer[offset..(offset + part_len)].copy_from_slice(&p[..part_len]);
-            self.transform(&self.buffer.clone());
+    // Transform as many times as possible
+    if nbytes >= part_len {
+        self.buffer[offset..(offset + part_len)].clone_from_slice(&p[..part_len]);
+        let buf = self.buffer;
+        self.transform(&buf);
 
-            while i < part_len.saturating_sub(63) {
-                let buf = self.buffer;
-                self.transform(&buf[i..]);
+        while i < nbytes - part_len {
+            if nbytes - i >= 64 {
+                let buf = self.buffer[i..i + 64].to_vec();
+                self.transform(&buf);
                 i += 64;
+            } else {
+                break;
             }
-            offset = 0;
-        } else {
-            i = 0;
         }
-        // Add remaining input in buffer
-        self.buffer[offset..(offset + nbytes - i)].copy_from_slice(&p[i..nbytes]);
+        offset = 0;
+    } else {
+        i = 0;
+        }
 
+        // Add remaining input in buffer
+        self.buffer[offset..(offset + nbytes - i)].clone_from_slice(&p[i..nbytes]);
         self
     }
 }
@@ -217,7 +221,7 @@ impl Digest for MD5 {
     }
     /// Update the internal state of the MD5 object with new data.
     fn update(&mut self, value: &[u8]) -> &mut Self {
-        self.update_with_len(value, None)
+        self.update_with_len(value, value.len())
     }
     /// Update the internal state of the MD5 object with new data from a file.
     fn update_file(&mut self, path: &str) -> &mut Self {
@@ -229,7 +233,7 @@ impl Digest for MD5 {
             if nbytes == 0 {
                 break;
             }
-            self.update_with_len(&buffer, Some(nbytes));
+            self.update_with_len(&buffer, nbytes);
         }
 
         self
@@ -250,7 +254,7 @@ impl Digest for MD5 {
             if nbytes == 0 {
                 break;
             }
-            md5.update_with_len(&buffer, Some(nbytes));
+            md5.update_with_len(&buffer, nbytes);
         }
 
         md5.finalize().to_string()

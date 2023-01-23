@@ -11,6 +11,17 @@ include = [
     "/LICENSE-APACHE",
     "/LICENSE-MIT",
     "/README.md",
+    "/claims/**",
+    "/common/**",
+    "/date/**",
+    "/errors/**",
+    "/games/**",
+    "/hash/**",
+    "/jot/**",
+    "/logger/**",
+    "/md5/**",
+    "/qr/**",
+    "/random/**",
     "/src/**",
     "/tests/**",
 ]
@@ -37,16 +48,17 @@ random = { path = "./random" }
 [workspace]
 resolver = "1"
 members = [
+    "claims",
+    "common",
     "date",
+    "errors",
     "games",
     "hash",
-    "claims",
-    "errors",
     "jot",
     "logger",
+    "md5",
     "qr",
     "random",
-    "md5",
 ] # List of workspace members
 
 [workspace.package]
@@ -68,16 +80,16 @@ rpath = false
 strip = false
 
 [profile.release]
-codegen-units = 1 # Compile crates one after another so the compiler can optimize better
-debug = false # Disable debug information
+codegen-units = 1        # Compile crates one after another so the compiler can optimize better
+debug = false            # Disable debug information
 debug-assertions = false # Disable debug assertions
-incremental = false # Disable incremental compilation
-lto = true # Enables link to optimizations
-opt-level = "s" # Optimize for binary size
-overflow-checks = false # Disable overflow checks
-panic = "abort" # Strip expensive panic clean-up logic
-rpath = false # Disable rpath
-strip = "symbols"  # Automatically strip symbols from the binary.
+incremental = false      # Disable incremental compilation
+lto = true               # Enables link to optimizations
+opt-level = "s"          # Optimize for binary size
+overflow-checks = false  # Disable overflow checks
+panic = "abort"          # Strip expensive panic clean-up logic
+rpath = false            # Disable rpath
+strip = "symbols"        # Automatically strip symbols from the binary.
 
 [profile.test]
 codegen-units = 256
@@ -95,6 +107,7 @@ crate-type = ["lib"]
 path = "src/lib.rs"
 required-features = [
     "claims",
+    "common",
     "date",
     "errors",
     "hash",

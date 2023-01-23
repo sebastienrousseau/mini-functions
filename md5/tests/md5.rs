@@ -71,4 +71,40 @@ mod tests {
         // Is this acceptable? Or make it an Option that can be None?
         assert_eq!(digest, "00000000000000000000000000000000");
     }
+
+    #[test]
+    fn update_with_len() {
+        let digest = MD5::new().update_with_len(b"abc", 3).finalize().to_string();
+        assert_eq!(digest, "900150983cd24fb0d6963f7d28e17f72");
+    }
+    #[test]
+    fn update_file() {
+        let digest = MD5::new()
+            .update_file("../update.txt")
+            .finalize()
+            .to_string();
+        assert_eq!(digest, "47353a0e5ed2e1e0d57213a39e9bb7c4");
+    }
+    #[test]
+    fn hexdigest_file() {
+        let digest = MD5::hexdigest_file("../update.txt");
+        assert_eq!(digest, "47353a0e5ed2e1e0d57213a39e9bb7c4");
+    }
+    #[test]
+    fn reset_file() {
+        let digest = MD5::new()
+            .update_file("../update.txt")
+            .reset()
+            .finalize()
+            .to_string();
+        assert_eq!(digest, "d41d8cd98f00b204e9800998ecf8427e");
+    }
+    #[test]
+    fn transform() {
+        let digest = MD5::new()
+            .update_file("../update.txt")
+            .finalize()
+            .to_string();
+        assert_eq!(digest, "47353a0e5ed2e1e0d57213a39e9bb7c4");
+    }
 }

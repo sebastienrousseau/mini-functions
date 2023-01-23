@@ -41,7 +41,8 @@ fn update_with_len_benchmark(c: &mut Criterion) {
 
     c.bench_function("update_with_len", |b| {
         b.iter(|| {
-            md5.update_with_len(black_box(&data), black_box(nbytes));
+            // md5.update_with_len(black_box(&data), black_box(nbytes));
+            md5.update_with_len(black_box(&data), black_box(nbytes.unwrap_or(BLOCK_LENGTH)));
         });
     });
 }

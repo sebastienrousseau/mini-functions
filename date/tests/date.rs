@@ -182,6 +182,60 @@ mod tests {
             &date2.year.try_read().unwrap() as *const _
         );
     }
+
+    #[test]
+    fn test_clone_eq() {
+        let date = Date::new();
+        let date_clone = date.clone();
+
+        assert_eq!(*date.date.read().unwrap(), *date_clone.date.read().unwrap());
+        assert_eq!(*date.day.read().unwrap(), *date_clone.day.read().unwrap());
+        assert_eq!(
+            date.hour.read().unwrap().to_string(),
+            date_clone.hour.read().unwrap().to_string()
+        );
+        assert_eq!(
+            date.iso_8601.read().unwrap().to_string(),
+            date_clone.iso_8601.read().unwrap().to_string()
+        );
+        assert_eq!(
+            date.iso_week.read().unwrap().to_string(),
+            date_clone.iso_week.read().unwrap().to_string()
+        );
+        assert_eq!(
+            date.minute.read().unwrap().to_string(),
+            date_clone.minute.read().unwrap().to_string()
+        );
+        assert_eq!(
+            date.month.read().unwrap().to_string(),
+            date_clone.month.read().unwrap().to_string()
+        );
+        assert_eq!(
+            date.offset.read().unwrap().to_string(),
+            date_clone.offset.read().unwrap().to_string()
+        );
+        assert_eq!(
+            date.ordinal.read().unwrap().to_string(),
+            date_clone.ordinal.read().unwrap().to_string()
+        );
+        assert_eq!(
+            date.second.read().unwrap().to_string(),
+            date_clone.second.read().unwrap().to_string()
+        );
+        assert_eq!(
+            date.time.read().unwrap().to_string(),
+            date_clone.time.read().unwrap().to_string()
+        );
+        assert_eq!(
+            date.weekday.read().unwrap().to_string(),
+            date_clone.weekday.read().unwrap().to_string()
+        );
+        assert_eq!(
+            date.year.read().unwrap().to_string(),
+            date_clone.year.read().unwrap().to_string()
+        );
+    }
+
     #[test]
     fn test_display() {
         let date = Date::new();
