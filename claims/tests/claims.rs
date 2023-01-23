@@ -55,4 +55,83 @@ mod tests {
         assert_eq!(claims.get_claim("vc").unwrap(), CL_VC);
         assert_eq!(claims.get_claim("vp").unwrap(), CL_VP);
     }
+    #[test]
+    fn test_get_claim() {
+        let mut claims = Claims::new();
+        claims.set_claim("aud", "MINI-FUNCTIONS-CLAIMS-AUD");
+        assert_eq!(
+            claims.get_claim("aud").unwrap(),
+            "MINI-FUNCTIONS-CLAIMS-AUD"
+        );
+        assert!(claims.get_claim("non-existent-claim").is_none());
+    }
+    #[test]
+    fn test_remove_claim() {
+        let mut claims = Claims::new();
+        claims.set_claim("aud", "MINI-FUNCTIONS-CLAIMS-AUD");
+        claims.remove_claim("aud");
+        assert!(claims.get_claim("aud").is_none());
+    }
+
+    #[test]
+    fn test_clear_claims() {
+        let mut claims = Claims::new();
+        claims.set_claim("aud", "MINI-FUNCTIONS-CLAIMS-AUD");
+        claims.set_claim("custom", "MINI-FUNCTIONS-CLAIMS-CUSTOM");
+        claims.clear_claims();
+        assert_eq!(claims.len(), 0);
+    }
+    #[test]
+    fn test_has_claim() {
+        let mut claims = Claims::new();
+        claims.set_claim("aud", "MINI-FUNCTIONS-CLAIMS-AUD");
+        assert!(claims.has_claim("aud"));
+        assert!(!claims.has_claim("non-existent-claim"));
+    }
+
+    #[test]
+    fn test_len() {
+        let mut claims = Claims::new();
+        claims.set_claim("aud", "MINI-FUNCTIONS-CLAIMS-AUD");
+        claims.set_claim("custom", "MINI-FUNCTIONS-CLAIMS-CUSTOM");
+        assert_eq!(claims.len(), 2);
+    }
+    #[test]
+    fn test_is_empty() {
+        let mut claims = Claims::new();
+        assert!(claims.is_empty());
+        claims.set_claim("aud", "MINI-FUNCTIONS-CLAIMS-AUD");
+        assert!(!claims.is_empty());
+    }
+
+    #[test]
+    fn test_get_claims() {
+        let mut claims = Claims::new();
+        claims.set_claim("aud", "MINI-FUNCTIONS-CLAIMS-AUD");
+        claims.set_claim("custom", "MINI-FUNCTIONS-CLAIMS-CUSTOM");
+        let retrieved_claims = claims.get_claims();
+        assert_eq!(
+            retrieved_claims.get("aud").unwrap(),
+            "MINI-FUNCTIONS-CLAIMS-AUD"
+        );
+        assert_eq!(
+            retrieved_claims.get("custom").unwrap(),
+            "MINI-FUNCTIONS-CLAIMS-CUSTOM"
+        );
+    }
+    #[test]
+    fn test_display_trait() {
+        let mut claims = Claims::new();
+        claims.set_claim("aud", "MINI-FUNCTIONS-CLAIMS-AUD");
+        claims.set_claim("custom", "MINI-FUNCTIONS-CLAIMS-CUSTOM");
+        let display_output = format!("{}", claims);
+        assert!(display_output.contains("aud: MINI-FUNCTIONS-CLAIMS-AUD"));
+        assert!(display_output.contains("custom: MINI-FUNCTIONS-CLAIMS-CUSTOM"));
+    }
+
+    #[test]
+    fn test_default_trait() {
+        let claims = Claims::default();
+        assert_eq!(claims.claims.len(), 0);
+    }
 }
