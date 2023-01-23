@@ -122,9 +122,11 @@ mod tests {
             "Test",
             "This is a test log message",
         );
-        println!("{}", log);
-        assert!(true);
+        let log_string = format!("{}", log);
+        println!("{}", log_string);
+        assert_eq!(log_string, "SessionID=12345678-1234-1234-1234-1234567890ab Timestamp=2022-01-01 12:00:00 Level=ERROR Component=Test Description=\"This is a test log message\"");
     }
+
     #[test]
     fn test_log_level_all_display() {
         let log_level = LogLevel::ALL;
