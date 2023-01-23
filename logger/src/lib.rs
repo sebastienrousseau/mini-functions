@@ -7,8 +7,37 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
-use std::fmt::Write;
-use std::{fmt, io}; // Import the `fmt` module from the standard library. // Import the `Write` trait from the `fmt` module.
+use std::{
+    fmt::{self, Write},
+    io,
+};
+
+// use std::sync::RwLock;
+// extern crate date;
+// use self::date::Date;
+
+#[derive(Debug, Clone, PartialEq, PartialOrd)]
+pub enum LogFormat {
+    COMMON,
+    JSON,
+    CEF,
+    ELF,
+    W3C,
+    GELF,
+}
+
+impl fmt::Display for LogFormat {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            LogFormat::CEF => write!(f, "CEF"),
+            LogFormat::COMMON => write!(f, "COMMON"),
+            LogFormat::ELF => write!(f, "ELF"),
+            LogFormat::GELF => write!(f, "GELF"),
+            LogFormat::JSON => write!(f, "JSON"),
+            LogFormat::W3C => write!(f, "W3C"),
+        }
+    }
+}
 
 /// Implements [`Log`] to log a message to the console with a simple, readable output format.
 ///
@@ -37,8 +66,6 @@ use std::{fmt, io}; // Import the `fmt` module from the standard library. // Imp
 /// * `INFO` - The log level is set to info.
 /// * `NONE` - The log level is set to none.
 /// * `TRACE` - The log level is set to trace.
-/// * `UNAVAILABLE` - The log level is set to unavailable.
-/// * `UNDEFINED` - The log level is set to undefined.
 /// * `VERBOSE` - The log level is set to verbose.
 /// * `WARNING` - The log level is set to warning.
 ///
@@ -51,8 +78,6 @@ pub enum LogLevel {
     INFO,
     NONE,
     TRACE,
-    UNAVAILABLE,
-    UNDEFINED,
     VERBOSE,
     WARNING,
 }
@@ -72,8 +97,6 @@ impl fmt::Display for LogLevel {
             LogLevel::INFO => write!(f, "INFO"),
             LogLevel::NONE => write!(f, "NONE"),
             LogLevel::TRACE => write!(f, "TRACE"),
-            LogLevel::UNAVAILABLE => write!(f, "UNAVAILABLE"),
-            LogLevel::UNDEFINED => write!(f, "UNDEFINED"),
             LogLevel::VERBOSE => write!(f, "VERBOSE"),
             LogLevel::WARNING => write!(f, "WARNING"),
         }
@@ -100,6 +123,7 @@ pub struct Log {
     pub level: LogLevel,
     pub component: String,
     pub description: String,
+    pub format: LogFormat,
 }
 
 /// This implementation allows the Log struct to be created with default
@@ -117,6 +141,7 @@ impl Default for Log {
             level: LogLevel::INFO,
             component: String::new(),
             description: String::new(),
+            format: LogFormat::COMMON,
         }
     }
 }
@@ -133,23 +158,57 @@ impl Log {
     ///
     pub fn log(&self) {
         let mut log_message = String::with_capacity(256);
-        write!(
-            log_message,
-            "SessionID={} Timestamp={} Level={} Component={} Description=\"{}\"",
-            self.session_id, self.time, self.level, self.component, self.description
+        match self.format {
+        LogFormat::COMMON => write!(
+        log_message,
+        "SessionID={} Timestamp={} Description={} Level={} Component={} Format={}",
+        self.session_id, self.description, self.time, self.level, self.component, self.format
         )
-        .expect("Unable to write log message");
-        print!("{}", log_message);
+        .expect("Unable to write log message"),
+        LogFormat::JSON => write!(
+        log_message,
+        "{{\"SessionID\":\"{}\",\"Timestamp\":\"{}\",\"Level\":\"{}\",\"Component\":\"{}\",\"Description\":\"{}\"}} Format={}",
+        self.session_id, self.time, self.level, self.component, self.description, self.format
+        )
+        .expect("Unable to write log message"),
+        LogFormat::CEF => write!(
+        log_message,
+                "CEF:0|{}|{}|{}|{}|{}|{}",
+        self.session_id, self.time, self.level, self.component, self.description, self.format
+        )
+        .expect("Unable to write log message"),
+        LogFormat::ELF => write!(
+        log_message,
+        "ELF:0|{}|{}|{}|{}|{}|{}",
+        self.session_id, self.time, self.level, self.component, self.description, self.format
+        )
+        .expect("Unable to write log message"),
+        LogFormat::W3C => write!(
+        log_message,
+        "W3C:0|{}|{}|{}|{}|{}|{}",
+        self.session_id, self.time, self.level, self.component, self.description, self.format
+        )
+        .expect("Unable to write log message"),
+        LogFormat::GELF => write!(
+        log_message,
+        "GELF:0|{}|{}|{}|{}|{}|{}",
+        self.session_id, self.time, self.level, self.component, self.description, self.format
+        )
+        .expect("Unable to write log message"),
+        }
+        println!("{}", log_message);
         io::Write::flush(&mut io::stdout()).expect("Unable to flush stdout");
     }
+
     /// Creates a new instance of the `Log` struct with the provided parameters.
     ///
     /// # Parameters
-    /// * `session_id`: A string slice representing the session ID.
-    /// * `time`: A string slice representing the timestamp.
-    /// * `level`: A string slice representing the log level.
     /// * `component`: A string slice representing the component.
     /// * `description`: A string slice representing the log description.
+    /// * `format`: A string slice representing the log format.
+    /// * `level`: A string slice representing the log level.
+    /// * `session_id`: A string slice representing the session ID.
+    /// * `time`: A string slice representing the timestamp.
     ///
     /// # Returns
     ///
@@ -161,6 +220,7 @@ impl Log {
         level: &LogLevel,
         component: &str,
         description: &str,
+        format: &LogFormat,
     ) -> Self {
         Self {
             session_id: session_id.to_string(),
@@ -168,15 +228,87 @@ impl Log {
             level: level.clone(),
             component: component.to_string(),
             description: description.to_string(),
+            format: format.clone(),
         }
     }
 }
+
 impl fmt::Display for Log {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(
-            f,
-            "SessionID={} Timestamp={} Level={} Component={} Description=\"{}\"",
-            self.session_id, self.time, self.level, self.component, self.description
-        )
+        match self.format {
+            LogFormat::COMMON => {
+                write!(
+                    f,
+                    "SessionID={} Timestamp={} Description={} Level={} Component={}",
+                    self.session_id, self.time, self.description, self.level, self.component
+                )
+                .expect("Unable to write log message");
+                Ok(())
+            },
+            LogFormat::JSON => {
+                write!(
+                f,
+                "{{\"SessionID\":\"{}\",\"Timestamp\":\"{}\",\"Level\":\"{}\",\"Component\":\"{}\",\"Description\":\"{}\",\"Format\":\"JSON\"}}",
+                self.session_id, self.time, self.level, self.component, self.description)
+                .expect("Unable to write log message");
+                Ok(())
+            }
+            LogFormat::CEF => {
+                write!(
+                    f,
+                    "CEF:0|{}|{}|{}|{}|{}|CEF",
+                    self.session_id, self.time, self.level, self.component, self.description
+                )
+                .expect("Unable to write log message");
+                Ok(())
+            }
+            LogFormat::ELF => {
+                write!(
+                    f,
+                    "ELF:0|{}|{}|{}|{}|{}|ELF",
+                    self.session_id, self.time, self.level, self.component, self.description
+                )
+                .expect("Unable to write log message");
+                Ok(())
+            }
+            LogFormat::W3C => {
+                write!(
+                    f,
+                    "W3C:0|{}|{}|{}|{}|{}|W3C",
+                    self.session_id, self.time, self.level, self.component, self.description
+                )
+                // self.session_id, self.time, self.level, self.component, self.description)
+                .expect("Unable to write log message");
+                Ok(())
+            }
+            LogFormat::GELF => {
+                write!(
+                    f,
+                    r#"{{
+                            "version": "1.1",
+                            "host": "{}",
+                            "short_message": "{}",
+                            "level": "{:?}",
+                            "timestamp": "{}",
+                            "_component": "{}",
+                            "_session_id": "{}"
+                        }}"#,
+                    self.component,
+                    self.description,
+                    self.level,
+                    self.time,
+                    self.component,
+                    self.session_id
+                )
+                .expect("Unable to write log message");
+                Ok(())
+            }
+            // LogFormat::GELF => Ok(write!(
+            //     f,
+            //     "GELF:0|{}|{}|{}|{}|{}|GELF",
+            //     self.session_id, self.time, self.level, self.component, self.description)
+            //     .expect("Unable to write log message")
+            // ),
+        }
     }
 }
