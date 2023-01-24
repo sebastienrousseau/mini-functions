@@ -1,7 +1,12 @@
+//!
 //! # Core Date functionality
 //!
-//! Date provides an easy way to get the current date and time in multiple formats.
-//! It is a thread-safe, optimized for speed and memory usage.
+//! Provides access to the current date and time. It's faster and uses
+//! less memory.
+//!
+//! [![GitHub](https://img.shields.io/badge/github-555555?style=for-the-badge&labelColor=000000&logo=github)](https://github.com/sebastienrousseau/mini-functions)
+//! [![Rust](https://img.shields.io/badge/rust-f04041?style=for-the-badge&labelColor=c0282d&logo=rust)](https://www.rust-lang.org)
+//! [![License](https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge&color=007EC6&labelColor=03589B)](http://opensource.org/licenses/MIT)
 //!
 //!
 

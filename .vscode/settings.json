@@ -43,6 +43,7 @@
         "jdrv",
         "jsonwebtoken",
         "JWSs",
+        "JWTs",
         "LFSR",
         "libexec",
         "libmini",
