@@ -36,8 +36,8 @@ pub const PI_CONSTANT: f64 = std::f64::consts::PI;
 pub const PLANCK_CONSTANT: f64 = 6.626_070_15e-34_f64;
 /// The SPECIAL_CHARS constant contains the special characters.
 pub const SPECIAL_CHARS: &[char] = &[
-    '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '-', '=', '[', ']', '{', '}', '|',
-    ';', ':', '"', '<', '>', ',', '.', '?', '/', '~', '`',
+    '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '=', '[', ']', '{', '}', '|', ';',
+    ':', '"', '<', '>', ',', '.', '?', '/', '~', '`',
 ];
 /// The SQRT5_CONSTANT constant contains the square root of 5.
 pub const SQRT5_CONSTANT: f64 = 2.236_067_977_499_79_f64;

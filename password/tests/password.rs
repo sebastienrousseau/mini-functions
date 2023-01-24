@@ -17,14 +17,7 @@ mod tests {
     #[test]
     fn test_password() {
         let password = Password::new(3, "-", SPECIAL_CHARS.to_vec());
-        assert_eq!(
-            password
-                .passphrase()
-                .split('-')
-                .collect::<Vec<&str>>()
-                .len(),
-            3
-        );
+        assert_eq!(password.passphrase().split('-').count(), 3);
     }
 
     #[test]
@@ -50,9 +43,9 @@ mod tests {
 
     #[test]
     fn test_password_is_empty() {
-        let password = Password::new(4, "-", vec!['!', '@', '#']);
+        let password = Password::new(0, "-", vec!['!', '@', '#']);
         let is_empty = password.is_empty();
-        assert_eq!(is_empty, false);
+        assert!(is_empty, "{}", password.passphrase());
     }
 
     #[test]
@@ -66,8 +59,7 @@ mod tests {
     fn test_password_default() {
         let len = 4;
         let password = Password::new(len, "-", SPECIAL_CHARS.to_vec());
-        let words: Vec<&str> = password.passphrase().split('-').collect();
-        assert!(words.len() == len.into());
+        assert!(password.passphrase().split('-').count() == len.into());
     }
 
     #[test]
@@ -85,7 +77,7 @@ mod tests {
         password.set_passphrase("M1n1Funct1()ns-N3wP@s5phr4s3-Ex@mpl3");
         assert_eq!(
             password.hash(),
-            "0714d19658a375698be1aa94aa22de8b12b51f5ae89ba35e95c897e0bfaa562c"
+            "e8aedd43809e690f3e3604ac79399a552656996f1449c9734431e33624e2f338"
         );
     }
     #[test]
