@@ -113,7 +113,7 @@ impl Password {
         let mut seen_chars = HashMap::new();
 
         // Generate `len` random words from the word list.
-        while words.len() < len as usize {
+        while words.len() < len.into() {
             // Choose a random word from the list.
             let mut word = if let Some(w) = Random::choose(&mut rng, WORD_LIST) {
                 // If a word was found, return it.
