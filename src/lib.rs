@@ -74,15 +74,26 @@
 #![crate_type = "rlib"]
 #![crate_type = "dylib"]
 
-/// The Mini-Functions library combines several major components that
-/// together encompass a wide range of functionality.
+/// Mini-Functions is a module that provides a variety of features
+/// for building apps, including several major crates that you can use
+/// individually or together to construct the core infrastructure of
+/// your Rust applications.
 pub mod mini_functions {
+    /// This module allows access to JSON Web Token (JWT) Claims
+    /// functions.
     pub use claims::Claims;
+    /// Provides access to Date functions.
     pub use date::Date;
+    /// Provides access to Hash functions.
     pub use hash::Hash;
+    /// Provides access to JSON Web Token (JWT) functions.
     pub use jot::{Algorithm, Header, JWT};
+    /// Provides access to Log functions.
     pub use logger::{Log, LogLevel};
+    /// Provides access to MD5 functions.
     pub use md5::MD5;
+    /// Provides access to QR code functions.
     pub use qr::QRCode;
+    /// Provides access to Random numbers functions.
     pub use random::Random;
 }
