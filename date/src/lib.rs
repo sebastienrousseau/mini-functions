@@ -1,65 +1,88 @@
-//!
-//! # Core Date functionality
-//!
-//! Provides access to the current date and time. It's faster and uses
-//! less memory.
-//!
-//! [![GitHub](https://img.shields.io/badge/github-555555?style=for-the-badge&labelColor=000000&logo=github)](https://github.com/sebastienrousseau/mini-functions)
-//! [![Rust](https://img.shields.io/badge/rust-f04041?style=for-the-badge&labelColor=c0282d&logo=rust)](https://www.rust-lang.org)
-//! [![License](https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge&color=007EC6&labelColor=03589B)](http://opensource.org/licenses/MIT)
-//!
-//!
-
 // Copyright © 2022-2023 Mini Functions. All rights reserved.
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
+//!
+//! Highly performant Date and Time library for Rust
+//!
+//!
+//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-date.svg)](https://minifunctions.com)
+//!
+//! <center>
+//!
+//! [![GitHub](https://img.shields.io/badge/github-555555?style=for-the-badge&labelColor=000000&logo=github)](https://github.com/sebastienrousseau/mini-functions)
+//! [![Rust](https://img.shields.io/badge/rust-f04041?style=for-the-badge&labelColor=c0282d&logo=rust)](https://www.rust-lang.org)
+//! [![Crates.io](https://img.shields.io/crates/v/mini-functions.svg?style=for-the-badge&color=success&labelColor=27A006)](https://crates.io/crates/mini-functions)
+//! [![Lib.rs](https://img.shields.io/badge/lib.rs-v0.0.8-success.svg?style=for-the-badge&color=8A48FF&labelColor=6F36E4)](https://lib.rs/crates/mini-functions)
+//! [![License](https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge&color=007EC6&labelColor=03589B)](http://opensource.org/licenses/MIT)
+//!
+//! </center>
+//!
+//! ## Overview
+//!
+//! This crate is a highly performant Date and Time library for Rust.
+//! The Date struct is thread-safe and allows concurrent access for read
+//! -only operations.
+//!
+#![warn(missing_docs)]
+#![doc(
+    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-date.svg",
+    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-date.svg",
+    html_root_url = "https://docs.rs/mini-functions"
+)]
+#![crate_name = "date"]
+#![crate_type = "lib"]
+#![crate_type = "rlib"]
+#![crate_type = "dylib"]
 
 extern crate time;
-use std::fmt;
-use std::sync::RwLock;
+use std::{fmt, sync::RwLock};
 use time::OffsetDateTime;
 
+/// # Date
+///
+/// [![GitHub](https://img.shields.io/badge/github-555555?style=for-the-badge&labelColor=000000&logo=github)](https://github.com/sebastienrousseau/mini-functions/tree/main/claims)
+/// [![License](https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge&color=007EC6&labelColor=03589B)](http://opensource.org/licenses/MIT)
+///
 /// Date struct for getting the current date and time.
 ///
-/// This struct represents a date and time value with various fields,
-/// such as the date, day, hour, ISO 8601 date and time, ISO week number,
-/// minute, month, offset, ordinal, second, time, weekday, and year.
-// Each field is wrapped in a Mutex to make the struct thread-safe and
-// allow for concurrent access.
+/// This module includes date and time types, such as day, hour,ISO 8601
+/// date and time, and many more. Each field is wrapped in a reader-
+/// writer lock (RwLock) to make the struct thread-safe and allows
+/// concurrent access for read-only operations.
 ///
 #[derive(Debug)]
 pub struct Date {
-    // The date represented as a time::Date object
+    /// The date represented as a time::Date object
     pub date: RwLock<time::Date>,
-    // The day of the month as a number (1-31)
+    /// The day of the month as a number (1-31)
     pub day: RwLock<u8>,
-    // The hour of the day as a number (0-23)
+    /// The hour of the day as a number (0-23)
     pub hour: RwLock<u8>,
-    // The ISO 8601 date and time as a string
+    /// The ISO 8601 date and time as a string (e.g. "2023-01-01T00:00:00+00:00")
     pub iso_8601: RwLock<String>,
-    // The ISO week number as a number
+    /// The ISO week number as a number (1-53)
     pub iso_week: RwLock<u8>,
-    // The minute of the hour as a number (0-59)
+    /// The minute of the hour as a number (0-59)
     pub minute: RwLock<u8>,
-    // The month as a string (e.g. "January")
+    /// The month as a string (e.g. "January")
     pub month: RwLock<String>,
-    // The offset from UTC as a time::UtcOffset object
+    /// The offset from UTC as a time::UtcOffset object
     pub offset: RwLock<time::UtcOffset>,
-    // The ordinal date as a number
+    /// The ordinal date as a number (1-366)
     pub ordinal: RwLock<u16>,
-    // The second of the minute as a number (0-59)
+    /// The second of the minute as a number (0-59)
     pub second: RwLock<u8>,
-    // The time represented as a time::Time object
+    /// The time represented as a time::Time object
     pub time: RwLock<time::Time>,
-    // The weekday as a string (e.g. "Monday")
+    /// The weekday as a string (e.g. "Monday")
     pub weekday: RwLock<String>,
-    // The year as a number
+    /// The year as a number (e.g. 2023)
     pub year: RwLock<i32>,
 }
 
 impl Date {
-    /// Create a new instance of the `Date` struct with the current date and time.
-    /// This struct is thread-safe, so it can be shared across multiple threads.
+    /// Create a new instance of the `Date` struct with the current
+    /// date and time. This struct is thread-safe.
     pub fn new() -> Self {
         // Get the current date and time in UTC
         let now_utc = OffsetDateTime::now_utc();
@@ -94,6 +117,7 @@ impl Default for Date {
 
 /// Clone implementation for Date.
 impl Clone for Date {
+    /// Clone the Date struct
     fn clone(&self) -> Self {
         let date = match self.date.try_read() {
             Ok(guard) => *guard,
