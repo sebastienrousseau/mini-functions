@@ -147,7 +147,7 @@ impl std::fmt::Display for Claims {
         let claims: Vec<String> = self
             .claims
             .iter()
-            .map(|(k, v)| format!("{}: {}", k, v))
+            .map(|(k, v)| format!("{k}: {v}"))
             .collect();
 
         write!(f, "Claims {{ {} }}", claims.join(", "))
