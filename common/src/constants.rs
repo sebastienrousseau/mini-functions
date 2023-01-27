@@ -7,15 +7,15 @@ pub struct Constants;
 impl Constants {
     pub fn constant(&self) -> Vec<(&'static str, String)> {
         vec![
-            ("EULER_CONSTANT", format!("{}", EULER_CONSTANT)),
-            ("HASH_ALGORITHM", HASH_ALGORITHM.to_string()),
-            ("HASH_COST", format!("{}", HASH_COST)),
-            ("HASH_LENGTH", format!("{}", HASH_LENGTH)),
-            ("PHI_CONSTANT", format!("{}", PHI_CONSTANT)),
-            ("PI_CONSTANT", format!("{}", PI_CONSTANT)),
-            ("PLANCK_CONSTANT", format!("{}", PLANCK_CONSTANT)),
-            ("SQRT5_CONSTANT", format!("{}", SQRT5_CONSTANT)),
-            ("SPECIAL_CHARS", format!("{:?}", SPECIAL_CHARS)),
+            ("EULER_CONSTANT", format!("{EULER_CONSTANT}")),
+            ("HASH_ALGORITHM", format!("{HASH_ALGORITHM}")),
+            ("HASH_COST", format!("{HASH_COST}")),
+            ("HASH_LENGTH", format!("{HASH_LENGTH}")),
+            ("PHI_CONSTANT", format!("{PHI_CONSTANT}")),
+            ("PI_CONSTANT", format!("{PI_CONSTANT}")),
+            ("PLANCK_CONSTANT", format!("{PLANCK_CONSTANT}")),
+            ("SPECIAL_CHARS", format!("{SPECIAL_CHARS:?}")),
+            ("SQRT5_CONSTANT", format!("{SQRT5_CONSTANT}")),
         ]
     }
 }
