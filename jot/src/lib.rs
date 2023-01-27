@@ -197,7 +197,7 @@ impl JWT {
         let claims_b64 = general_purpose::STANDARD.encode(claims_json.as_bytes());
 
         // Concatenate the encoded header, claims, and separators
-        let jwt = format!("{}.{}.", header_b64, claims_b64);
+        let jwt = format!("{header_b64}.{claims_b64}.");
 
         // Sign the JWT with the secret
         type HmacSha256 = Hmac<Sha256>;
@@ -207,7 +207,7 @@ impl JWT {
 
         // Base64-encode the signature and concatenate it with the JWT
         let signature_b64 = general_purpose::STANDARD.encode(signature.into_bytes());
-        let jwt = format!("{}.{}", jwt, signature_b64);
+        let jwt = format!("{jwt}.{signature_b64}");
 
         Ok(jwt)
     }
