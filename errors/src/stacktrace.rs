@@ -16,7 +16,7 @@ impl StackTrace {
             "Stack trace:\n{}",
             stack_trace
                 .iter()
-                .map(|elem| format!("\t- {}", elem))
+                .map(|elem| format!("\t- {elem}"))
                 .collect::<Vec<_>>()
                 .join("\n")
         )
@@ -47,15 +47,15 @@ impl fmt::Display for StackTrace {
         let stack_trace = self
             .pc
             .iter()
-            .map(|&pc| format!("{:#x}", pc))
+            .map(|&pc| format!("{pc:#x}"))
             .collect::<Vec<_>>();
         let formatted_stack_trace = StackTrace::format_stack_trace(stack_trace);
 
         match &self.cause_stack_trace {
             Some(cause_stack_trace) => {
-                write!(f, "{}\n{}", formatted_stack_trace, cause_stack_trace)
+                write!(f, "{formatted_stack_trace}\n{cause_stack_trace}")
             }
-            None => write!(f, "{}", formatted_stack_trace),
+            None => write!(f, "{formatted_stack_trace}"),
         }
     }
 }
