@@ -18,7 +18,7 @@ extern crate serde_json;
 extern crate sha2;
 
 use self::claims::Claims;
-use self::errors::JwtError;
+use errors::jwt::JwtError;
 
 use base64::{engine::general_purpose, Engine as _};
 use hmac::{Hmac, Mac};

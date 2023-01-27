@@ -1,6 +1,39 @@
-//! # Deck
+// Copyright © 2022-2023 Mini Functions. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
+//!
+//! Highly performant Games library for Rust
+//!
+//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-games.svg)](https://minifunctions.com)
+//!
+//! <center>
+//!
+//! [![GitHub](https://img.shields.io/badge/github-555555?style=for-the-badge&labelColor=000000&logo=github)](https://github.com/sebastienrousseau/mini-functions/tree/main/claims)
+//! [![Rust](https://img.shields.io/badge/rust-f04041?style=for-the-badge&labelColor=c0282d&logo=rust)](https://www.rust-lang.org)
+//! [![Crates.io](https://img.shields.io/crates/v/mini-functions.svg?style=for-the-badge&color=success&labelColor=27A006)](https://crates.io/crates/mini-functions)
+//! [![Lib.rs](https://img.shields.io/badge/lib.rs-v0.0.8-success.svg?style=for-the-badge&color=8A48FF&labelColor=6F36E4)](https://lib.rs/crates/mini-functions)
+//! [![License](https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge&color=007EC6&labelColor=03589B)](http://opensource.org/licenses/MIT)
+//!
+//! </center>
+//!
+//! ## Overview
+//!
+//! A highly performant game library for Rust that helps implement game logic. The library uses Mini-Functions, such as random number generation, timers, and constants.
+//!
+//! ## Deck
 //!
 //! A struct representing a deck of cards and the methods to draw cards from the deck.
+//!
+#![warn(missing_docs)]
+#![doc(
+    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-claims.svg",
+    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-claims.svg",
+    html_root_url = "https://docs.rs/mini-functions"
+)]
+#![crate_name = "games"]
+#![crate_type = "lib"]
+#![crate_type = "rlib"]
+#![crate_type = "dylib"]
 
 extern crate random;
 use self::random::Random;
@@ -13,9 +46,13 @@ use self::random::Random;
 /// Diamonds.
 #[derive(Clone, Debug, PartialEq, PartialOrd)]
 pub struct Deck {
+    /// The player's balance
     pub balance: u32,
+    /// The player's bet
     pub bet: u32,
+    /// The cards in the deck
     pub cards: Vec<usize>,
+    /// The random number generator
     pub rng: Random,
 }
 

@@ -22,6 +22,8 @@
         "datetime",
         "dcfe",
         "dylib",
+        "errcode",
+        "errtype",
         "euler",
         "Funct",
         "gelf",

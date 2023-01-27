@@ -1,0 +1,91 @@
+use std::any::Any;
+use std::collections::HashMap;
+
+use crate::common::ErrorType;
+use crate::property::Property;
+use crate::stacktrace::StackTrace;
+use crate::traits::Trait;
+
+struct Error {
+    message: String,
+    error_type: &'static ErrorType,
+    cause: Option<Box<Error>>,
+    stack_trace: Option<StackTrace>,
+    properties: HashMap<Property, Box<dyn Any>>,
+    transparent: bool,
+    has_underlying: bool,
+    printable_property_count: u8,
+}
+
+impl Error {
+    fn has_trait(&self, key: Trait) -> bool {
+        let mut cause = self;
+        while let Some(c) = cause {
+            if !c.transparent {
+                return c.error_type.has_trait(key);
+            }
+            cause = c.cause.as_ref()?.downcast_ref::<Error>()?;
+        }
+        false
+    }
+
+    fn is_of_type(&self, t: &'static ErrorType) -> bool {
+        self.is_of_type(t)
+    }
+
+    fn property(&self, key: Property) -> Option<&Box<dyn Any>> {
+        let mut cause = self;
+        while let Some(c) = cause {
+            if let Some(value) = c.properties.get(&key) {
+                return Some(value);
+            }
+            if !c.transparent {
+                break;
+            }
+            cause = c.cause.as_ref()?.downcast_ref::<Error>()?;
+        }
+        None
+    }
+
+    fn type_(&self) -> &'static ErrorType {
+        let mut cause = self;
+        while let Some(c) = cause {
+            if !c.transparent {
+                return c.error_type;
+            }
+            cause = c.cause.as_ref();
+        }
+        panic!("Error should always have a non-transparent cause");
+    }
+
+    fn with_property(&self, key: Property, value: Box<dyn Any>) -> Error {
+        let mut properties = self.properties.clone();
+        properties.insert(key, value);
+        let mut printable_property_count = self.printable_property_count;
+        if key.printable && printable_property_count < 255 {
+            printable_property_count += 1;
+        }
+        Error {
+            message: self.message.clone(),
+            error_type: self.error_type,
+            cause: self.cause.clone(),
+            stack_trace: self.stack_trace.clone(),
+            properties,
+            transparent: self.transparent,
+            has_underlying: self.has_underlying,
+            printable_property_count,
+        }
+    }
+
+    fn with_underlying_errors(&self, errs: &[Box<Error>]) -> Error {
+        let mut underlying = self.underlying();
+        underlying.extend(errs);
+        if underlying.len() == self.underlying().len() {
+            return self.clone();
+        }
+        let l = underlying.len();
+        return self
+            .with_property(underlying, underlying[..l].to_vec())
+            .has_underlying(true);
+    }
+}
