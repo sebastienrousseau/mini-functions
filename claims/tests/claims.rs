@@ -124,7 +124,7 @@ mod tests {
         let mut claims = Claims::new();
         claims.set_claim("aud", "MINI-FUNCTIONS-CLAIMS-AUD");
         claims.set_claim("custom", "MINI-FUNCTIONS-CLAIMS-CUSTOM");
-        let display_output = format!("{}", claims);
+        let display_output = format!("{claims}");
         assert!(display_output.contains("aud: MINI-FUNCTIONS-CLAIMS-AUD"));
         assert!(display_output.contains("custom: MINI-FUNCTIONS-CLAIMS-CUSTOM"));
     }

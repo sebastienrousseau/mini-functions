@@ -13,8 +13,8 @@ fn main() {
     hash.set_hash("1.61803398874989484820");
     default.set_hash("1.61803398874989484820");
 
-    println!("🦀 Hash::new():                ✅ {}", hash);
-    println!("🦀 Hash::default():            ✅ {}", default);
+    println!("🦀 Hash::new():                ✅ {hash}");
+    println!("🦀 Hash::default():            ✅ {default}");
     println!("🦀 Hash::generate_hash():      ✅ {}", hash.generate_hash());
     if is_valid {
         println!(

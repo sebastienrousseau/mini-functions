@@ -29,5 +29,5 @@ fn main() {
     claims.set_claim("vc", CL_VC);
     claims.set_claim("vp", CL_VP);
 
-    println!("🦀 Claims::new():                 ✅ {}\n", claims);
+    println!("🦀 Claims::new():                 ✅ {claims}\n");
 }

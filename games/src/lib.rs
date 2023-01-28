@@ -63,7 +63,7 @@ impl Deck {
         match (self.draw(), self.draw(), self.draw()) {
             (Some(card1), Some(card2), Some(card3)) => {
                 println!("\n🦀 Your hand:");
-                println!("{}\n{}\n{}", card1, card2, card3);
+                println!("{card1}\n{card2}\n{card3}");
 
                 // Determine if the player has a winning hand and pay out winnings
                 let winnings = if self.has_winning_hand(card1, card2, card3) {
@@ -73,7 +73,7 @@ impl Deck {
                 };
                 self.balance += winnings;
                 if winnings > 0 {
-                    println!("🎲 Congratulations! You won ${}", winnings);
+                    println!("🎲 Congratulations! You won ${winnings}");
                 } else {
                     println!("🎲 Sorry, you didn't win this time.");
                 }
@@ -103,7 +103,7 @@ impl Deck {
             ];
             let suit = suits[card / 13];
             let rank = ranks[card % 13];
-            Some(format!("{} of {}", rank, suit))
+            Some(format!("{rank} of {suit}"))
         } else {
             None
         }
@@ -145,9 +145,9 @@ impl Deck {
         if self.balance >= bet {
             self.bet = bet;
             self.balance -= bet;
-            println!("🎲 You placed a bet of ${}", bet);
+            println!("🎲 You placed a bet of ${bet}");
         } else {
-            println!("🎲 You do not have enough funds to place a bet of ${}", bet);
+            println!("🎲 You do not have enough funds to place a bet of ${bet}");
         }
     }
 

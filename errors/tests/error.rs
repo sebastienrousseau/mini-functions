@@ -33,14 +33,14 @@ mod tests {
     #[test]
     fn test_display() {
         let err = OtherError::new("Test error", ErrorType::new("test_error"));
-        let display = format!("{}", err);
+        let display = format!("{err}");
         assert_eq!(display, "Test error, ctx: ");
     }
 
     #[test]
     fn test_display_error_type() {
         let err_type = ErrorType::new("test_error_type");
-        let display = format!("{}", err_type);
+        let display = format!("{err_type}");
         assert_eq!(display, "test_error_type");
     }
 }

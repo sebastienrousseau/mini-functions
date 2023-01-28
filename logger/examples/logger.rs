@@ -26,6 +26,6 @@ fn main() {
             "Showing main window",
             &format,
         );
-        println!("🦀 Log::new():            ✅ {}", log);
+        println!("🦀 Log::new():            ✅ {log}");
     }
 }

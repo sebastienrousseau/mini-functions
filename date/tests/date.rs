@@ -239,7 +239,7 @@ mod tests {
     #[test]
     fn test_display() {
         let date = Date::new();
-        let display = format!("{}", date);
+        let display = format!("{date}");
 
         assert!(display.contains("date: "));
         assert!(display.contains("day: "));
@@ -260,7 +260,7 @@ mod tests {
     fn test_display_with_write_lock() {
         let date = Date::new();
         *date.year.write().unwrap() = 2020;
-        let display = format!("{}", date);
+        let display = format!("{date}");
 
         assert!(display.contains("year: 2020"));
     }

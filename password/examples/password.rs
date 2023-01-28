@@ -7,7 +7,7 @@ fn main() {
         "🦀 Password::default():           ✅ {}",
         Password::default()
     );
-    println!("🦀 Password::new():               ✅ {}", password);
+    println!("🦀 Password::new():               ✅ {password}");
     println!(
         "🦀 Password::passphrase():        ✅ {}",
         password.passphrase()
@@ -41,20 +41,16 @@ fn main() {
     let entropy = Password::entropy(&password) as u64;
 
     match entropy {
-        x if x < 40 => println!("🦀 Password::entropy():  ❌ {} bits (Poor)", entropy),
+        x if x < 40 => println!("🦀 Password::entropy():  ❌ {entropy} bits (Poor)"),
         x if (40..55).contains(&x) => {
-            println!("🦀 Password::entropy():  ❌ {} bits (Weak)", entropy)
+            println!("🦀 Password::entropy():  ❌ {entropy} bits (Weak)")
         }
-        x if (56..70).contains(&x) => println!(
-            "🦀 Password::entropy():           ⚠️ {} bits (Reasonable)",
-            entropy
-        ),
+        x if (56..70).contains(&x) => {
+            println!("🦀 Password::entropy():           ⚠️ {entropy} bits (Reasonable)",)
+        }
         x if (71..80).contains(&x) => {
-            println!("🦀 Password::entropy():  ⚠️ {} bits (Strong)", entropy)
+            println!("🦀 Password::entropy():  ⚠️ {entropy} bits (Strong)")
         }
-        _ => println!(
-            "🦀 Password::entropy():           ✅ {} bits (Excellent)",
-            entropy
-        ),
+        _ => println!("🦀 Password::entropy():           ✅ {entropy} bits (Excellent)",),
     }
 }

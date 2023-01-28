@@ -129,8 +129,8 @@ mod tests {
             "This is a test log message",
             &LogFormat::COMMON,
         );
-        let log_string = format!("{}", log);
-        println!("{}", log_string);
+        let log_string = format!("{log}");
+        println!("{log_string}");
         assert_eq!(log_string, "SessionID=12345678-1234-1234-1234-1234567890ab Timestamp=2023-01-23 14:03:00.000+0000 Description=This is a test log message Level=ERROR Component=Test");
     }
 
@@ -218,7 +218,7 @@ mod tests {
             &LogFormat::JSON,
         );
         let expected_output = "{\"SessionID\":\"123\",\"Timestamp\":\"2023-01-23 14:04:09.881393 +00:00:00\",\"Level\":\"INFO\",\"Component\":\"test\",\"Description\":\"test log message\",\"Format\":\"JSON\"}";
-        assert_eq!(expected_output, format!("{}", log));
+        assert_eq!(expected_output, format!("{log}"));
     }
 
     #[test]
@@ -233,7 +233,7 @@ mod tests {
         );
         let expected_output =
             "CEF:0|123|2023-01-23 14:04:09.881393 +00:00:00|INFO|test|test log message|CEF";
-        assert_eq!(expected_output, format!("{}", log));
+        assert_eq!(expected_output, format!("{log}"));
     }
     #[test]
     fn test_elf_log_format() {
@@ -247,7 +247,7 @@ mod tests {
         );
         let expected_output =
             "ELF:0|123|2023-01-23 14:04:09.881393 +00:00:00|INFO|test|test log message|ELF";
-        assert_eq!(expected_output, format!("{}", log));
+        assert_eq!(expected_output, format!("{log}"));
     }
     #[test]
     fn test_w3c_log_format() {
@@ -261,7 +261,7 @@ mod tests {
         );
         let expected_output =
             "W3C:0|123|2023-01-23 14:04:09.881393 +00:00:00|INFO|test|test log message|W3C";
-        assert_eq!(expected_output, format!("{}", log));
+        assert_eq!(expected_output, format!("{log}"));
     }
     #[test]
     fn test_gelf_log_format() {
@@ -275,6 +275,6 @@ mod tests {
         );
         let expected_output =
             "{\n                            \"version\": \"1.1\",\n                            \"host\": \"test\",\n                            \"short_message\": \"test log message\",\n                            \"level\": \"INFO\",\n                            \"timestamp\": \"2023-01-23 14:04:09.881393 +00:00:00\",\n                            \"_component\": \"test\",\n                            \"_session_id\": \"123\"\n                        }";
-        assert_eq!(expected_output, format!("{}", log));
+        assert_eq!(expected_output, format!("{log}"));
     }
 }

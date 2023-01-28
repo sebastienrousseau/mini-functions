@@ -196,7 +196,7 @@ impl Log {
         )
         .expect("Unable to write log message"),
         }
-        println!("{}", log_message);
+        println!("{log_message}");
         io::Write::flush(&mut io::stdout()).expect("Unable to flush stdout");
     }
 

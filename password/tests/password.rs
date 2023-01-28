@@ -67,7 +67,7 @@ mod tests {
         let mut password = Password::new(4, "-", SPECIAL_CHARS.to_vec());
         password.set_passphrase("M1n1Funct1()ns-N3wP@s5phr4s3-Ex@mpl3");
         assert_eq!(
-            format!("{}", password),
+            format!("{password}"),
             "M1n1Funct1()ns-N3wP@s5phr4s3-Ex@mpl3"
         );
     }

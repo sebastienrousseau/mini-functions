@@ -98,7 +98,7 @@ fn len_and_is_empty_benchmark(c: &mut Criterion) {
 fn scale_claim_benchmark(c: &mut Criterion) {
     let mut group = c.benchmark_group("set_claim");
     for i in [10, 100, 1000, 10000, 100000].iter() {
-        group.bench_with_input(format!("{} claims", i), i, |b, i| {
+        group.bench_with_input(format!("{i} claims"), i, |b, i| {
             let mut claims = Claims::new();
             let key = "key";
             let value = "value";

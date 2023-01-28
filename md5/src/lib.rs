@@ -157,44 +157,44 @@ impl MD5 {
         self
     }
     // Update the internal state of the MD5 object with new data.
-pub fn update_with_len(&mut self, value: &[u8], nbytes: usize) -> &mut Self {
-    // Compute number of bytes mod 64
-    let mut offset = ((self.count[0] >> 3) & 63) as usize;
-    let nbits = (nbytes << 3) as u32;
-    let p = value;
+    pub fn update_with_len(&mut self, value: &[u8], nbytes: usize) -> &mut Self {
+        // Compute number of bytes mod 64
+        let mut offset = ((self.count[0] >> 3) & 63) as usize;
+        let nbits = (nbytes << 3) as u32;
+        let p = value;
 
-    if nbytes == 0 {
-        return self;
-    }
-
-    // Update the number of bits
-    self.count[0] += nbits;
-    if self.count[0] < nbits {
-        self.count[1] += 1;
-    }
-    self.count[1] += (nbytes >> 29) as u32;
-
-    let part_len = BLOCK_LENGTH - offset;
-    let mut i = part_len;
-
-    // Transform as many times as possible
-    if nbytes >= part_len {
-        self.buffer[offset..(offset + part_len)].clone_from_slice(&p[..part_len]);
-        let buf = self.buffer;
-        self.transform(&buf);
-
-        while i < nbytes - part_len {
-            if nbytes - i >= 64 {
-                let buf = self.buffer[i..i + 64].to_vec();
-                self.transform(&buf);
-                i += 64;
-            } else {
-                break;
-            }
+        if nbytes == 0 {
+            return self;
         }
-        offset = 0;
-    } else {
-        i = 0;
+
+        // Update the number of bits
+        self.count[0] += nbits;
+        if self.count[0] < nbits {
+            self.count[1] += 1;
+        }
+        self.count[1] += (nbytes >> 29) as u32;
+
+        let part_len = BLOCK_LENGTH - offset;
+        let mut i = part_len;
+
+        // Transform as many times as possible
+        if nbytes >= part_len {
+            self.buffer[offset..(offset + part_len)].clone_from_slice(&p[..part_len]);
+            let buf = self.buffer;
+            self.transform(&buf);
+
+            while i < nbytes - part_len {
+                if nbytes - i >= 64 {
+                    let buf = self.buffer[i..i + 64].to_vec();
+                    self.transform(&buf);
+                    i += 64;
+                } else {
+                    break;
+                }
+            }
+            offset = 0;
+        } else {
+            i = 0;
         }
 
         // Add remaining input in buffer
@@ -269,7 +269,7 @@ impl Digest for MD5 {
 impl Display for MD5 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         for di in self.digest {
-            write!(f, "{:02x}", di)?;
+            write!(f, "{di:02x}")?;
         }
 
         Ok(())

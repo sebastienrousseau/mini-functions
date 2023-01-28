@@ -1,12 +1,6 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
-categories = [
-    "Algorithms",
-    "Encoding",
-    "Images",
-    "Rendering",
-    "Visualization",
-]
+categories = ["Algorithms", "Encoding", "Images", "Rendering", "Visualization"]
 description = "Highly Performant QR Code Generator Library For Rust"
 edition = "2018"
 homepage = "https://minifunctions.com/"
