@@ -17,9 +17,9 @@ use blake3::Hasher;
 #[derive(Clone, Debug, PartialEq, PartialOrd)]
 pub struct Hash {
     /// The password.
-    password: String,
+    pub password: String,
     /// The password hash.
-    hash: String,
+    pub hash: String,
 }
 
 impl Hash {

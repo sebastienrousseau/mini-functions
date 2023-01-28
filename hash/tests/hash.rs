@@ -4,6 +4,30 @@ mod tests {
     use self::hash::Hash;
 
     #[test]
+    fn test_hash_fmt() {
+        let mut hash = Hash::new();
+        hash.set_password("password");
+        hash.set_hash("hash");
+        assert_eq!(format!("{hash}"), "Hash { password: password, hash: hash }");
+    }
+
+    #[test]
+    fn test_hash_password() {
+        let mut hash = Hash::new();
+        hash.set_password("password");
+        hash.set_hash("hash");
+        assert_eq!(hash.password, "password");
+    }
+
+    #[test]
+    fn test_hash_hash() {
+        let mut hash = Hash::new();
+        hash.set_password("password");
+        hash.set_hash("hash");
+        assert_eq!(hash.hash, "hash");
+    }
+
+    #[test]
     fn test_new() {
         let hash = Hash::new();
         assert_eq!(hash.password(), "");

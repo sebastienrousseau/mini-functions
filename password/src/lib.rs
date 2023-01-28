@@ -61,16 +61,6 @@ impl Password {
         let l = self.len() as f64;
         l * (94.0_f64.log2()).round()
     }
-
-    // pub fn entropy(&self) -> f64 {
-    //     let mut hash = Hash::new();
-    //     hash.set_password(&format!(
-    //         "{}{}",
-    //         self.passphrase,
-    //         self.special_chars.iter().collect::<String>()
-    //     ));
-    //     hash.entropy()
-    // }
     /// Returns the hash of the generated passphrase.
     pub fn hash(&self) -> String {
         let mut hash = Hash::new();

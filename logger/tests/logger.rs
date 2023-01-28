@@ -5,21 +5,24 @@ mod tests {
     extern crate logger;
 
     use self::date::Date;
+    use self::logger::LogLevel::ERROR;
     use self::logger::{Log, LogFormat, LogLevel};
+    use logger::LogFormat::COMMON;
 
     #[test]
-    fn test_log() {
-        let date = Date::new().date;
+    fn test_log_common_format() {
         let log = Log::new(
-            "12345678-1234-1234-1234-1234567890ab",
-            &date.read().unwrap().to_string(),
-            &LogLevel::INFO,
-            "SystemTrayEvent",
-            "Showing main window",
-            &LogFormat::COMMON,
+            "session_id_123",
+            "2022-01-01T00:00:00Z",
+            &ERROR,
+            "component_a",
+            "description_a",
+            &COMMON,
         );
-        log.log();
+        let expected_output = "SessionID=session_id_123 Timestamp=2022-01-01T00:00:00Z Description=description_a Level=ERROR Component=component_a";
+        assert_eq!(log.to_string(), expected_output);
     }
+
     #[test]
     fn test_log_error() {
         let date = Date::new().date;
