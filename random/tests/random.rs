@@ -109,7 +109,7 @@ mod tests {
     fn test_fmt() {
         let rng = Random::new();
         let s = format!("{rng}");
-        assert!(!is_empty);
+        assert!(!s.is_empty());
     }
     #[test]
     fn test_default() {
