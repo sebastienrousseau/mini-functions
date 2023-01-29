@@ -117,4 +117,15 @@ mod tests {
         let result = jwt.validate(secret);
         assert!(result.is_err());
     }
+    #[test]
+    fn test_to_string() {
+        let jwt = JWT {
+            header: Header::default(),
+            claims: Claims::default(),
+            signature: vec![],
+            token: "example_token".to_owned(),
+        };
+        let result = jwt.to_string();
+        assert_eq!(result, "JWT { header: Header { alg: Some(HS256), kid: None, typ: Some(\"JWT\"), cty: None }, claims: Claims {  }, signature: [], token: example_token }");
+    }
 }
