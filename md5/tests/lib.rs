@@ -1,7 +1,10 @@
 #[cfg(test)]
 mod tests {
     extern crate md5;
-    use md5::*;
+    use md5::{Digest, MD5};
+
+    extern crate jot;
+    use self::jot::{Algorithm, JWT};
 
     #[test]
     fn test_md5_0() {
@@ -106,5 +109,33 @@ mod tests {
             .finalize()
             .to_string();
         assert_eq!(digest, "47353a0e5ed2e1e0d57213a39e9bb7c4");
+    }
+    #[test]
+    fn test_algorithm_to_string() {
+        let hs256 = Algorithm::HS256;
+        assert_eq!(hs256.to_string(), "HS256");
+
+        let rs512 = Algorithm::RS512;
+        assert_eq!(rs512.to_string(), "RS512");
+    }
+
+    #[test]
+    fn test_default_algorithm() {
+        let default_alg = Algorithm::default();
+        assert_eq!(default_alg, Algorithm::HS256);
+    }
+
+    #[test]
+    fn test_default_jwt() {
+        let default_jwt = JWT::default();
+        assert_eq!(default_jwt.header.alg, Some(Algorithm::HS256));
+        assert_eq!(default_jwt.token, String::new());
+    }
+    #[test]
+    fn test_reset_file() {
+        let mut md5 = MD5::new();
+        md5.finalize();
+        md5.reset();
+        assert_eq!(md5.to_string(), "00000000000000000000000000000000");
     }
 }

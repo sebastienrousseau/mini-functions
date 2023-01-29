@@ -37,6 +37,8 @@ harness = false
 path = "benches/md5.rs"
 
 [dependencies]
+claims = { path = "../claims" }
+jot = { path = "../jot" }
 
 [dev-dependencies]
 criterion = "0.4.0"

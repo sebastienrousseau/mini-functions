@@ -52,15 +52,14 @@
 mod params;
 pub use params::*;
 
-mod constants;
-use constants::*;
+pub mod constants;
+pub use constants::*;
+
+pub mod digest;
+pub use digest::*;
 
 use std::convert::TryInto;
 use std::fmt::Display;
-
-// use crate::Digest;
-use std::fs::File;
-use std::io::Read;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct MD5 {
@@ -209,63 +208,6 @@ impl Default for MD5 {
     }
 }
 
-impl Digest for MD5 {
-    /// Reset the internal state of the MD5 object.
-    fn reset(&mut self) -> &mut Self {
-        self.state = INITIAL_STATE;
-        self.count.fill(0);
-        self.buffer.fill(0);
-        self.digest.fill(0);
-
-        self
-    }
-    /// Update the internal state of the MD5 object with new data.
-    fn update(&mut self, value: &[u8]) -> &mut Self {
-        self.update_with_len(value, value.len())
-    }
-    /// Update the internal state of the MD5 object with new data from a file.
-    fn update_file(&mut self, path: &str) -> &mut Self {
-        let mut file = File::open(path).expect("Couldn't open file");
-        let mut buffer = [0; 1024];
-
-        loop {
-            let nbytes = file.read(&mut buffer).expect("Couldn't read file");
-            if nbytes == 0 {
-                break;
-            }
-            self.update_with_len(&buffer, nbytes);
-        }
-
-        self
-    }
-    /// Return the digest value as a string of hexadecimal digits.
-    fn hexdigest(value: &str) -> String {
-        Self::new().update(value.as_bytes()).finalize().to_string()
-    }
-
-    /// Return the digest value as a string of hexadecimal digits from a file.
-    fn hexdigest_file(path: &str) -> String {
-        let mut file = File::open(path).expect("Couldn't open file");
-        let mut buffer = [0; 1024];
-        let mut md5 = Self::new();
-
-        loop {
-            let nbytes = file.read(&mut buffer).expect("Couldn't read file");
-            if nbytes == 0 {
-                break;
-            }
-            md5.update_with_len(&buffer, nbytes);
-        }
-
-        md5.finalize().to_string()
-    }
-    /// Reset the internal state of the MD5 object and update it with new data from a file.
-    fn reset_file(&mut self, path: &str) -> &mut Self {
-        self.reset();
-        self.update_file(path)
-    }
-}
-
 impl Display for MD5 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         for di in self.digest {
@@ -276,11 +218,11 @@ impl Display for MD5 {
     }
 }
 
-pub trait Digest {
-    fn reset(&mut self) -> &mut Self; // reset the internal state of the object
-    fn update(&mut self, value: &[u8]) -> &mut Self; // update the internal state of the object with new data
-    fn update_file(&mut self, path: &str) -> &mut Self; // update the internal state of the object with new data from a file
-    fn hexdigest(value: &str) -> String; // return the digest value as a string of hexadecimal digits
-    fn hexdigest_file(path: &str) -> String; // return the digest value as a string of hexadecimal digits from a file
-    fn reset_file(&mut self, path: &str) -> &mut Self; // reset the internal state of the object and update it with new data from a file
-}
+// pub trait Digest {
+//     fn reset(&mut self) -> &mut Self; // reset the internal state of the object
+//     fn update(&mut self, value: &[u8]) -> &mut Self; // update the internal state of the object with new data
+//     fn update_file(&mut self, path: &str) -> &mut Self; // update the internal state of the object with new data from a file
+//     fn hexdigest(value: &str) -> String; // return the digest value as a string of hexadecimal digits
+//     fn hexdigest_file(path: &str) -> String; // return the digest value as a string of hexadecimal digits from a file
+//     fn reset_file(&mut self, path: &str) -> &mut Self; // reset the internal state of the object and update it with new data from a file
+// }

@@ -79,12 +79,27 @@ jobs:
       - name: Run Cargo Doc 🦀
         id: run-check-doc
         run: |
-          cargo doc --all-features --workspace --no-deps
+          cargo doc --workspace --color always --no-deps --release --all-features
 
       - name: Run Cargo Test 🦀
         id: run-check-test
         run: |
           cargo test --all-targets --workspace --all-features
+
+      - name: Run Cargo Code Coverage 🦀
+        id: run-check-code-coverage
+        run: |
+          # Install tarpaulin
+          cargo install cargo-tarpaulin
+
+          # Run tarpaulin and generate the code coverage report
+          cargo tarpaulin --all --all-features --workspace --out Xml
+
+      - name: Upload to codecov.io 📊
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
 
       - name: Package the binary 📦
         id: package
