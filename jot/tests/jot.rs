@@ -130,6 +130,6 @@ mod tests {
     #[test]
     fn test_claims_default() {
         let claims = self::JWT::claims();
-        assert_eq!(claims.is_empty(), true);
+        assert!(claims.is_empty(), "{}", true);
     }
 }

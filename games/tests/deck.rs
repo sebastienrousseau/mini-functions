@@ -93,15 +93,15 @@ mod tests {
         deck.bet = 5;
 
         // Test playing again
-        let mut input_string = "p\n".to_string();
-        deck.play_again_or_quit(&mut input_string);
+        let input_string = "p\n".to_string();
+        deck.play_again_or_quit(&input_string);
         assert_eq!(input_string, "p\n");
         assert_eq!(deck.bet, 0);
         assert_eq!(deck.balance, 10);
 
         // Test quitting
-        let mut input_string = "q\n".to_string();
-        deck.play_again_or_quit(&mut input_string);
+        let input_string = "q\n".to_string();
+        deck.play_again_or_quit(&input_string);
         assert_eq!(input_string, "q\n");
         assert_eq!(deck.bet, 0);
         assert_eq!(deck.balance, 10);
