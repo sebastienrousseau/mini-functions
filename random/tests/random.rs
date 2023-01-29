@@ -43,6 +43,9 @@ mod tests {
         let value = Random::choose(&mut rng, &values);
         assert!(value.is_some());
         assert!(value.unwrap() >= &1 && value.unwrap() <= &5);
+        if values.is_empty() {
+            assert!(Random::choose(&mut rng, &values).is_none());
+        }
     }
     #[test]
     fn test_float() {
@@ -92,6 +95,7 @@ mod tests {
         Random::seed(&mut rng, 0);
         assert!(rng.mti <= N);
         assert!(rng.mt.iter().any(|&x| x != 0));
+        assert!(rng.mti == N);
     }
     #[test]
     fn test_twist() {
@@ -100,5 +104,17 @@ mod tests {
         Random::twist(&mut rng);
         assert!(rng.mti <= N);
         assert!(rng.mt.iter().any(|&x| x != 0));
+    }
+    #[test]
+    fn test_fmt() {
+        let rng = Random::new();
+        let s = format!("{}", rng);
+        assert!(s.len() > 0);
+    }
+    #[test]
+    fn test_default() {
+        let rng = Random::default();
+        assert!(rng.mti <= N);
+        assert!(rng.mt[0] > 0);
     }
 }
