@@ -86,4 +86,32 @@ mod tests {
         assert_eq!(deck.bet, 5);
         deck.place_bet(105);
     }
+    #[test]
+    fn test_play_again_or_quit() {
+        let mut deck = Deck::new();
+        deck.balance = 10;
+        deck.bet = 5;
+
+        // Test playing again
+        let mut input_string = "p\n".to_string();
+        deck.play_again_or_quit(&mut input_string);
+        assert_eq!(input_string, "p\n");
+        assert_eq!(deck.bet, 0);
+        assert_eq!(deck.balance, 10);
+
+        // Test quitting
+        let mut input_string = "q\n".to_string();
+        deck.play_again_or_quit(&mut input_string);
+        assert_eq!(input_string, "q\n");
+        assert_eq!(deck.bet, 0);
+        assert_eq!(deck.balance, 10);
+    }
+    #[test]
+    fn test_fmt_display() {
+        let deck = Deck::new();
+        assert_eq!(deck.balance, 100);
+        assert_eq!(deck.bet, 0);
+        let expected_output = "Balance: $100 Bet: $0";
+        assert_eq!(deck.to_string(), expected_output);
+    }
 }

@@ -6,6 +6,8 @@ mod tests {
     extern crate qr;
     use self::qr::QRCode;
 
+    const URL: &str = "https://minifunctions.com/"; // Define a constant for the URL to be encoded
+
     #[test]
     fn test_new() {
         let data = vec![0x61, 0x62, 0x63];
@@ -47,6 +49,16 @@ mod tests {
         let png_data = png.into_raw();
         assert_eq!(png_data.len(), 1323);
     }
+    #[test]
+    fn test_to_svg() {
+        let data = vec![0x61, 0x62, 0x63];
+        let qrcode = QRCode::from_bytes(data.clone());
+        assert_eq!(qrcode.data, data);
+
+        let qrcode = QRCode::from_string(URL.to_string());
+        let qrcode_svg = qrcode.to_svg(512);
+        assert_eq!(qrcode_svg.len(), 6918);
+    }
 
     #[test]
     fn test_colorize() {
@@ -80,12 +92,5 @@ mod tests {
         // Convert the QR code to a PNG image and assert that the dimensions are correct.
         let image: RgbImage = resized_qrcode;
         assert_eq!(image.dimensions(), (42, 42));
-    }
-
-    #[test]
-    fn test_to_svg() {
-        let data = vec![0x61, 0x62, 0x63];
-        let qrcode = QRCode::from_bytes(data);
-        assert!(qrcode.data != vec![], "{}", true);
     }
 }

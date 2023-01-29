@@ -85,7 +85,6 @@ mod tests {
         assert_eq!(result.typ, Some("example_type".to_string()));
         assert_eq!(result.cty, Some("example_cty".to_string()));
     }
-
     #[test]
     fn test_get_token_length() {
         let jwt = JWT {
@@ -127,5 +126,10 @@ mod tests {
         };
         let result = jwt.to_string();
         assert_eq!(result, "JWT { header: Header { alg: Some(HS256), kid: None, typ: Some(\"JWT\"), cty: None }, claims: Claims {  }, signature: [], token: example_token }");
+    }
+    #[test]
+    fn test_claims_default() {
+        let claims = self::JWT::claims();
+        assert_eq!(claims.is_empty(), true);
     }
 }

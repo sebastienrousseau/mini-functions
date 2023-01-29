@@ -148,18 +148,18 @@ impl Deck {
             println!("🎲 You placed a bet of ${bet}");
         } else {
             println!("🎲 You do not have enough funds to place a bet of ${bet}");
+            println!("👋 Thanks for playing!");
+            std::process::exit(0);
         }
     }
 
     /// Allows the player to play again or quit the game
-    pub fn play_again_or_quit(&mut self) {
+    pub fn play_again_or_quit(&mut self, input_string: &str) {
         loop {
             println!(
                 "Would you like to play again or quit? (Enter 'p' to play again or 'q' to quit)"
             );
-            let mut input = String::new();
-            std::io::stdin().read_line(&mut input).unwrap();
-            let input = input.trim();
+            let input = input_string.trim();
             match input {
                 "p" => {
                     self.bet = 0;

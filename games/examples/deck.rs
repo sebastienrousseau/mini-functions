@@ -19,25 +19,30 @@ fn main() {
 
     loop {
         println!("\n🎲 Your current balance is ${}", deck.balance);
-        println!("🎲 Enter a bet amount or 0 to quit:");
+        println!("🎲 Enter a bet amount or q to quit:");
         let mut bet = String::new();
         std::io::stdin()
             .read_line(&mut bet)
             .expect("Failed to read line");
-        let bet: u32 = match bet.trim().parse() {
-            Ok(num) => num,
-            Err(_) => {
-                println!("Please enter a valid number.");
-                continue;
-            }
-        };
-
-        if bet == 0 {
+        let bet = bet.trim();
+        if bet == "q" {
             println!("👋 Thanks for playing!");
             break;
         } else {
-            deck.place_bet(bet);
-            deck.determine_winnings();
+            let bet: u32 = match bet.parse() {
+                Ok(num) => num,
+                Err(_) => {
+                    println!("Please enter a valid number.");
+                    continue;
+                }
+            };
+            if bet == 0 {
+                println!("👋 Thanks for playing!");
+                break;
+            } else {
+                deck.place_bet(bet);
+                deck.determine_winnings();
+            }
         }
     }
 }
