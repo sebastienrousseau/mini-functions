@@ -4,14 +4,6 @@ mod tests {
     extern crate games;
     use self::games::Deck;
 
-    // #[test]
-    // fn test_has_winning_hand() {
-    //     let card1 = "2 of Hearts (♥)".to_string();
-    //     let card2 = "3 of Hearts (♥)".to_string();
-    //     let card3 = "4 of Hearts (♥)".to_string();
-    //     let deck = Deck::new();
-    //     assert!(deck.has_winning_hand(card1, card2, card3));
-    // }
     #[test]
     fn test_determine_winnings() {
         let mut deck = Deck::new();
@@ -85,5 +77,13 @@ mod tests {
         assert_eq!(deck.cards.len(), 52);
         assert_eq!(deck.balance, 100);
         assert_eq!(deck.bet, 0);
+    }
+    #[test]
+    fn test_place_bet() {
+        let mut deck = Deck::new();
+        deck.place_bet(5);
+        assert_eq!(deck.balance, 95);
+        assert_eq!(deck.bet, 5);
+        deck.place_bet(105);
     }
 }
