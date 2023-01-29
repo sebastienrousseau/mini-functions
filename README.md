@@ -1,6 +1,7 @@
 # Mini Functions 🦀
 
 [![Made With Love][mwl]][6]
+[![codecov][codecov-badge]][13]
 
 <!-- markdownlint-disable MD033 -->
 <center>
@@ -338,9 +339,11 @@ for their help and support.
 [9]: https://docs.rs/mini-functions
 [10]: https://lib.rs/crates/mini-functions
 [12]: https://www.rust-lang.org/
+[13]: https://codecov.io/github/sebastienrousseau/mini-functions
 
 [banner]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/banners/banner-mini-functions.svg "Mini Functions - Rust 🦀"
 [crates-badge]: https://img.shields.io/crates/v/mini-functions.svg?style=for-the-badge 'Crates.io'
+[codecov-badge]: https://img.shields.io/codecov/c/github/sebastienrousseau/mini-functions.svg?style=for-the-badge&token=M1REIC3QCK 'Codecov'
 [divider]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/elements/divider.svg "divider"
 [docs-badge]: https://img.shields.io/docsrs/mini-functions.svg?style=for-the-badge 'Docs.rs'
 [libs-badge]: https://img.shields.io/badge/lib.rs-v0.0.8-orange.svg?style=for-the-badge 'Lib.rs'
