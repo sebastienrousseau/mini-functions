@@ -108,8 +108,8 @@ mod tests {
     #[test]
     fn test_fmt() {
         let rng = Random::new();
-        let s = format!("{}", rng);
-        assert!(s.len() > 0);
+        let s = format!("{rng}");
+        assert!(!is_empty);
     }
     #[test]
     fn test_default() {
