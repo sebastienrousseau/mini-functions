@@ -1,7 +1,7 @@
 # Mini Functions 🦀
 
 [![Made With Love][mwl]][6]
-[![codecov][codecov-badge]][13]
+[![Rust][made-with-rust-badge]][12]
 
 <!-- markdownlint-disable MD033 -->
 <center>
@@ -10,11 +10,13 @@
 
 ![Mini Functions][banner]
 
-[![Rust][made-with-rust-badge]][12]
 [![Crates.io][crates-badge]][8]
 [![Lib.rs][libs-badge]][10]
 [![Docs.rs][docs-badge]][9]
+
+[![codecov][codecov-badge]][13]
 [![License][license-badge]][2]
+[![Fossa][fossa-badge]][14]
 
 ![divider][divider]
 
@@ -340,6 +342,7 @@ for their help and support.
 [10]: https://lib.rs/crates/mini-functions
 [12]: https://www.rust-lang.org/
 [13]: https://codecov.io/github/sebastienrousseau/mini-functions
+[14]: https://app.fossa.com/projects/git%2Bgithub.com%2Fsebastienrousseau%2Fmini-functions?ref=badge_shield
 
 [banner]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/banners/banner-mini-functions.svg "Mini Functions - Rust 🦀"
 [crates-badge]: https://img.shields.io/crates/v/mini-functions.svg?style=for-the-badge 'Crates.io'
@@ -350,3 +353,4 @@ for their help and support.
 [license-badge]: https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge 'License'
 [made-with-rust-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-rust.svg "Made With Rust 🦀"
 [mwl]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg "Made With Love"
+[fossa-badge]: https://img.shields.io/static/v1?style=for-the-badge&message=Fossa&color=289E6D&logo=Fossa&logoColor=FFFFFF&label= 'Fossa'

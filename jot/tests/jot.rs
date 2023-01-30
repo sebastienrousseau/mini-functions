@@ -2,10 +2,14 @@
 
 mod tests {
     extern crate claims;
+    extern crate hmac;
     extern crate jot;
+    extern crate sha2;
 
     use self::claims::Claims;
     use self::jot::{Algorithm, Header, JWT};
+    use hmac::{Hmac, Mac};
+    use sha2::Sha256;
 
     #[test]
     fn test_header_default() {
@@ -97,6 +101,19 @@ mod tests {
         assert_eq!(result, 5);
     }
     #[test]
+    fn test_validate_success() {
+        let secret: &[u8; 6] = b"secret";
+        let jwt = JWT {
+            header: Header::default(),
+            claims: Claims::default(),
+            signature: vec![],
+            token: "example_token".to_owned(),
+        };
+        let result = JWT::validate(&jwt, secret);
+        assert!(!result.is_ok());
+    }
+
+    #[test]
     fn test_validate_with_empty_signature() {
         // Create a JWT with valid claims and an empty signature
         let secret = b"secret";
@@ -131,5 +148,53 @@ mod tests {
     fn test_claims_default() {
         let claims = self::JWT::claims();
         assert!(claims.is_empty(), "{}", true);
+    }
+
+    #[test]
+    fn test_algorithm_variants() {
+        assert!(matches!(Algorithm::HS256, Algorithm::HS256));
+        assert!(matches!(Algorithm::HS384, Algorithm::HS384));
+        assert!(matches!(Algorithm::HS512, Algorithm::HS512));
+        assert!(matches!(Algorithm::RS256, Algorithm::RS256));
+        assert!(matches!(Algorithm::RS384, Algorithm::RS384));
+        assert!(matches!(Algorithm::RS512, Algorithm::RS512));
+        assert!(matches!(Algorithm::ES256, Algorithm::ES256));
+        assert!(matches!(Algorithm::ES384, Algorithm::ES384));
+        assert!(matches!(Algorithm::ES512, Algorithm::ES512));
+    }
+
+    #[test]
+    fn test_algorithm_default() {
+        let algorithm = Algorithm::default();
+        assert_eq!(algorithm, Algorithm::HS256);
+    }
+    #[test]
+    fn test_algorithm_to_string() {
+        let algorithm = Algorithm::default();
+        assert_eq!(algorithm.to_string(), "HS256");
+
+        let algorithm_hs384 = Algorithm::HS384;
+        assert_eq!(algorithm_hs384.to_string(), "HS384");
+
+        let algorithm_hs512 = Algorithm::HS512;
+        assert_eq!(algorithm_hs512.to_string(), "HS512");
+
+        let algorithm_rs256 = Algorithm::RS256;
+        assert_eq!(algorithm_rs256.to_string(), "RS256");
+
+        let algorithm_rs384 = Algorithm::RS384;
+        assert_eq!(algorithm_rs384.to_string(), "RS384");
+
+        let algorithm_rs512 = Algorithm::RS512;
+        assert_eq!(algorithm_rs512.to_string(), "RS512");
+
+        let algorithm_es256 = Algorithm::ES256;
+        assert_eq!(algorithm_es256.to_string(), "ES256");
+
+        let algorithm_es384 = Algorithm::ES384;
+        assert_eq!(algorithm_es384.to_string(), "ES384");
+
+        let algorithm_es512 = Algorithm::ES512;
+        assert_eq!(algorithm_es512.to_string(), "ES512");
     }
 }
