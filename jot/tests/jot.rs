@@ -2,14 +2,10 @@
 
 mod tests {
     extern crate claims;
-    extern crate hmac;
     extern crate jot;
-    extern crate sha2;
 
     use self::claims::Claims;
     use self::jot::{Algorithm, Header, JWT};
-    use hmac::{Hmac, Mac};
-    use sha2::Sha256;
 
     #[test]
     fn test_header_default() {
@@ -110,7 +106,7 @@ mod tests {
             token: "example_token".to_owned(),
         };
         let result = JWT::validate(&jwt, secret);
-        assert!(!result.is_ok());
+        assert!(result.is_err());
     }
 
     #[test]
