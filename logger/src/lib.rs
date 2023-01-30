@@ -244,7 +244,7 @@ impl fmt::Display for Log {
                 )
                 .expect("Unable to write log message");
                 Ok(())
-            },
+            }
             LogFormat::JSON => {
                 write!(
                 f,
@@ -303,12 +303,6 @@ impl fmt::Display for Log {
                 .expect("Unable to write log message");
                 Ok(())
             }
-            // LogFormat::GELF => Ok(write!(
-            //     f,
-            //     "GELF:0|{}|{}|{}|{}|{}|GELF",
-            //     self.session_id, self.time, self.level, self.component, self.description)
-            //     .expect("Unable to write log message")
-            // ),
         }
     }
 }

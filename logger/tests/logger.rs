@@ -280,4 +280,17 @@ mod tests {
             "{\n                            \"version\": \"1.1\",\n                            \"host\": \"test\",\n                            \"short_message\": \"test log message\",\n                            \"level\": \"INFO\",\n                            \"timestamp\": \"2023-01-23 14:04:09.881393 +00:00:00\",\n                            \"_component\": \"test\",\n                            \"_session_id\": \"123\"\n                        }";
         assert_eq!(expected_output, format!("{log}"));
     }
+    #[test]
+    fn test_log_format_display() {
+        for (log_format, expected_output) in vec![
+            (LogFormat::COMMON, "COMMON"),
+            (LogFormat::JSON, "JSON"),
+            (LogFormat::CEF, "CEF"),
+            (LogFormat::ELF, "ELF"),
+            (LogFormat::W3C, "W3C"),
+            (LogFormat::GELF, "GELF"),
+        ] {
+            assert_eq!(log_format.to_string(), expected_output);
+        }
+    }
 }
