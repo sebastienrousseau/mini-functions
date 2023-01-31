@@ -43,7 +43,6 @@ harness = false
 path = "benches/password.rs"
 
 [dependencies]
-convert_case = "0.6.0"
 common = { path = "../common" }
 date = { path = "../date" }
 hash = { path = "../hash" }

@@ -8,7 +8,7 @@ pub use hash::Hash;
 extern crate random;
 use crate::random::Random;
 
-use convert_case::{Case, Casing};
+// use convert_case::{Case, Casing};
 use std::collections::{HashMap, HashSet};
 use std::convert::TryInto;
 use std::f64;
@@ -163,7 +163,20 @@ impl Password {
 
             // Convert the word to title case and add a number to the
             // end of the word.
-            let mut word = word.to_case(Case::Title);
+            let mut word = word.to_owned();
+            let chars = word.chars().enumerate().collect::<Vec<_>>();
+            for (i, c) in chars {
+                if i == 0 || !c.is_alphabetic() {
+                    continue;
+                }
+                let lower = c.to_lowercase().next().unwrap();
+                word.remove(i);
+                word.insert(i, lower);
+                word.insert(i + 1, lower.to_uppercase().next().unwrap());
+            }
+            let first_letter = word.chars().next().unwrap().to_uppercase().next().unwrap();
+            word.remove(0);
+            word.insert(0, first_letter);
 
             // Generate a new random number between 0 and 99.
             let nb = rng.range(HASH_COST.try_into().unwrap(), 99);
