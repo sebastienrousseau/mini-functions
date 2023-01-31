@@ -136,11 +136,11 @@ pub struct Log {
 impl Default for Log {
     fn default() -> Log {
         Log {
-            session_id: String::new(),
-            time: String::new(),
+            session_id: String::default(),
+            time: String::default(),
             level: LogLevel::INFO,
-            component: String::new(),
-            description: String::new(),
+            component: String::default(),
+            description: String::default(),
             format: LogFormat::COMMON,
         }
     }

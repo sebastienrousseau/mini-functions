@@ -100,7 +100,7 @@ impl Default for JWT {
             },
             claims: Claims::default(),
             signature: vec![],
-            token: String::new(),
+            token: String::default(),
         }
     }
 }
