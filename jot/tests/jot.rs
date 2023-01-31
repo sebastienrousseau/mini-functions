@@ -33,7 +33,7 @@ mod tests {
         let claims = Claims::default();
         let encoded_result = JWT::encode(header, claims, secret);
         let encoded = encoded_result.unwrap();
-        jwt.token = encoded.clone();
+        jwt.token.clone_from(&encoded);
         let decoded = JWT::decode(&mut jwt, secret);
         if let Ok(decoded_token) = decoded {
             assert_eq!(decoded_token, encoded);
