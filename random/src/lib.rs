@@ -91,7 +91,7 @@ impl Random {
 
     /// Returns a random integer within the given range
     pub fn int(&mut self, min: i32, max: i32) -> i32 {
-        thread_rng().gen_range(min..max + 1)
+        thread_rng().gen_range(min..=max)
     }
     // pub fn int(&mut self, min: i32, max: i32) -> i32 {
     //     self.range(min, max)
@@ -148,7 +148,7 @@ impl Random {
 
     /// Returns a random number within a given range
     pub fn range(&mut self, min: i32, max: i32) -> i32 {
-        thread_rng().gen_range(min..max + 1)
+        thread_rng().gen_range(min..=max)
     }
 
     /// Seeds the random number generator with a given value
