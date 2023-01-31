@@ -16,7 +16,7 @@ fn main() {
     // Expected 6cd3556deb0da54bca060b4c39479839
 
     // Example using MD5::hexdigest() for a file input
-    let digest = MD5::hexdigest_file("../file.txt"); // file.txt contains "Hello, world!"
+    let digest = MD5::hexdigest_file("md5/file.txt"); // file.txt contains "Hello, world!"
     println!("🦀 MD5::hexdigest_file() for a file input:         ✅ {digest}",);
     // Expected 6cd3556deb0da54bca060b4c39479839
 
@@ -45,7 +45,7 @@ fn main() {
         md5.finalize()
     );
     // Expected d41d8cd98f00b204e9800998ecf8427e
-    md5.update_file("../update.txt"); // update.txt contains "Coucou, le monde!"
+    md5.update_file("md5/update.txt"); // update.txt contains "Coucou, le monde!"
     let digest = md5.finalize();
     println!("🦀 MD5::update_file() is:                          ✅ {digest}",);
     // Expected 7fc3e27776139278c6b8e0b6f096b4fb

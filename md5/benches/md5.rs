@@ -70,7 +70,7 @@ fn update_benchmark(c: &mut Criterion) {
 
 fn update_file_benchmark(c: &mut Criterion) {
     let mut md5 = MD5::new();
-    let path = "../file.txt";
+    let path = "file.txt";
 
     c.bench_function("update_file", |b| {
         b.iter(|| {
@@ -91,7 +91,7 @@ fn hexdigest_benchmark(c: &mut Criterion) {
 }
 
 fn hexdigest_file_benchmark(c: &mut Criterion) {
-    let path = "../file.txt";
+    let path = "file.txt";
 
     c.bench_function("hexdigest_file", |b| {
         b.iter(|| {
@@ -102,7 +102,7 @@ fn hexdigest_file_benchmark(c: &mut Criterion) {
 
 fn reset_file_benchmark(c: &mut Criterion) {
     let mut md5 = MD5::new();
-    let path = "../file.txt";
+    let path = "file.txt";
 
     c.bench_function("reset_file", |b| {
         b.iter(|| {

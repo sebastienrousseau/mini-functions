@@ -217,12 +217,3 @@ impl Display for MD5 {
         Ok(())
     }
 }
-
-// pub trait Digest {
-//     fn reset(&mut self) -> &mut Self; // reset the internal state of the object
-//     fn update(&mut self, value: &[u8]) -> &mut Self; // update the internal state of the object with new data
-//     fn update_file(&mut self, path: &str) -> &mut Self; // update the internal state of the object with new data from a file
-//     fn hexdigest(value: &str) -> String; // return the digest value as a string of hexadecimal digits
-//     fn hexdigest_file(path: &str) -> String; // return the digest value as a string of hexadecimal digits from a file
-//     fn reset_file(&mut self, path: &str) -> &mut Self; // reset the internal state of the object and update it with new data from a file
-// }

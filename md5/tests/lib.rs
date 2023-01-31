@@ -82,21 +82,18 @@ mod tests {
     }
     #[test]
     fn update_file() {
-        let digest = MD5::new()
-            .update_file("../update.txt")
-            .finalize()
-            .to_string();
+        let digest = MD5::new().update_file("update.txt").finalize().to_string();
         assert_eq!(digest, "47353a0e5ed2e1e0d57213a39e9bb7c4");
     }
     #[test]
     fn hexdigest_file() {
-        let digest = MD5::hexdigest_file("../update.txt");
+        let digest = MD5::hexdigest_file("update.txt");
         assert_eq!(digest, "47353a0e5ed2e1e0d57213a39e9bb7c4");
     }
     #[test]
     fn reset_file() {
         let digest = MD5::new()
-            .update_file("../update.txt")
+            .update_file("update.txt")
             .reset()
             .finalize()
             .to_string();
@@ -104,10 +101,7 @@ mod tests {
     }
     #[test]
     fn transform() {
-        let digest = MD5::new()
-            .update_file("../update.txt")
-            .finalize()
-            .to_string();
+        let digest = MD5::new().update_file("update.txt").finalize().to_string();
         assert_eq!(digest, "47353a0e5ed2e1e0d57213a39e9bb7c4");
     }
     #[test]
