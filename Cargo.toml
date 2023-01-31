@@ -8,31 +8,24 @@ homepage = "https://minifunctions.com"
 include = [
     "/build.rs",
     "/Cargo.toml",
-    "/LICENSE-APACHE",
-    "/LICENSE-MIT",
-    "/README.md",
     "/claims/**",
     "/common/**",
     "/date/**",
     "/errors/**",
-    "/games/**",
     "/hash/**",
     "/jot/**",
+    "/LICENSE-APACHE",
+    "/LICENSE-MIT",
     "/logger/**",
     "/md5/**",
     "/password/**",
     "/qr/**",
     "/random/**",
+    "/README.md",
     "/src/**",
     "/tests/**",
 ]
 keywords = [
-    "functions",
-    "helper",
-    "libraries",
-    "mini-functions",
-    "toolkit",
-    "utilities",
     "barcode",
     "checksum",
     "claims",
@@ -47,18 +40,22 @@ keywords = [
     "error",
     "exception-handling",
     "exception",
+    "functions",
     "handling",
     "hash",
     "hashing",
+    "helper",
     "jot",
     "json",
     "jwt",
+    "libraries",
     "log",
     "logger",
     "logging",
+    "mini-functions",
+    "password-generator",
     "password",
     "passwords",
-    "password-generator",
     "pseudo-random",
     "qr",
     "qrcode",
@@ -67,7 +64,9 @@ keywords = [
     "random",
     "security",
     "time",
+    "toolkit",
     "tracing",
+    "utilities",
 ]
 license = "Apache-2.0 OR MIT"
 name = "mini-functions"
@@ -81,7 +80,6 @@ claims = { path = "./claims" }
 common = { path = "./common" }
 date = { path = "./date" }
 errors = { path = "./errors" }
-games = { path = "./games" }
 hash = { path = "./hash" }
 jot = { path = "./jot" }
 logger = { path = "./logger" }
@@ -98,7 +96,6 @@ members = [
     "common",
     "date",
     "errors",
-    "games",
     "hash",
     "jot",
     "logger",
