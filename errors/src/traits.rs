@@ -53,7 +53,7 @@ impl TraitBuilder {
 
 impl Default for TraitBuilder {
     fn default() -> Self {
-        TraitBuilder::new()
+        Self::new()
     }
 }
 
