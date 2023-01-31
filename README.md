@@ -1,6 +1,7 @@
 # Mini Functions 🦀
 
 [![Made With Love][mwl]][6]
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsebastienrousseau%2Fmini-functions.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsebastienrousseau%2Fmini-functions?ref=badge_shield)
 
 <!-- markdownlint-disable MD033 -->
 <center>
@@ -315,6 +316,9 @@ Apache License (Version 2.0).
 
 - [Apache License, Version 2.0][1]
 - [MIT license][2]
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsebastienrousseau%2Fmini-functions.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsebastienrousseau%2Fmini-functions?ref=badge_large)
 
 ## Contribution 🤝
 
