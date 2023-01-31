@@ -6,47 +6,43 @@ pub struct ErrorType {
 
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Error {
-    IllegalArgument(String),
-    IllegalState(String),
-    IllegalFormat(String),
-    NotImplemented(String),
-    UnsupportedOperation(String),
-    UnsupportedVersion(String),
-    InitializationFailed(String),
-    ConcurrentUpdate(String),
-    DataUnavailable(String),
-    RejectedOperation(String),
-    TimeoutElapsed(String),
-    AssertionFailed(String),
-    Interrupted(String),
-    ExternalError(String),
-    InternalError(String),
-    UnknownError(String),
+    Argument(String),
+    Assertion(String),
+    Concurrency(String),
+    Data(String),
+    External(String),
+    Format(String),
+    Implementation(String),
+    Initialization(String),
+    Internal(String),
+    Interruption(String),
+    Operation(String),
+    Rejection(String),
+    State(String),
+    Timeout(String),
+    Unknown(String),
+    Version(String),
 }
 
 impl Error {
     pub fn new(err_type: ErrorType) -> Self {
         match err_type.name.as_str() {
-            "illegal_argument" => Error::IllegalArgument(String::from("Illegal argument")),
-            "illegal_state" => Error::IllegalState(String::from("Illegal state")),
-            "illegal_format" => Error::IllegalFormat(String::from("Illegal format")),
-            "not_implemented" => Error::NotImplemented(String::from("Not implemented")),
-            "unsupported_operation" => {
-                Error::UnsupportedOperation(String::from("Unsupported operation"))
-            }
-            "unsupported_version" => Error::UnsupportedVersion(String::from("Unsupported version")),
-            "initialization_failed" => {
-                Error::InitializationFailed(String::from("Initialization failed"))
-            }
-            "concurrent_update" => Error::ConcurrentUpdate(String::from("Concurrent update")),
-            "data_unavailable" => Error::DataUnavailable(String::from("Data unavailable")),
-            "rejected_operation" => Error::RejectedOperation(String::from("Rejected operation")),
-            "timeout_elapsed" => Error::TimeoutElapsed(String::from("Timeout elapsed")),
-            "assertion_failed" => Error::AssertionFailed(String::from("Assertion failed")),
-            "interrupted" => Error::Interrupted(String::from("Interrupted")),
-            "external_error" => Error::ExternalError(String::from("External error")),
-            "internal_error" => Error::InternalError(String::from("Internal error")),
-            _ => Error::UnknownError(String::from("Unknown error")),
+            "argument" => Error::Argument(String::from("Illegal argument")),
+            "assertion" => Error::Assertion(String::from("Assertion failed")),
+            "concurrency" => Error::Concurrency(String::from("Concurrency update")),
+            "data" => Error::Data(String::from("Data unavailable")),
+            "external" => Error::External(String::from("External error")),
+            "format" => Error::Format(String::from("Illegal format")),
+            "implementation" => Error::Implementation(String::from("No implementation")),
+            "initialization" => Error::Initialization(String::from("Initialization failed")),
+            "internal" => Error::Internal(String::from("Internal error")),
+            "interruption" => Error::Interruption(String::from("Interruption occurred")),
+            "operation" => Error::Operation(String::from("Unsupported operation")),
+            "rejection" => Error::Rejection(String::from("Rejection occurred")),
+            "state" => Error::State(String::from("Illegal state")),
+            "timeout" => Error::Timeout(String::from("Timeout elapsed")),
+            "version" => Error::Version(String::from("Unsupported version")),
+            _ => Error::Unknown(String::from("Unknown error")),
         }
     }
 }
@@ -57,7 +53,7 @@ impl ErrorType {
             name: String::from(name),
             error_type: Error::new(ErrorType {
                 name: name.to_string(),
-                error_type: Error::UnknownError(String::from(name)),
+                error_type: Error::Unknown(String::from(name)),
             }),
         }
     }
@@ -66,7 +62,7 @@ impl ErrorType {
             name: String::from(name),
             error_type: Error::new(ErrorType {
                 name: name.to_string(),
-                error_type: Error::UnknownError(String::from(name)),
+                error_type: Error::Unknown(String::from(name)),
             }),
         }
     }

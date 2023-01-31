@@ -7,10 +7,10 @@ mod tests {
 
     #[test]
     fn test_error_type_new() {
-        let error_type = ErrorType::new("illegal_argument");
-        assert_eq!(error_type.name, "illegal_argument");
+        let error_type = ErrorType::new("argument");
+        assert_eq!(error_type.name, "argument");
         match error_type.error_type {
-            Error::IllegalArgument(s) => assert_eq!(s, "Illegal argument"),
+            Error::Argument(s) => assert_eq!(s, "Illegal argument"),
             _ => panic!("Unexpected error type"),
         }
     }
@@ -21,7 +21,7 @@ mod tests {
         let subtype = error_type.new_subtype("subtype");
         assert_eq!(subtype.name, "subtype");
         match subtype.error_type {
-            Error::UnknownError(s) => assert_eq!(s, "Unknown error"),
+            Error::Unknown(s) => assert_eq!(s, "Unknown error"),
             _ => panic!("Unexpected error type"),
         }
     }
@@ -34,9 +34,9 @@ mod tests {
 
     #[test]
     fn test_error_type_error_type() {
-        let error_type = ErrorType::new("illegal_argument");
+        let error_type = ErrorType::new("argument");
         match error_type.error_type {
-            Error::IllegalArgument(s) => assert_eq!(s, "Illegal argument"),
+            Error::Argument(s) => assert_eq!(s, "Illegal argument"),
             _ => panic!("Unexpected error type"),
         }
     }
@@ -44,30 +44,24 @@ mod tests {
     #[test]
     fn test_new() {
         let err_type = ErrorType {
-            name: String::from("illegal_argument"),
-            error_type: Error::IllegalArgument(String::from("illegal_argument")),
+            name: String::from("argument"),
+            error_type: Error::Argument(String::from("argument")),
         };
         let err = Error::new(err_type);
-        assert_eq!(
-            err,
-            Error::IllegalArgument(String::from("Illegal argument"))
-        );
+        assert_eq!(err, Error::Argument(String::from("Illegal argument")));
 
         let err_type = ErrorType {
-            name: String::from("unsupported_operation"),
-            error_type: Error::UnsupportedOperation(String::from("unsupported_operation")),
+            name: String::from("operation"),
+            error_type: Error::Operation(String::from("operation")),
         };
         let err = Error::new(err_type);
-        assert_eq!(
-            err,
-            Error::UnsupportedOperation(String::from("Unsupported operation"))
-        );
+        assert_eq!(err, Error::Operation(String::from("Unsupported operation")));
 
         let err_type = ErrorType {
             name: String::from("unknown_error"),
-            error_type: Error::UnknownError(String::from("unknown_error")),
+            error_type: Error::Unknown(String::from("unknown_error")),
         };
         let err = Error::new(err_type);
-        assert_eq!(err, Error::UnknownError(String::from("Unknown error")));
+        assert_eq!(err, Error::Unknown(String::from("Unknown error")));
     }
 }
