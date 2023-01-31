@@ -70,7 +70,7 @@ mod tests {
     }
 
     #[test]
-    fn test_empty_wordlist() {
+    fn test_wordlist() {
         let words: Vec<String> = vec!["mini".to_string(), "functions".to_string()];
         let mut rng = Random::default();
         while words.len() < 2 {
@@ -80,5 +80,10 @@ mod tests {
                 assert!(words.is_empty());
             };
         }
+    }
+    #[test]
+    fn test_wordlist_is_empty() {
+        let word = "";
+        assert!(word.is_empty());
     }
 }
