@@ -121,7 +121,7 @@ impl Clone for Date {
     fn clone(&self) -> Self {
         let date = match self.date.try_read() {
             Ok(guard) => *guard,
-            _ => Date::new().date.into_inner().unwrap(),
+            _ => Date::default().date.into_inner().unwrap(),
         };
         let day = match self.day.try_read() {
             Ok(guard) => *guard,
@@ -149,7 +149,7 @@ impl Clone for Date {
         };
         let offset = match self.offset.try_read() {
             Ok(guard) => *guard,
-            _ => Date::new().offset.into_inner().unwrap(),
+            _ => Date::default().offset.into_inner().unwrap(),
         };
         let ordinal = match self.ordinal.try_read() {
             Ok(guard) => *guard,
@@ -161,7 +161,7 @@ impl Clone for Date {
         };
         let time = match self.time.try_read() {
             Ok(guard) => *guard,
-            _ => Date::new().time.into_inner().unwrap(),
+            _ => Date::default().time.into_inner().unwrap(),
         };
         let weekday = match self.weekday.try_read() {
             Ok(guard) => guard.clone(),
