@@ -1,4 +1,6 @@
 #[cfg(test)]
+
+// FIXME: Add more tests to bring the code coverage to 100%
 mod tests {
     extern crate md5;
     use md5::*;

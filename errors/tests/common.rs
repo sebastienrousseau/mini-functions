@@ -1,5 +1,6 @@
 #[cfg(test)]
 
+// FIXME: Add more tests to bring the code coverage to 100%
 mod tests {
     extern crate errors;
     use errors::common::{Error, ErrorType};

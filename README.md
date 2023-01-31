@@ -1,7 +1,6 @@
 # Mini Functions 🦀
 
 [![Made With Love][mwl]][6]
-[![Rust][made-with-rust-badge]][12]
 
 <!-- markdownlint-disable MD033 -->
 <center>
@@ -13,6 +12,7 @@
 [![Crates.io][crates-badge]][8]
 [![Lib.rs][libs-badge]][10]
 [![Docs.rs][docs-badge]][9]
+[![Rust][made-with-rust-badge]][12]
 
 [![codecov][codecov-badge]][13]
 [![License][license-badge]][2]
