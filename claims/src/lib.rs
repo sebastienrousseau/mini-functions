@@ -91,13 +91,8 @@
     html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-claims.svg",
     html_root_url = "https://docs.rs/mini-functions"
 )]
-#![crate_name = "claims"]
-#![crate_type = "dylib"]
 #![crate_type = "lib"]
-#![crate_type = "rlib"]
-#![crate_type = "staticlib"]
 
-extern crate date;
 extern crate serde;
 
 use serde::{Deserialize, Serialize};

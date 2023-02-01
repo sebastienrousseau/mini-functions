@@ -7,7 +7,7 @@ categories = [
     "WebAssembly",
     "Webprogramming",
 ]
-description = "`Claims` is a struct that holds the claims defined in the RFC 7519, encoded as JSON object in JWS/JWE, allowing digital signing/integrity protection and/or encryption."
+description = "The `Claims` library holds JSON Web Token (JWT) claims. It provides an RFC7519 compliant implementation of JSON Web Tokens (JWT) and JSON Web Signature (JWS) for Rust."
 edition = "2018"
 homepage = "https://minifunctions.com/"
 keywords = [
@@ -43,12 +43,11 @@ harness = false
 path = "benches/claims.rs"
 
 [dependencies]
-date = { path = "../date" }
 serde = { version = "1.0.152", features = ["derive"] }
-serde_json = "1.0.91"
 
 [dev-dependencies]
 criterion = "0.4.0"
+date = { path = "../date" }
 
 [lib]
 crate-type = ["lib"]
