@@ -41,6 +41,8 @@
 //! | `vc` (Verifiable Credential) | A Credential that is tamper-evident and has authorship that can be cryptographically verified. |
 //! | `vp` (Verifiable Presentation) | A Presentation that is tamper-evident and has authorship that can be cryptographically verified. |
 //!
+//! ## Usage
+//!
 //! Claims can be any `serde::Serialize` or `serde::Deserialize` types,
 //! usually derived with `serde_derive`.
 //!

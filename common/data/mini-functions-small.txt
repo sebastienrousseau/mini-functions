@@ -1,8 +1,0 @@
-Mini Functions is a highly performant utility and wrapper functions
-library for Rust that has been carefully designed with optimization and
-efficiency in mind. By providing convenient wrapper functions, our
-library aims to provide a high-level interface for common tasks while
-still leveraging the performance benefits of Rust under the hood. These
-utility functions serve as an essential toolkit for any Rust developer,
-and the library's design abstractions allow for easy integration into a
-variety of projects and applications.

@@ -32,8 +32,6 @@
 )]
 #![crate_name = "date"]
 #![crate_type = "lib"]
-#![crate_type = "rlib"]
-#![crate_type = "dylib"]
 
 extern crate time;
 use std::{fmt, sync::RwLock};
