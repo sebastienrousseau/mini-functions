@@ -1,3 +1,5 @@
+#![warn(missing_docs)]
+#![forbid(unsafe_code)]
 extern crate common;
 pub use common::constants::*;
 pub use common::words::WORD_LIST;

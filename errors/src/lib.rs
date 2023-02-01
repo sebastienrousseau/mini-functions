@@ -1,3 +1,5 @@
+#![warn(missing_docs)]
+#![forbid(unsafe_code)]
 pub mod common;
 pub mod error;
 pub mod jwt;

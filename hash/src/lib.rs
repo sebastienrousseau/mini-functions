@@ -3,7 +3,8 @@
 //! This crate provides an easy way to hash and verify passwords using the [blake3](https://crates.io/crates/blake3) crate.
 //!
 //!
-
+#![warn(missing_docs)]
+#![forbid(unsafe_code)]
 // Copyright © 2022-2023 Mini Functions. All rights reserved.
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT

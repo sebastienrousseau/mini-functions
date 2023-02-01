@@ -2,7 +2,8 @@
 //!
 //! Log provides an easy way to log a message to the console with a simple, readable output format.
 //!
-
+#![warn(missing_docs)]
+#![forbid(unsafe_code)]
 // Copyright © 2022-2023 Mini Functions. All rights reserved.
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT

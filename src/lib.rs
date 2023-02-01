@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 //!
-//! Highly performant utility and wrapper functions library for Rust
+//! A Rust library of highly performant utility and wrapper functions
 //!
-//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/logos/logo-mini-functions.svg)](https://minifunctions.com)
+//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-mini-functions.svg)](https://minifunctions.com)
 //!
 //! <center>
 //!
@@ -18,21 +18,32 @@
 //!
 //! ## Overview
 //!
-//! Mini-Functions is a Rust utility library for performance, security,
-//! and modularity. At a high level, it provides a few major components:
+//! Mini-Functions is a modern Rust library that prioritizes performance
+//! , security, and modularity. It provides a low-overhead access to
+//! functions for common programming tasks.
 //!
-//! - **[claims](../claims/index.html)** - Provides access to the claims of a JSON Web Token (JWT).
-//! - **[common](../common/index.html)** - Provides access to common functions and constants.
-//! - **[date](../date/index.html)** - Provides access to the current date and time.
-//! - **[errors](../errors/index.html)** - Provides access to error handling functions.
-//! - **[games](../games/index.html)** - Provides access to mini games using Mini-Functions
-//! - **[hash](../hash/index.html)** - Provides access to hash functions.
-//! - **[jot](../jot/index.html)** - Provides access to JSON Web Token (JWT) functions.
-//! - **[logger](../logger/index.html)** - Provides access to logging functions.
-//! - **[md5](../md5/index.html)** - Provides access to MD5 functions.
-//! - **[password](../password/index.html)** - Provides access to password functions.
-//! - **[qr](../qr/index.html)** - Provides access to QR code functions.
-//! - **[random](../random/index.html)** - Provides access to random number functions.
+//! ## Features
+//!
+//! - **[Claims](../claims/index.html)** - Provides access to the claims
+//! of a JSON Web Token (JWT).
+//! - **[Common](../common/index.html)** - Provides access to common
+//! functions and constants.
+//! - **[Date](../date/index.html)** - Provides access to the current
+//! date and time.
+//! - **[Errors](../errors/index.html)** - Provides access to error
+//! handling functions.
+//! - **[Hash](../hash/index.html)** - Provides access to hash
+//! functions.
+//! - **[Jot](../jot/index.html)** - Provides access to JSON Web Token
+//! (JWT) functions.
+//! - **[Logger](../logger/index.html)** - Provides access to logging
+//! functions.
+//! - **[MD5](../md5/index.html)** - Provides access to MD5 functions.
+//! - **[Password](../password/index.html)** - Provides access to
+//! password functions.
+//! - **[QR](../qr/index.html)** - Provides access to QR code functions.
+//! - **[Random](../random/index.html)** - Provides access to random
+//! number functions.
 //! - And so much more.
 //!
 //! These components provide a comprehensive set of functionality and
@@ -40,6 +51,7 @@
 //! applications and services in the Rust programming language.
 //!
 //! [**Learn more**](https://minifunctions.com) [❯](https://minifunctions.com)
+//!
 //!
 //! ## Installation
 //!
@@ -64,36 +76,50 @@
 //!
 //!
 #![warn(missing_docs)]
+#![forbid(unsafe_code)]
 #![doc(
-    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/icons/ico-mini-functions.svg",
-    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/icons/ico-mini-functions.svg",
+    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-mini-functions.svg",
+    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-mini-functions.svg",
     html_root_url = "https://docs.rs/mini-functions"
 )]
 #![crate_name = "mini_functions"]
+#![crate_type = "dylib"]
 #![crate_type = "lib"]
 #![crate_type = "rlib"]
-#![crate_type = "dylib"]
+#![crate_type = "staticlib"]
 
-/// Mini-Functions is a module that provides a variety of features
-/// for building apps, including several major crates that you can use
+/// Mini-Functions module that provides a variety of features for
+/// building apps, including several major crates that you can use
 /// individually or together to construct the core infrastructure of
 /// your Rust applications.
 pub mod mini_functions {
-    /// This module allows access to JSON Web Token (JWT) Claims
-    /// functions.
-    pub use claims::Claims;
+    /// Provides access to common functions and constants.
+    pub use self::common::*;
+
+    /// Provides access to the claims of a JSON Web Token (JWT).
+    pub use claims::*;
+
     /// Provides access to Date functions.
-    pub use date::Date;
+    pub use date::*;
+
+    /// Provides access to Error handling functions.
+    pub use errors::*;
+
     /// Provides access to Hash functions.
-    pub use hash::Hash;
+    pub use hash::*;
+
     /// Provides access to JSON Web Token (JWT) functions.
-    pub use jot::{Algorithm, Header, JWT};
+    pub use jot::*;
+
     /// Provides access to Log functions.
-    pub use logger::{Log, LogLevel};
+    pub use logger::*;
+
     /// Provides access to MD5 functions.
-    pub use md5::MD5;
+    pub use md5::*;
+
     /// Provides access to QR code functions.
-    pub use qr::QRCode;
+    pub use qr::*;
+
     /// Provides access to Random numbers functions.
-    pub use random::Random;
+    pub use random::*;
 }

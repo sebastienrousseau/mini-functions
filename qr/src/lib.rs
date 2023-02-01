@@ -3,7 +3,8 @@
 //! QRCode provides an easy way to generate a QR code image in PNG or
 //! SVG format.
 //!
-
+#![warn(missing_docs)]
+#![forbid(unsafe_code)]
 // Copyright © 2022-2023 Mini Functions. All rights reserved.
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT

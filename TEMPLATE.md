@@ -3,7 +3,7 @@
 <!-- markdownlint-disable MD033 -->
 <center>
 
-## Highly performant utility and wrapper functions library for Rust 🚀
+## A Rust library of highly performant utility and wrapper functions 🚀
 
 ![Mini Functions][banner]
 

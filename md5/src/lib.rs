@@ -44,7 +44,8 @@
 //! Mini Functions is an ongoing project that is constantly evolving and improving. Our goal is to make it a highly-performant utility and wrapper functions library for Rust. We’ve already added a number of functions and features to the library, and we have more planned for the future but we need your help.
 //!
 //! As an open source project, we welcome contributions from the community. If you’re an experienced Rust developer and you’re interested in helping us shape the direction of the project, we encourage you to get involved. Whether you have ideas for new features, want to help fix bugs, or just want to learn more about Rust development, we welcome your contributions.
-
+#![warn(missing_docs)]
+#![forbid(unsafe_code)]
 // Copyright © 2022-2023 Mini Functions. All rights reserved.
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT

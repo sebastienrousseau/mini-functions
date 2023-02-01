@@ -1,33 +1,41 @@
 extern crate claims;
-extern crate date;
-
 use self::claims::Claims;
-use self::date::Date;
 
 fn main() {
-    const CL_AUD: &str = "MINI-FUNCTIONS-CLAIMS-AUD";
-    const CL_CUSTOM: &str = "MINI-FUNCTIONS-CLAIMS-CUSTOM";
-    const CL_DID: &str = "MINI-FUNCTIONS-CLAIMS-DID";
-    const CL_ISS: &str = "MINI-FUNCTIONS-CLAIMS-ISS";
-    const CL_JTI: &str = "MINI-FUNCTIONS-CLAIMS-JTI";
-    const CL_SUB: &str = "MINI-FUNCTIONS-CLAIMS-SUB";
-    const CL_VC: &str = "MINI-FUNCTIONS-CLAIMS-VC";
-    const CL_VP: &str = "MINI-FUNCTIONS-CLAIMS-VP";
-
-    let date = Date::new().iso_8601;
-
+    // Create a new instance of Claims
     let mut claims = Claims::new();
-    claims.set_claim("aud", CL_AUD);
-    claims.set_claim("custom", CL_CUSTOM);
-    claims.set_claim("did", CL_DID);
-    claims.set_claim("exp", &date.read().unwrap().to_string());
-    claims.set_claim("iat", &date.read().unwrap().to_string());
-    claims.set_claim("iss", CL_ISS);
-    claims.set_claim("jti", CL_JTI);
-    claims.set_claim("nbf", &date.read().unwrap().to_string());
-    claims.set_claim("sub", CL_SUB);
-    claims.set_claim("vc", CL_VC);
-    claims.set_claim("vp", CL_VP);
 
-    println!("🦀 Claims::new():                 ✅ {claims}\n");
+    // Set claims
+    claims.set_claim("aud", "https://example.com");
+    claims.set_claim("custom", "admin");
+    claims.set_claim("did", "did:example:123456789");
+    claims.set_claim("iss", "https://issuer.com");
+    claims.set_claim("jti", "abc123");
+    claims.set_claim("sub", "user123");
+    claims.set_claim("vc", "Ed25519Signature2018");
+    claims.set_claim("vp", "B7AC971B05D791F0EB5FCE3B8A3296F1D68A63199714A2993AAD6E2F3D10F4E4425576AA4D97B80B617D5A182B519E9A021DEEDE9BFFBC3499F902DDC5CA163F");
+
+    // Get claims
+    let audience = claims.get_claim("aud").unwrap();
+    let custom = claims.get_claim("custom").unwrap();
+    let did = claims.get_claim("did").unwrap();
+    let issuer = claims.get_claim("iss").unwrap();
+    let jwt_id = claims.get_claim("jti").unwrap();
+    let subject = claims.get_claim("sub").unwrap();
+    let credential = claims.get_claim("vc").unwrap();
+    let proof = claims.get_claim("vp").unwrap();
+
+    println!("🦀 Claims::get_claim() for 'aud':       ✅ {}", audience);
+    println!("🦀 Claims::get_claim() for 'custom':    ✅ {}", custom);
+    println!("🦀 Claims::get_claim() for 'did':       ✅ {}", did);
+    println!("🦀 Claims::get_claim() for 'iss':       ✅ {}", issuer);
+    println!("🦀 Claims::get_claim() for 'jti':       ✅ {}", jwt_id);
+    println!("🦀 Claims::get_claim() for 'sub':       ✅ {}", subject);
+    println!("🦀 Claims::get_claim() for 'vc':        ✅ {}", credential);
+    println!("🦀 Claims::get_claim() for 'vp':        ✅ {}", proof);
+
+    // Remove claims
+    let audience = claims.get_claim("aud").unwrap().to_owned();
+    claims.remove_claim("aud");
+    println!("🦀 Claims::remove_claim():              ✅ {}", audience);
 }

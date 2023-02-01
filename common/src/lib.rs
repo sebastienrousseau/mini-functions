@@ -1,3 +1,5 @@
+#![warn(missing_docs)]
+#![forbid(unsafe_code)]
 pub mod constants;
 pub mod words;
 pub use {constants::*, words::*};
