@@ -62,10 +62,9 @@ impl QRCode {
 
     /// The `to_png` method creates a new PNG image of the QR code using
     /// the data stored in the QRCode
-    pub fn to_png(&self) -> ImageBuffer<Rgb<u8>, Vec<u8>> {
+    pub fn to_png(&self, width: u32) -> ImageBuffer<Rgb<u8>, Vec<u8>> {
         let qrcode = self.to_qrcode();
-        let mut img: ImageBuffer<Rgb<u8>, Vec<u8>> =
-            ImageBuffer::new(qrcode.width() as u32, qrcode.width() as u32);
+        let mut img: ImageBuffer<Rgb<u8>, Vec<u8>> = ImageBuffer::new(width, width);
         for (x, y, pixel) in img.enumerate_pixels_mut() {
             let c = if qrcode[(x as usize, y as usize)] == qrcode::Color::Dark {
                 Rgb([0, 0, 0])
@@ -77,6 +76,22 @@ impl QRCode {
         }
         img
     }
+
+    // pub fn to_png(&self) -> ImageBuffer<Rgb<u8>, Vec<u8>> {
+    //     let qrcode = self.to_qrcode();
+    //     let mut img: ImageBuffer<Rgb<u8>, Vec<u8>> =
+    //         ImageBuffer::new(qrcode.width() as u32, qrcode.width() as u32);
+    //     for (x, y, pixel) in img.enumerate_pixels_mut() {
+    //         let c = if qrcode[(x as usize, y as usize)] == qrcode::Color::Dark {
+    //             Rgb([0, 0, 0])
+    //         } else {
+    //             Rgb([255, 255, 255])
+    //         };
+    //         *pixel = c;
+    //         *pixel = c;
+    //     }
+    //     img
+    // }
 
     /// The `to_svg` method creates a new SVG image of the QR code using
     /// the data stored in the QRCode
@@ -127,4 +142,28 @@ impl QRCode {
         }
         img
     }
+}
+
+#[macro_export]
+/// The `qr_code` macro creates a new instance of the QRCode struct
+/// with the given data.
+macro_rules! qr_code {
+    ($data:expr) => {
+        QRCode::new($data)
+    };
+}
+
+#[macro_export]
+/// Define a macro named `qr_code_from`
+macro_rules! qr_code_from {
+    // This macro takes two expressions: `$data` and `$format`
+    ($data:expr, $format:expr,  $width:expr) => {
+        // Match the value of `$format`
+        match $format {
+            // If `$format` is equal to "png", generate a PNG format QR code using `QRCode::from_bytes`
+            "png" => QRCode::from_bytes($data).to_png($width),
+            // For any other value, panic with the message "Invalid format"
+            _ => panic!("Invalid format"),
+        }
+    };
 }
