@@ -1,4 +1,22 @@
-//! # Core Random number generator
+// Copyright © 2022-2023 Mini Functions. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
+//!
+//! # A Rust library that generates random and pseudo-random numbers based on the Mersenne Twister algorithm
+//!
+//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-random.svg)](https://minifunctions.com)
+//!
+//! <center>
+//!
+//! [![Rust](https://img.shields.io/badge/rust-f04041?style=for-the-badge&labelColor=c0282d&logo=rust)](https://www.rust-lang.org)
+//! [![Crates.io](https://img.shields.io/crates/v/mini-functions.svg?style=for-the-badge&color=success&labelColor=27A006)](https://crates.io/crates/mini-functions)
+//! [![Lib.rs](https://img.shields.io/badge/lib.rs-v0.0.8-success.svg?style=for-the-badge&color=8A48FF&labelColor=6F36E4)](https://lib.rs/crates/mini-functions)
+//! [![GitHub](https://img.shields.io/badge/github-555555?style=for-the-badge&labelColor=000000&logo=github)](https://github.com/sebastienrousseau/mini-functions/tree/main/claims)
+//! [![License](https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge&color=007EC6&labelColor=03589B)](http://opensource.org/licenses/MIT)
+//!
+//! </center>
+//!
+//! ## Overview
 //!
 //! This crate provides a random number generator based on the Mersenne
 //! Twister algorithm. The Mersenne Twister algorithm is a pseudorandom
@@ -7,11 +25,23 @@
 //! (LFSR) and is designed to have a period of 2^19937-1. It is one of
 //! the most widely used PRNGs in scientific computing.
 //!
+//! ## Features
+//!
+//! - Generates random numbers based on the Mersenne Twister algorithm
+//! (MT19937)
+//! - Generates random numbers in the range 0..(2^32 - 1)
+//!
+//!
+#![warn(missing_debug_implementations)]
+#![warn(missing_copy_implementations)]
 #![warn(missing_docs)]
 #![forbid(unsafe_code)]
-// Copyright © 2022-2023 Mini Functions. All rights reserved.
-// SPDX-License-Identifier: Apache-2.0
-// SPDX-License-Identifier: MIT
+#![doc(
+    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-random.svg",
+    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-random.svg",
+    html_root_url = "https://docs.rs/mini-functions"
+)]
+#![crate_type = "lib"]
 
 extern crate rand;
 use rand::{thread_rng, Rng};
@@ -44,7 +74,20 @@ const TEMPERING_MASK_B: u32 = 0x9d2c5680;
 /// algorithm.
 const TEMPERING_MASK_C: u32 = 0xefc60000;
 
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+/// The Random struct is used to generate random numbers using the
+/// Mersenne Twister algorithm. It generates pseudorandom integers
+/// uniformly distributed in 0..(2^32 - 1) starting from any odd seed in
+/// 0..(2^32 - 1).
+///
+/// It contains an array of unsigned 32-bit integers and an index used
+/// to generate random numbers. The array contains 624 elements and the
+/// index is used to generate random numbers from the array.
+///
+/// The index is incremented after each random number is generated.
+/// When the index reaches 624, the array is reinitialized and the index
+/// is reset to 0.
+///
 pub struct Random {
     /// The array of unsigned 32-bit integers used to generate random
     /// numbers
@@ -98,7 +141,7 @@ impl Random {
     //     self.range(min, max)
     // }
 
-    // Returns new random number generator
+    /// Returns new random number generator
     pub fn new() -> Self {
         let mut rng = Random {
             mt: [0; N],
