@@ -113,205 +113,19 @@ collection of tools for working with various aspects of a Rust
 application. The `mini-functions` library consists of the following
 `non-exhaustive` functions:
 
-[![Claims][claims-badge]][12]
-[![Common][common-badge]][12]
-[![Date][date-badge]][12]
-[![Errors][errors-badge]][12]
-[![Hash][hash-badge]][12]
-[![Jot][jot-badge]][12]
-[![Logger][logger-badge]][12]
-[![MD5][md5-badge]][12]
-[![Password][password-badge]][12]
-[![QR][qr-badge]][12]
-[![Random][random-badge]][12]
-
-### 1) Claim functions
-
-The **Claim functions** are used to retrieve and manipulate information
-about claims. These functions are used to create and manage claims in
-JSON Web Tokens (JWT) and JSON Web Signatures (JWS).
-
-<!-- markdownlint-disable MD033 -->
-<details>
-  <summary>Open to view the Claim functions available in the library<br><br></summary>
-
-| Function | Include File | Function Prototype | Description |
-| -------- | ------------ | ------------------ | ----------- |
-| `Claim::new()` | `claim.rs` | `fn new()` | Creates a new claim. |
-| `Claim::exp` | `claim.rs` | `exp` | Returns the expiration time of the claim. |
-| `Claim::iat` | `claim.rs` | `iat` | Returns the issued at time of the claim. |
-| `Claim::iss` | `claim.rs` | `iss` | Returns the issuer of the claim. |
-| `Claim::sub` | `claim.rs` | `sub` | Returns the subject of the claim. |
-| `Claim::aud` | `claim.rs` | `aud` | Returns the audience of the claim. |
-
-</details>
-
-### 2) Date and time functions
-
-The **Date and time functions** are used to retrieve and manipulate
-information about dates and times.
-
-<!-- markdownlint-disable MD033 -->
-<details>
-  <summary>Open to view the Date and time functions available in the library<br><br></summary>
-
-| Function | Include File | Function Prototype | Description |
-| -------- | ------------ | ------------------ | ----------- |
-| `Date::date()` | `date.rs` | `fn date()` | Returns the current date in UTC format. |
-| `Date::day()` | `date.rs` | `fn day()` | Returns the current day. |
-| `Date::hour()` | `date.rs` | `fn hour()` | Returns the current hour. |
-| `Date::iso_8601()` | `date.rs` | `fn iso_8601()` | Returns the current date and time in ISO 8601 format. |
-| `Date::microsecond()` | `date.rs` | `fn microsecond()` | Returns the current microsecond. |
-| `Date::millisecond()` | `date.rs` | `fn millisecond()` | Returns the current millisecond. |
-| `Date::minute()` | `date.rs` | `fn minute()` | Returns the current minute. |
-| `Date::month()` | `date.rs` | `fn month()` | Returns the current month. |
-| `Date::nanosecond()` | `date.rs` | `fn nanosecond()` | Returns the current nanosecond. |
-| `Date::now_utc()` | `date.rs` | `fn now_utc()` | Returns the current date and time in UTC format. |
-| `Date::second()` | `date.rs` | `fn second()` | Returns the current second. |
-| `Date::timestamp()` | `date.rs` | `fn timestamp()` | Returns the current timestamp. |
-| `Date::weekday()` | `date.rs` | `fn weekday()` | Returns the current weekday. |
-| `Date::year()` | `date.rs` | `fn year()` | Returns the current year. |
-</details>
-
-### 3) Hash functions
-
-The **Hash functions** are used to generate hashes for various data
-types.
-
-<!-- markdownlint-disable MD033 -->
-<details>
-  <summary>Open to view the Hash functions available in the library<br><br></summary>
-
-| Function | Include File | Function Prototype | Description |
-| -------- | ------------ | ------------------ | ----------- |
-| `Hash::entropy` | `hash.rs` | `fn entropy()` | Returns the entropy of a string. |
-| `Hash::generate_hash` | `hash.rs` | `fn generate_hash()` | Generates a hash for a string. |
-| `Hash::hash` | `hash.rs` | `fn hash()` | Returns the hash of a string. |
-| `Hash::hash_length` | `hash.rs` | `fn hash_length()` | Returns the length of a hash. |
-| `Hash::new` | `hash.rs` | `fn new()` | Creates a new hash instance. |
-| `Hash::password` | `hash.rs` | `fn password()` | Returns the hash of a password. |
-| `Hash::password_length` | `hash.rs` | `fn password_length()` | Returns the length of a password hash. |
-| `Hash::set_hash` | `hash.rs` | `fn set_hash()` | Sets the hash for a string. |
-| `Hash::set_password` | `hash.rs` | `fn set_password()` | Sets the hash for a password. |
-| `Hash::verify` | `hash.rs` | `fn verify()` | Verifies a hash. |
-</details>
-
-### 4) JWT functions
-
-The **JWT functions** are used to generate and verify JSON Web Tokens.
-
-<!-- markdownlint-disable MD033 -->
-<details>
-  <summary>Open to view the JWT functions available in the library<br><br></summary>
-
-| Function | Include File | Function Prototype | Description |
-| -------- | ------------ | ------------------ | ----------- |
-| `JWT::default` | `jwt.rs` | `fn default()` | Creates a new JWT instance. |
-| `JWT::decode` | `jwt.rs` | `fn decode()` | Decodes a JWT. |
-| `JWT::encode` | `jwt.rs` | `fn encode()` | Encodes a JWT. |
-| `JWT::generate` | `jwt.rs` | `fn generate()` | Generates a JWT. |
-| `JWT::get_token` | `jwt.rs` | `fn get_token()` | Returns the JWT token. |
-| `JWT::claims` | `jwt.rs` | `fn claims()` | Returns the JWT claims. |
-| `JWT::get_token_length` | `jwt.rs` | `fn get_token_length()` | Returns the length of the JWT token. |
-| `JWT::get_token_username` | `jwt.rs` | `fn get_token_username()` | Returns the username of the JWT token. |
-| `JWT::header` | `jwt.rs` | `fn header()` | Returns the JWT header. |
-| `JWT::new` | `jwt.rs` | `fn new()` | Creates a new JWT instance. |
-| `JWT::secret` | `jwt.rs` | `fn secret()` | Returns the JWT secret. |
-| `JWT::set_token` | `jwt.rs` | `fn set_token()` | Sets the JWT token. |
-</details>
-
-### 5) Log functions
-
-The **Log functions** are used to log messages to the console.
-
-<!-- markdownlint-disable MD033 -->
-<details>
-  <summary>Open to view the Log functions available in the library<br><br></summary>
-
-| Function | Include File | Function Prototype | Description |
-| -------- | ------------ | ------------------ | ----------- |
-| `Log::log()` | `log.rs` | `fn log()` | Logs a message to the console.|
-| `Log::new()` | `log.rs` | `fn new()` | Creates a new log instance. |
-</details>
-
-### 6) Password functions
-
-The **Password functions** are used to generate passwords and verify
-passwords.
-
-<!-- markdownlint-disable MD033 -->
-<details>
-  <summary>Open to view the Password functions available in the library<br><br></summary>
-
-| Function | Include File | Function Prototype | Description |
-| -------- | ------------ | ------------------ | ----------- |
-| `Password::entropy` | `password.rs` | `fn entropy()` | Returns the entropy of a string. |
-| `Password::hash_length` | `password.rs` | `fn hash_length()` | Returns the length of a hash. |
-| `Password::hash` | `password.rs` | `fn hash()` | Returns the hash of a password. |
-| `Password::is_empty` | `password.rs` | `fn is_empty()` | Checks if a password is empty. |
-| `Password::len` | `password.rs` | `fn len()` | Returns the length of a password. |
-| `Password::new` | `password.rs` | `fn new()` | Creates a new password instance. |
-| `Password::passphrase` | `password.rs` | `fn passphrase()` | Generates a passphrase. |
-| `Password::password_length` | `password.rs` | `fn password_length()` | Returns the length of a password hash. |
-| `Password::set_passphrase` | `password.rs` | `fn set_passphrase()` | Sets a passphrase. |
-</details>
-
-### 7) QRCode functions
-
-The **QRCode functions** are used to generate QRCode images and data.
-
-<!-- markdownlint-disable MD033 -->
-<details>
-  <summary>Open to view the QRCode functions available in the library<br><br></summary>
-
-| Function | Include File | Function Prototype | Description |
-| -------- | ------------ | ------------------ | ----------- |
-| `QRCode::colorize()` | `qrcode.rs` | `fn colorize()` | Colorizes the QRCode instance. |
-| `QRCode::from_bytes()` | `qrcode.rs` | `fn from_bytes()` | Creates a new QRCode instance from a byte array. |
-| `QRCode::from_string()` | `qrcode.rs` | `fn from_string()` | Creates a new QRCode instance from a string. |
-| `QRCode::new()` | `qrcode.rs` | `fn new()` | Creates a new QRCode instance. |
-| `QRCode::resize()` | `qrcode.rs` | `fn resize()` | Resizes the QRCode instance. |
-| `QRCode::to_png()` | `qrcode.rs` | `fn to_png()` | Converts the QRCode instance to a PNG image. |
-| `QRCode::to_qrcode()` | `qrcode.rs` | `fn to_qrcode()` | Converts the QRCode instance to a QRCode image. |
-| `QRCode::to_svg()` | `qrcode.rs` | `fn to_svg()` | Converts the QRCode instance to a SVG image. |
-</details>
-
-### 8) Random number functions
-
-The **Random number functions** are used to
-generate random numbers in a variety of sizes and formats.
-
-<!-- markdownlint-disable MD033 -->
-<details>
-  <summary>Open to view the Random number functions available in the library<br><br></summary>
-
-| Function | Include File | Function Prototype | Description |
-| -------- | ------------ | ------------------ | ----------- |
-| `Random::bytes()` | `random.rs` | `fn bytes()` | Generates a vector of random bytes of a given length. |
-| `Random::default()` | `random.rs` | `fn default()` | Creates a new `Random` struct with a default seed. |
-| `Random::float()` | `random.rs` | `fn float()` | Generates a random floating point number between 0 and 1. |
-| `Random::int()` | `random.rs` | `fn int()` | Generates a random integer between a minimum and maximum value. |
-| `Random::new()` | `random.rs` | `fn new()` | Creates a new `Random` struct with a seed based on the current system time. |
-| `Random::pseudo()` | `random.rs` | `fn pseudo()` | Generates a pseudo-random number by XORing the last 31 random numbers together. |
-| `Random::random()` | `random.rs` | `fn random()` | Generates a random number using the linear congruential generator algorithm. The multiplier for the algorithm is the golden ratio. |
-</details>
-
-### 9) UUID functions
-
-The **UUID functions** are used to generate UUIDs (Universally Unique
-Identifiers).
-
-<!-- markdownlint-disable MD033 -->
-<details>
-  <summary>Open to view the UUID functions available in the library<br><br></summary>
-
-| Function | Include File | Function Prototype | Description |
-| -------- | ------------ | ------------------ | ----------- |
-| `UUID::new()` | `uuid.rs` | `fn new()` | Creates a new UUID instance based on the version specified. (v3, v4, v5) |
-| `UUID::uuid_v3()` | `uuid.rs` | `fn uuid_v3()` | Creates a new UUID v3 instance. |
-| `UUID::uuid_v4()` | `uuid.rs` | `fn uuid_v4()` | Creates a new UUID v4 instance. |
-| `UUID::uuid_v5()` | `uuid.rs` | `fn uuid_v5()` | Creates a new UUID v5 instance. |
-</details>
+| Functions | Description |
+| -------- | ----------- |
+| [![Claims][claims-badge]][12] | The **Claim functions** are used to retrieve and manipulate information about claims. These functions are used to create and manage claims in JSON Web Tokens (JWT) and JSON Web Signatures (JWS). |
+| [![Common][common-badge]][12] | The **Common functions** are used to retrieve and manipulate information about common data types. |
+| [![Date][date-badge]][12] | The **Date and time functions** are used to retrieve and manipulate information about dates and times. |
+| [![Errors][errors-badge]][12] | The **Error functions** are used to retrieve and manipulate information about errors. |
+| [![Hash][hash-badge]][12] | The **Hash functions** are used to retrieve and manipulate information about hashes. |
+| [![Jot][jot-badge]][12] | The **Jot functions** are used to retrieve and manipulate information about JSON Object Tokens (JOT). |
+| [![Logger][logger-badge]][12] | The **Logger functions** are used to retrieve and manipulate information about logging. |
+| [![MD5][md5-badge]][12] | The **MD5 functions** are used to retrieve and manipulate information about MD5. |
+| [![Password][password-badge]][12] | The **Password functions** are used to retrieve and manipulate information about passwords. |
+| [![QR][qr-badge]][12] | The **QR functions** are used to retrieve and manipulate information about QR codes. |
+| [![Random][random-badge]][12] | The **Random functions** are used to retrieve and manipulate information about random data. |
 
 ## Semantic Versioning Policy 🚥
 
@@ -368,14 +182,14 @@ for their help and support.
 [mwl]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg "Made With Love"
 [fossa-badge]: https://img.shields.io/static/v1?style=for-the-badge&message=Fossa&color=289E6D&logo=Fossa&logoColor=FFFFFF&label= 'Fossa'
 
-[claims-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-claims.svg 'Claims'
-[common-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-common.svg 'Common'
-[date-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-date.svg 'Date'
-[errors-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-errors.svg 'Errors'
-[hash-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-hash.svg 'Hash'
-[jot-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-jot.svg 'Jot'
-[logger-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-logger.svg 'Logger'
-[md5-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-md5.svg 'MD5'
-[password-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-password.svg 'Password'
-[qr-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-qr.svg 'QR'
-[random-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-random.svg 'Random'
+[claims-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-claims.png 'Claims'
+[common-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-common.png 'Common'
+[date-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-date.png 'Date'
+[errors-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-errors.png 'Errors'
+[hash-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-hash.png 'Hash'
+[jot-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-jot.png 'Jot'
+[logger-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-logger.png 'Logger'
+[md5-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-md5.png 'MD5'
+[password-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-password.png 'Password'
+[qr-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-qr.png 'QR'
+[random-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-random.png 'Random'
