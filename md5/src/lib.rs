@@ -1,4 +1,22 @@
-//! # Core `MD5` functionality
+// Copyright © 2022-2023 Mini Functions. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
+//!
+//! # A Rust library for the MD5 algorithm
+//!
+//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-md5.svg)](https://minifunctions.com)
+//!
+//! <center>
+//!
+//! [![Rust](https://img.shields.io/badge/rust-f04041?style=for-the-badge&labelColor=c0282d&logo=rust)](https://www.rust-lang.org)
+//! [![Crates.io](https://img.shields.io/crates/v/mini-functions.svg?style=for-the-badge&color=success&labelColor=27A006)](https://crates.io/crates/mini-functions)
+//! [![Lib.rs](https://img.shields.io/badge/lib.rs-v0.0.8-success.svg?style=for-the-badge&color=8A48FF&labelColor=6F36E4)](https://lib.rs/crates/mini-functions)
+//! [![GitHub](https://img.shields.io/badge/github-555555?style=for-the-badge&labelColor=000000&logo=github)](https://github.com/sebastienrousseau/mini-functions)
+//! [![License](https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge&color=007EC6&labelColor=03589B)](http://opensource.org/licenses/MIT)
+//!
+//! </center>
+//!
+//! ## Overview
 //!
 //! The crate `md5` provides an easy way to produces a 128-bit (16-byte)
 //! hash value using the MD5 algorithm. MD5 (Message Digest Method 5) is
@@ -26,6 +44,10 @@
 //! md5 = "0.0.1"
 //! ```
 //!
+//! ## Usage
+//!
+//! - [`serde`][]: Enable serialization/deserialization via serde
+//!
 //! # Examples
 //!
 //! ```no_run
@@ -44,11 +66,23 @@
 //! Mini Functions is an ongoing project that is constantly evolving and improving. Our goal is to make it a highly-performant utility and wrapper functions library for Rust. We’ve already added a number of functions and features to the library, and we have more planned for the future but we need your help.
 //!
 //! As an open source project, we welcome contributions from the community. If you’re an experienced Rust developer and you’re interested in helping us shape the direction of the project, we encourage you to get involved. Whether you have ideas for new features, want to help fix bugs, or just want to learn more about Rust development, we welcome your contributions.
-#![warn(missing_docs)]
+//!
+//!
+//! [`serde`]: https://github.com/serde-rs/serde
+//!
+#![cfg_attr(feature = "bench", feature(test))]
+#![deny(dead_code)]
+#![deny(missing_debug_implementations)]
+#![deny(missing_docs)]
 #![forbid(unsafe_code)]
-// Copyright © 2022-2023 Mini Functions. All rights reserved.
-// SPDX-License-Identifier: Apache-2.0
-// SPDX-License-Identifier: MIT
+#![warn(unreachable_pub)]
+#![doc(
+    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-md5.svg",
+    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-md5.svg",
+    html_root_url = "https://docs.rs/mini-functions"
+)]
+#![crate_name = "md5"]
+#![crate_type = "lib"]
 
 /// Import the `params` module.
 mod params;

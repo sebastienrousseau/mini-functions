@@ -1,7 +1,7 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 categories = ["cryptography", "encoding", "algorithms"]
-description = "Highly Performant MD5 Functions Library For Rust"
+description = "A Rust library for the MD5 algorithm"
 edition = "2018"
 homepage = "https://minifunctions.com/"
 keywords = [

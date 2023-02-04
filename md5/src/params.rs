@@ -1,4 +1,5 @@
 /// MD5Params
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct MD5Params {
     /// A
     pub a: u32,
