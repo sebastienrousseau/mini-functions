@@ -1,28 +1,29 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 categories = [
-    "Authentication",
+    "Algorithms",
     "Cryptography",
     "Development tools",
-    "WebAssembly",
-    "Webprogramming",
+    "Security",
+    "Utilities",
 ]
-description = "`Claims` is a struct that holds the claims defined in the RFC 7519, encoded as JSON object in JWS/JWE, allowing digital signing/integrity protection and/or encryption."
+description = "A Rust library for generating random passwords and passphrases"
 edition = "2018"
 homepage = "https://minifunctions.com/"
 keywords = [
-    "authentication",
-    "authorization",
-    "claims",
-    "jwt",
+    "entropy",
+    "hash",
+    "passphrase generator",
+    "password length",
+    "random password generator",
+    "serialization/deserialization",
     "mini-functions",
+    "password",
     "security",
-    "token",
-    "web",
 ]
 license = "MIT OR Apache-2.0"
 name = "password"
-repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/claims/"
+repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/password/"
 rust-version = "1.66.1"
 version = "0.0.1"
 include = [

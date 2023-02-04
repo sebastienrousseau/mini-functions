@@ -1,7 +1,57 @@
-//! # Core Password code functionality
-
-#![warn(missing_docs)]
+// Copyright © 2022-2023 Mini Functions. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
+//!
+//! # A Rust library for generating random passwords and passphrases
+//!
+//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-password.svg)](https://minifunctions.com)
+//!
+//! <center>
+//!
+//! [![Rust](https://img.shields.io/badge/rust-f04041?style=for-the-badge&labelColor=c0282d&logo=rust)](https://www.rust-lang.org)
+//! [![Crates.io](https://img.shields.io/crates/v/mini-functions.svg?style=for-the-badge&color=success&labelColor=27A006)](https://crates.io/crates/mini-functions)
+//! [![Lib.rs](https://img.shields.io/badge/lib.rs-v0.0.8-success.svg?style=for-the-badge&color=8A48FF&labelColor=6F36E4)](https://lib.rs/crates/mini-functions)
+//! [![GitHub](https://img.shields.io/badge/github-555555?style=for-the-badge&labelColor=000000&logo=github)](https://github.com/sebastienrousseau/mini-functions)
+//! [![License](https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge&color=007EC6&labelColor=03589B)](http://opensource.org/licenses/MIT)
+//!
+//! </center>
+//!
+//! ## Overview
+//!
+//! A random password / passphrase generator. The generated password is
+//! a string of three words separated by hyphens. Each word is between 6
+//! and 8 characters long. The first character of each word is
+//! capitalized.
+//!
+//! ## Features
+//!
+//! - Generate a random password / passphrase.
+//! - Calculate the entropy of a password.
+//! - Calculate the hash of a password.
+//! - Calculate the hash length of a password.
+//! - Check if a password is empty.
+//! - Get the length of a password.
+//! - Get the generated password / passphrase.
+//!
+//! ## Usage
+//!
+//! - [`serde`][]: Enable serialization/deserialization via serde
+//!
+//! [`serde`]: https://github.com/serde-rs/serde
+//!
+#![cfg_attr(feature = "bench", feature(test))]
+#![deny(dead_code)]
+#![deny(missing_debug_implementations)]
+#![deny(missing_docs)]
 #![forbid(unsafe_code)]
+#![warn(unreachable_pub)]
+#![doc(
+    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-password.svg",
+    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-password.svg",
+    html_root_url = "https://docs.rs/mini-functions"
+)]
+#![crate_name = "password"]
+#![crate_type = "lib"]
 
 extern crate common;
 /// constants
