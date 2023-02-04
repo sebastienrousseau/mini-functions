@@ -43,7 +43,7 @@ harness = false
 path = "benches/claims.rs"
 
 [dependencies]
-serde = { version = "1.0.152", features = ["derive"] }
+serde = "1.0.152"
 
 [dev-dependencies]
 criterion = "0.4.0"

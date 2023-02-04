@@ -48,8 +48,7 @@
 //!
 //! ## Usage
 //!
-//! Common can be any `serde::Serialize` or `serde::Deserialize` types,
-//! usually derived with `serde_derive`.
+//! Common can be any `serde::Serialize` or `serde::Deserialize` types
 //!
 //! ## Examples
 //!

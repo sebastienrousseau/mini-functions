@@ -94,6 +94,23 @@ impl QRCode {
         }
         img
     }
+    /// The `to_gif` method creates a new GIF image of the QR code using
+    /// the data stored in the QRCode
+    pub fn to_gif(&self, width: u32) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
+        let qrcode = self.to_qrcode();
+        let height = width;
+        let mut img = ImageBuffer::new(width, height);
+        for (x, y, pixel) in img.enumerate_pixels_mut() {
+            let x_index = (x as f32 / width as f32) * qrcode.width() as f32;
+            let y_index = (y as f32 / height as f32) * qrcode.width() as f32;
+            *pixel = match qrcode[(x_index as usize, y_index as usize)] {
+                qrcode::Color::Dark => Rgba([0, 0, 0, 0]),
+                qrcode::Color::Light => Rgba([255, 255, 255, 255]),
+            };
+        }
+        img
+    }
+
     /// The `to_svg` method creates a new SVG image of the QR code using
     /// the data stored in the QRCode
     pub fn to_svg(&self, width: u32) -> String {
@@ -233,6 +250,8 @@ macro_rules! qr_code_to {
             "png" => QRCode::from_bytes($data).to_png($width),
             // If `$format` is equal to "jpg", generate a JPG format QR code using `QRCode::from_bytes`
             "jpg" => QRCode::from_bytes($data).to_jpg($width),
+            // If `$format` is equal to "gif", generate a "gif" format QR code using `QRCode::from_bytes`
+            "gif" => QRCode::from_bytes($data).to_gif($width),
             // For any other value, panic with the message "Invalid format"
             _ => panic!("Invalid format"),
         }

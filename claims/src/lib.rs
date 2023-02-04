@@ -48,8 +48,7 @@
 //!
 //! ## Usage
 //!
-//! - [`serde`][]: Enable serialization/deserialization via serde,
-//! usually derived with `serde_derive`.
+//! - [`serde`][]: Enable serialization/deserialization via serde
 //!
 //! ## Examples
 //!
@@ -107,8 +106,8 @@
 #![crate_type = "lib"]
 
 extern crate serde;
-
 use serde::{Deserialize, Serialize};
+
 use std::collections::HashMap;
 
 #[derive(Clone, Serialize, Deserialize, Debug)]

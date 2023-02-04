@@ -1,89 +1,45 @@
 [package]
-authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
-categories = ["Algorithms", "Encoding", "Images", "Rendering", "Visualization"]
-description = "Highly Performant QR Code Generator Library For Rust"
-edition = "2018"
-homepage = "https://minifunctions.com/"
-keywords = [
-    "barcode",
-    "encoding",
-    "mini-functions",
-    "qr-code",
-    "qr",
-    "qrcode",
-    "scanning",
-]
-license = "MIT OR Apache-2.0"
 name = "qr"
-repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/qr/"
+edition = "2018"
 rust-version = "1.66.1"
 version = "0.0.1"
-include = [
-    "../../LICENSE-APACHE",
-    "../../LICENSE-MIT",
-    "/benches/**",
-    "/build.rs",
-    "/Cargo.toml",
-    "/examples/**",
-    "/README.md",
-    "/src/**",
-    "/tests/**",
-]
-
-[[bench]]
-name = "qr"
-harness = false
-path = "benches/qr.rs"
+authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
+description = "Highly Performant QR Code Generator Library For Rust"
+homepage = "https://minifunctions.com/"
+keywords = ["barcode", "encoding", "mini-functions", "qr-code", "qr", "qrcode", "scanning"]
+categories = ["Algorithms", "Encoding", "Images", "Rendering", "Visualization"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/qr/"
+[package.metadata.docs.rs]
+all-features = true
 
 [dependencies]
 image = "0.24.5"
-qrcode = "0.12.0"
+
+[dependencies.qrcode]
+version = "0.12.0"
+features = ["svg"]
+optional = false
+default-features = false
 
 [dev-dependencies]
 criterion = "0.4.0"
 
-[lib]
-crate-type = ["lib"]
-name = "qr"
-path = "src/lib.rs"
-
 [features]
 default = []
 
-[package.metadata.docs.rs]
-all-features = true
+[lib]
+path = "src/lib.rs"
+name = "qr"
+plugin = false
+proc-macro = false
+crate-type = ["lib"]
+required-features = []
 
-# [profile.dev]
-# codegen-units = 256
-# debug = true
-# debug-assertions = true
-# incremental = true
-# lto = false
-# opt-level = 0
-# overflow-checks = true
-# panic = 'unwind'
-# rpath = false
-# strip = false
-
-# [profile.release]
-# codegen-units = 1 # Compile crates one after another so the compiler can optimize better
-# debug = false # Disable debug information
-# debug-assertions = false # Disable debug assertions
-# incremental = false # Disable incremental compilation
-# lto = true # Enables link to optimizations
-# opt-level = "s" # Optimize for binary size
-# overflow-checks = false # Disable overflow checks
-# panic = "abort" # Strip expensive panic clean-up logic
-# rpath = false # Disable rpath
-# strip = "symbols"  # Automatically strip symbols from the binary.
-
-# [profile.test]
-# codegen-units = 256
-# debug = true
-# debug-assertions = true
-# incremental = true
-# lto = false
-# opt-level = 0
-# overflow-checks = true
-# rpath = false
-# strip = false
+[[bench]]
+path = "benches/qr.rs"
+name = "qr"
+plugin = false
+proc-macro = false
+harness = false
+required-features = []

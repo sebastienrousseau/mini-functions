@@ -44,8 +44,7 @@
 //!
 //! ## Usage
 //!
-//! - [`serde`][]: Enable serialization/deserialization via serde,
-//! usually derived with `serde_derive`.
+//! - [`serde`][]: Enable serialization/deserialization via serde
 //!
 //! ## Examples
 //!

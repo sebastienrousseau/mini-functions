@@ -60,6 +60,16 @@ mod tests {
         assert_eq!(qrcode_svg.len(), 6918);
     }
     #[test]
+    fn test_to_gif() {
+        let data = vec![0x61, 0x62, 0x63];
+        let qrcode = QRCode::from_bytes(data.clone());
+        assert_eq!(qrcode.data, data);
+
+        let qrcode = QRCode::from_string(URL.to_string());
+        let qrcode_gif = qrcode.to_gif(512);
+        assert_eq!(qrcode_gif.len(), 1048576);
+    }
+    #[test]
     fn test_to_jpg() {
         let data = vec![0x61, 0x62, 0x63];
         let qrcode = QRCode::from_bytes(data.clone());

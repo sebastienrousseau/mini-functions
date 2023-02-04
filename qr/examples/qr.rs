@@ -111,6 +111,16 @@ fn main() {
         Ok(_) => println!("🦀 png file removed:           ✅ qrcode.png"), // Print the path to the PNG representation of the QRCode that was saved to a file called "qrcode.png"
         Err(e) => println!("🦀 png file removed:           ❌ qrcode.png: {e}",), // Print the path to the PNG representation of the QRCode that was saved to a file called "qrcode.png"
     }
+    // Create a new QRCode using the macro qr_code_from into a GIF representation with a custom size of 512x512
+    let qrcode = qr_code_to!(URL.into(), "gif", 512);
+    match qrcode.save("qrcode.gif") {
+        Ok(_) => println!("🦀 gif file created:           ✅ qrcode.gif"), // Print the path to the GIF representation of the QRCode that was saved to a file called "qrcode.gif"
+        Err(e) => println!("🦀 gif file created:           ❌ qrcode.gif: {e}",), // Print the path to the GIF representation of the QRCode that was saved to a file called "qrcode.gif"
+    }
+    match fs::remove_file("qrcode.gif") {
+        Ok(_) => println!("🦀 gif file removed:           ✅ qrcode.gif"), // Print the path to the GIF representation of the QRCode that was saved to a file called "qrcode.gif"
+        Err(e) => println!("🦀 gif file removed:           ❌ qrcode.gif: {e}",), // Print the path to the GIF representation of the QRCode that was saved to a file called "qrcode.gif"
+    }
     // Create a new QRCode using the macro qr_code_to into a JPEG representation with a custom size of 512x512
     let qrcode = qr_code_to!(URL.into(), "jpg", 512);
     match qrcode.save("qrcode.jpg") {
