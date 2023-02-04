@@ -357,7 +357,7 @@ for their help and support.
 [13]: https://codecov.io/github/sebastienrousseau/mini-functions
 [14]: https://app.fossa.com/projects/git%2Bgithub.com%2Fsebastienrousseau%2Fmini-functions?ref=badge_shield
 
-[banner]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/banners/banner-mini-functions.svg "Mini Functions - Rust 🦀"
+[banner]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/banners/banner-mini-functions.svg "Mini Functions - Rust 🦀"
 [crates-badge]: https://img.shields.io/crates/v/mini-functions.svg?style=for-the-badge 'Crates.io'
 [codecov-badge]: https://img.shields.io/codecov/c/github/sebastienrousseau/mini-functions?style=for-the-badge&token=M1REIC3QCK 'Codecov'
 [divider]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/elements/divider.svg "divider"
