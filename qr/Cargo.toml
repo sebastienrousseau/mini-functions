@@ -4,9 +4,17 @@ edition = "2018"
 rust-version = "1.66.1"
 version = "0.0.1"
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
-description = "Highly Performant QR Code Generator Library For Rust"
+description = "A Rust library for generating QR code images in PNG, JPG, GIF and SVG format"
 homepage = "https://minifunctions.com/"
-keywords = ["barcode", "encoding", "mini-functions", "qr-code", "qr", "qrcode", "scanning"]
+keywords = [
+    "barcode",
+    "encoding",
+    "mini-functions",
+    "qr-code",
+    "qr",
+    "qrcode",
+    "scanning",
+]
 categories = ["Algorithms", "Encoding", "Images", "Rendering", "Visualization"]
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/qr/"
