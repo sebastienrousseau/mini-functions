@@ -1,13 +1,52 @@
-//! # Core Cryptography Hash functionality based on the [blake3](https://crates.io/crates/blake3) crate.
-//!
-//! This crate provides an easy way to hash and verify passwords using the [blake3](https://crates.io/crates/blake3) crate.
-//!
-//!
-#![warn(missing_docs)]
-#![forbid(unsafe_code)]
 // Copyright © 2022-2023 Mini Functions. All rights reserved.
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
+//!
+//! # A Rust cryptographic library for hash functionalities based on the [blake3](https://crates.io/crates/blake3) crate
+//!
+//!
+//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-hash.svg)](https://minifunctions.com)
+//!
+//! <center>
+//!
+//! [![Rust](https://img.shields.io/badge/rust-f04041?style=for-the-badge&labelColor=c0282d&logo=rust)](https://www.rust-lang.org)
+//! [![Crates.io](https://img.shields.io/crates/v/mini-functions.svg?style=for-the-badge&color=success&labelColor=27A006)](https://crates.io/crates/mini-functions)
+//! [![Lib.rs](https://img.shields.io/badge/lib.rs-v0.0.8-success.svg?style=for-the-badge&color=8A48FF&labelColor=6F36E4)](https://lib.rs/crates/mini-functions)
+//! [![GitHub](https://img.shields.io/badge/github-555555?style=for-the-badge&labelColor=000000&logo=github)](https://github.com/sebastienrousseau/mini-functions)
+//! [![License](https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge&color=007EC6&labelColor=03589B)](http://opensource.org/licenses/MIT)
+//!
+//! </center>
+//!
+//! ## Overview
+//!
+//! This struct provides a simple way for storing and verifying hashed passwords based on the [blake3](https://crates.io/crates/blake3) crate.
+//!
+//!
+//! ## Features
+//!
+//! - [x] Hashes passwords using the [blake3](https://crates.io/crates/blake3) crate.
+//! - [x] Verifies passwords against stored hashes.
+//! - [x] Calculates the entropy of the hash in bits based on the Shannon entropy formula.
+//!
+//! ## Usage
+//!
+//! - [`serde`][]: Enable serialization/deserialization via serde
+//!
+//! [`serde`]: https://github.com/serde-rs/serde
+//!
+#![cfg_attr(feature = "bench", feature(test))]
+#![deny(dead_code)]
+#![deny(missing_debug_implementations)]
+#![deny(missing_docs)]
+#![forbid(unsafe_code)]
+#![warn(unreachable_pub)]
+#![doc(
+    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-hash.svg",
+    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-hash.svg",
+    html_root_url = "https://docs.rs/mini-functions"
+)]
+#![crate_name = "hash"]
+#![crate_type = "lib"]
 
 extern crate blake3;
 use blake3::Hasher;

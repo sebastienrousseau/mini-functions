@@ -1,7 +1,7 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 categories = ["Algorithms", "Data structures", "Cryptography"]
-description = "Hash is a struct that provides an easy way to hash and verify passwords using the [blake3](https://crates.io/crates/blake3) crate."
+description = "A Rust cryptographic library for hash functionalities based on the blake3 crate."
 edition = "2018"
 homepage = "https://minifunctions.com/"
 keywords = [
