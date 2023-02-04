@@ -1,76 +1,164 @@
 [package]
 authors = ["Sebastien Rousseau"]
-categories = ["development-tools"]
-description = "Highly Performant Utility And Wrapper Functions Library For Rust"
+categories = ["development-tools", "parsing", "randomness", "security", "time"]
+description = "A Rust library of highly performant utility and wrapper functions"
 documentation = "https://docs.rs/mini-functions"
 edition = "2021"
 homepage = "https://minifunctions.com"
 include = [
     "/build.rs",
     "/Cargo.toml",
+    "/claims/**",
+    "/common/**",
+    "/date/**",
+    "/errors/**",
+    "/hash/**",
+    "/jot/**",
     "/LICENSE-APACHE",
     "/LICENSE-MIT",
+    "/logger/**",
+    "/md5/**",
+    "/password/**",
+    "/qr/**",
+    "/random/**",
     "/README.md",
     "/src/**",
     "/tests/**",
 ]
-keywords = ["functions"]
+keywords = [
+    "barcode",
+    "checksum",
+    "claims",
+    "cryptography",
+    "date",
+    "datetime",
+    "debugging",
+    "digest",
+    "encoding",
+    "encryption",
+    "error-handling",
+    "error",
+    "exception-handling",
+    "exception",
+    "functions",
+    "handling",
+    "hash",
+    "hashing",
+    "helper",
+    "jot",
+    "json",
+    "jwt",
+    "libraries",
+    "log",
+    "logger",
+    "logging",
+    "mini-functions",
+    "password-generator",
+    "password",
+    "passwords",
+    "pseudo-random",
+    "qr",
+    "qrcode",
+    "random-generation",
+    "random-number",
+    "random",
+    "security",
+    "time",
+    "toolkit",
+    "tracing",
+    "utilities",
+]
 license = "Apache-2.0 OR MIT"
 name = "mini-functions"
 readme = "README.md"
 repository = "https://github.com/sebastienrousseau/mini-functions.git"
-resolver = "2" # Enables the new Cargo resolution engine
-rust-version = "1.57.0"
-version = "0.0.7"
+rust-version = "1.67.0"
+version = "0.0.8"
+
+[dependencies]
+claims = { path = "./claims" }
+common = { path = "./common" }
+date = { path = "./date" }
+errors = { path = "./errors" }
+hash = { path = "./hash" }
+jot = { path = "./jot" }
+logger = { path = "./logger" }
+md5 = { path = "./md5" }
+password = { path = "./password" }
+qr = { path = "./qr" }
+random = { path = "./random" }
+
+[workspace]
+exclude = ["src"]
+resolver = "2"
+members = [
+    "claims",
+    "common",
+    "date",
+    "errors",
+    "hash",
+    "jot",
+    "logger",
+    "md5",
+    "password",
+    "qr",
+    "random",
+] # List of workspace members
+
+[workspace.package]
+rust-version = "1.67.0"
 
 [badges]
 maintenance = { status = "actively-developed" }
 
-[dependencies]
-blake3 = "1.3.3"
-convert_case = "0.6.0"
-image = "0.24.5"
-qrcode = "0.12.0"
-time = "0.3.17"
-uuid = { version = "1.2.2", features = ["v3", "v4", "v5"] }
-
-[package.metadata.docs.rs]
-all-features = true
-default-target = "x86_64-unknown-linux-gnu"
-rustdoc-args = ["--cfg", "docsrs"]
-targets = [
-    "x86_64-unknown-linux-gnu",
-    "aarch64-unknown-linux-gnu",
-    "x86_64-pc-windows-gnu",
-    "x86_64-pc-windows-msvc",
-    "x86_64-apple-darwin",
-    "aarch64-apple-darwin"
+[lib]
+crate-type = ["lib"]
+path = "src/lib.rs"
+required-features = [
+    "claims",
+    "common",
+    "date",
+    "errors",
+    "hash",
+    "jot",
+    "logger",
+    "md5",
+    "password",
+    "qr",
+    "random",
 ]
 
-[targets.x86_64-unknown-linux-gnu]
-image = "ubuntu:latest"
-
-[targets.aarch64-unknown-linux-gnu]
-image = "arm64v8/ubuntu:latest"
-
-[targets.x86_64-pc-windows-gnu]
-image = "mcr.microsoft.com/windows/servercore:ltsc2019"
-
-[targets.x86_64-pc-windows-msvc]
-image = "mcr.microsoft.com/windows/servercore:ltsc2019"
-
-[targets.x86_64-apple-darwin]
-image = "darwin:latest"
-
-[targets.aarch64-apple-darwin]
-image = "arm64v8/darwin:latest"
+[profile.dev]
+codegen-units = 256
+debug = true
+debug-assertions = true
+incremental = true
+lto = false
+opt-level = 0
+overflow-checks = true
+panic = 'unwind'
+rpath = false
+strip = false
 
 [profile.release]
-codegen-units = 1 # Compile crates one after another so the compiler can optimize better
-debug = false # Disable debug information
-incremental = false # Disable incremental compilation
-lto = true # Enables link to optimizations
-opt-level = "s" # Optimize for binary size
-panic = "abort" # Strip expensive panic clean-up logic
-rpath = false # Disable rpath
-strip = "symbols"  # Automatically strip symbols from the binary.
+codegen-units = 1        # Compile crates one after another so the compiler can optimize better
+debug = false            # Disable debug information
+debug-assertions = false # Disable debug assertions
+incremental = false      # Disable incremental compilation
+lto = true               # Enables link to optimizations
+opt-level = "s"          # Optimize for binary size
+overflow-checks = false  # Disable overflow checks
+panic = "abort"          # Strip expensive panic clean-up logic
+rpath = false            # Disable rpath
+strip = "symbols"        # Automatically strip symbols from the binary.
+
+[profile.test]
+codegen-units = 256
+debug = true
+debug-assertions = true
+incremental = true
+lto = false
+opt-level = 0
+overflow-checks = true
+rpath = false
+strip = false

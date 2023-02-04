@@ -1,20 +1,21 @@
 # Mini Functions 🦀
 
 [![Made With Love][mwl]][6]
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsebastienrousseau%2Fmini-functions.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsebastienrousseau%2Fmini-functions?ref=badge_shield)
 
 <!-- markdownlint-disable MD033 -->
 <center>
 
-## Highly performant utility and wrapper functions library for Rust 🚀
+## A Rust library of highly performant utility and wrapper functions 🚀
 
 ![Mini Functions][banner]
 
-[![Rust][made-with-rust-badge]][12]
+[![Rust][rust-badge]][12]
 [![Crates.io][crates-badge]][8]
 [![Lib.rs][libs-badge]][10]
 [![Docs.rs][docs-badge]][9]
+[![codecov][codecov-badge]][13]
 [![License][license-badge]][2]
+[![Fossa][fossa-badge]][14]
 
 ![divider][divider]
 
@@ -80,7 +81,7 @@ To use `mini-functions` in your project, add the following to your
 
 ```toml
 [dependencies]
-mini-functions = "0.0.7"
+mini-functions = "0.0.8"
 ```
 
 Add the following to your `main.rs` file:
@@ -112,148 +113,19 @@ collection of tools for working with various aspects of a Rust
 application. The `mini-functions` library consists of the following
 `non-exhaustive` functions:
 
-### 1) Date and time functions
-
-The **Date and time functions** are used to retrieve and manipulate
-information about dates and times.
-
-<!-- markdownlint-disable MD033 -->
-<details>
-  <summary>Open to view the Date and time functions available in the library<br><br></summary>
-
-| Function | Include File | Function Prototype | Description |
-| -------- | ------------ | ------------------ | ----------- |
-| `Date::date()` | `date.rs` | `fn date()` | Returns the current date in UTC format. |
-| `Date::day()` | `date.rs` | `fn day()` | Returns the current day. |
-| `Date::hour()` | `date.rs` | `fn hour()` | Returns the current hour. |
-| `Date::iso_8601()` | `date.rs` | `fn iso_8601()` | Returns the current date and time in ISO 8601 format. |
-| `Date::microsecond()` | `date.rs` | `fn microsecond()` | Returns the current microsecond. |
-| `Date::millisecond()` | `date.rs` | `fn millisecond()` | Returns the current millisecond. |
-| `Date::minute()` | `date.rs` | `fn minute()` | Returns the current minute. |
-| `Date::month()` | `date.rs` | `fn month()` | Returns the current month. |
-| `Date::nanosecond()` | `date.rs` | `fn nanosecond()` | Returns the current nanosecond. |
-| `Date::now_utc()` | `date.rs` | `fn now_utc()` | Returns the current date and time in UTC format. |
-| `Date::second()` | `date.rs` | `fn second()` | Returns the current second. |
-| `Date::timestamp()` | `date.rs` | `fn timestamp()` | Returns the current timestamp. |
-| `Date::weekday()` | `date.rs` | `fn weekday()` | Returns the current weekday. |
-| `Date::year()` | `date.rs` | `fn year()` | Returns the current year. |
-</details>
-
-### 2) Hash functions
-
-The **Hash functions** are used to generate hashes for various data
-types.
-
-<!-- markdownlint-disable MD033 -->
-<details>
-  <summary>Open to view the Hash functions available in the library<br><br></summary>
-
-| Function | Include File | Function Prototype | Description |
-| -------- | ------------ | ------------------ | ----------- |
-| `Hash::entropy` | `hash.rs` | `fn entropy()` | Returns the entropy of a string. |
-| `Hash::generate_hash` | `hash.rs` | `fn generate_hash()` | Generates a hash for a string. |
-| `Hash::hash` | `hash.rs` | `fn hash()` | Returns the hash of a string. |
-| `Hash::hash_length` | `hash.rs` | `fn hash_length()` | Returns the length of a hash. |
-| `Hash::new` | `hash.rs` | `fn new()` | Creates a new hash instance. |
-| `Hash::password` | `hash.rs` | `fn password()` | Returns the hash of a password. |
-| `Hash::password_length` | `hash.rs` | `fn password_length()` | Returns the length of a password hash. |
-| `Hash::set_hash` | `hash.rs` | `fn set_hash()` | Sets the hash for a string. |
-| `Hash::set_password` | `hash.rs` | `fn set_password()` | Sets the hash for a password. |
-| `Hash::verify` | `hash.rs` | `fn verify()` | Verifies a hash. |
-</details>
-
-### 3) Log functions
-
-The **Log functions** are used to log messages to the console.
-
-<!-- markdownlint-disable MD033 -->
-<details>
-  <summary>Open to view the Log functions available in the library<br><br></summary>
-
-| Function | Include File | Function Prototype | Description |
-| -------- | ------------ | ------------------ | ----------- |
-| `Log::log()` | `log.rs` | `fn log()` | Logs a message to the console.|
-| `Log::new()` | `log.rs` | `fn new()` | Creates a new log instance. |
-</details>
-
-### 4) Password functions
-
-The **Password functions** are used to generate passwords and verify
-passwords.
-
-<!-- markdownlint-disable MD033 -->
-<details>
-  <summary>Open to view the Password functions available in the library<br><br></summary>
-
-| Function | Include File | Function Prototype | Description |
-| -------- | ------------ | ------------------ | ----------- |
-| `Password::entropy` | `password.rs` | `fn entropy()` | Returns the entropy of a string. |
-| `Password::hash_length` | `password.rs` | `fn hash_length()` | Returns the length of a hash. |
-| `Password::hash` | `password.rs` | `fn hash()` | Returns the hash of a password. |
-| `Password::is_empty` | `password.rs` | `fn is_empty()` | Checks if a password is empty. |
-| `Password::len` | `password.rs` | `fn len()` | Returns the length of a password. |
-| `Password::new` | `password.rs` | `fn new()` | Creates a new password instance. |
-| `Password::passphrase` | `password.rs` | `fn passphrase()` | Generates a passphrase. |
-| `Password::password_length` | `password.rs` | `fn password_length()` | Returns the length of a password hash. |
-| `Password::set_passphrase` | `password.rs` | `fn set_passphrase()` | Sets a passphrase. |
-</details>
-
-### 5) QRCode functions
-
-The **QRCode functions** are used to generate QRCode images and data.
-
-<!-- markdownlint-disable MD033 -->
-<details>
-  <summary>Open to view the QRCode functions available in the library<br><br></summary>
-
-| Function | Include File | Function Prototype | Description |
-| -------- | ------------ | ------------------ | ----------- |
-| `QRCode::colorize()` | `qrcode.rs` | `fn colorize()` | Colorizes the QRCode instance. |
-| `QRCode::from_bytes()` | `qrcode.rs` | `fn from_bytes()` | Creates a new QRCode instance from a byte array. |
-| `QRCode::from_string()` | `qrcode.rs` | `fn from_string()` | Creates a new QRCode instance from a string. |
-| `QRCode::new()` | `qrcode.rs` | `fn new()` | Creates a new QRCode instance. |
-| `QRCode::resize()` | `qrcode.rs` | `fn resize()` | Resizes the QRCode instance. |
-| `QRCode::to_png()` | `qrcode.rs` | `fn to_png()` | Converts the QRCode instance to a PNG image. |
-| `QRCode::to_qrcode()` | `qrcode.rs` | `fn to_qrcode()` | Converts the QRCode instance to a QRCode image. |
-| `QRCode::to_svg()` | `qrcode.rs` | `fn to_svg()` | Converts the QRCode instance to a SVG image. |
-</details>
-
-### 6) Random number functions
-
-The **Random number functions** are used to
-generate random numbers in a variety of sizes and formats.
-
-<!-- markdownlint-disable MD033 -->
-<details>
-  <summary>Open to view the Random number functions available in the library<br><br></summary>
-
-| Function | Include File | Function Prototype | Description |
-| -------- | ------------ | ------------------ | ----------- |
-| `Random::bytes()` | `random.rs` | `fn bytes()` | Generates a vector of random bytes of a given length. |
-| `Random::default()` | `random.rs` | `fn default()` | Creates a new `Random` struct with a default seed. |
-| `Random::float()` | `random.rs` | `fn float()` | Generates a random floating point number between 0 and 1. |
-| `Random::int()` | `random.rs` | `fn int()` | Generates a random integer between a minimum and maximum value. |
-| `Random::new()` | `random.rs` | `fn new()` | Creates a new `Random` struct with a seed based on the current system time. |
-| `Random::pseudo()` | `random.rs` | `fn pseudo()` | Generates a pseudo-random number by XORing the last 31 random numbers together. |
-| `Random::random()` | `random.rs` | `fn random()` | Generates a random number using the linear congruential generator algorithm. The multiplier for the algorithm is the golden ratio. |
-</details>
-
-### 7) UUID functions
-
-The **UUID functions** are used to generate UUIDs (Universally Unique
-Identifiers).
-
-<!-- markdownlint-disable MD033 -->
-<details>
-  <summary>Open to view the UUID functions available in the library<br><br></summary>
-
-| Function | Include File | Function Prototype | Description |
-| -------- | ------------ | ------------------ | ----------- |
-| `UUID::new()` | `uuid.rs` | `fn new()` | Creates a new UUID instance based on the version specified. (v3, v4, v5) |
-| `UUID::uuid_v3()` | `uuid.rs` | `fn uuid_v3()` | Creates a new UUID v3 instance. |
-| `UUID::uuid_v4()` | `uuid.rs` | `fn uuid_v4()` | Creates a new UUID v4 instance. |
-| `UUID::uuid_v5()` | `uuid.rs` | `fn uuid_v5()` | Creates a new UUID v5 instance. |
-</details>
+| Functions | Description |
+| -------- | ----------- |
+| [![Claims][claims-badge]][12] | The **Claim functions** are used to retrieve and manipulate information about claims. These functions are used to create and manage claims in JSON Web Tokens (JWT) and JSON Web Signatures (JWS). |
+| [![Common][common-badge]][12] | The **Common functions** are used to retrieve and manipulate information about common data types. |
+| [![Date][date-badge]][12] | The **Date and time functions** are used to retrieve and manipulate information about dates and times. |
+| [![Errors][errors-badge]][12] | The **Error functions** are used to retrieve and manipulate information about errors. |
+| [![Hash][hash-badge]][12] | The **Hash functions** are used to retrieve and manipulate information about hashes. |
+| [![Jot][jot-badge]][12] | The **Jot functions** are used to retrieve and manipulate information about JSON Object Tokens (JOT). |
+| [![Logger][logger-badge]][12] | The **Logger functions** are used to retrieve and manipulate information about logging. |
+| [![MD5][md5-badge]][12] | The **MD5 functions** are used to retrieve and manipulate information about MD5. |
+| [![Password][password-badge]][12] | The **Password functions** are used to retrieve and manipulate information about passwords. |
+| [![QR][qr-badge]][12] | The **QR functions** are used to retrieve and manipulate information about QR codes. |
+| [![Random][random-badge]][12] | The **Random functions** are used to retrieve and manipulate information about random data. |
 
 ## Semantic Versioning Policy 🚥
 
@@ -268,7 +140,6 @@ Apache License (Version 2.0).
 
 - [Apache License, Version 2.0][1]
 - [MIT license][2]
-
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsebastienrousseau%2Fmini-functions.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsebastienrousseau%2Fmini-functions?ref=badge_large)
 
@@ -297,12 +168,28 @@ for their help and support.
 [9]: https://docs.rs/mini-functions
 [10]: https://lib.rs/crates/mini-functions
 [12]: https://www.rust-lang.org/
+[13]: https://codecov.io/github/sebastienrousseau/mini-functions
+[14]: https://app.fossa.com/projects/git%2Bgithub.com%2Fsebastienrousseau%2Fmini-functions?ref=badge_shield
 
-[banner]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/banners/banner-mini-functions.svg "Mini Functions - Rust 🦀"
+[banner]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/banners/banner-mini-functions.svg "Mini Functions - Rust 🦀"
 [crates-badge]: https://img.shields.io/crates/v/mini-functions.svg?style=for-the-badge 'Crates.io'
+[codecov-badge]: https://img.shields.io/codecov/c/github/sebastienrousseau/mini-functions?style=for-the-badge&token=M1REIC3QCK 'Codecov'
 [divider]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/elements/divider.svg "divider"
 [docs-badge]: https://img.shields.io/docsrs/mini-functions.svg?style=for-the-badge 'Docs.rs'
-[libs-badge]: https://img.shields.io/badge/lib.rs-v0.0.7-orange.svg?style=for-the-badge 'Lib.rs'
+[libs-badge]: https://img.shields.io/badge/lib.rs-v0.0.8-orange.svg?style=for-the-badge 'Lib.rs'
 [license-badge]: https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge 'License'
-[made-with-rust-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-rust.svg "Made With Rust 🦀"
+[rust-badge]: https://img.shields.io/badge/rust-f04041?style=for-the-badge&labelColor=c0282d&logo=rust 'Rust'
 [mwl]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg "Made With Love"
+[fossa-badge]: https://img.shields.io/static/v1?style=for-the-badge&message=Fossa&color=289E6D&logo=Fossa&logoColor=FFFFFF&label= 'Fossa'
+
+[claims-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-claims.png 'Claims'
+[common-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-common.png 'Common'
+[date-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-date.png 'Date'
+[errors-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-errors.png 'Errors'
+[hash-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-hash.png 'Hash'
+[jot-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-jot.png 'Jot'
+[logger-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-logger.png 'Logger'
+[md5-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-md5.png 'MD5'
+[password-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-password.png 'Password'
+[qr-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-qr.png 'QR'
+[random-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-random.png 'Random'

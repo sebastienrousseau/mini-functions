@@ -1,140 +1,222 @@
-name: ❯ mini_functions_release
+name: ❯ release
 
 on: [push]
 
+env:
+  CARGO_TERM_COLOR: always
+
 jobs:
-  mini_functions_release:
+  targets:
+    name: mf_${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        node-version: [16]
         target:
-          - x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+)
-          - x86_64-pc-windows-gnu # 64-bit Windows (7 or later)
-          - x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
-          - aarch64-unknown-linux-gnu # ARM64 Linux (kernel 4.1, glibc 2.17+)
-          - aarch64-apple-darwin # ARM64 macOS (10.15 Catalina or later)
+          # List of targets: https://doc.rust-lang.org/nightly/rustc/platform-support.html
+
+          # Linux targets 🐧
+          - aarch64-unknown-linux-gnu # 64-bit Linux systems on ARM architecture                ✅ Tested
+          - aarch64-unknown-linux-musl # 64-bit Linux systems on ARM architecture               ✅ Tested
+          - arm-unknown-linux-gnueabi # ARMv6 Linux (kernel 3.2, glibc 2.17)                    ✅ Tested
+          - armv7-unknown-linux-gnueabihf # ARMv7 Linux, hardfloat (kernel 3.2, glibc 2.17)     ✅ Tested
+          - i686-unknown-linux-gnu # 32-bit Linux (kernel 3.2+, glibc 2.17+)                    ✅ Tested
+          - i686-unknown-linux-musl # 32-bit Linux (kernel 3.2+, musl libc)                     ✅ Tested
+          # - mips-unknown-linux-gnu # MIPS Linux (kernel 2.6.32+, glibc 2.11+)                   ❌ Tested
+          # - mips-unknown-linux-musl # MIPS Linux (kernel 2.6.32+, musl libc)                    ❌ Tested
+          # - mips64-unknown-linux-gnuabi64 # MIPS64 Linux (kernel 2.6.32+, glibc 2.11+)          ❌ Tested
+          # - mips64el-unknown-linux-gnuabi64 # MIPS64el Linux (kernel 2.6.32+, glibc 2.11+)      ❌ Tested
+          # - mipsel-unknown-linux-gnu # MIPSel Linux (kernel 2.6.32+, glibc 2.11+)               ❌ Tested
+          # - powerpc64le-unknown-linux-gnu # 64-bit PowerPC Linux (kernel 2.6.32+, glibc 2.11+)  ❌ Tested
+          - x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+)               ✅ Tested
+          - x86_64-unknown-linux-musl # 64-bit Linux (kernel 2.6.32+, musl libc)                ✅ Tested
+
+          # macOS targets 🍎
+          - x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)                             ✅ Tested
+
+          # Windows targets 🪟
+          # - i686-pc-windows-msvc # 32-bit Windows                                               ❌ Tested
+          # - x86_64-pc-windows-msvc # 64-bit Windows                                             ❌ Tested
+
         include:
+          # Linux targets 🐧
+          - target: aarch64-unknown-linux-gnu # 64-bit Linux systems on ARM architecture
+            os: ubuntu-latest
+            cross: true
+          - target: aarch64-unknown-linux-musl # 64-bit Linux systems on ARM architecture
+            os: ubuntu-latest
+            cross: true
+          - target: arm-unknown-linux-gnueabi # ARMv6 Linux (kernel 3.2, glibc 2.17)
+            os: ubuntu-latest
+            cross: true
+          - target: armv7-unknown-linux-gnueabihf # ARMv7 Linux, hardfloat (kernel 3.2, glibc 2.17)
+            os: ubuntu-latest
+            cross: true
+          - target: i686-unknown-linux-gnu # 32-bit Linux (kernel 3.2+, glibc 2.17+)
+            os: ubuntu-latest
+            cross: true
+          - target: i686-unknown-linux-musl # 32-bit Linux (kernel 3.2+, musl libc)
+            os: ubuntu-latest
+            cross: true
+          # - target: mips-unknown-linux-gnu # MIPS Linux (kernel 2.6.32+, glibc 2.11+)
+          #   os: ubuntu-latest
+          #   cross: true
+          # - target: mips-unknown-linux-musl # MIPS Linux (kernel 2.6.32+, musl libc)
+          #   os: ubuntu-latest
+          #   cross: true
+          # - target: mips64-unknown-linux-gnuabi64 # MIPS64 Linux (kernel 2.6.32+, glibc 2.11+)
+          #   os: ubuntu-latest
+          #   cross: true
+          # - target: mips64el-unknown-linux-gnuabi64 # MIPS64el Linux (kernel 2.6.32+, glibc 2.11+)
+          #   os: ubuntu-latest
+          #   cross: true
+          # - target: mipsel-unknown-linux-gnu # MIPSel Linux (kernel 2.6.32+, glibc 2.11+)
+          #   os: ubuntu-latest
+          #   cross: true
+          # - target: powerpc64le-unknown-linux-gnu # 64-bit PowerPC Linux (kernel 2.6.32+, glibc 2.11+)
+          #   os: ubuntu-latest
+          #   cross: true
           - target: x86_64-unknown-linux-gnu # 64-bit Linux (kernel 2.6.32+, glibc 2.11+)
             os: ubuntu-latest
-          - target: x86_64-pc-windows-gnu # 64-bit Windows (7 or later)
+            cross: true
+          - target: x86_64-unknown-linux-musl # 64-bit Linux (kernel 2.6.32+, musl libc)
             os: ubuntu-latest
+            cross: true
+
+          # macOS targets 🍎
           - target: x86_64-apple-darwin # 64-bit macOS (10.7 Lion or later)
             os: macos-latest
-          - target: aarch64-unknown-linux-gnu # ARM64 Linux (kernel 4.1, glibc 2.17+)
-            os: ubuntu-latest
-          - target: aarch64-apple-darwin # ARM64 macOS (10.15 Catalina or later)
-            os: macos-latest
+            cross: true
 
-      max-parallel: 5
+          # Windows targets 🪟
+          # - target: i686-pc-windows-msvc # 32-bit Windows
+          # os: windows-latest
+          # cross: true
+          # - target: x86_64-pc-windows-msvc # 64-bit Windows
+          #   os: windows-latest
+          #   cross: true
 
-    runs-on: ${{ matrix.os }}
+      max-parallel: 2
 
     steps:
       - name: Checkout repository 🛎️
-        id: checkout
+        id: checkout-repository
         uses: actions/checkout@v3
+        with: { submodules: true }
 
-      - name: Restore dependencies cache 📦
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo
-            ~/.rustup
-          key: ${{ runner.os }}-cache-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-
-            ${{ runner.os }}-rustup-
-
-      - name: Install Rust 🦀
-        id: rust
+      - name: Installing Rust 🦀
+        id: install-rust
         run: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+        shell: /bin/bash -e {0}
 
-      - name: Install rustfmt 🦀
-        id: install-rustfmt
-        uses: actions-rs/toolchain@v1
-        with:
-          components: rustfmt
-          override: true
-          profile: minimal
-          target: ${{ matrix.target }}
-          toolchain: stable
-
-      - name: Run rustfmt 🦀
-        id: rustfmt
-        run: rustup component add rustfmt
-
-      - name: Check formatting 🦀
-        id: fmt
-        uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: --all -- --check --verbose --color=always
-
-      - name: Set environment variables 🔢
+      - name: Update version number 🧮
+        id: update-version
+        if: github.ref == 'refs/heads/main'
         run: |
-          echo "VERSION=$(echo $(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2))" >> $GITHUB_ENV
-          echo "ARTIFACT_NAME=mini-functions-${{ matrix.target }}" >> $GITHUB_ENV
-          echo "COMMITS=$(git log -20 --oneline | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | awk '{labels="";for(i=2;i<=NF;i++){if($i~/^[a-zA-Z]+\([a-zA-Z0-9-_]+\):/)labels=labels" "$i;else break;}printf("-%s %s\n",labels,$0);}' | sort -k1,1)" >> $GITHUB_ENV
+          NEW_VERSION=$(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
+          echo "VERSION=$NEW_VERSION" >> $GITHUB_ENV
+        shell: /bin/bash -e {0}
 
-      - name: Build libraries 🏗
+      - name: Install Cross 🦀
+        id: install-cross
         run: |
-          # Check the code base
-
-          cargo check --all
           # Install cross
           cargo install cross
 
           # Clean the build artifacts
-          cargo clean
-
-          # Build the libraries for the target platform and architecture
-          cross build --release --target=${{ matrix.target }} --lib
-
+          cargo clean --verbose
         shell: /bin/bash -e {0}
 
-      - name: Generate Changelog 📜
-        id: changelog
+      - name: Build targets 🏗
+        id: build-targets
+        uses: actions-rs/cargo@v1
+        with:
+          use-cross: true
+          command: build
+          args: --verbose --workspace --release --target ${{ matrix.target }}
+
+      - name: Run Cargo Format 🦀
+        id: run-check-format
         if: github.ref == 'refs/heads/main'
         run: |
+          cargo check --all --all-features --workspace --verbose
 
-          # Generate the release notes template
-          echo "<img src='https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg' alt='Made with Love' width='100%'/><br>" > ${{ github.workspace }}-CHANGELOG.md
-          echo "<h1>Highly performant utility and wrapper functions library for Rust 🚀</h1><br>" > ${{ github.workspace }}-CHANGELOG.md
-          echo "<img src='https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/banners/banner-mini-functions.svg' alt='Mini Functions Banner' width='100%'/><br>" > ${{ github.workspace }}-CHANGELOG.md
-          echo "<h2>Welcome to Mini Functions 👋</h2><br>" >> ${{ github.workspace }}-CHANGELOG.md
-          echo "Mini Functions is a highly performant utility and wrapper functions library for Rust that has been carefully designed with optimization and efficiency in mind.<br>" >> ${{ github.workspace }}-CHANGELOG.md
-          echo "" >> ${{ github.workspace }}-CHANGELOG.md
-          echo "By providing convenient wrapper functions, our library aims to provide a high-level interface for common tasks while still leveraging the performance benefits of Rust under the hood.<br>" >> ${{ github.workspace }}-CHANGELOG.md
-          echo "" >> ${{ github.workspace }}-CHANGELOG.md
-          echo "These utility functions serve as an essential toolkit for any Rust developer, and the library's design abstractions allow for easy integration into a variety of projects and applications." >> ${{ github.workspace }}-CHANGELOG.md
-          echo "" >> ${{ github.workspace }}-CHANGELOG.md
-          echo "<h2>Key Features 🎯</h2><br>" >> ${{ github.workspace }}-CHANGELOG.md
-          echo "$COMMITS" >> ${{ github.workspace }}-CHANGELOG.md
-          echo "..." >> ${{ github.workspace }}-CHANGELOG.md
-          echo "" >> ${{ github.workspace }}-CHANGELOG.md
+      - name: Run Clippy 🦀
+        id: run-check-clippy
+        run: |
+          cargo clippy --all-targets --all-features --workspace -- -D warnings
 
-      - name: Upload artifacts 📦
-        id: upload
+      - name: Run Cargo Doc 🦀
+        id: run-check-doc
+        if: github.ref == 'refs/heads/main'
+        run: |
+          cargo doc --workspace --color always --no-deps --release --all-features
+
+      - name: Run Cargo Test 🦀
+        id: run-check-test
+        if: github.ref == 'refs/heads/main'
+        run: |
+          cargo test --all-targets --workspace --all-features
+
+      - name: Run Cargo Code Coverage 🦀
+        id: run-check-code-coverage
+        if: github.ref == 'refs/heads/main'
+        run: |
+          # Install tarpaulin
+          cargo install cargo-tarpaulin
+
+          # Run tarpaulin and generate the code coverage report
+          cargo tarpaulin --all --all-features --workspace --out Xml
+
+      - name: Upload to codecov.io 📊
+        id: upload-codecov
+        if: github.ref == 'refs/heads/main'
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false
+          verbose: false
+
+      - name: Package the binary 📦
+        id: package-binary
+        if: github.ref == 'refs/heads/main'
+        run: |
+          mkdir -p target/package
+          tar czf target/package/${{ matrix.target }}.tar.gz -C target/${{ matrix.target }}/release .
+
+      - name: Deploy binary 🚀
+        id: deploy-binary
         if: github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.ARTIFACT_NAME }}_${{ env.VERSION }}
-          path: target/release
+          name: ${{ matrix.target }}.tar.gz
+          path: target/package/${{ matrix.target }}.tar.gz
+
+      - name: Generate Changelog 📜
+        id: generate-changelog
+        if: github.ref == 'refs/heads/main'
+        run: |
+          # Append version information to CHANGELOG.md
+          echo "## [${{ env.VERSION }}] - $(date +'%Y-%m-%d')" >> ${{ github.workspace }}/CHANGELOG.md
+          # Copy content of template file to CHANGELOG.md
+          cat TEMPLATE.md > ${{ github.workspace }}/CHANGELOG.md
+          # Append git log to CHANGELOG.md
+          echo "$(git log --pretty=format:'%s' --reverse $(git describe --tags --abbrev=0)..HEAD)" >> ${{ github.workspace }}/CHANGELOG.md
+          # Append empty line to CHANGELOG.md
+          echo "" >> ${{ github.workspace }}/CHANGELOG.md
+          # Append empty line to CHANGELOG.md
+          echo "" >> ${{ github.workspace }}/CHANGELOG.md
 
       - name: Create Release 🚀
         id: create_release
         if: github.ref == 'refs/heads/main'
-        uses: softprops/action-gh-release@v1
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          body_path: ${{ github.workspace }}-CHANGELOG.md
-          draft: true
-          files: |
-            target/release/*
-          name: Mini Functions 🦀 v${{ env.VERSION }}
-          prerelease: false
           tag_name: v${{ env.VERSION }}
+          release_name: Mini Functions 🦀 v${{ env.VERSION }} - ${{ matrix.target }}
+          body_path: ${{ github.workspace }}/CHANGELOG.md
+          draft: true
+          prerelease: false

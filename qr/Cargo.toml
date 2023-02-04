@@ -1,0 +1,45 @@
+[package]
+name = "qr"
+edition = "2018"
+rust-version = "1.66.1"
+version = "0.0.1"
+authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
+description = "Highly Performant QR Code Generator Library For Rust"
+homepage = "https://minifunctions.com/"
+keywords = ["barcode", "encoding", "mini-functions", "qr-code", "qr", "qrcode", "scanning"]
+categories = ["Algorithms", "Encoding", "Images", "Rendering", "Visualization"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/qr/"
+[package.metadata.docs.rs]
+all-features = true
+
+[dependencies]
+image = "0.24.5"
+
+[dependencies.qrcode]
+version = "0.12.0"
+features = ["svg"]
+optional = false
+default-features = false
+
+[dev-dependencies]
+criterion = "0.4.0"
+
+[features]
+default = []
+
+[lib]
+path = "src/lib.rs"
+name = "qr"
+plugin = false
+proc-macro = false
+crate-type = ["lib"]
+required-features = []
+
+[[bench]]
+path = "benches/qr.rs"
+name = "qr"
+plugin = false
+proc-macro = false
+harness = false
+required-features = []

@@ -1,93 +1,125 @@
+// Copyright © 2022-2023 Mini Functions. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 //!
-//! <h2>Highly Performant Utility And Wrapper Functions Library For Rust</h2>
+//! A Rust library of highly performant utility and wrapper functions
 //!
-//! <p align="center">
-//!     <img src="https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/logos/logo-mini-functions.svg" alt="Mini Functions Logo">
-//! </p>
+//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-mini-functions.svg)](https://minifunctions.com)
 //!
-//! <p align="left">
-//! <strong>
-//! Mini Functions is a highly performant utility and wrapper functions
-//! library for Rust that has been carefully designed with optimization
-//! and efficiency in mind.
-//! </strong>
-//! </p>
+//! <center>
 //!
-//! <p align="left">
-//! By providing convenient wrapper functions, our library aims to
-//! provide a high-level interface for common tasks while still
-//! leveraging the performance benefits of Rust under the hood.
-//! </p>
+//! [![GitHub](https://img.shields.io/badge/github-555555?style=for-the-badge&labelColor=000000&logo=github)](https://github.com/sebastienrousseau/mini-functions)
+//! [![Rust](https://img.shields.io/badge/rust-f04041?style=for-the-badge&labelColor=c0282d&logo=rust)](https://www.rust-lang.org)
+//! [![Crates.io](https://img.shields.io/crates/v/mini-functions.svg?style=for-the-badge&color=success&labelColor=27A006)](https://crates.io/crates/mini-functions)
+//! [![Lib.rs](https://img.shields.io/badge/lib.rs-v0.0.8-success.svg?style=for-the-badge&color=8A48FF&labelColor=6F36E4)](https://lib.rs/crates/mini-functions)
+//! [![License](https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge&color=007EC6&labelColor=03589B)](http://opensource.org/licenses/MIT)
 //!
-//! <p align="left">
-//! These utility functions serve as an essential toolkit for any Rust
-//! developer, and the library's design abstractions allow for easy
-//! integration into a variety of projects and applications.
-//! </p>
+//! </center>
+//!
+//! ## Overview
+//!
+//! Mini-Functions is a modern Rust library that prioritizes performance
+//! , security, and modularity. It provides a low-overhead access to
+//! functions for common programming tasks.
+//!
+//! ## Features
+//!
+//! - **[Claims](../claims/index.html)** - Provides access to the claims
+//! of a JSON Web Token (JWT).
+//! - **[Common](../common/index.html)** - Provides access to common
+//! functions and constants.
+//! - **[Date](../date/index.html)** - Provides access to the current
+//! date and time.
+//! - **[Errors](../errors/index.html)** - Provides access to error
+//! handling functions.
+//! - **[Hash](../hash/index.html)** - Provides access to hash
+//! functions.
+//! - **[Jot](../jot/index.html)** - Provides access to JSON Web Token
+//! (JWT) functions.
+//! - **[Logger](../logger/index.html)** - Provides access to logging
+//! functions.
+//! - **[MD5](../md5/index.html)** - Provides access to MD5 functions.
+//! - **[Password](../password/index.html)** - Provides access to
+//! password functions.
+//! - **[QR](../qr/index.html)** - Provides access to QR code functions.
+//! - **[Random](../random/index.html)** - Provides access to random
+//! number functions.
+//! - And so much more.
+//!
+//! These components provide a comprehensive set of functionality and
+//! offer powerful new capabilities to help you build better
+//! applications and services in the Rust programming language.
+//!
+//! [**Learn more**](https://minifunctions.com) [❯](https://minifunctions.com)
+//!
 //!
 //! ## Installation
 //!
-//! Mini Functions is available on [crates.io](https://crates.io/crates/mini_functions).
+//! Mini Functions is available on both
+//! [Crates.io](https://crates.io/crates/mini_functions) and
+//! [Lib.rs](https://lib.rs/crates/mini_functions).
+//!
+//! Learn more about Mini Functions at <https://minifunctions.com>.
+//!
 //! Add the following to your `Cargo.toml` file:
 //! ```toml
 //! [dependencies]
-//! mini_functions = "0.0.7"
+//! mini_functions = "0.0.8"
 //! ```
 //! Then, add the following to your crate root:
 //! ```rust
 //! extern crate mini_functions;
+//!
+//! use mini_functions::mini_functions::*;
+//!
 //! ```
-//!
-//! ## Example
-//!
-//! ```rust
-//! extern crate mini_functions;
-//!
-//! use mini_functions::date::Date;
-//!
-//! fn main() {
-//!   let date = Date::date();
-//!   println!("{}", date);
-//! }
-//! ```
-//! Learn more about Mini Functions at <https://minifunctions.com>.
 //!
 //!
 #![warn(missing_docs)]
+#![forbid(unsafe_code)]
 #![doc(
-    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/icons/ico-mini-functions.svg",
-    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/icons/ico-mini-functions.svg",
+    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-mini-functions.svg",
+    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-mini-functions.svg",
     html_root_url = "https://docs.rs/mini-functions"
 )]
 #![crate_name = "mini_functions"]
+#![crate_type = "dylib"]
 #![crate_type = "lib"]
 #![crate_type = "rlib"]
-#![crate_type = "dylib"]
+#![crate_type = "staticlib"]
 
-#[macro_use]
-/// Provides a set of common constants used in the application
-pub mod common;
+/// Mini-Functions module that provides a variety of features for
+/// building apps, including several major crates that you can use
+/// individually or together to construct the core infrastructure of
+/// your Rust applications.
+pub mod mini_functions {
+    /// Provides access to common functions and constants.
+    pub use self::common::*;
 
-/// Provides a set of utility functions for working with dates and times
-pub mod date;
+    /// Provides access to the claims of a JSON Web Token (JWT).
+    pub use claims::*;
 
-/// Provides a set of utility functions for working with hashes. This
-/// module is a wrapper around the `blake2` crate.
-pub mod hash;
+    /// Provides access to Date functions.
+    pub use date::*;
 
-/// Provides a log function to log a message to the console with a
-/// simple, readable output format
-pub mod log;
+    /// Provides access to Error handling functions.
+    pub use errors::*;
 
-/// Provides a set of utility functions for generating and working with
-/// passwords/passphrases
-pub mod password;
+    /// Provides access to Hash functions.
+    pub use hash::*;
 
-/// Provides a set of utility functions for generating QR codes
-pub mod qrcode;
+    /// Provides access to JSON Web Token (JWT) functions.
+    pub use jot::*;
 
-/// Provides a set of utility functions for working with random numbers
-pub mod random;
+    /// Provides access to Log functions.
+    pub use logger::*;
 
-/// Provides a set of utility functions for working with UUIDs
-pub mod uuid;
+    /// Provides access to MD5 functions.
+    pub use md5::*;
+
+    /// Provides access to QR code functions.
+    pub use qr::*;
+
+    /// Provides access to Random numbers functions.
+    pub use random::*;
+}

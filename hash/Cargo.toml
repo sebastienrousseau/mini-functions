@@ -1,0 +1,52 @@
+[package]
+authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
+categories = ["Algorithms", "Data structures", "Cryptography"]
+description = "Hash is a struct that provides an easy way to hash and verify passwords using the [blake3](https://crates.io/crates/blake3) crate."
+edition = "2018"
+homepage = "https://minifunctions.com/"
+keywords = [
+    "blake3",
+    "checksum",
+    "crypto",
+    "cryptography",
+    "digest",
+    "encryption",
+    "hash",
+    "hasher",
+    "mini-functions",
+]
+license = "MIT OR Apache-2.0"
+name = "hash"
+repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/hash/"
+rust-version = "1.66.1"
+version = "0.0.1"
+include = [
+    "../../LICENSE-APACHE",
+    "../../LICENSE-MIT",
+    "/benches/**",
+    "/build.rs",
+    "/Cargo.toml",
+    "/examples/**",
+    "/README.md",
+    "/src/**",
+    "/tests/**",
+]
+
+[[bench]]
+name = "hash"
+harness = false
+path = "benches/hash.rs"
+
+[dependencies]
+blake3 = "1.3.3"
+
+[dev-dependencies]
+criterion = "0.4.0"
+
+[lib]
+crate-type = ["lib"]
+name = "hash"
+path = "src/lib.rs"
+
+[features]
+default = []

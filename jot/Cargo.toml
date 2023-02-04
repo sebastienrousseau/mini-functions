@@ -1,0 +1,108 @@
+[package]
+authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
+categories = [
+    "Authentication",
+    "Cryptography",
+    "Development tools",
+    "Encoding",
+    "Web programming",
+]
+description = "JWT provides a set of utility functions for working with JSON Web Tokens (JWTs) and JSON Web Signatures (JWSs)."
+edition = "2018"
+homepage = "https://minifunctions.com/"
+keywords = [
+    "api",
+    "deserialization",
+    "jot",
+    "json",
+    "jws",
+    "jwt",
+    "marshalling",
+    "mini-functions",
+    "serialization",
+    "unmarshalling",
+]
+license = "MIT OR Apache-2.0"
+name = "jot"
+repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/jot/"
+rust-version = "1.66.1"
+version = "0.0.1"
+include = [
+    "../../LICENSE-APACHE",
+    "../../LICENSE-MIT",
+    "/benches/**",
+    "/build.rs",
+    "/Cargo.toml",
+    "/examples/**",
+    "/README.md",
+    "/src/**",
+    "/tests/**",
+]
+
+[[bench]]
+name = "jot"
+harness = false
+path = "benches/jot.rs"
+
+[dependencies]
+base64 = "0.21.0"
+claims = { path = "../claims" }
+date = { path = "../date" }
+errors = { path = "../errors" }
+hmac = "0.12.1"
+jsonwebtoken = "8.2.0"
+jwt = "0.16.0"
+serde = "1.0.152"
+# openssl = "0.10.45"
+serde_derive = "1.0.152"
+serde_json = "1.0.91"
+sha2 = "0.10.6"
+
+[dev-dependencies]
+criterion = "0.4.0"
+
+[lib]
+crate-type = ["lib"]
+name = "jot"
+path = "src/lib.rs"
+
+[features]
+default = []
+
+[package.metadata.docs.rs]
+all-features = true
+
+# [profile.dev]
+# codegen-units = 256
+# debug = true
+# debug-assertions = true
+# incremental = true
+# lto = false
+# opt-level = 0
+# overflow-checks = true
+# panic = 'unwind'
+# rpath = false
+# strip = false
+
+# [profile.release]
+# codegen-units = 1 # Compile crates one after another so the compiler can optimize better
+# debug = false # Disable debug information
+# debug-assertions = false # Disable debug assertions
+# incremental = false # Disable incremental compilation
+# lto = true # Enables link to optimizations
+# opt-level = "s" # Optimize for binary size
+# overflow-checks = false # Disable overflow checks
+# panic = "abort" # Strip expensive panic clean-up logic
+# rpath = false # Disable rpath
+# strip = "symbols"  # Automatically strip symbols from the binary.
+
+# [profile.test]
+# codegen-units = 256
+# debug = true
+# debug-assertions = true
+# incremental = true
+# lto = false
+# opt-level = 0
+# overflow-checks = true
+# rpath = false
+# strip = false
