@@ -7,7 +7,7 @@ categories = [
     "Encoding",
     "Security",
 ]
-description = "A Rust library that generates random and pseudo-random numbers based on the Mersenne Twister algorithm."
+description = "A Rust library for generating random and pseudo-random numbers based on the Mersenne Twister algorithm"
 edition = "2018"
 homepage = "https://minifunctions.com/"
 keywords = [

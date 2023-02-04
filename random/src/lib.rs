@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 //!
-//! # A Rust library that generates random and pseudo-random numbers based on the Mersenne Twister algorithm
+//! # A Rust library for generating random and pseudo-random numbers based on the Mersenne Twister algorithm
 //!
 //! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-random.svg)](https://minifunctions.com)
 //!

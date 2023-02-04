@@ -1,13 +1,52 @@
-//! # Core QR code functionality
-//!
-//! QRCode provides an easy way to generate a QR code image in PNG or
-//! SVG format.
-//!
-#![warn(missing_docs)]
-#![forbid(unsafe_code)]
 // Copyright © 2022-2023 Mini Functions. All rights reserved.
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
+//!
+//! # A Rust library for generating QR code images in PNG, JPG, GIF and SVG format
+//!
+//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-qr.svg)](https://minifunctions.com)
+//!
+//! <center>
+//!
+//! [![Rust](https://img.shields.io/badge/rust-f04041?style=for-the-badge&labelColor=c0282d&logo=rust)](https://www.rust-lang.org)
+//! [![Crates.io](https://img.shields.io/crates/v/mini-functions.svg?style=for-the-badge&color=success&labelColor=27A006)](https://crates.io/crates/mini-functions)
+//! [![Lib.rs](https://img.shields.io/badge/lib.rs-v0.0.8-success.svg?style=for-the-badge&color=8A48FF&labelColor=6F36E4)](https://lib.rs/crates/mini-functions)
+//! [![GitHub](https://img.shields.io/badge/github-555555?style=for-the-badge&labelColor=000000&logo=github)](https://github.com/sebastienrousseau/mini-functions)
+//! [![License](https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge&color=007EC6&labelColor=03589B)](http://opensource.org/licenses/MIT)
+//!
+//! </center>
+//!
+//! ## Overview
+//!
+//! QRCode provides an easy way to generate QR code images in PNG, JPG, GIF and SVG format.
+//!
+//! ## Features
+//!
+//! - Generate QR code images in PNG, JPG, GIF and SVG format.
+//! - The data is a string or a vector of bytes.
+//! - The QR code image can be in black and white or in color.
+//! - It can be resized, colorized and converted to an image.
+//! - It can add an image as a watermark to the QR code image.
+//!
+//! ## Usage
+//!
+//! - [`serde`][]: Enable serialization/deserialization via serde
+//!
+//! [`serde`]: https://github.com/serde-rs/serde
+//!
+#![cfg_attr(feature = "bench", feature(test))]
+#![deny(dead_code)]
+#![deny(missing_debug_implementations)]
+#![deny(missing_docs)]
+#![forbid(unsafe_code)]
+#![warn(unreachable_pub)]
+#![doc(
+    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-qr.svg",
+    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-qr.svg",
+    html_root_url = "https://docs.rs/mini-functions"
+)]
+#![crate_name = "qr"]
+#![crate_type = "lib"]
 
 extern crate image;
 extern crate qrcode;
@@ -17,17 +56,12 @@ use qrcode::render::svg;
 use qrcode::QrCode;
 
 #[non_exhaustive]
-#[derive(Debug, Clone, Default, PartialEq)]
-/// The `QRCode` struct for generating an image in PNG or SVG format.
+#[derive(Clone, Debug, Default, PartialEq, Eq, Hash, PartialOrd, Ord)]
+/// The `QRCode` struct for generating an image in PNG, JPG, GIF and SVG format.
 ///
 /// This struct represents a QR code image from a given data.
 ///
-/// - It can be used to generate a QR code image in PNG, JPG and SVG
-/// format.
-/// - The data is a string or a vector of bytes.
-/// - The QR code image can be in black and white or in color.
-/// - It can be resized, colorized and converted to an image.
-/// - It can add an image as a watermark to the QR code image.
+///
 ///
 pub struct QRCode {
     /// The `data` field holds the data to be encoded in the QR code.
@@ -221,14 +255,14 @@ macro_rules! add_image_watermark {
     };
 }
 
-#[macro_export]
-/// The `add_emoji_watermark` macro creates a new instance of the QRCode struct
-/// with the given data.
-macro_rules! add_emoji_watermark {
-    ($img:expr) => {
-        QRCode::add_emoji_watermark($img)
-    };
-}
+// #[macro_export]
+// The `add_emoji_watermark` macro creates a new instance of the QRCode struct
+// with the given data.
+// macro_rules! add_emoji_watermark {
+//     ($img:expr) => {
+//         QRCode::add_emoji_watermark($img)
+//     };
+// }
 
 #[macro_export]
 /// The `qr_code` macro creates a new instance of the QRCode struct

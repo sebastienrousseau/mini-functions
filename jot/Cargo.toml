@@ -7,7 +7,7 @@ categories = [
     "Encoding",
     "Web programming",
 ]
-description = "JWT provides a set of utility functions for working with JSON Web Tokens (JWTs) and JSON Web Signatures (JWSs)."
+description = "A Rust library for working with JSON Web Tokens (JWTs) and JSON Web Signatures (JWSs)"
 edition = "2018"
 homepage = "https://minifunctions.com/"
 keywords = [
