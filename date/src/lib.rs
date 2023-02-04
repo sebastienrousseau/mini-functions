@@ -88,12 +88,14 @@
 #![crate_type = "lib"]
 
 extern crate serde;
-use std::fmt;
 
 pub use serde::{Deserialize, Serialize};
 
 extern crate time;
 use time::{Duration, OffsetDateTime};
+
+extern crate regex;
+use regex::Regex;
 
 /// # DateTime
 ///
@@ -192,60 +194,49 @@ impl DateTime {
         valid
     }
     /// Check if the input is a valid hour.
-    /// 24:00 is valid.
-    /// 24:01 is not valid.
+    /// 23:59 is valid.
+    /// 24:00 is not valid.
     pub fn is_valid_hour(input: &str) -> bool {
-        let mut valid = false;
-        if let Ok(hour) = input.parse::<u8>() {
-            if (0..=24).contains(&hour) {
-                valid = true;
-            }
-        }
-        valid
+        let re: Regex = Regex::new(r"^([0-1][0-9]|2[0-3])(:[0-5][0-9])?$").unwrap();
+        re.is_match(input)
     }
     /// Check if the input is a valid ISO 8601 date and time.
     /// 2023-01-01T00:00:00+00:00 is valid.
-    /// 2023-01-01T00:00:00+00:01 is not valid.
+    /// 2023-01-01T00:00:00+00:00:00 is not valid.
     pub fn is_valid_iso_8601(input: &str) -> bool {
-        let mut iter = input.splitn(6, '-');
-
-        let year = iter
-            .next()
-            .and_then(|year_str| year_str.parse::<i32>().ok());
-        let month = iter
-            .next()
-            .and_then(|month_str| month_str.parse::<u32>().ok());
-        let day = iter.next().and_then(|day_str| day_str.parse::<u32>().ok());
-        let hour = iter.next().and_then(|hour_str| {
-            hour_str
-                .split(':')
-                .next()
-                .and_then(|hour_str| hour_str.parse::<u32>().ok())
-        });
-        let minute = iter.next().and_then(|minute_str| {
-            minute_str
-                .split(':')
-                .next()
-                .and_then(|minute_str| minute_str.parse::<u32>().ok())
-        });
-        let second = iter.next().and_then(|second_str| {
-            second_str
-                .split('.')
-                .next()
-                .and_then(|second_str| second_str.parse::<u32>().ok())
-        });
-
-        match (year, month, day, hour, minute, second) {
-            (Some(y), Some(m), Some(d), Some(h), Some(min), Some(s)) => {
-                y >= 1
-                    && (1..=12).contains(&m)
-                    && (1..=31).contains(&d)
-                    && h <= 23
-                    && min <= 59
-                    && s <= 59
-            }
-            _ => false,
+        let re = Regex::new(
+            r"^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d+)?(Z|[+-]\d{2}:\d{2})$",
+        )
+        .unwrap();
+        if !re.is_match(input) {
+            return false;
         }
+        let captures = re.captures(input).unwrap();
+        // let year = captures[1].parse::<i32>().unwrap();
+        let month = captures[2].parse::<u32>().unwrap();
+        let day = captures[3].parse::<u32>().unwrap();
+        let hour = captures[4].parse::<u32>().unwrap();
+        let minute = captures[5].parse::<u32>().unwrap();
+        let second = captures[6].parse::<u32>().unwrap();
+        let tz = captures[7].to_string();
+        if !(1..=12).contains(&month)
+            || !(1..=31).contains(&day)
+            || hour >= 24
+            || minute >= 60
+            || second >= 60
+        {
+            return false;
+        }
+        if tz != "Z" {
+            let re = Regex::new(r"^[+-](\d{2}):(\d{2})$").unwrap();
+            let captures = re.captures(&tz).unwrap();
+            let tz_hour = captures[1].parse::<i32>().unwrap();
+            let tz_minute = captures[2].parse::<i32>().unwrap();
+            if !(0..=23).contains(&tz_hour) || !(0..=59).contains(&tz_minute) {
+                return false;
+            }
+        }
+        true
     }
 
     /// Check if the input is a valid ISO week number.
@@ -324,22 +315,15 @@ impl DateTime {
     /// 23:59:59 is valid.
     /// 24:00:00 is not valid.
     pub fn is_valid_time(input: &str) -> bool {
-        let mut valid = false;
-        if let Ok(_time) = input.parse::<u32>() {
-            valid = true;
-        }
-        valid
+        let re = Regex::new(r"^([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$").unwrap();
+        re.is_match(input)
     }
 }
 
-impl fmt::Display for DateTime {
+impl std::fmt::Display for DateTime {
     /// Display the date and time in ISO 8601 format.
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(
-            f,
-            "{}T{}:{:02}:{:02}{}",
-            self.now, self.hour, self.minute, self.second, self.offset
-        )
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "Year: {}\nMonth: {}\nDay: {}\nWeekday: {}\nHour: {}\nMinute: {}\nSecond: {}\nMicrosecond: {}\nOrdinal: {}\nIso 8601: {}\nIso Week: {}\nTime: {}\nTZ: {}\nOffset: {}\nNow: {}", self.year, self.month, self.day, self.weekday, self.hour, self.minute, self.second, self.microsecond, self.ordinal, self.iso_8601, self.iso_week, self.time, self.tz, self.offset, self.now)
     }
 }
 

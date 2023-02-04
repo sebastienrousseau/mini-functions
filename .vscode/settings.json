@@ -90,6 +90,7 @@
         "simd",
         "slli",
         "softprops",
+        "splitn",
         "srli",
         "staticlib",
         "strptime",

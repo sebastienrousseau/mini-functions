@@ -34,11 +34,66 @@ mod tests {
     #[test]
     fn test_is_valid_hour() {
         assert!(DateTime::is_valid_hour("23"));
+        assert!(DateTime::is_valid_hour("23:59"));
+        assert!(!DateTime::is_valid_hour("24:00"));
     }
     #[test]
-    fn is_valid_iso_8601() {
+    fn test_valid_iso_8601() {
+        assert!(DateTime::is_valid_iso_8601("2022-06-25T17:30:00Z"));
+        assert!(DateTime::is_valid_iso_8601("2022-06-25T17:30:00+01:00"));
+        assert!(DateTime::is_valid_iso_8601("2022-06-25T17:30:00.123456Z"));
         assert!(DateTime::is_valid_iso_8601(
-            "2023-02-02 20:48:44.751609 +00:00:00"
+            "2022-06-25T17:30:00.123456+01:00"
+        ));
+    }
+
+    #[test]
+    fn test_invalid_iso_8601() {
+        assert!(!DateTime::is_valid_iso_8601("2022-06-25T17:30:00"));
+        assert!(!DateTime::is_valid_iso_8601("2022-06-25 17:30:00Z"));
+        assert!(!DateTime::is_valid_iso_8601("2022-06-25T17:30:00+25:00"));
+        assert!(!DateTime::is_valid_iso_8601("2022-06-25T17:30:00+01:61"));
+    }
+
+    #[test]
+    fn test_month_out_of_range() {
+        assert!(!DateTime::is_valid_iso_8601("2022-13-25T17:30:00.1234567Z"));
+        assert!(!DateTime::is_valid_iso_8601("2022-00-25T17:30:00.1234567Z"));
+    }
+
+    #[test]
+    fn test_day_out_of_range() {
+        assert!(!DateTime::is_valid_iso_8601("2022-12-32T17:30:00.1234567Z"));
+        assert!(!DateTime::is_valid_iso_8601("2022-12-00T17:30:00.1234567Z"));
+    }
+
+    #[test]
+    fn test_hour_out_of_range() {
+        assert!(!DateTime::is_valid_iso_8601("2022-12-31T24:30:00.1234567Z"));
+        assert!(!DateTime::is_valid_iso_8601("2022-12-31T-1:30:00.1234567Z"));
+    }
+
+    #[test]
+    fn test_minute_out_of_range() {
+        assert!(!DateTime::is_valid_iso_8601("2022-12-31T23:60:00.1234567Z"));
+        assert!(!DateTime::is_valid_iso_8601("2022-12-31T23:-1:00.1234567Z"));
+    }
+
+    #[test]
+    fn test_second_out_of_range() {
+        assert!(!DateTime::is_valid_iso_8601("2022-12-31T23:59:60.1234567Z"));
+        assert!(!DateTime::is_valid_iso_8601("2022-12-31T23:59:-1.1234567Z"));
+    }
+    #[test]
+    fn test_tz_out_of_range() {
+        assert!(!DateTime::is_valid_iso_8601(
+            "2022-06-25T17:30:00.123456Z+25:00"
+        ));
+        assert!(!DateTime::is_valid_iso_8601(
+            "2022-06-25T17:30:00.123456Z+24:61"
+        ));
+        assert!(!DateTime::is_valid_iso_8601(
+            "2022-06-25T17:30:00.123456Z+99:59"
         ));
     }
     #[test]
@@ -181,32 +236,78 @@ mod tests {
         assert!(date.year > 0);
     }
     #[test]
-    fn test_display_format() {
-        let date_time = DateTime::new();
-        let formatted = format!("{date_time}");
-
-        let expected = format!(
-            "{}T{:02}:{:02}:{:02}{}",
-            date_time.now, date_time.hour, date_time.minute, date_time.second, date_time.offset
-        );
-        assert_eq!(formatted, expected);
-    }
-    #[test]
-    fn test_formatting_date_time() {
-        let date_time = DateTime::new();
-        let formatted = format!("{date_time}");
-
-        let expected = format!(
-            "{}T{:02}:{:02}:{:02}{}",
-            date_time.now, date_time.hour, date_time.minute, date_time.second, date_time.offset
-        );
-        assert_eq!(formatted, expected);
-    }
-    #[test]
     fn test_is_valid() {
         is_valid!(day, u32);
         let input = "31";
         let result = day(input);
         assert!(result);
+    }
+    #[test]
+    fn test_display_format() {
+        let date_time = DateTime::new();
+        let formatted = format!("{date_time}");
+
+        assert!(formatted.starts_with("Year:"));
+        assert!(formatted.contains("Month:"));
+        assert!(formatted.contains("Day:"));
+        assert!(formatted.contains("Weekday:"));
+        assert!(formatted.contains("Hour:"));
+        assert!(formatted.contains("Minute:"));
+        assert!(formatted.contains("Second:"));
+        assert!(formatted.contains("Microsecond:"));
+        assert!(formatted.contains("Ordinal:"));
+        assert!(formatted.contains("Iso 8601:"));
+        assert!(formatted.contains("Iso Week:"));
+        assert!(formatted.contains("Time:"));
+        assert!(formatted.contains("TZ:"));
+        assert!(formatted.contains("Offset:"));
+        assert!(formatted.contains("Now:"));
+    }
+    #[test]
+    fn test_is_valid_iso_week() {
+        assert!(DateTime::is_valid_iso_week("53"));
+        assert!(!DateTime::is_valid_iso_week("54"));
+        assert!(!DateTime::is_valid_iso_week("a"));
+    }
+
+    #[test]
+    fn test_is_valid_microsecond() {
+        assert!(DateTime::is_valid_microsecond("999999"));
+        assert!(!DateTime::is_valid_microsecond("1000000"));
+        assert!(!DateTime::is_valid_microsecond("b"));
+    }
+
+    #[test]
+    fn test_is_valid_minute() {
+        assert!(DateTime::is_valid_minute("59"));
+        assert!(!DateTime::is_valid_minute("60"));
+        assert!(!DateTime::is_valid_minute("c"));
+    }
+
+    #[test]
+    fn test_is_valid_month() {
+        assert!(DateTime::is_valid_month("12"));
+        assert!(!DateTime::is_valid_month("13"));
+        assert!(!DateTime::is_valid_month("d"));
+    }
+
+    #[test]
+    fn test_is_valid_ordinal() {
+        assert!(DateTime::is_valid_ordinal("366"));
+        assert!(!DateTime::is_valid_ordinal("367"));
+        assert!(!DateTime::is_valid_ordinal("e"));
+    }
+
+    #[test]
+    fn test_is_valid_second() {
+        assert!(DateTime::is_valid_second("59"));
+        assert!(!DateTime::is_valid_second("60"));
+        assert!(!DateTime::is_valid_second("f"));
+    }
+    #[test]
+    fn test_is_valid_time() {
+        assert!(DateTime::is_valid_time("23:59:59"));
+        assert!(!DateTime::is_valid_time("24:00:00"));
+        assert!(!DateTime::is_valid_time("g"));
     }
 }

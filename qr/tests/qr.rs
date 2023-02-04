@@ -4,7 +4,7 @@ mod tests {
     use image::{Rgba, RgbaImage};
 
     extern crate qr;
-    use qr::{qr_code, qr_code_to, QRCode};
+    use qr::{add_image_watermark, qr_code, qr_code_to, QRCode};
 
     const URL: &str = "https://minifunctions.com/"; // Define a constant for the URL to be encoded
 
@@ -58,6 +58,28 @@ mod tests {
         let qrcode = QRCode::from_string(URL.to_string());
         let qrcode_svg = qrcode.to_svg(512);
         assert_eq!(qrcode_svg.len(), 6918);
+    }
+    #[test]
+    fn test_to_jpg() {
+        let data = vec![0x61, 0x62, 0x63];
+        let qrcode = QRCode::from_bytes(data.clone());
+        assert_eq!(qrcode.data, data);
+
+        let qrcode = QRCode::from_string(URL.to_string());
+        let qrcode_jpg = qrcode.to_jpg(512);
+        assert_eq!(qrcode_jpg.len(), 1048576);
+    }
+    #[test]
+    fn test_add_image_watermark() {
+        let data = vec![0x61, 0x62, 0x63];
+        let qrcode = QRCode::from_bytes(data.clone());
+        assert_eq!(qrcode.data, data);
+
+        let qrcode = QRCode::from_string(URL.to_string());
+        let mut qrcode_img = qrcode.to_png(512);
+        let watermark_img = image::open("bubba.ico").unwrap().into_rgba8();
+        add_image_watermark!(&mut qrcode_img, &watermark_img);
+        assert_eq!(qrcode_img.dimensions(), (512, 512));
     }
     #[test]
     fn test_colorize() {

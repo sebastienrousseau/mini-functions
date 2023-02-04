@@ -36,6 +36,7 @@ harness = false
 path = "benches/date.rs"
 
 [dependencies]
+regex = "1.7.1"
 serde = { version = "1.0.152", features = ["derive"] }
 time = "0.3.17"
 
