@@ -55,20 +55,39 @@ pub struct Header {
     pub cty: Option<String>,
 }
 
+/// The Algorithm enum contains a list of supported algorithms.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub enum Algorithm {
+    /// HMAC using SHA-256 hash algorithm.
     HS256,
+
+    /// HMAC using SHA-384 hash algorithm.
     HS384,
+
+    /// HMAC using SHA-512 hash algorithm.
     HS512,
+
+    /// RSASSA-PKCS1-v1_5 using SHA-256 hash algorithm.
     RS256,
+
+    /// RSASSA-PKCS1-v1_5 using SHA-384 hash algorithm.
     RS384,
+
+    /// RSASSA-PKCS1-v1_5 using SHA-512 hash algorithm.
     RS512,
+
+    /// ECDSA using P-256 and SHA-256.
     ES256,
+
+    /// ECDSA using P-384 and SHA-384.
     ES384,
+
+    /// ECDSA using P-521 and SHA-512.
     ES512,
 }
 
 impl ToString for Algorithm {
+    /// Converts an Algorithm enum to a string.
     fn to_string(&self) -> String {
         match self {
             Algorithm::HS256 => "HS256".to_string(),
@@ -85,12 +104,14 @@ impl ToString for Algorithm {
 }
 
 impl Default for Algorithm {
+    /// Returns the default algorithm, HS256.
     fn default() -> Self {
         Algorithm::HS256
     }
 }
 
 impl Default for JWT {
+    /// Returns a default JWT struct.
     fn default() -> Self {
         JWT {
             header: Header {
@@ -107,6 +128,7 @@ impl Default for JWT {
 }
 
 impl Default for Header {
+    /// Returns a default Header struct.
     fn default() -> Self {
         Header {
             alg: Some(Algorithm::HS256),
@@ -118,7 +140,7 @@ impl Default for Header {
 }
 
 impl JWT {
-    // Claims
+    /// Claims returns a default Claims struct.
     pub fn claims() -> Claims {
         Claims::default()
     }
@@ -213,29 +235,29 @@ impl JWT {
         Ok(jwt)
     }
 
-    // Generates a JWT token.
+    /// Generates a JWT token.
     pub fn generate(secret: &[u8]) -> Result<String, JwtError> {
         let claims = Claims::default();
         let header = Header::default();
         JWT::encode(header, claims, secret)
     }
 
-    // Returns the token field of the JWT struct.
+    /// Returns the token field of the JWT struct.
     pub fn get_token(jwt: JWT) -> String {
         jwt.token
     }
 
-    // Returns the header field of the JWT struct.
+    /// Returns the header field of the JWT struct.
     pub fn get_token_header(jwt: JWT) -> Header {
         jwt.header
     }
 
-    // Get the token length.
+    /// Get the token length.
     pub fn get_token_length(jwt: JWT) -> usize {
         jwt.token.len()
     }
 
-    // Validates a JWT token.
+    /// Validates a JWT token.
     pub fn validate(&self, secret: &[u8]) -> Result<(), JwtError> {
         let jwt = &self.token;
         {
@@ -280,6 +302,7 @@ impl JWT {
 }
 
 impl fmt::Display for JWT {
+    /// Formats the JWT struct for printing.
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(
             f,
@@ -290,6 +313,7 @@ impl fmt::Display for JWT {
 }
 
 impl fmt::Display for Header {
+    /// Formats the Header struct for printing.
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(
             f,

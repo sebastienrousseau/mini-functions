@@ -1,30 +1,50 @@
+/// ErrorType is a struct that holds a name and an Error enum instance
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ErrorType {
+    /// name is a string that holds the name of the error type
     pub name: String,
+    /// error_type is an instance of the Error enum
     pub error_type: Error,
 }
-
+/// Error is an enumeration of different error types
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Error {
+    /// Argument error
     Argument(String),
+    /// Assertion error
     Assertion(String),
+    /// Concurrency error
     Concurrency(String),
+    /// Data error
     Data(String),
+    /// External error
     External(String),
+    /// Format error
     Format(String),
+    /// Implementation error
     Implementation(String),
+    /// Initialization error
     Initialization(String),
+    /// Internal error
     Internal(String),
+    /// Interruption error
     Interruption(String),
+    /// Operation error
     Operation(String),
+    /// Rejection error
     Rejection(String),
+    /// State error
     State(String),
+    /// Timeout error
     Timeout(String),
+    /// Unknown error
     Unknown(String),
+    /// Version error
     Version(String),
 }
 
 impl Error {
+    /// new creates a new Error enum instance based on the name
     pub fn new(err_type: ErrorType) -> Self {
         match err_type.name.as_str() {
             "argument" => Error::Argument(String::from("Illegal argument")),
@@ -48,6 +68,7 @@ impl Error {
 }
 
 impl ErrorType {
+    /// new creates a new ErrorType struct instance
     pub fn new(name: &str) -> ErrorType {
         ErrorType {
             name: String::from(name),
@@ -57,6 +78,7 @@ impl ErrorType {
             }),
         }
     }
+    /// new_subtype creates a new ErrorType struct instance
     pub fn new_subtype(&self, name: &str) -> ErrorType {
         ErrorType {
             name: String::from(name),

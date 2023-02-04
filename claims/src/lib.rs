@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 //!
-//! A Rust library for accessing and manipulating claims of a JSON Web Token (JWT)
+//! # A Rust library for accessing and manipulating claims of a JSON Web Token (JWT)
 //!
 //! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-claims.svg)](https://minifunctions.com)
 //!
@@ -21,6 +21,11 @@
 //! The Claims library holds JSON Web Token (JWT) claims. It provides an
 //! RFC7519 compliant implementation of JSON Web Tokens (JWT) and JSON
 //! Web Signature (JWS) for Rust.
+//!
+//! The [**`Claims`**](./struct.Claims.html) type is provided to hold
+//! the claims of a JWT. The claims are stored in a `HashMap` and can be
+//! accessed using the `get_claim`, `set_claim`, `remove_claim`, and
+//! `has_claim` methods.
 //!
 //! ## Features
 //!
@@ -43,7 +48,7 @@
 //!
 //! ## Usage
 //!
-//! Claims can be any `serde::Serialize` or `serde::Deserialize` types,
+//! - [`serde`][]: Enable serialization/deserialization via serde,
 //! usually derived with `serde_derive`.
 //!
 //! ## Examples
@@ -86,13 +91,19 @@
 //! * [JSON Web Token (JWT)](https://jwt.io/)
 //!
 //!
-#![warn(missing_docs)]
+//! [`serde`]: https://github.com/serde-rs/serde
+//!
+#![deny(dead_code)]
+#![deny(missing_debug_implementations)]
+#![deny(missing_docs)]
 #![forbid(unsafe_code)]
+#![warn(unreachable_pub)]
 #![doc(
-    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-claims.svg",
     html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-claims.svg",
+    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-claims.svg",
     html_root_url = "https://docs.rs/mini-functions"
 )]
+#![crate_name = "claims"]
 #![crate_type = "lib"]
 
 extern crate serde;
@@ -176,7 +187,7 @@ impl Claims {
     /// assert_eq!(claims.remove_claim("sub"), Some("1234567890".to_owned()));
     /// ```
     pub fn remove_claim(&mut self, key: &str) -> Option<String> {
-        self.claims.remove(key).map(|value| value.to_owned())
+        self.claims.remove(key)
     }
     /// Clears all claims from the `Claims` struct.
     ///

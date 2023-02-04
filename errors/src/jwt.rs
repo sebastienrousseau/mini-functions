@@ -21,27 +21,59 @@ use std::io::Error as IoError;
 /// implemented as an enum with variants for each possible error. It
 /// also implements the `Default`, `Display`, and `Error` traits.
 pub enum JwtError {
-    AudienceInvalid(String),   // Audience is invalid
-    DecodeError(String),       // Decode error
-    ExpirationInvalid(String), // Expiration is invalid
-    FormatInvalid(String),     // Format is invalid
-    InvalidHeader(String),     // Invalid header
-    InvalidPayload(String),    // Invalid payload
-    InvalidSignature(String),  // Invalid signature
-    InvalidLength(String),     // Invalid length
-    IoError(String),           // IO error
-    IssuerInvalid(String),     // Issuer is invalid
-    JWTInvalid(String),        // JWT is invalid
-    OpenSslError(String),      // Open SSL error
-    ProtocolError(String),     // Protocol error
-    SignatureExpired(String),  // Signature is expired
-    SignatureInvalid(String),  // Signature is invalid
-    TokenNotFound(String),     // Token not found
+    /// The Audience is invalid.
+    AudienceInvalid(String),
+
+    /// Decode error.
+    DecodeError(String),
+
+    /// Expiration is invalid.
+    ExpirationInvalid(String),
+
+    /// Format is invalid
+    FormatInvalid(String),
+
+    /// Invalid header.
+    InvalidHeader(String),
+
+    /// Invalid payload.
+    InvalidPayload(String),
+
+    /// Invalid signature
+    InvalidSignature(String),
+
+    /// Invalid length
+    InvalidLength(String),
+
+    /// IO error.
+    IoError(String),
+
+    /// Issuer is invalid.
+    IssuerInvalid(String),
+
+    /// JWT is invalid.
+    JWTInvalid(String),
+
+    /// Open SSL error.
+    OpenSslError(String),
+
+    /// Protocol error.
+    ProtocolError(String),
+
+    /// Signature is expired.
+    SignatureExpired(String),
+
+    /// Signature is invalid.
+    SignatureInvalid(String),
+
+    /// Token not found.
+    TokenNotFound(String),
 }
 
 impl Error for JwtError {}
 
 impl fmt::Display for JwtError {
+    /// The formatted error.
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             JwtError::AudienceInvalid(err) => write!(f, "Audience Invalid Error: {err}"),
@@ -53,6 +85,7 @@ impl fmt::Display for JwtError {
 }
 
 impl From<DecodeError> for JwtError {
+    /// Converts a `DecodeError` to a `JwtError`.
     fn from(error: DecodeError) -> Self {
         JwtError::DecodeError(error.to_string())
     }

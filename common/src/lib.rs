@@ -79,6 +79,7 @@
     html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-common.svg",
     html_root_url = "https://docs.rs/mini-functions"
 )]
+#![crate_name = "common"]
 #![crate_type = "lib"]
 
 extern crate serde;

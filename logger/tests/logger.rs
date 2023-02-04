@@ -6,7 +6,7 @@ mod tests {
     extern crate date;
     extern crate logger;
 
-    use self::date::Date;
+    use self::date::DateTime;
     use self::logger::LogLevel::ERROR;
     use self::logger::{Log, LogFormat, LogLevel};
     use logger::LogFormat::COMMON;
@@ -27,10 +27,10 @@ mod tests {
 
     #[test]
     fn test_log_error() {
-        let date = Date::new().date;
+        let date = DateTime::new();
         let log = Log::new(
             "12345678-1234-1234-1234-1234567890ab",
-            &date.read().unwrap().to_string(),
+            &date.now,
             &LogLevel::INFO,
             "SystemTrayEvent",
             "Showing main window",
@@ -40,10 +40,10 @@ mod tests {
     }
     #[test]
     fn test_log_warn() {
-        let date = Date::new().date;
+        let date = DateTime::new();
         let log = Log::new(
             "12345678-1234-1234-1234-1234567890ab",
-            &date.read().unwrap().to_string(),
+            &date.now,
             &LogLevel::INFO,
             "SystemTrayEvent",
             "Showing main window",
@@ -53,10 +53,10 @@ mod tests {
     }
     #[test]
     fn test_log_debug() {
-        let date = Date::new().date;
+        let date = DateTime::new();
         let log = Log::new(
             "12345678-1234-1234-1234-1234567890ab",
-            &date.read().unwrap().to_string(),
+            &date.now,
             &LogLevel::INFO,
             "SystemTrayEvent",
             "Showing main window",
@@ -66,10 +66,10 @@ mod tests {
     }
     #[test]
     fn test_log_trace() {
-        let date = Date::new().date;
+        let date = DateTime::new();
         let log = Log::new(
             "12345678-1234-1234-1234-1234567890ab",
-            &date.read().unwrap().to_string(),
+            &date.now,
             &LogLevel::INFO,
             "SystemTrayEvent",
             "Showing main window",
@@ -79,10 +79,10 @@ mod tests {
     }
     #[test]
     fn test_log_info() {
-        let date = Date::new().date;
+        let date = DateTime::new();
         let log = Log::new(
             "12345678-1234-1234-1234-1234567890ab",
-            &date.read().unwrap().to_string(),
+            &date.now,
             &LogLevel::INFO,
             "SystemTrayEvent",
             "Showing main window",

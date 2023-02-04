@@ -1,58 +1,41 @@
 extern crate date;
-use self::date::Date;
+use self::date::DateTime;
 
 pub fn main() {
-    let date = Date::new();
-    match date.date.read() {
-        Ok(d) => println!("🦀 date:          ✅ {d}"),
-        Err(e) => println!("🦀 date:          ❌ {e}"),
-    }
-    match date.day.read() {
-        Ok(d) => println!("🦀 day:           ✅ {d}"),
-        Err(e) => println!("🦀 day:           ❌ {e}"),
-    }
-    match date.hour.read() {
-        Ok(d) => println!("🦀 hour:          ✅ {d}"),
-        Err(e) => println!("🦀 hour:          ❌ {e}"),
-    }
-    match date.iso_8601.read() {
-        Ok(d) => println!("🦀 iso_8601:      ✅ {d}"),
-        Err(e) => println!("🦀 iso_8601:      ❌ {e}"),
-    }
-    match date.iso_week.read() {
-        Ok(d) => println!("🦀 iso_week:      ✅ {d}"),
-        Err(e) => println!("🦀 iso_week:      ❌ {e}"),
-    }
-    match date.minute.read() {
-        Ok(d) => println!("🦀 minute:        ✅ {d}"),
-        Err(e) => println!("🦀 minute:        ❌ {e}"),
-    }
-    match date.month.read() {
-        Ok(d) => println!("🦀 month:         ✅ {d}"),
-        Err(e) => println!("🦀 month:         ❌ {e}"),
-    }
-    match date.offset.read() {
-        Ok(d) => println!("🦀 offset:        ✅ {d}"),
-        Err(e) => println!("🦀 offset:        ❌ {e}"),
-    }
-    match date.ordinal.read() {
-        Ok(d) => println!("🦀 ordinal:       ✅ {d}"),
-        Err(e) => println!("🦀 ordinal:       ❌ {e}"),
-    }
-    match date.second.read() {
-        Ok(d) => println!("🦀 second:        ✅ {d}"),
-        Err(e) => println!("🦀 second:        ❌ {e}"),
-    }
-    match date.time.read() {
-        Ok(d) => println!("🦀 time:          ✅ {d}"),
-        Err(e) => println!("🦀 time:          ❌ {e}"),
-    }
-    match date.weekday.read() {
-        Ok(d) => println!("🦀 weekday:       ✅ {d}"),
-        Err(e) => println!("🦀 weekday:       ❌ {e}"),
-    }
-    match date.year.read() {
-        Ok(d) => println!("🦀 year:          ✅ {d}"),
-        Err(e) => println!("🦀 year:          ❌ {e}"),
-    };
+    let date = DateTime::new();
+    println!("🦀 Date:              ✅ {}", date.now);
+    println!("🦀 Day:               ✅ {}", date.day);
+    println!("🦀 Hour:              ✅ {}", date.hour);
+    println!("🦀 ISO 8601:          ✅ {}", date.iso_8601);
+    println!("🦀 ISO Week Number:   ✅ {}", date.iso_week);
+    println!("🦀 Minute:            ✅ {}", date.minute);
+    println!("🦀 Month:             ✅ {}", date.month);
+    println!("🦀 Offset:            ✅ {}", date.offset);
+    println!("🦀 Ordinal Date:      ✅ {}", date.ordinal);
+    println!("🦀 Second:            ✅ {}", date.second);
+    println!("🦀 Microsecond:       ✅ {}", date.microsecond);
+    println!("🦀 Time:              ✅ {}", date.time);
+    println!("🦀 Weekday:           ✅ {}", date.weekday);
+    println!("🦀 Year:              ✅ {}", date.year);
+
+    println!(
+        "🦀 Invalid day (32):       ❌ {}",
+        DateTime::is_valid_day("32")
+    );
+    println!(
+        "🦀 Valid day:         ✅ {}",
+        DateTime::is_valid_day(&date.day.to_string())
+    );
+    println!(
+        "🦀 Invalid hour (24):      ❌ {}",
+        DateTime::is_valid_hour("24")
+    );
+    println!(
+        "🦀 Valid hour:        ✅ {}",
+        DateTime::is_valid_hour(&date.hour.to_string())
+    );
+    // println!(
+    //     "🦀 Invalid month:     ❌ {}",
+    //     DateTime::is_valid_month("13")
+    // );
 }

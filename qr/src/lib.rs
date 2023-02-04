@@ -12,7 +12,7 @@
 extern crate image;
 extern crate qrcode;
 
-use image::{ImageBuffer, Rgb, RgbImage};
+use image::{ImageBuffer, Rgba, RgbaImage};
 use qrcode::render::svg;
 use qrcode::QrCode;
 
@@ -22,10 +22,12 @@ use qrcode::QrCode;
 ///
 /// This struct represents a QR code image from a given data.
 ///
-/// - It can be used to generate a QR code image in PNG or SVG format.
+/// - It can be used to generate a QR code image in PNG, JPG and SVG
+/// format.
 /// - The data is a string or a vector of bytes.
 /// - The QR code image can be in black and white or in color.
 /// - It can be resized, colorized and converted to an image.
+/// - It can add an image as a watermark to the QR code image.
 ///
 pub struct QRCode {
     /// The `data` field holds the data to be encoded in the QR code.
@@ -62,37 +64,36 @@ impl QRCode {
 
     /// The `to_png` method creates a new PNG image of the QR code using
     /// the data stored in the QRCode
-    pub fn to_png(&self, width: u32) -> ImageBuffer<Rgb<u8>, Vec<u8>> {
+    pub fn to_png(&self, width: u32) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
         let qrcode = self.to_qrcode();
-        let mut img: ImageBuffer<Rgb<u8>, Vec<u8>> = ImageBuffer::new(width, width);
+        let height = width;
+        let mut img = ImageBuffer::new(width, height);
         for (x, y, pixel) in img.enumerate_pixels_mut() {
-            let c = if qrcode[(x as usize, y as usize)] == qrcode::Color::Dark {
-                Rgb([0, 0, 0])
-            } else {
-                Rgb([255, 255, 255])
+            let x_index = (x as f32 / width as f32) * qrcode.width() as f32;
+            let y_index = (y as f32 / height as f32) * qrcode.width() as f32;
+            *pixel = match qrcode[(x_index as usize, y_index as usize)] {
+                qrcode::Color::Dark => Rgba([0, 0, 0, 0]),
+                qrcode::Color::Light => Rgba([255, 255, 255, 255]),
             };
-            *pixel = c;
-            *pixel = c;
         }
         img
     }
-
-    // pub fn to_png(&self) -> ImageBuffer<Rgb<u8>, Vec<u8>> {
-    //     let qrcode = self.to_qrcode();
-    //     let mut img: ImageBuffer<Rgb<u8>, Vec<u8>> =
-    //         ImageBuffer::new(qrcode.width() as u32, qrcode.width() as u32);
-    //     for (x, y, pixel) in img.enumerate_pixels_mut() {
-    //         let c = if qrcode[(x as usize, y as usize)] == qrcode::Color::Dark {
-    //             Rgb([0, 0, 0])
-    //         } else {
-    //             Rgb([255, 255, 255])
-    //         };
-    //         *pixel = c;
-    //         *pixel = c;
-    //     }
-    //     img
-    // }
-
+    /// The `to_jpg` method creates a new JPEG image of the QR code
+    /// using the data stored in the QRCode
+    pub fn to_jpg(&self, width: u32) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
+        let qrcode = self.to_qrcode();
+        let height = width;
+        let mut img = ImageBuffer::new(width, height);
+        for (x, y, pixel) in img.enumerate_pixels_mut() {
+            let x_index = (x as f32 / width as f32) * qrcode.width() as f32;
+            let y_index = (y as f32 / height as f32) * qrcode.width() as f32;
+            *pixel = match qrcode[(x_index as usize, y_index as usize)] {
+                qrcode::Color::Dark => Rgba([0, 0, 0, 0]),
+                qrcode::Color::Light => Rgba([255, 255, 255, 255]),
+            };
+        }
+        img
+    }
     /// The `to_svg` method creates a new SVG image of the QR code using
     /// the data stored in the QRCode
     pub fn to_svg(&self, width: u32) -> String {
@@ -109,14 +110,14 @@ impl QRCode {
     /// The `colorize` method creates a new PNG image of the QR code
     /// using the data stored in the QRCode and the given color value to
     /// colorize the QR code.
-    pub fn colorize(&self, color: Rgb<u8>) -> RgbImage {
+    pub fn colorize(&self, color: Rgba<u8>) -> RgbaImage {
         let qrcode = self.to_qrcode();
-        let mut img: RgbImage = ImageBuffer::new(qrcode.width() as u32, qrcode.width() as u32);
+        let mut img: RgbaImage = ImageBuffer::new(qrcode.width() as u32, qrcode.width() as u32);
         for (x, y, pixel) in img.enumerate_pixels_mut() {
             let c = if qrcode[(x as usize, y as usize)] == qrcode::Color::Dark {
                 color
             } else {
-                Rgb([255, 255, 255])
+                Rgba([255, 255, 255, 255])
             };
             *pixel = c;
         }
@@ -126,22 +127,90 @@ impl QRCode {
     /// The `resize` method creates a new PNG image of the QR code using
     /// the data stored in the QRCode and the given width and height
     /// values to resize the QR code.
-    pub fn resize(&self, width: u32, height: u32) -> RgbImage {
+    pub fn resize(&self, width: u32, height: u32) -> RgbaImage {
         let qrcode = self.to_qrcode();
-        let mut img: RgbImage = ImageBuffer::new(width, height);
+        let mut img: RgbaImage = ImageBuffer::new(width, height);
         for y in 0..height {
             for x in 0..width {
                 let x_index = (x as f32 / width as f32) * qrcode.width() as f32;
                 let y_index = (y as f32 / height as f32) * qrcode.width() as f32;
                 let c = match qrcode[(x_index as usize, y_index as usize)] {
-                    qrcode::Color::Dark => Rgb([0, 0, 0]),
-                    qrcode::Color::Light => Rgb([255, 255, 255]),
+                    qrcode::Color::Dark => Rgba([0, 0, 0, 0]),
+                    qrcode::Color::Light => Rgba([255, 255, 255, 255]),
                 };
                 img.put_pixel(x, y, c);
             }
         }
         img
     }
+    /// The `add_image_watermark` method adds a watermark to the given image.
+    pub fn add_image_watermark(img: &mut RgbaImage, watermark: &RgbaImage) {
+        let (width, height) = img.dimensions();
+        let (watermark_width, watermark_height) = watermark.dimensions();
+
+        // position the watermark in the bottom right corner
+        let x = width - watermark_width;
+        let y = height - watermark_height;
+
+        // draw the watermark on the QR code image
+        for (dx, dy, watermark_pixel) in watermark.enumerate_pixels() {
+            let x = x + dx as u32;
+            let y = y + dy as u32;
+            let qr_pixel = img.get_pixel(x, y);
+
+            let alpha = (watermark_pixel[3] as f32) / 255.0;
+            let new_r = (1.0 - alpha) * (qr_pixel[0] as f32) + alpha * (watermark_pixel[0] as f32);
+            let new_g = (1.0 - alpha) * (qr_pixel[1] as f32) + alpha * (watermark_pixel[1] as f32);
+            let new_b = (1.0 - alpha) * (qr_pixel[2] as f32) + alpha * (watermark_pixel[2] as f32);
+            let new_a = (qr_pixel[3] as f32) + alpha * (255.0 - qr_pixel[3] as f32);
+
+            let new_pixel = [new_r as u8, new_g as u8, new_b as u8, new_a as u8];
+            img.put_pixel(x, y, image::Rgba(new_pixel));
+        }
+    }
+    // The `add_emoji_watermark` method adds an emoji watermark to the
+    // given image.
+    // pub fn add_emoji_watermark(img: &mut RgbaImage) {
+    //     let (width, height) = img.dimensions();
+
+    //     // position the watermark in the center of the QR code
+    //     let x = width / 2 - 10;
+    //     let y = height / 2 - 10;
+
+    //     let emoji = "🦀︎";
+    //     let emoji_image =
+    //         image::load_from_memory_with_format(emoji.as_bytes(), image::ImageFormat::Png);
+    //     let emoji_image = match emoji_image {
+    //         Ok(img) => img,
+    //         Err(e) => {
+    //             println!("Error decoding emoji: {}", e);
+    //             return;
+    //         }
+    //     };
+    //     let emoji_image = emoji_image.resize(20, 20, image::imageops::FilterType::Nearest);
+    //     let emoji_image = emoji_image.to_rgb8();
+    //     for (dx, dy, pixel) in emoji_image.enumerate_pixels() {
+    //         img.put_pixel(x + dx, y + dy, *pixel);
+    //     }
+    // }
+}
+
+#[macro_export]
+/// The `add_emoji_watermark` macro creates a new instance of the QRCode struct
+/// with the given data.
+macro_rules! add_image_watermark {
+    ($img:expr, $watermark:expr) => {
+        QRCode::add_image_watermark($img, $watermark)
+    };
+}
+
+#[macro_export]
+/// The `add_emoji_watermark` macro creates a new instance of the QRCode struct
+/// with the given data.
+macro_rules! add_emoji_watermark {
+    ($img:expr) => {
+        QRCode::add_emoji_watermark($img)
+    };
 }
 
 #[macro_export]
@@ -154,14 +223,16 @@ macro_rules! qr_code {
 }
 
 #[macro_export]
-/// Define a macro named `qr_code_from`
-macro_rules! qr_code_from {
+/// Define a macro named `qr_code_to`
+macro_rules! qr_code_to {
     // This macro takes two expressions: `$data` and `$format`
-    ($data:expr, $format:expr,  $width:expr) => {
+    ($data:expr, $format:expr, $width:expr) => {
         // Match the value of `$format`
         match $format {
             // If `$format` is equal to "png", generate a PNG format QR code using `QRCode::from_bytes`
             "png" => QRCode::from_bytes($data).to_png($width),
+            // If `$format` is equal to "jpg", generate a JPG format QR code using `QRCode::from_bytes`
+            "jpg" => QRCode::from_bytes($data).to_jpg($width),
             // For any other value, panic with the message "Invalid format"
             _ => panic!("Invalid format"),
         }

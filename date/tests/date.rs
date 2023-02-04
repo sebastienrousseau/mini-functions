@@ -4,265 +4,210 @@
 mod tests {
 
     extern crate date;
+    use date::{is_valid, DateTime};
 
-    use self::date::Date;
-
-    #[test]
-    fn test_date() {
-        let date = Date::new().date;
-        assert_eq!(
-            date.read().unwrap().to_string(),
-            date.read().unwrap().to_string()
-        );
-    }
+    extern crate time;
+    use time::{Duration, OffsetDateTime};
 
     #[test]
-    fn test_day() {
-        let day = Date::new().day;
+    fn test_new() {
+        let date = DateTime::new();
+        assert!(!date.now.is_empty());
+        assert!(date.day <= 31);
+        assert!(date.hour <= 23);
+        assert!(!date.iso_8601.is_empty());
+        assert!(date.iso_week > 0 && date.iso_week <= 53);
+        assert!(date.minute <= 59);
+        assert!(!date.month.is_empty());
+        assert!(!date.offset.is_empty());
+        assert!(date.ordinal > 0 && date.ordinal <= 366);
+        assert!(date.second <= 59);
+        assert!(!date.time.is_empty());
+        assert!(!date.weekday.is_empty());
+        assert!(date.year > 0);
+    }
+    #[test]
+    fn test_is_valid_day() {
+        assert_eq!(false, DateTime::is_valid_day("32"));
+        assert_eq!(true, DateTime::is_valid_day("31"));
+    }
+    #[test]
+    fn test_is_valid_hour() {
+        assert_eq!(true, DateTime::is_valid_hour("23"));
+    }
+    #[test]
+    fn is_valid_iso_8601() {
         assert_eq!(
-            day.read().unwrap().to_string(),
-            day.read().unwrap().to_string()
+            true,
+            DateTime::is_valid_iso_8601("2023-02-02 20:48:44.751609 +00:00:00")
         );
     }
     #[test]
-    fn test_hour() {
-        let hour = Date::new().hour;
-        assert_eq!(
-            hour.read().unwrap().to_string(),
-            hour.read().unwrap().to_string()
-        );
-    }
-    #[test]
-    fn test_iso_8601() {
-        let iso_8601 = Date::new().iso_8601;
-        assert_eq!(
-            iso_8601.read().unwrap().to_string(),
-            iso_8601.read().unwrap().to_string()
-        );
-    }
-    #[test]
-    fn test_iso_week() {
-        let iso_week = Date::new().iso_week;
-        assert_eq!(
-            iso_week.read().unwrap().to_string(),
-            iso_week.read().unwrap().to_string()
-        );
-    }
-    #[test]
-    fn test_minute() {
-        let minute = Date::new().minute;
-        assert_eq!(
-            minute.read().unwrap().to_string(),
-            minute.read().unwrap().to_string()
-        );
-    }
-    #[test]
-    fn test_month() {
-        let month = Date::new().month;
-        assert_eq!(
-            month.read().unwrap().to_string(),
-            month.read().unwrap().to_string()
-        );
-    }
-    #[test]
-    fn test_offset() {
-        let offset = Date::new().offset;
-        assert_eq!(
-            offset.read().unwrap().to_string(),
-            offset.read().unwrap().to_string()
-        );
-    }
-    #[test]
-    fn test_ordinal() {
-        let ordinal = Date::new().ordinal;
-        assert_eq!(
-            ordinal.read().unwrap().to_string(),
-            ordinal.read().unwrap().to_string()
-        );
-    }
-    #[test]
-    fn test_second() {
-        let second = Date::new().second;
-        assert_eq!(
-            second.read().unwrap().to_string(),
-            second.read().unwrap().to_string()
-        );
-    }
-    #[test]
-    fn test_time() {
-        let time = Date::new().time;
-        assert_eq!(
-            time.read().unwrap().to_string(),
-            time.read().unwrap().to_string()
-        );
-    }
-    #[test]
-    fn test_weekday() {
-        let weekday = Date::new().weekday;
-        assert_eq!(
-            weekday.read().unwrap().to_string(),
-            weekday.read().unwrap().to_string()
-        );
-    }
-    #[test]
-    fn test_year() {
-        let year = Date::new().year;
-        assert_eq!(
-            year.read().unwrap().to_string(),
-            year.read().unwrap().to_string()
-        );
-    }
-    #[test]
-    fn test_default() {
-        let date1 = Date::default();
-        let date2 = Date::new();
-        assert_eq!(
-            date1.date.read().unwrap().to_string(),
-            date2.date.read().unwrap().to_string()
-        );
-    }
-    #[test]
-    fn test_clone() {
-        let date1 = Date::new();
-        let date2 = date1.clone();
-
-        assert_eq!(
-            date1.date.read().unwrap().to_string(),
-            date2.date.read().unwrap().to_string()
-        );
-        assert_ne!(
-            &date1.date.try_read().unwrap() as *const _,
-            &date2.date.try_read().unwrap() as *const _
-        );
-        assert_ne!(
-            &date1.day.try_read().unwrap() as *const _,
-            &date2.day.try_read().unwrap() as *const _
-        );
-        assert_ne!(
-            &date1.hour.try_read().unwrap() as *const _,
-            &date2.hour.try_read().unwrap() as *const _
-        );
-        assert_ne!(
-            &date1.iso_8601.try_read().unwrap() as *const _,
-            &date2.iso_8601.try_read().unwrap() as *const _
-        );
-        assert_ne!(
-            &date1.iso_week.try_read().unwrap() as *const _,
-            &date2.iso_week.try_read().unwrap() as *const _
-        );
-        assert_ne!(
-            &date1.minute.try_read().unwrap() as *const _,
-            &date2.minute.try_read().unwrap() as *const _
-        );
-        assert_ne!(
-            &date1.month.try_read().unwrap() as *const _,
-            &date2.month.try_read().unwrap() as *const _
-        );
-        assert_ne!(
-            &date1.offset.try_read().unwrap() as *const _,
-            &date2.offset.try_read().unwrap() as *const _
-        );
-        assert_ne!(
-            &date1.ordinal.try_read().unwrap() as *const _,
-            &date2.ordinal.try_read().unwrap() as *const _
-        );
-        assert_ne!(
-            &date1.second.try_read().unwrap() as *const _,
-            &date2.second.try_read().unwrap() as *const _
-        );
-        assert_ne!(
-            &date1.time.try_read().unwrap() as *const _,
-            &date2.time.try_read().unwrap() as *const _
-        );
-        assert_ne!(
-            &date1.weekday.try_read().unwrap() as *const _,
-            &date2.weekday.try_read().unwrap() as *const _
-        );
-        assert_ne!(
-            &date1.year.try_read().unwrap() as *const _,
-            &date2.year.try_read().unwrap() as *const _
-        );
+    fn test_update_date() {
+        let date = DateTime::new();
+        let date_before_update = date.now.clone();
+        assert_eq!(date_before_update, date.now);
     }
 
     #[test]
-    fn test_clone_eq() {
-        let date = Date::new();
-        let date_clone = date.clone();
-
-        assert_eq!(*date.date.read().unwrap(), *date_clone.date.read().unwrap());
-        assert_eq!(*date.day.read().unwrap(), *date_clone.day.read().unwrap());
-        assert_eq!(
-            date.hour.read().unwrap().to_string(),
-            date_clone.hour.read().unwrap().to_string()
-        );
-        assert_eq!(
-            date.iso_8601.read().unwrap().to_string(),
-            date_clone.iso_8601.read().unwrap().to_string()
-        );
-        assert_eq!(
-            date.iso_week.read().unwrap().to_string(),
-            date_clone.iso_week.read().unwrap().to_string()
-        );
-        assert_eq!(
-            date.minute.read().unwrap().to_string(),
-            date_clone.minute.read().unwrap().to_string()
-        );
-        assert_eq!(
-            date.month.read().unwrap().to_string(),
-            date_clone.month.read().unwrap().to_string()
-        );
-        assert_eq!(
-            date.offset.read().unwrap().to_string(),
-            date_clone.offset.read().unwrap().to_string()
-        );
-        assert_eq!(
-            date.ordinal.read().unwrap().to_string(),
-            date_clone.ordinal.read().unwrap().to_string()
-        );
-        assert_eq!(
-            date.second.read().unwrap().to_string(),
-            date_clone.second.read().unwrap().to_string()
-        );
-        assert_eq!(
-            date.time.read().unwrap().to_string(),
-            date_clone.time.read().unwrap().to_string()
-        );
-        assert_eq!(
-            date.weekday.read().unwrap().to_string(),
-            date_clone.weekday.read().unwrap().to_string()
-        );
-        assert_eq!(
-            date.year.read().unwrap().to_string(),
-            date_clone.year.read().unwrap().to_string()
-        );
+    fn test_update_day() {
+        let date = DateTime::new();
+        let day_before_update = date.day;
+        assert_eq!(day_before_update, date.day);
+        assert!(date.day <= 31);
     }
 
     #[test]
-    fn test_display() {
-        let date = Date::new();
-        let display = format!("{date}");
-
-        assert!(display.contains("date: "));
-        assert!(display.contains("day: "));
-        assert!(display.contains("hour: "));
-        assert!(display.contains("iso_8601: "));
-        assert!(display.contains("iso_week: "));
-        assert!(display.contains("minute: "));
-        assert!(display.contains("month: "));
-        assert!(display.contains("offset: "));
-        assert!(display.contains("ordinal: "));
-        assert!(display.contains("second: "));
-        assert!(display.contains("time: "));
-        assert!(display.contains("weekday: "));
-        assert!(display.contains("year: "));
+    fn test_update_hour() {
+        let date = DateTime::new();
+        let hour_before_update = date.hour;
+        assert_eq!(hour_before_update, date.hour);
+        assert!(date.hour <= 23);
     }
 
     #[test]
-    fn test_display_with_write_lock() {
-        let date = Date::new();
-        *date.year.write().unwrap() = 2020;
-        let display = format!("{date}");
+    fn test_update_iso_8601() {
+        let date = DateTime::new();
+        let iso_8601_before_update = date.iso_8601.clone();
+        assert_eq!(iso_8601_before_update, date.iso_8601);
+    }
 
-        assert!(display.contains("year: 2020"));
+    #[test]
+    fn test_update_iso_week() {
+        let date = DateTime::new();
+        let iso_week_before_update = date.iso_week;
+        assert_eq!(iso_week_before_update, date.iso_week);
+        assert!(date.iso_week <= 53);
+    }
+
+    #[test]
+    fn test_update_minute() {
+        let date = DateTime::new();
+        let minute_before_update = date.minute;
+        assert_eq!(minute_before_update, date.minute);
+        assert!(date.minute <= 59);
+    }
+
+    #[test]
+    fn test_update_month() {
+        let date = DateTime::new();
+        let month_before_update = date.month.clone();
+        assert_eq!(month_before_update, date.month);
+    }
+
+    #[test]
+    fn test_update_offset() {
+        let date = DateTime::new();
+        let offset_before_update = date.offset.clone();
+        assert_eq!(offset_before_update, date.offset);
+    }
+
+    #[test]
+    fn test_update_ordinal() {
+        let date = DateTime::new();
+        let ordinal_before_update = date.ordinal;
+        assert_eq!(ordinal_before_update, date.ordinal);
+        assert!(date.ordinal > 0 && date.ordinal <= 366);
+    }
+    #[test]
+    fn test_update_second() {
+        let date = DateTime::new();
+        let second_before_update = date.second;
+        assert_eq!(second_before_update, date.second);
+        assert!(date.second <= 59);
+    }
+    #[test]
+    fn test_update_time() {
+        let date = DateTime::new();
+        let time_before_update = date.time.clone();
+        assert_eq!(time_before_update, date.time);
+    }
+
+    #[test]
+    fn test_update_weekday() {
+        let date = DateTime::new();
+        let weekday_before_update = date.weekday.clone();
+        assert_eq!(weekday_before_update, date.weekday);
+    }
+    #[test]
+    fn test_update_year() {
+        let date = DateTime::new();
+        let year_before_update = date.year;
+        assert_eq!(year_before_update, date.year);
+        assert!(date.year > 0);
+    }
+    #[test]
+    fn test_new_with_tz_utc() {
+        let date_time = DateTime::new_with_tz("UTC");
+        let offset = time::UtcOffset::UTC;
+
+        let now_utc = OffsetDateTime::now_utc();
+        let (hours, minutes, _) = offset.as_hms();
+        let total_seconds = (hours as i16 * 3600) + (minutes as i16 * 60);
+        let expected_date_time = now_utc + Duration::seconds(total_seconds as i64);
+
+        assert_eq!(date_time.hour, expected_date_time.hour());
+        assert_eq!(date_time.minute, expected_date_time.minute());
+        assert_eq!(date_time.offset, expected_date_time.offset().to_string());
+    }
+    #[test]
+    fn test_new_with_tz_custom() {
+        let date_time = DateTime::new_with_tz("Custom");
+        let offset = time::UtcOffset::from_hms(0, 0, 0).unwrap();
+
+        let now_utc = OffsetDateTime::now_utc();
+        let (hours, minutes, _) = offset.as_hms();
+        let total_seconds = (hours as i16 * 3600) + (minutes as i16 * 60);
+        let expected_date_time = now_utc + Duration::seconds(total_seconds as i64);
+
+        assert_eq!(date_time.hour, expected_date_time.hour());
+        assert_eq!(date_time.minute, expected_date_time.minute());
+        assert_eq!(date_time.offset, expected_date_time.offset().to_string());
+    }
+    #[test]
+    fn test_new_with_tz_to_paris() {
+        let date = DateTime::new_with_tz("Europe/Paris");
+        assert!(!date.now.is_empty());
+        assert!(date.day <= 31);
+        assert!(date.hour <= 23);
+        assert!(!date.iso_8601.is_empty());
+        assert!(date.iso_week > 0 && date.iso_week <= 53);
+        assert!(date.minute <= 59);
+        assert!(!date.month.is_empty());
+        assert!(!date.offset.is_empty());
+        assert!(date.ordinal > 0 && date.ordinal <= 366);
+        assert!(date.second <= 59);
+        assert!(!date.time.is_empty());
+        assert!(!date.weekday.is_empty());
+        assert!(date.year > 0);
+    }
+    #[test]
+    fn test_display_format() {
+        let date_time = DateTime::new();
+        let formatted = format!("{date_time}");
+
+        let expected = format!(
+            "{}T{:02}:{:02}:{:02}{}",
+            date_time.now, date_time.hour, date_time.minute, date_time.second, date_time.offset
+        );
+        assert_eq!(formatted, expected);
+    }
+    #[test]
+    fn test_formatting_date_time() {
+        let date_time = DateTime::new();
+        let formatted = format!("{date_time}");
+
+        let expected = format!(
+            "{}T{:02}:{:02}:{:02}{}",
+            date_time.now, date_time.hour, date_time.minute, date_time.second, date_time.offset
+        );
+        assert_eq!(formatted, expected);
+    }
+    #[test]
+    fn test_is_valid() {
+        is_valid!(day, u32);
+        let input = "31";
+        let result = day(input);
+        assert!(result);
     }
 }

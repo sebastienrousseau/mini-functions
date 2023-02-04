@@ -3,10 +3,15 @@ use std::error::Error as StdError;
 use std::fmt;
 
 #[derive(Debug)]
-/// Error struct
+/// Error struct for the crate
 pub struct Error {
+    /// The error message
     pub message: String,
+
+    /// The error type
     pub error_type: ErrorType,
+
+    /// The context of the error
     pub ctx: String,
 }
 

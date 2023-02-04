@@ -1,126 +1,122 @@
 extern crate criterion;
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 extern crate date;
-use self::date::Date;
+use self::date::DateTime;
 
 fn new_date(c: &mut Criterion) {
-    c.bench_function("new", |b| b.iter(|| Date::new));
+    c.bench_function("new", |b| b.iter(|| DateTime::new));
 }
 
 fn new_day(c: &mut Criterion) {
-    let date = black_box(Date::new());
-    c.bench_function("day", move |b| b.iter(|| date.day.read().unwrap()));
+    let date = black_box(DateTime::new());
+    c.bench_function("day", move |b| b.iter(|| date.day));
 }
 
 fn new_hour(c: &mut Criterion) {
-    let date = black_box(Date::new());
-    c.bench_function("hour", move |b| b.iter(|| date.hour.read().unwrap()));
+    let date = black_box(DateTime::new());
+    c.bench_function("hour", move |b| b.iter(|| date.hour));
 }
 
 fn new_iso_8601(c: &mut Criterion) {
-    let date = black_box(Date::new());
-    c.bench_function("iso_8601", move |b| {
-        b.iter(|| date.iso_8601.read().unwrap())
-    });
+    let date = black_box(DateTime::new());
+    c.bench_function("iso_8601", move |b| b.iter(|| date.iso_8601.to_owned()));
 }
 fn new_iso_week(c: &mut Criterion) {
-    let date = black_box(Date::new());
-    c.bench_function("iso_week", move |b| {
-        b.iter(|| date.iso_week.read().unwrap())
-    });
+    let date = black_box(DateTime::new());
+    c.bench_function("iso_week", move |b| b.iter(|| date.iso_week));
 }
 fn new_minute(c: &mut Criterion) {
-    let date = black_box(Date::new());
-    c.bench_function("minute", move |b| b.iter(|| date.minute.read().unwrap()));
+    let date = black_box(DateTime::new());
+    c.bench_function("minute", move |b| b.iter(|| date.minute));
 }
 
 fn new_month(c: &mut Criterion) {
-    let date = black_box(Date::new());
-    c.bench_function("month", move |b| b.iter(|| date.month.read().unwrap()));
+    let date = black_box(DateTime::new());
+    c.bench_function("month", move |b| b.iter(|| date.month.to_owned()));
 }
 fn new_offset(c: &mut Criterion) {
-    let date = black_box(Date::new());
-    c.bench_function("offset", move |b| b.iter(|| date.offset.read().unwrap()));
+    let date = black_box(DateTime::new());
+    c.bench_function("offset", move |b| b.iter(|| date.offset.to_owned()));
 }
 fn new_ordinal(c: &mut Criterion) {
-    let date = black_box(Date::new());
-    c.bench_function("ordinal", move |b| b.iter(|| date.ordinal.read().unwrap()));
+    let date = black_box(DateTime::new());
+    c.bench_function("ordinal", move |b| b.iter(|| date.ordinal));
 }
 fn new_second(c: &mut Criterion) {
-    let date = black_box(Date::new());
-    c.bench_function("second", move |b| b.iter(|| date.second.read().unwrap()));
+    let date = black_box(DateTime::new());
+    c.bench_function("second", move |b| b.iter(|| date.second));
 }
 fn new_time(c: &mut Criterion) {
-    let date = black_box(Date::new());
-    c.bench_function("time", move |b| b.iter(|| date.time.read().unwrap()));
+    let date = black_box(DateTime::new());
+    c.bench_function("time", move |b| b.iter(|| date.time.to_owned()));
 }
 fn new_weekday(c: &mut Criterion) {
-    let date = black_box(Date::new());
-    c.bench_function("weekday", move |b| b.iter(|| date.weekday.read().unwrap()));
+    let date = black_box(DateTime::new());
+    c.bench_function("weekday", move |b| b.iter(|| date.weekday.to_owned()));
 }
 
 fn new_year(c: &mut Criterion) {
-    let date = black_box(Date::new());
-    c.bench_function("year", move |b| b.iter(|| date.year.read().unwrap()));
+    let date = black_box(DateTime::new());
+    c.bench_function("year", move |b| b.iter(|| date.year));
 }
 
-fn scalability(c: &mut Criterion) {
-    c.bench_function("scalability", |b| {
-        b.iter_with_setup(
-            || vec![Date::new(); 10],
-            |dates| {
-                for date in &dates {
-                    date.year.try_read().map_or(0, |guard| *guard);
-                    date.iso_week.try_read().map_or(0, |guard| *guard);
-                }
-            },
-        );
-    });
-    c.bench_function("scalability", |b| {
-        b.iter_with_setup(
-            || vec![Date::new(); 100],
-            |dates| {
-                for date in &dates {
-                    date.year.try_read().map_or(0, |guard| *guard);
-                    date.iso_week.try_read().map_or(0, |guard| *guard);
-                }
-            },
-        );
-    });
-    c.bench_function("scalability", |b| {
-        b.iter_with_setup(
-            || vec![Date::new(); 1000],
-            |dates| {
-                for date in &dates {
-                    date.year.try_read().map_or(0, |guard| *guard);
-                    date.iso_week.try_read().map_or(0, |guard| *guard);
-                }
-            },
-        );
-    });
-    c.bench_function("scalability", |b| {
-        b.iter_with_setup(
-            || vec![Date::new(); 10000],
-            |dates| {
-                for date in &dates {
-                    date.year.try_read().map_or(0, |guard| *guard);
-                    date.iso_week.try_read().map_or(0, |guard| *guard);
-                }
-            },
-        );
-    });
-    c.bench_function("scalability", |b| {
-        b.iter_with_setup(
-            || vec![Date::new(); 100000],
-            |dates| {
-                for date in &dates {
-                    date.year.try_read().map_or(0, |guard| *guard);
-                    date.iso_week.try_read().map_or(0, |guard| *guard);
-                }
-            },
-        );
-    });
-}
+// fn scalability(c: &mut Criterion) {
+//     c.bench_function("scalability", |b| {
+//         b.iter_with_setup(
+//             || vec![DateTime::new(); 10],
+//             |dates| {
+//                 for date in &dates {
+//                     date.year;
+//                     date.iso_week;
+//                 }
+//             },
+//         );
+//     });
+//     c.bench_function("scalability", |b| {
+//         b.iter_with_setup(
+//             || vec![DateTime::new(); 100],
+//             |dates| {
+//                 for date in &dates {
+//                     date.year;
+//                     date.iso_week;
+//                 }
+//             },
+//         );
+//     });
+//     c.bench_function("scalability", |b| {
+//         b.iter_with_setup(
+//             || vec![DateTime::new(); 1000],
+//             |dates| {
+//                 for date in &dates {
+//                     date.year;
+//                     date.iso_week;
+//                 }
+//             },
+//         );
+//     });
+//     c.bench_function("scalability", |b| {
+//         b.iter_with_setup(
+//             || vec![DateTime::new(); 10000],
+//             |dates| {
+//                 for date in &dates {
+//                     date.year;
+//                     date.iso_week;
+//                 }
+//             },
+//         );
+//     });
+//     c.bench_function("scalability", |b| {
+//         b.iter_with_setup(
+//             || vec![DateTime::new(); 100000],
+//             |dates| {
+//                 for date in &dates {
+//                     date.year;
+//                     date.iso_week;
+//                 }
+//             },
+//         );
+//     });
+// }
 
 criterion_group!(
     benches,
@@ -137,6 +133,6 @@ criterion_group!(
     new_time,
     new_weekday,
     new_year,
-    scalability
+    // scalability
 );
 criterion_main!(benches);

@@ -1,20 +1,18 @@
 # Mini Functions 🦀
 
 [![Made With Love][mwl]][6]
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsebastienrousseau%2Fmini-functions.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsebastienrousseau%2Fmini-functions?ref=badge_shield)
 
 <!-- markdownlint-disable MD033 -->
 <center>
 
-## Highly performant utility and wrapper functions library for Rust 🚀
+## A Rust library of highly performant utility and wrapper functions 🚀
 
 ![Mini Functions][banner]
 
+[![Rust][rust-badge]][12]
 [![Crates.io][crates-badge]][8]
 [![Lib.rs][libs-badge]][10]
 [![Docs.rs][docs-badge]][9]
-[![Rust][made-with-rust-badge]][12]
-
 [![codecov][codecov-badge]][13]
 [![License][license-badge]][2]
 [![Fossa][fossa-badge]][14]
@@ -114,6 +112,18 @@ cargo run --example date
 collection of tools for working with various aspects of a Rust
 application. The `mini-functions` library consists of the following
 `non-exhaustive` functions:
+
+[![Claims][claims-badge]][12]
+[![Common][common-badge]][12]
+[![Date][date-badge]][12]
+[![Errors][errors-badge]][12]
+[![Hash][hash-badge]][12]
+[![Jot][jot-badge]][12]
+[![Logger][logger-badge]][12]
+[![MD5][md5-badge]][12]
+[![Password][password-badge]][12]
+[![QR][qr-badge]][12]
+[![Random][random-badge]][12]
 
 ### 1) Claim functions
 
@@ -317,7 +327,6 @@ Apache License (Version 2.0).
 - [Apache License, Version 2.0][1]
 - [MIT license][2]
 
-
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsebastienrousseau%2Fmini-functions.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsebastienrousseau%2Fmini-functions?ref=badge_large)
 
 ## Contribution 🤝
@@ -355,6 +364,18 @@ for their help and support.
 [docs-badge]: https://img.shields.io/docsrs/mini-functions.svg?style=for-the-badge 'Docs.rs'
 [libs-badge]: https://img.shields.io/badge/lib.rs-v0.0.8-orange.svg?style=for-the-badge 'Lib.rs'
 [license-badge]: https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge 'License'
-[made-with-rust-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-rust.svg "Made With Rust 🦀"
+[rust-badge]: https://img.shields.io/badge/rust-f04041?style=for-the-badge&labelColor=c0282d&logo=rust 'Rust'
 [mwl]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg "Made With Love"
 [fossa-badge]: https://img.shields.io/static/v1?style=for-the-badge&message=Fossa&color=289E6D&logo=Fossa&logoColor=FFFFFF&label= 'Fossa'
+
+[claims-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-claims.svg 'Claims'
+[common-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-common.svg 'Common'
+[date-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-date.svg 'Date'
+[errors-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-errors.svg 'Errors'
+[hash-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-hash.svg 'Hash'
+[jot-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-jot.svg 'Jot'
+[logger-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-logger.svg 'Logger'
+[md5-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-md5.svg 'MD5'
+[password-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-password.svg 'Password'
+[qr-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-qr.svg 'QR'
+[random-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-random.svg 'Random'

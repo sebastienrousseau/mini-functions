@@ -3,11 +3,12 @@ extern crate logger;
 
 use std::sync::RwLock;
 
-use self::date::Date;
+use self::date::DateTime;
 use self::logger::{Log, LogFormat, LogLevel};
 
 fn main() {
-    let now: RwLock<String> = Date::new().iso_8601;
+    let date = DateTime::new();
+    let iso = date.iso_8601.to_owned();
     let log_formats = vec![
         LogFormat::COMMON,
         LogFormat::JSON,
@@ -20,7 +21,7 @@ fn main() {
     for format in log_formats {
         let log = Log::new(
             "12345678-1234-1234-1234-1234567890ab",
-            &now.read().unwrap().to_string(),
+            &iso,
             &LogLevel::INFO,
             "SystemTrayEvent",
             "Showing main window",

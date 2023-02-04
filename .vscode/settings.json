@@ -92,6 +92,7 @@
         "softprops",
         "srli",
         "staticlib",
+        "strptime",
         "struct",
         "structs",
         "Swatinem",

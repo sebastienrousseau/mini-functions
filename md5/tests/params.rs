@@ -57,5 +57,5 @@ mod tests {
     #[test]
     fn test_rotate_left() {
         assert_eq!(rotate_left(0b1010, 2), 0b101000);
-    }
+    }    
 }

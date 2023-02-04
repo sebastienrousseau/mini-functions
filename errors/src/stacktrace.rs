@@ -5,7 +5,9 @@ const STACK_TRACE_DEPTH: usize = 128;
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 /// The program counter of the stack trace.
 pub struct StackTrace {
+    /// The program counter of the stack trace.
     pub pc: Vec<usize>,
+    /// The cause stack trace of the stack trace.
     pub cause_stack_trace: Option<Box<StackTrace>>,
 }
 

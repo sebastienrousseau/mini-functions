@@ -1,7 +1,7 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 categories = ["Date and time"]
-description = "Highly Performant Date and Time Functions Library For Rust"
+description = "A Rust library for parsing, validating, manipulating, and formatting dates and times."
 edition = "2018"
 homepage = "https://minifunctions.com/"
 keywords = [
@@ -36,6 +36,7 @@ harness = false
 path = "benches/date.rs"
 
 [dependencies]
+serde = { version = "1.0.152", features = ["derive"] }
 time = "0.3.17"
 
 [dev-dependencies]

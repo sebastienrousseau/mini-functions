@@ -56,7 +56,7 @@ impl Constants {
             },
             Constant {
                 name: "SPECIAL_CHARS",
-                value: format!("{:?}", SPECIAL_CHARS),
+                value: format!("{SPECIAL_CHARS:?}"),
             },
         ]
     }
