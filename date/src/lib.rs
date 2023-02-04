@@ -153,7 +153,7 @@ impl DateTime {
             "UTC" => time::UtcOffset::UTC,
             _ => time::UtcOffset::from_hms(0, 0, 0).unwrap(),
         };
-        let now_utc = if let "UTC" = tz {
+        let now_utc = if tz == "UTC" {
             OffsetDateTime::now_utc()
         } else {
             let (hours, minutes, _) = offset.as_hms();
