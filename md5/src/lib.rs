@@ -50,23 +50,31 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
+/// Import the `params` module.
 mod params;
 pub use params::*;
 
+/// Import the `constants` module.
 pub mod constants;
 pub use constants::*;
 
+/// Import the `digest` module.
 pub mod digest;
 pub use digest::*;
 
 use std::convert::TryInto;
 use std::fmt::Display;
 
+/// The MD5 struct.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct MD5 {
+    /// The buffer.
     pub buffer: [u8; BLOCK_LENGTH],
+    /// The count.
     pub count: [u32; 2],
+    /// The digest.
     pub digest: [u8; DIGEST_LENGTH],
+    /// The state.
     pub state: [u32; 4],
 }
 
@@ -156,7 +164,7 @@ impl MD5 {
 
         self
     }
-    // Update the internal state of the MD5 object with new data.
+    /// Update the internal state of the MD5 object with new data.
     pub fn update_with_len(&mut self, value: &[u8], nbytes: usize) -> &mut Self {
         // Compute number of bytes mod 64
         let mut offset = ((self.count[0] >> 3) & 63) as usize;
@@ -204,12 +212,14 @@ impl MD5 {
 }
 
 impl Default for MD5 {
+    /// Create a new instance of the MD5 struct.
     fn default() -> Self {
         Self::new()
     }
 }
 
 impl Display for MD5 {
+    /// Display the current MD5 value.
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         for di in self.digest {
             write!(f, "{di:02x}")?;

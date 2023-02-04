@@ -25,17 +25,17 @@ fn main() {
     let credential = claims.get_claim("vc").unwrap();
     let proof = claims.get_claim("vp").unwrap();
 
-    println!("🦀 Claims::get_claim() for 'aud':       ✅ {}", audience);
-    println!("🦀 Claims::get_claim() for 'custom':    ✅ {}", custom);
-    println!("🦀 Claims::get_claim() for 'did':       ✅ {}", did);
-    println!("🦀 Claims::get_claim() for 'iss':       ✅ {}", issuer);
-    println!("🦀 Claims::get_claim() for 'jti':       ✅ {}", jwt_id);
-    println!("🦀 Claims::get_claim() for 'sub':       ✅ {}", subject);
-    println!("🦀 Claims::get_claim() for 'vc':        ✅ {}", credential);
-    println!("🦀 Claims::get_claim() for 'vp':        ✅ {}", proof);
+    println!("🦀 Claims::get_claim() for 'aud':       ✅ {audience}");
+    println!("🦀 Claims::get_claim() for 'custom':    ✅ {custom}");
+    println!("🦀 Claims::get_claim() for 'did':       ✅ {did}");
+    println!("🦀 Claims::get_claim() for 'iss':       ✅ {issuer}");
+    println!("🦀 Claims::get_claim() for 'jti':       ✅ {jwt_id}");
+    println!("🦀 Claims::get_claim() for 'sub':       ✅ {subject}");
+    println!("🦀 Claims::get_claim() for 'vc':        ✅ {credential}");
+    println!("🦀 Claims::get_claim() for 'vp':        ✅ {proof}");
 
     // Remove claims
     let audience = claims.get_claim("aud").unwrap().to_owned();
     claims.remove_claim("aud");
-    println!("🦀 Claims::remove_claim():              ✅ {}", audience);
+    println!("🦀 Claims::remove_claim():              ✅ {audience}");
 }

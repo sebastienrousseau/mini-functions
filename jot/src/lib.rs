@@ -41,6 +41,7 @@ pub struct JWT {
     /// The JWT token.
     pub token: String,
 }
+/// The Header struct contains the header of the JWT.
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Header {
     /// Indicates the algorithm used to sign the JWT. Defaults to HS256.

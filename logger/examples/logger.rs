@@ -1,14 +1,12 @@
 extern crate date;
 extern crate logger;
 
-use std::sync::RwLock;
-
 use self::date::DateTime;
 use self::logger::{Log, LogFormat, LogLevel};
 
 fn main() {
     let date = DateTime::new();
-    let iso = date.iso_8601.to_owned();
+    let iso = date.iso_8601;
     let log_formats = vec![
         LogFormat::COMMON,
         LogFormat::JSON,

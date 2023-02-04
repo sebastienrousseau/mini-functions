@@ -154,8 +154,8 @@ impl QRCode {
 
         // draw the watermark on the QR code image
         for (dx, dy, watermark_pixel) in watermark.enumerate_pixels() {
-            let x = x + dx as u32;
-            let y = y + dy as u32;
+            let x = x + dx;
+            let y = y + dy;
             let qr_pixel = img.get_pixel(x, y);
 
             let alpha = (watermark_pixel[3] as f32) / 255.0;

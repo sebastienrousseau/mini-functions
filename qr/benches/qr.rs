@@ -1,5 +1,5 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use image::Rgb;
+use image::Rgba;
 extern crate qr;
 use self::qr::QRCode;
 
@@ -12,7 +12,7 @@ fn new_benchmark(c: &mut Criterion) {
 // Benchmark for QRCode::to_png
 fn to_png_benchmark(c: &mut Criterion) {
     let qrcode = QRCode::new(vec![1, 2, 3]);
-    c.bench_function("QRCode::to_png", |b| b.iter(|| qrcode.to_png()));
+    c.bench_function("QRCode::to_png", |b| b.iter(|| qrcode.to_png(512)));
 }
 
 // Benchmark for QRCode::from_string
@@ -40,7 +40,7 @@ fn to_svg_benchmark(c: &mut Criterion) {
 // Benchmark for QRCode::colorize
 fn colorize_benchmark(c: &mut Criterion) {
     let qrcode = QRCode::new(vec![1, 2, 3]);
-    let color = Rgb([0, 0, 0]);
+    let color = Rgba([0, 0, 0, 0]);
     c.bench_function("QRCode::colorize", |b| {
         b.iter(|| qrcode.colorize(black_box(color)))
     });

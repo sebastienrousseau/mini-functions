@@ -28,19 +28,18 @@ mod tests {
     }
     #[test]
     fn test_is_valid_day() {
-        assert_eq!(false, DateTime::is_valid_day("32"));
-        assert_eq!(true, DateTime::is_valid_day("31"));
+        assert!(!DateTime::is_valid_day("32"));
+        assert!(DateTime::is_valid_day("31"));
     }
     #[test]
     fn test_is_valid_hour() {
-        assert_eq!(true, DateTime::is_valid_hour("23"));
+        assert!(DateTime::is_valid_hour("23"));
     }
     #[test]
     fn is_valid_iso_8601() {
-        assert_eq!(
-            true,
-            DateTime::is_valid_iso_8601("2023-02-02 20:48:44.751609 +00:00:00")
-        );
+        assert!(DateTime::is_valid_iso_8601(
+            "2023-02-02 20:48:44.751609 +00:00:00"
+        ));
     }
     #[test]
     fn test_update_date() {

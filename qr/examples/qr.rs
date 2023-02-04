@@ -125,8 +125,8 @@ fn main() {
     // Create a new QRCode add a watermark to it and save it as a PNG file
     let qrcode = QRCode::from_string(URL.to_string());
     let mut qrcode_img = qrcode.to_png(512);
-    let mut watermark_img = image::open("bubba.ico").unwrap().into_rgba8();
-    add_image_watermark!(&mut qrcode_img, &mut watermark_img);
+    let watermark_img = image::open("bubba.ico").unwrap().into_rgba8();
+    add_image_watermark!(&mut qrcode_img, &watermark_img);
     match qrcode_img.save("qrcode_watermarked.png") {
         Ok(_) => println!("🦀 png file with watermark:           ✅ qrcode_watermarked.png"), // Print the path to the PNG representation of the QRCode that was saved to a file called "qrcode1.png"
         Err(e) => println!("🦀 png file with watermark:           ❌ qrcode_watermarked.png: {e}"), // Print the path to the PNG representation of the QRCode that was saved to a file called "qrcode1.png"

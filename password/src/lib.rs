@@ -1,16 +1,21 @@
+//! # Core Password code functionality
+
 #![warn(missing_docs)]
 #![forbid(unsafe_code)]
+
 extern crate common;
+/// constants
 pub use common::constants::*;
+/// words
 pub use common::words::WORD_LIST;
 
 extern crate hash;
+/// hash
 pub use hash::Hash;
 
 extern crate random;
 use crate::random::Random;
 
-// use convert_case::{Case, Casing};
 use std::collections::{HashMap, HashSet};
 use std::convert::TryInto;
 use std::f64;
@@ -196,6 +201,7 @@ impl Password {
             word = chars.into_iter().collect();
             words.push(word);
         }
+        // Return the generated passphrase.
         Self {
             passphrase: words.join(separator),
             special_chars,
@@ -218,14 +224,14 @@ impl Password {
 }
 
 impl std::fmt::Display for Password {
-    // Display the generated passphrase.
+    /// Display the generated passphrase.
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", self.passphrase)
     }
 }
 
 impl Default for Password {
-    // Default to a passphrase of 4 words.
+    /// Default to a passphrase of 4 words.
     fn default() -> Self {
         Self::new(4, "-", SPECIAL_CHARS.to_vec())
     }
