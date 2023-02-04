@@ -7,7 +7,7 @@ categories = [
     "Logging",
     "Tracing",
 ]
-description = "Log provides an easy way to log a message to the console with a simple, readable output format."
+description = "A Rust library for logging messages to the console with a simple, readable output format."
 edition = "2018"
 homepage = "https://minifunctions.com/"
 keywords = [
