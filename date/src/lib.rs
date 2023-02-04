@@ -153,13 +153,12 @@ impl DateTime {
             "UTC" => time::UtcOffset::UTC,
             _ => time::UtcOffset::from_hms(0, 0, 0).unwrap(),
         };
-        let now_utc = match tz {
-            "UTC" => OffsetDateTime::now_utc(),
-            _ => {
-                let (hours, minutes, _) = offset.as_hms();
-                let total_seconds = (hours as i16 * 3600) + (minutes as i16 * 60);
-                OffsetDateTime::now_utc() + Duration::seconds(total_seconds as i64)
-            }
+        let now_utc = if let "UTC" = tz {
+            OffsetDateTime::now_utc()
+        } else {
+            let (hours, minutes, _) = offset.as_hms();
+            let total_seconds = (hours as i16 * 3600) + (minutes as i16 * 60);
+            OffsetDateTime::now_utc() + Duration::seconds(total_seconds as i64)
         };
         let iso_8601 = now_utc.to_string();
 
