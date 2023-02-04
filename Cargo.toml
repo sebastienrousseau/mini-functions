@@ -76,17 +76,17 @@ rust-version = "1.67.0"
 version = "0.0.8"
 
 [dependencies]
-claims = { path = "./claims" }
-common = { path = "./common" }
-date = { path = "./date" }
-errors = { path = "./errors" }
-hash = { path = "./hash" }
-jot = { path = "./jot" }
-logger = { path = "./logger" }
-md5 = { path = "./md5" }
-password = { path = "./password" }
-qr = { path = "./qr" }
-random = { path = "./random" }
+claims = { path = "./claims", version = "*" }
+common = { path = "./common", version = "*" }
+date = { path = "./date", version = "*" }
+errors = { path = "./errors", version = "*" }
+hash = { path = "./hash", version = "*" }
+jot = { path = "./jot", version = "*" }
+logger = { path = "./logger", version = "*" }
+md5 = { path = "./md5", version = "*" }
+password = { path = "./password", version = "*" }
+qr = { path = "./qr", version = "*" }
+random = { path = "./random", version = "*" }
 
 [workspace]
 exclude = ["src"]
