@@ -3,7 +3,7 @@
 // TODO: Add more tests to bring the code coverage to 100%
 mod tests {
     use cmn::constants::*;
-    use pwd::Password;
+    use psph::Password;
     use vrd::Random;
 
     #[test]

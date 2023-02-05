@@ -79,6 +79,7 @@
         "padlen",
         "planck",
         "PRNG",
+        "psph",
         "qrcode",
         "rlib",
         "rustc",

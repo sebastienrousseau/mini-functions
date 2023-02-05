@@ -1,5 +1,5 @@
 use cmn::constants::*;
-use pwd::Password;
+use psph::Password;
 
 fn main() {
     let password = Password::new(4, "-", SPECIAL_CHARS.to_vec());

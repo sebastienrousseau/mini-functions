@@ -1,6 +1,6 @@
 use cmn::constants::*;
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use pwd::Password;
+use psph::Password;
 
 fn new_benchmark(c: &mut Criterion) {
     c.bench_function("Password::new", |b| {
