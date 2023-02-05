@@ -1,6 +1,6 @@
-extern crate common;
-pub use common::Constants;
-pub use common::Words;
+extern crate cmn;
+pub use cmn::Constants;
+pub use cmn::Words;
 
 fn main() {
     // Constants

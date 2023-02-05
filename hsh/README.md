@@ -29,17 +29,16 @@ A Cryptographic Hash Algorithms Library for Rust 🦀
 
 ## Overview 📖
 
-HSH, is a Cryptographic Hash Algorithms Library for secure password
-management.
+Hash (HSH), is a Cryptographic Hash Algorithms Library for secure
+password management. Utilizing the cutting-edge [Blake3][11] algorithm,
+this library generates and verifies hashed passwords with ease.
 
-Utilizing the cutting-edge [Blake3][11] algorithm, this library generates
-and verifies hashed passwords with ease. The library features a struct
-for storing and verifying hashed passwords, as well as a series of
-methods for calculating entropy, generating hashes, accessing
-password and hash values, and more.
+The library features a struct for storing and verifying hashed
+passwords, as well as a series of methods for calculating entropy,
+generating hashes, accessing password and hash values, and more.
 
-The Hash library also implements the Default and Display traits for
-flexible use and easy readability.
+`HSH` also implements the Default and Display traits for flexible use
+and easy readability.
 
 ## Features ✨
 

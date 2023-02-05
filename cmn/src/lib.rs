@@ -2,25 +2,32 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 //!
-//! A Rust library for accessing common constants and functions
+//! A Rust library for accessing a collection of mathematical and cryptographic constants
 //!
-//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-common.svg)](https://minifunctions.com)
+//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-cmn.svg)](https://minifunctions.com)
 //!
 //! <center>
 //!
 //! [![Rust](https://img.shields.io/badge/rust-f04041?style=for-the-badge&labelColor=c0282d&logo=rust)](https://www.rust-lang.org)
-//! [![Crates.io](https://img.shields.io/crates/v/mini-functions.svg?style=for-the-badge&color=success&labelColor=27A006)](https://crates.io/crates/mini-functions)
-//! [![Lib.rs](https://img.shields.io/badge/lib.rs-v0.0.8-success.svg?style=for-the-badge&color=8A48FF&labelColor=6F36E4)](https://lib.rs/crates/mini-functions)
-//! [![GitHub](https://img.shields.io/badge/github-555555?style=for-the-badge&labelColor=000000&logo=github)](https://github.com/sebastienrousseau/mini-functions/tree/main/common)
-//! [![License](https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge&color=007EC6&labelColor=03589B)](http://opensource.org/licenses/MIT)
+//! [![Crates.io](https://img.shields.io/crates/v/cmn.svg?style=for-the-badge&color=success&labelColor=27A006)](https://crates.io/crates/cmn)
+//! [![Lib.rs](https://img.shields.io/badge/lib.rs-v0.0.1-success.svg?style=for-the-badge&color=8A48FF&labelColor=6F36E4)](https://lib.rs/crates/cmn)
+//! [![GitHub](https://img.shields.io/badge/github-555555?style=for-the-badge&labelColor=000000&logo=github)](https://github.com/sebastienrousseau/mini-functions/tree/main/cmn)
+//! [![License](https://img.shields.io/crates/l/cmn.svg?style=for-the-badge&color=007EC6&labelColor=03589B)](http://opensource.org/licenses/MIT)
 //!
 //! </center>
 //!
 //! ## Overview
 //!
-//! The Common library provides access to common constants and elements
-//! that are used by the mini-functions libraries and other applications
-//! .
+//! Common (CMN), a Rust library designed for developers who are looking
+//! for a comprehensive collection of mathematical and cryptographic
+//! constants.
+//!
+//!`CMN` is a modern, fast, and user-friendly library that makes it easy
+//! to access a wide range of mathematical and cryptographic constants,
+//! including the mathematical constant "Euler", the hash algorithm
+//! used, the cost of the hash algorithm, the length of the hash, the
+//! mathematical constant "Phi", the mathematical constant "Pi", the
+//! Planck constant, a set of special characters, and much more.
 //!
 //! ## Features
 //!
@@ -74,31 +81,37 @@
 #![warn(missing_docs)]
 #![forbid(unsafe_code)]
 #![doc(
-    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-common.svg",
-    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-common.svg",
+    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-cmn.svg",
+    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-cmn.svg",
     html_root_url = "https://docs.rs/mini-functions"
 )]
-#![crate_name = "common"]
+#![crate_name = "cmn"]
 #![crate_type = "lib"]
 
 extern crate serde;
 pub use serde::{Deserialize, Serialize};
 
-/// The `constants` module contains the `Constants` structure.
+/// The `constants` module contains the `Constants` structure, which
+/// provides a collection of constant values that are used throughout
+/// the library.
 pub mod constants;
 
-/// The `words` module contains the `Words` structure.
+/// The `words` module contains the `Words` structure, which provides a
+/// collection of words that are used throughout the library.
 pub mod words;
 
 pub use constants::Constants;
 pub use words::Words;
 
-/// The `Common` structure holds data that is commonly used.
+/// The `Common` structure provides a central location to store data
+/// that is commonly used throughout the library. The structure
+/// implements the `Serialize` and `Deserialize` traits from the `serde`
+/// crate to enable serialization and deserialization of the data.
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Common;
 
 impl Common {
-    /// Creates a new `Common` instance.
+    /// Creates a new instance of the `Common` structure.
     pub fn new() -> Self {
         Self
     }
@@ -106,14 +119,15 @@ impl Common {
     pub fn constants(&self) -> Constants {
         Constants
     }
-    /// Returns a new `Words` instance.
+    /// Returns a new instance of the `Words` structure.
     pub fn words(&self) -> Words {
         Words::new()
     }
 }
 
 impl Default for Common {
-    /// Creates a new `Common` instance using `Self::new()`.
+    /// Creates a new instance of the `Common` structure by calling
+    /// `Self::new()`.
     fn default() -> Self {
         Self::new()
     }

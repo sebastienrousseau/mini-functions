@@ -19,30 +19,24 @@
 //!
 //! ## Overview
 //!
-//! Introducing the QRCode Library - a versatile tool for generating and
+//! The QR Code Library (QRC) is a versatile tool for generating and
 //! manipulating QR code images in various formats.
 //!
 //! With this library, you can easily convert your data into a QR code,
 //! whether it be in the form of a string or a vector of bytes.
 //!
-//! Choose from popular image formats like PNG, JPG, and SVG, and even
-//! customize the size and color of your QR code. And with its
-//! comprehensive set of features, including support for different modes
-//! like Numeric and Alphanumeric, and ability to mix modes, you can
-//! create QR codes that perfectly suit your needs.
-//!
-//! The QRCode Library is a powerful and flexible solution for all your
-//! QR code generation needs.
+//! Choose from popular image formats like PNG, JPG, GIF and SVG, and
+//! even customize the size and color of your QR code.
 //!
 //! ## Features
 //!
-//! The QRCode Library features a `QRCode` struct that can be
-//! constructed with a `Vec<u8>` of data or a `String` of data that will
-//! be converted to a `Vec<u8>`.
+//! `QRC` features a `QRCode` struct that can be constructed with a
+//! `Vec<u8>` of data or a `String` of data that will be converted to
+//! a `Vec<u8>`.
 //!
 //! The QR code can be generated using the zto_qrcode` method, and
-//! specific image formats can be generated using the `to_png`, `to_jpg`,
-//! and `to_gif` methods.
+//! specific image formats can be generated using the `to_png`,
+//! `to_jpg`, and `to_gif` methods.
 //!
 //! Each of these methods takes a `width` parameter and returns an
 //! `ImageBuffer` containing the QR code image.

@@ -1,7 +1,7 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
-pub use common::Constants;
-pub use common::Words;
+pub use cmn::Constants;
+pub use cmn::Words;
 
 pub struct Common;
 

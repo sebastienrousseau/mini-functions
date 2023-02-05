@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    pub use common::Words;
+    pub use cmn::Words;
 
     #[test]
     fn test_words_list() {

@@ -10,17 +10,26 @@
 //! <center>
 //!
 //! [![Rust](https://img.shields.io/badge/rust-f04041?style=for-the-badge&labelColor=c0282d&logo=rust)](https://www.rust-lang.org)
-//! [![Crates.io](https://img.shields.io/crates/v/mini-functions.svg?style=for-the-badge&color=success&labelColor=27A006)](https://crates.io/crates/mini-functions)
-//! [![Lib.rs](https://img.shields.io/badge/lib.rs-v0.0.8-success.svg?style=for-the-badge&color=8A48FF&labelColor=6F36E4)](https://lib.rs/crates/mini-functions)
-//! [![GitHub](https://img.shields.io/badge/github-555555?style=for-the-badge&labelColor=000000&logo=github)](https://github.com/sebastienrousseau/mini-functions)
-//! [![License](https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge&color=007EC6&labelColor=03589B)](http://opensource.org/licenses/MIT)
+//! [![Crates.io](https://img.shields.io/crates/v/hsh.svg?style=for-the-badge&color=success&labelColor=27A006)](https://crates.io/crates/hsh)
+//! [![Lib.rs](https://img.shields.io/badge/lib.rs-v0.0.1-success.svg?style=for-the-badge&color=8A48FF&labelColor=6F36E4)](https://lib.rs/crates/hsh)
+//! [![GitHub](https://img.shields.io/badge/github-555555?style=for-the-badge&labelColor=000000&logo=github)](https://github.com/sebastienrousseau/mini-functions/tree/main/hsh)
+//! [![License](https://img.shields.io/crates/l/hsh.svg?style=for-the-badge&color=007EC6&labelColor=03589B)](http://opensource.org/licenses/MIT)
 //!
 //! </center>
 //!
 //! ## Overview
 //!
-//! This struct provides a simple way for storing and verifying hashed passwords based on the [blake3](https://crates.io/crates/blake3) crate.
+//! Hash (HSH), is a Cryptographic Hash Algorithms Library for secure
+//! password management.
 //!
+//! Utilizing the cutting-edge [Blake3][11] algorithm, this library
+//! generates and verifies hashed passwords with ease. The library
+//! features a struct for storing and verifying hashed passwords, as
+//! well as a series of methods for calculating entropy, generating
+//! hashes, accessing password and hash values, and more.
+//!
+//! `HSH` also implements the Default and Display traits for flexible
+//! use and easy readability.
 //!
 //! ## Features
 //!

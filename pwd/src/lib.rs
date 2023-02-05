@@ -53,11 +53,11 @@
 #![crate_name = "pwd"]
 #![crate_type = "lib"]
 
-extern crate common;
+extern crate cmn;
 /// constants
-pub use common::constants::*;
+pub use cmn::constants::*;
 /// words
-pub use common::words::WORD_LIST;
+pub use cmn::words::WORD_LIST;
 
 extern crate hsh;
 /// hash

@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
-    extern crate common;
-    pub use common::Constants;
+    extern crate cmn;
+    pub use cmn::Constants;
 
     #[test]
     fn test_constant() {

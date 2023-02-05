@@ -1,4 +1,4 @@
-use common::constants::*;
+use cmn::constants::*;
 use pwd::Password;
 
 fn main() {

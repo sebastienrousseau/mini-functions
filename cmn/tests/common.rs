@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
-    pub use common::Words;
-    use common::*;
+    pub use cmn::Words;
+    use cmn::*;
 
     #[test]
     fn test_new() {

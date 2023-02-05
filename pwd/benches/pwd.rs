@@ -1,4 +1,4 @@
-use common::constants::*;
+use cmn::constants::*;
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use pwd::Password;
 

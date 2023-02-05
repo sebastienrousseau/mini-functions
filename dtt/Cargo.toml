@@ -38,7 +38,7 @@ path = "benches/dtt.rs"
 
 [dependencies]
 regex = "1.7.1"
-serde = "1.0.152"
+serde = { version = "1.0.152", features = ["derive"] }
 time = "0.3.17"
 
 [dev-dependencies]

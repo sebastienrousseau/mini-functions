@@ -9,7 +9,7 @@ include = [
     "/build.rs",
     "/Cargo.toml",
     "/claims/**",
-    "/common/**",
+    "/cmn/**",
     "/dtt/**",
     "/errors/**",
     "/hsh/**",
@@ -30,6 +30,7 @@ keywords = [
     "checksum",
     "claims",
     "cryptography",
+    "cmn",
     "dtt",
     "date",
     "datetime",
@@ -81,7 +82,7 @@ version = "0.0.8"
 
 [dependencies]
 claims = { path = "./claims", version = "*" }
-common = { path = "./common", version = "*" }
+cmn = { path = "./cmn", version = "*" }
 dtt = { path = "./dtt", version = "*" }
 errors = { path = "./errors", version = "*" }
 hsh = { path = "./hsh", version = "*" }
@@ -97,7 +98,7 @@ exclude = ["src"]
 resolver = "2"
 members = [
     "claims",
-    "common",
+    "cmn",
     "dtt",
     "errors",
     "hsh",
@@ -120,7 +121,7 @@ crate-type = ["lib"]
 path = "src/lib.rs"
 required-features = [
     "claims",
-    "common",
+    "cmn",
     "dtt",
     "errors",
     "hsh",

@@ -29,8 +29,8 @@ The QR Code Library for Rust 🦀
 
 ## Overview 📖
 
-A versatile tool for generating and manipulating QR code images in
-various formats.
+The QR Code Library (QRC) is a versatile tool for generating and
+manipulating QR code images in various formats.
 
 With this library, you can easily convert your data into a QR code,
 whether it be in the form of a string or a vector of bytes.
@@ -40,11 +40,11 @@ customize the size and color of your QR code.
 
 ## Features ✨
 
-The QRCode Library features a `QRCode` struct that can be constructed
-with a `Vec<u8>` of data or a `String` of data that will be converted to
+`QRC` features a `QRCode` struct that can be constructed with a
+`Vec<u8>` of data or a `String` of data that will be converted to
 a `Vec<u8>`.
 
-The QR code can be generated using the zto_qrcode`method, and specific
+The QR code can be generated using the `to_qrcode`method, and specific
 image formats can be generated using the`to_png`,`to_jpg`, and`to_gif`
 methods.
 
