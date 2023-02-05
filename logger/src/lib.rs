@@ -54,8 +54,8 @@ use std::{
 };
 
 // use std::sync::RwLock;
-// extern crate date;
-// use self::date::Date;
+// extern crate dtt;
+// use self::dtt::Date;
 
 #[derive(Debug, Clone, PartialEq, PartialOrd)]
 /// An enumeration of the different log formats that can be used.

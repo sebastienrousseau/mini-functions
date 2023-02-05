@@ -10,7 +10,7 @@ include = [
     "/Cargo.toml",
     "/claims/**",
     "/common/**",
-    "/date/**",
+    "/dtt/**",
     "/errors/**",
     "/hsh/**",
     "/jot/**",
@@ -30,6 +30,7 @@ keywords = [
     "checksum",
     "claims",
     "cryptography",
+    "dtt",
     "date",
     "datetime",
     "debugging",
@@ -81,7 +82,7 @@ version = "0.0.8"
 [dependencies]
 claims = { path = "./claims", version = "*" }
 common = { path = "./common", version = "*" }
-date = { path = "./date", version = "*" }
+dtt = { path = "./dtt", version = "*" }
 errors = { path = "./errors", version = "*" }
 hsh = { path = "./hsh", version = "*" }
 jot = { path = "./jot", version = "*" }
@@ -97,7 +98,7 @@ resolver = "2"
 members = [
     "claims",
     "common",
-    "date",
+    "dtt",
     "errors",
     "hsh",
     "jot",
@@ -120,7 +121,7 @@ path = "src/lib.rs"
 required-features = [
     "claims",
     "common",
-    "date",
+    "dtt",
     "errors",
     "hsh",
     "jot",

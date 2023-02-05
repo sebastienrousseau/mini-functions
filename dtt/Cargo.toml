@@ -6,6 +6,7 @@ edition = "2018"
 homepage = "https://minifunctions.com/"
 keywords = [
     "calendar",
+    "dtt",
     "date",
     "datetime",
     "duration",
@@ -14,8 +15,8 @@ keywords = [
     "timezone",
 ]
 license = "MIT OR Apache-2.0"
-name = "date"
-repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/date/"
+name = "dtt"
+repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/dtt/"
 rust-version = "1.67.0"
 version = "0.0.1"
 include = [
@@ -31,9 +32,9 @@ include = [
 ]
 
 [[bench]]
-name = "date"
+name = "dtt"
 harness = false
-path = "benches/date.rs"
+path = "benches/dtt.rs"
 
 [dependencies]
 regex = "1.7.1"
@@ -45,7 +46,7 @@ criterion = "0.4.0"
 
 [lib]
 crate-type = ["lib"]
-name = "date"
+name = "dtt"
 path = "src/lib.rs"
 
 [features]

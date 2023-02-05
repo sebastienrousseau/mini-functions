@@ -3,8 +3,8 @@
 // TODO: Add more tests to bring the code coverage to 100%
 mod tests {
 
-    extern crate date;
-    use date::{is_valid, DateTime};
+    extern crate dtt;
+    use dtt::{is_valid, DateTime};
 
     extern crate time;
     use time::{Duration, OffsetDateTime};

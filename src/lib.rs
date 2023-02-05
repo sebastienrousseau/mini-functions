@@ -100,7 +100,7 @@ pub mod mini_functions {
     pub use claims::*;
 
     /// Provides access to Date functions.
-    pub use date::*;
+    pub use dtt::*;
 
     /// Provides access to Error handling functions.
     pub use errors::*;

@@ -3,10 +3,10 @@
 // TODO: Add more tests to bring the code coverage to 100%
 mod tests {
 
-    extern crate date;
+    extern crate dtt;
     extern crate logger;
 
-    use self::date::DateTime;
+    use self::dtt::DateTime;
     use self::logger::LogLevel::ERROR;
     use self::logger::{Log, LogFormat, LogLevel};
     use logger::LogFormat::COMMON;

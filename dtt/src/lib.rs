@@ -50,8 +50,8 @@
 //!
 //! ```rust
 //!
-//! extern crate date;
-//! use self::date::DateTime;
+//! extern crate dtt;
+//! use self::dtt::DateTime;
 //!
 //! let dt = DateTime::new();
 //! println!("Date: {}", dt.now);
@@ -79,11 +79,11 @@
 #![forbid(unsafe_code)]
 #![warn(unreachable_pub)]
 #![doc(
-    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-date.svg",
-    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-date.svg",
+    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-dtt.svg",
+    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-dtt.svg",
     html_root_url = "https://docs.rs/mini-functions"
 )]
-#![crate_name = "date"]
+#![crate_name = "dtt"]
 #![crate_type = "lib"]
 
 extern crate serde;
@@ -332,7 +332,7 @@ impl std::fmt::Display for DateTime {
 ///
 /// ```rust
 ///
-/// extern crate date;
+/// extern crate dtt;
 /// use date::is_valid;
 ///
 /// is_valid!(day, u32);

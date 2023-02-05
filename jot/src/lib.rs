@@ -49,7 +49,7 @@
 
 extern crate base64;
 extern crate claims;
-extern crate date;
+extern crate dtt;
 extern crate errors;
 extern crate hmac;
 extern crate jwt;

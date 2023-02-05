@@ -1,7 +1,7 @@
-extern crate date;
+extern crate dtt;
 extern crate logger;
 
-use self::date::DateTime;
+use self::dtt::DateTime;
 use self::logger::{Log, LogFormat, LogLevel};
 
 fn main() {

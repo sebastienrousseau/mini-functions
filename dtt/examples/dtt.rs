@@ -1,5 +1,5 @@
-extern crate date;
-use self::date::DateTime;
+extern crate dtt;
+use self::dtt::DateTime;
 
 pub fn main() {
     let date = DateTime::new();

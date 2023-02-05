@@ -47,7 +47,7 @@ path = "benches/jot.rs"
 [dependencies]
 base64 = "0.21.0"
 claims = { path = "../claims" }
-date = { path = "../date" }
+dtt = { path = "../dtt" }
 errors = { path = "../errors" }
 hmac = "0.12.1"
 jsonwebtoken = "8.2.0"

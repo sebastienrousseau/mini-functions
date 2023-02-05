@@ -45,7 +45,7 @@ path = "benches/pwd.rs"
 
 [dependencies]
 common = { path = "../common" }
-date = { path = "../date" }
+dtt = { path = "../dtt" }
 hsh = { path = "../hsh" }
 random = { path = "../random" }
 regex = "1.7.1"

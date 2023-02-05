@@ -3,10 +3,10 @@
 mod tests {
 
     extern crate claims;
-    extern crate date;
+    extern crate dtt;
 
     use self::claims::Claims;
-    use self::date::DateTime;
+    use self::dtt::DateTime;
 
     #[test]
     fn test_claims() {

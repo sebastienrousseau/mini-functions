@@ -1,7 +1,7 @@
 extern crate criterion;
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-extern crate date;
-use self::date::DateTime;
+extern crate dtt;
+use self::dtt::DateTime;
 
 fn new_date(c: &mut Criterion) {
     c.bench_function("new", |b| b.iter(|| DateTime::new));
