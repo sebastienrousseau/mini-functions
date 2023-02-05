@@ -1,7 +1,7 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use image::Rgba;
-extern crate qr;
-use self::qr::QRCode;
+extern crate qrc;
+use self::qrc::QRCode;
 
 // Benchmark for QRCode::new
 fn new_benchmark(c: &mut Criterion) {

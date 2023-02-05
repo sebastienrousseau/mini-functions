@@ -3,8 +3,8 @@ mod tests {
     extern crate image;
     use image::{Rgba, RgbaImage};
 
-    extern crate qr;
-    use qr::{add_image_watermark, qr_code, qr_code_to, QRCode};
+    extern crate qrc;
+    use qrc::{add_image_watermark, qr_code, qr_code_to, QRCode};
 
     const URL: &str = "https://minifunctions.com/"; // Define a constant for the URL to be encoded
 
