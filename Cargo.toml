@@ -11,7 +11,7 @@ include = [
     "/claims/**",
     "/cmn/**",
     "/dtt/**",
-    "/errors/**",
+    "/idk/**",
     "/hsh/**",
     "/jot/**",
     "/LICENSE-APACHE",
@@ -85,7 +85,7 @@ version = "0.0.8"
 claims = { path = "./claims", version = "*" }
 cmn = { path = "./cmn", version = "*" }
 dtt = { path = "./dtt", version = "*" }
-errors = { path = "./errors", version = "*" }
+idk = { path = "./idk", version = "*" }
 hsh = { path = "./hsh", version = "*" }
 jot = { path = "./jot", version = "*" }
 logger = { path = "./logger", version = "*" }
@@ -101,7 +101,7 @@ members = [
     "claims",
     "cmn",
     "dtt",
-    "errors",
+    "idk",
     "hsh",
     "jot",
     "logger",
@@ -124,7 +124,7 @@ required-features = [
     "claims",
     "cmn",
     "dtt",
-    "errors",
+    "idk",
     "hsh",
     "jot",
     "logger",

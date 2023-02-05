@@ -10,17 +10,9 @@ categories = [
 description = "A Rust library for error handling and reporting in Mini Functions."
 edition = "2018"
 homepage = "https://minifunctions.com/"
-keywords = [
-    "error-handling",
-    "error",
-    "exception-handling",
-    "failure",
-    "handling",
-    "macro",
-    "mini-functions",
-]
+keywords = ["idk", "error-handling", "error", "exception-handling", "failure"]
 license = "MIT OR Apache-2.0"
-name = "errors"
+name = "idk"
 repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/errors/"
 rust-version = "1.66.1"
 version = "0.0.1"
@@ -53,7 +45,7 @@ criterion = "0.4.0"
 
 [lib]
 crate-type = ["lib"]
-name = "errors"
+name = "idk"
 path = "src/lib.rs"
 
 [features]

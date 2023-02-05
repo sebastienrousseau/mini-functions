@@ -1,4 +1,5 @@
-use errors::common::ErrorType;
+extern crate idk;
+use idk::common::ErrorType;
 
 fn main() {
     let error_type = ErrorType::new("illegal_argument");
