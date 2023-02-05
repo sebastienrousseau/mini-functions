@@ -4,16 +4,7 @@ categories = ["Date and time"]
 description = "A Rust library for parsing, validating, manipulating, and formatting dates and times."
 edition = "2018"
 homepage = "https://minifunctions.com/"
-keywords = [
-    "calendar",
-    "dtt",
-    "date",
-    "datetime",
-    "duration",
-    "mini-functions",
-    "time",
-    "timezone",
-]
+keywords = ["dtt", "date", "datetime", "time", "timezone"]
 license = "MIT OR Apache-2.0"
 name = "dtt"
 repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/dtt/"
