@@ -1,0 +1,42 @@
+[package]
+authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
+categories = ["Algorithms", "Data structures", "Cryptography"]
+description = "A Cryptographic Hash Algorithms Library for Rust"
+edition = "2018"
+homepage = "https://minifunctions.com/"
+keywords = ["blake3", "hsh", "hash", "hasher", "mini-functions"]
+license = "MIT OR Apache-2.0"
+name = "hsh"
+repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/hsh/"
+rust-version = "1.66.1"
+version = "0.0.1"
+include = [
+    "../../LICENSE-APACHE",
+    "../../LICENSE-MIT",
+    "/benches/**",
+    "/build.rs",
+    "/Cargo.toml",
+    "/examples/**",
+    "/README.md",
+    "/src/**",
+    "/tests/**",
+]
+
+[[bench]]
+name = "hsh"
+harness = false
+path = "benches/hsh.rs"
+
+[dependencies]
+blake3 = "1.3.3"
+
+[dev-dependencies]
+criterion = "0.4.0"
+
+[lib]
+crate-type = ["lib"]
+name = "hsh"
+path = "src/lib.rs"
+
+[features]
+default = []

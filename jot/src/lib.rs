@@ -49,16 +49,16 @@
 
 extern crate base64;
 extern crate claims;
-extern crate date;
-extern crate errors;
+extern crate dtt;
 extern crate hmac;
+extern crate idk;
 extern crate jwt;
 extern crate serde;
 extern crate serde_json;
 extern crate sha2;
 
 use self::claims::Claims;
-use errors::jwt::JwtError;
+use idk::jwt::JwtError;
 
 use base64::{engine::general_purpose, Engine as _};
 use hmac::{Hmac, Mac};

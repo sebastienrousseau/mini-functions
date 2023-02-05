@@ -43,7 +43,7 @@ harness = false
 path = "benches/logger.rs"
 
 [dependencies]
-date = { path = "../date" }
+dtt = { path = "../dtt" }
 
 [dev-dependencies]
 criterion = "0.4.0"

@@ -42,7 +42,7 @@
 //! - **[Password](../password/index.html)** - Provides access to
 //! password functions.
 //! - **[QR](../qr/index.html)** - Provides access to QR code functions.
-//! - **[Random](../random/index.html)** - Provides access to random
+//! - **[Random](../vrd/index.html)** - Provides access to random
 //! number functions.
 //! - And so much more.
 //!
@@ -94,19 +94,19 @@
 /// your Rust applications.
 pub mod mini_functions {
     /// Provides access to common functions and constants.
-    pub use self::common::*;
+    pub use cmn::*;
 
     /// Provides access to the claims of a JSON Web Token (JWT).
     pub use claims::*;
 
     /// Provides access to Date functions.
-    pub use date::*;
+    pub use dtt::*;
 
     /// Provides access to Error handling functions.
-    pub use errors::*;
+    pub use idk::*;
 
     /// Provides access to Hash functions.
-    pub use hash::*;
+    pub use hsh::*;
 
     /// Provides access to JSON Web Token (JWT) functions.
     pub use jot::*;
@@ -121,5 +121,5 @@ pub mod mini_functions {
     pub use qrc::*;
 
     /// Provides access to Random numbers functions.
-    pub use random::*;
+    pub use vrd::*;
 }

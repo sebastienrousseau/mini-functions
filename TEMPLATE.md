@@ -43,7 +43,7 @@ It takes just a few minutes to get up and running with `mini-functions`.
 
 ### Requirements
 
-`mini-functions` requires Rust **1.57.0** or later.
+`mini-functions` requires Rust **1.67.0** or later.
 
 ### Documentation
 

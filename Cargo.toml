@@ -9,18 +9,18 @@ include = [
     "/build.rs",
     "/Cargo.toml",
     "/claims/**",
-    "/common/**",
-    "/date/**",
-    "/errors/**",
-    "/hash/**",
+    "/cmn/**",
+    "/dtt/**",
+    "/idk/**",
+    "/hsh/**",
     "/jot/**",
     "/LICENSE-APACHE",
     "/LICENSE-MIT",
     "/logger/**",
     "/md5/**",
-    "/password/**",
+    "/pwd/**",
     "/qrc/**",
-    "/random/**",
+    "/vrd/**",
     "/README.md",
     "/src/**",
     "/tests/**",
@@ -30,6 +30,8 @@ keywords = [
     "checksum",
     "claims",
     "cryptography",
+    "cmn",
+    "dtt",
     "date",
     "datetime",
     "debugging",
@@ -42,6 +44,7 @@ keywords = [
     "exception",
     "functions",
     "handling",
+    "hsh",
     "hash",
     "hashing",
     "helper",
@@ -53,6 +56,7 @@ keywords = [
     "logger",
     "logging",
     "mini-functions",
+    "pwd",
     "password-generator",
     "password",
     "passwords",
@@ -60,6 +64,7 @@ keywords = [
     "qr",
     "qrc",
     "qrcode",
+    "vrd",
     "random-generation",
     "random-number",
     "random",
@@ -78,32 +83,32 @@ version = "0.0.8"
 
 [dependencies]
 claims = { path = "./claims", version = "*" }
-common = { path = "./common", version = "*" }
-date = { path = "./date", version = "*" }
-errors = { path = "./errors", version = "*" }
-hash = { path = "./hash", version = "*" }
+cmn = { path = "./cmn", version = "*" }
+dtt = { path = "./dtt", version = "*" }
+idk = { path = "./idk", version = "*" }
+hsh = { path = "./hsh", version = "*" }
 jot = { path = "./jot", version = "*" }
 logger = { path = "./logger", version = "*" }
 md5 = { path = "./md5", version = "*" }
-password = { path = "./password", version = "*" }
+psph = { path = "./psph", version = "*" }
 qrc = { path = "./qrc", version = "*" }
-random = { path = "./random", version = "*" }
+vrd = { path = "./vrd", version = "*" }
 
 [workspace]
 exclude = ["src"]
 resolver = "2"
 members = [
     "claims",
-    "common",
-    "date",
-    "errors",
-    "hash",
+    "cmn",
+    "dtt",
+    "idk",
+    "hsh",
     "jot",
     "logger",
     "md5",
-    "password",
+    "psph",
     "qrc",
-    "random",
+    "vrd",
 ] # List of workspace members
 
 [workspace.package]
@@ -117,16 +122,16 @@ crate-type = ["lib"]
 path = "src/lib.rs"
 required-features = [
     "claims",
-    "common",
-    "date",
-    "errors",
-    "hash",
+    "cmn",
+    "dtt",
+    "idk",
+    "hsh",
     "jot",
     "logger",
     "md5",
-    "password",
+    "psph",
     "qrc",
-    "random",
+    "vrd",
 ]
 
 [profile.dev]
