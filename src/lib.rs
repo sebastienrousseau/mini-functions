@@ -94,7 +94,7 @@
 /// your Rust applications.
 pub mod mini_functions {
     /// Provides access to common functions and constants.
-    pub use self::common::*;
+    pub use cmn::*;
 
     /// Provides access to the claims of a JSON Web Token (JWT).
     pub use claims::*;
@@ -103,7 +103,7 @@ pub mod mini_functions {
     pub use dtt::*;
 
     /// Provides access to Error handling functions.
-    pub use errors::*;
+    pub use idk::*;
 
     /// Provides access to Hash functions.
     pub use hsh::*;

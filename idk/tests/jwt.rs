@@ -2,8 +2,8 @@
 
 // TODO: Add more tests to bring the code coverage to 100%
 mod tests {
-    extern crate errors;
-    use errors::jwt::JwtError;
+    extern crate idk;
+    use idk::jwt::JwtError;
 
     #[test]
     fn test_jwt_error() {

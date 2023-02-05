@@ -2,8 +2,8 @@
 
 // TODO: Add more tests to bring the code coverage to 100%
 mod tests {
-    extern crate errors;
-    use errors::traits::{HasTrait, Trait, TraitBuilder};
+    extern crate idk;
+    use idk::traits::{HasTrait, Trait, TraitBuilder};
 
     #[test]
     fn test_trait_new() {

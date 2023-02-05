@@ -2,8 +2,8 @@
 
 // TODO: Add more tests to bring the code coverage to 100%
 mod tests {
-    extern crate errors;
-    use errors::stacktrace::StackTrace;
+    extern crate idk;
+    use idk::stacktrace::StackTrace;
 
     #[test]
     fn test_stack_trace_new() {

@@ -1,8 +1,8 @@
 #[cfg(test)]
 
 mod tests {
-    extern crate errors;
-    use errors::property::Property;
+    extern crate idk;
+    use idk::property::Property;
 
     #[test]
     fn test_property_error() {
