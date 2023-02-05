@@ -118,7 +118,7 @@ pub mod mini_functions {
     pub use md5::*;
 
     /// Provides access to QR code functions.
-    pub use qr::*;
+    pub use qrc::*;
 
     /// Provides access to Random numbers functions.
     pub use random::*;

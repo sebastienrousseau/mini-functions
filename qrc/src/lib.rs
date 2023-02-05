@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 //!
-//! # A Rust library for generating QR code images in PNG, JPG, GIF and SVG format
+//! # A Rust library for generating and manipulating QR code images in various formats
 //!
-//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-qr.svg)](https://minifunctions.com)
+//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-qrc.svg)](https://minifunctions.com)
 //!
 //! <center>
 //!
@@ -18,15 +18,74 @@
 //!
 //! ## Overview
 //!
-//! QRCode provides an easy way to generate QR code images in PNG, JPG, GIF and SVG format.
+//! Introducing the QRCode Library - a versatile tool for generating and
+//! manipulating QR code images in various formats.
+//!
+//! With this library, you can easily convert your data into a QR code,
+//! whether it be in the form of a string or a vector of bytes.
+//!
+//! Choose from popular image formats like PNG, JPG, and SVG, and even
+//! customize the size and color of your QR code. And with its
+//! comprehensive set of features, including support for different modes
+//! like Numeric and Alphanumeric, and ability to mix modes, you can
+//! create QR codes that perfectly suit your needs.
+//!
+//! The QRCode Library is a powerful and flexible solution for all your
+//! QR code generation needs.
 //!
 //! ## Features
 //!
-//! - Generate QR code images in PNG, JPG, GIF and SVG format.
-//! - The data is a string or a vector of bytes.
-//! - The QR code image can be in black and white or in color.
-//! - It can be resized, colorized and converted to an image.
-//! - It can add an image as a watermark to the QR code image.
+//! The QRCode Library features a `QRCode` struct that can be
+//! constructed with a `Vec<u8>` of data or a `String` of data that will
+//! be converted to a `Vec<u8>`.
+//!
+//! The QR code can be generated using the zto_qrcode` method, and
+//! specific image formats can be generated using the `to_png`, `to_jpg`,
+//! and `to_gif` methods.
+//!
+//! Each of these methods takes a `width` parameter and returns an
+//! `ImageBuffer` containing the QR code image.
+//!
+//! The library uses the qrcode and image crates to generate the QR
+//! code images.
+//!
+//! As of the current version, the library supports the following
+//! features with the following status:
+//!
+//! | Feature | Description |
+//! | ------- | ----------- |
+//! | Library license | Apache-2.0 OR MIT |
+//! | Library version | 0.0.1 |
+//! | Mode Numeric | not specified |
+//! | Mode Alphanumeric | not specified |
+//! | Mode Byte | not specified |
+//! | Mode Kanji | not specified |
+//! | Mode ECI | not specified |
+//! | Mode FNC1 | not specified |
+//! | Mode Structured Append | not specified |
+//! | Mode Hanzi | not specified |
+//! | Mixing modes | not specified |
+//! | QR Codes version 1 - 40 | not specified |
+//! | Micro QR Codes version M1 - M4 | not specified |
+//! | Find maximal error correction level | not specified |
+//! | Optimize QR Codes | not specified |
+//! | PNG output | supported |
+//! | JPG output | supported |
+//! | GIF output | supported |
+//! | SVG output | supported |
+//! | EPS output | not specified |
+//! | PDF output | not specified |
+//! | BMP output | not specified |
+//! | TIFF output | not specified |
+//! | WebP output | not specified |
+//! | Black and white QR Codes | Yes |
+//! | Colorized QR code | Yes |
+//! | Animated QR Codes (GIF, APNG, WebP) | not specified |
+//! | Changing size of modules (scaling factor) | not specified |
+//! | Command line script | not specified |
+//! | QR code resizing | supported |
+//! | QR code watermarking | supported |
+//! | QR code with logo | supported |
 //!
 //! ## Usage
 //!
@@ -41,11 +100,11 @@
 #![forbid(unsafe_code)]
 #![warn(unreachable_pub)]
 #![doc(
-    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-qr.svg",
-    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-qr.svg",
+    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-qrc.svg",
+    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-qrc.svg",
     html_root_url = "https://docs.rs/mini-functions"
 )]
-#![crate_name = "qr"]
+#![crate_name = "qrc"]
 #![crate_type = "lib"]
 
 extern crate image;
@@ -57,20 +116,15 @@ use qrcode::QrCode;
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Default, PartialEq, Eq, Hash, PartialOrd, Ord)]
-/// The `QRCode` struct for generating an image in PNG, JPG, GIF and SVG format.
-///
-/// This struct represents a QR code image from a given data.
-///
-///
-///
+/// QRCode is a structure that contains data in the form of a vector of
+/// bytes.
 pub struct QRCode {
     /// The `data` field holds the data to be encoded in the QR code.
     pub data: Vec<u8>,
 }
-
+/// Implementation of QRCode structure.
 impl QRCode {
-    /// The `new` method creates a new instance of the QRCode struct
-    /// with the given data.
+    /// Creates a new QRCode structure with the given data.
     pub fn new(data: Vec<u8>) -> Self {
         QRCode { data }
     }
@@ -84,20 +138,17 @@ impl QRCode {
         }
     }
 
-    /// The `from_bytes` method creates a new instance of the QRCode
-    /// struct with the given vector of bytes
+    /// Creates a new QRCode structure from a vector of bytes.
     pub fn from_bytes(data: Vec<u8>) -> Self {
         QRCode { data }
     }
 
-    /// The `to_qrcode` method creates a new QrCode value using the data
-    /// stored in the QRCode struct.
+    /// Converts the QRCode structure to a QrCode structure.
     pub fn to_qrcode(&self) -> QrCode {
         QrCode::new(&self.data).unwrap()
     }
 
-    /// The `to_png` method creates a new PNG image of the QR code using
-    /// the data stored in the QRCode
+    /// Converts the QRCode structure to a PNG image.
     pub fn to_png(&self, width: u32) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
         let qrcode = self.to_qrcode();
         let height = width;
@@ -112,8 +163,7 @@ impl QRCode {
         }
         img
     }
-    /// The `to_jpg` method creates a new JPEG image of the QR code
-    /// using the data stored in the QRCode
+    /// Converts the QRCode structure to a JPG image.
     pub fn to_jpg(&self, width: u32) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
         let qrcode = self.to_qrcode();
         let height = width;
@@ -128,8 +178,7 @@ impl QRCode {
         }
         img
     }
-    /// The `to_gif` method creates a new GIF image of the QR code using
-    /// the data stored in the QRCode
+    /// Converts the QRCode structure to a GIF image.
     pub fn to_gif(&self, width: u32) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
         let qrcode = self.to_qrcode();
         let height = width;
@@ -145,8 +194,7 @@ impl QRCode {
         img
     }
 
-    /// The `to_svg` method creates a new SVG image of the QR code using
-    /// the data stored in the QRCode
+    /// Converts the QRCode structure to an SVG image.
     pub fn to_svg(&self, width: u32) -> String {
         let qrcode = self.to_qrcode();
         let svg_string = qrcode
@@ -219,31 +267,6 @@ impl QRCode {
             img.put_pixel(x, y, image::Rgba(new_pixel));
         }
     }
-    // The `add_emoji_watermark` method adds an emoji watermark to the
-    // given image.
-    // pub fn add_emoji_watermark(img: &mut RgbaImage) {
-    //     let (width, height) = img.dimensions();
-
-    //     // position the watermark in the center of the QR code
-    //     let x = width / 2 - 10;
-    //     let y = height / 2 - 10;
-
-    //     let emoji = "🦀︎";
-    //     let emoji_image =
-    //         image::load_from_memory_with_format(emoji.as_bytes(), image::ImageFormat::Png);
-    //     let emoji_image = match emoji_image {
-    //         Ok(img) => img,
-    //         Err(e) => {
-    //             println!("Error decoding emoji: {}", e);
-    //             return;
-    //         }
-    //     };
-    //     let emoji_image = emoji_image.resize(20, 20, image::imageops::FilterType::Nearest);
-    //     let emoji_image = emoji_image.to_rgb8();
-    //     for (dx, dy, pixel) in emoji_image.enumerate_pixels() {
-    //         img.put_pixel(x + dx, y + dy, *pixel);
-    //     }
-    // }
 }
 
 #[macro_export]
@@ -254,15 +277,6 @@ macro_rules! add_image_watermark {
         QRCode::add_image_watermark($img, $watermark)
     };
 }
-
-// #[macro_export]
-// The `add_emoji_watermark` macro creates a new instance of the QRCode struct
-// with the given data.
-// macro_rules! add_emoji_watermark {
-//     ($img:expr) => {
-//         QRCode::add_emoji_watermark($img)
-//     };
-// }
 
 #[macro_export]
 /// The `qr_code` macro creates a new instance of the QRCode struct

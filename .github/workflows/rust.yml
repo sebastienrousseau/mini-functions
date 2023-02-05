@@ -112,7 +112,7 @@ jobs:
 
       - name: Update version number 🧮
         id: update-version
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && !github.event.check_run.conclusion
         run: |
           NEW_VERSION=$(grep version Cargo.toml | sed -n 2p | cut -d '"' -f 2)
           echo "VERSION=$NEW_VERSION" >> $GITHUB_ENV
@@ -138,18 +138,19 @@ jobs:
 
       - name: Run Cargo Format 🦀
         id: run-check-format
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == !github.event.check_run.conclusion
         run: |
           cargo check --all --all-features --workspace --verbose
 
       - name: Run Clippy 🦀
         id: run-check-clippy
+        if: github.ref == !github.event.check_run.conclusion
         run: |
           cargo clippy --all-targets --all-features --workspace -- -D warnings
 
       - name: Run Cargo Doc 🦀
         id: run-check-doc
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && !github.event.check_run.conclusion
         run: |
           cargo doc --workspace --color always --no-deps --release --all-features
 
@@ -161,7 +162,7 @@ jobs:
 
       - name: Run Cargo Code Coverage 🦀
         id: run-check-code-coverage
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && !github.event.check_run.conclusion
         run: |
           # Install tarpaulin
           cargo install cargo-tarpaulin
@@ -171,7 +172,7 @@ jobs:
 
       - name: Upload to codecov.io 📊
         id: upload-codecov
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && !github.event.check_run.conclusion
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -195,7 +196,7 @@ jobs:
 
       - name: Generate Changelog 📜
         id: generate-changelog
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && !github.event.check_run.conclusion
         run: |
           # Append version information to CHANGELOG.md
           echo "## [${{ env.VERSION }}] - $(date +'%Y-%m-%d')" >> ${{ github.workspace }}/CHANGELOG.md
@@ -210,13 +211,13 @@ jobs:
 
       - name: Create Release 🚀
         id: create_release
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && !github.event.check_run.conclusion
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: v${{ env.VERSION }}
-          release_name: Mini Functions 🦀 v${{ env.VERSION }} - ${{ matrix.target }}
+          release_name: Mini Functions 🦀 v${{ env.VERSION }}
           body_path: ${{ github.workspace }}/CHANGELOG.md
           draft: true
           prerelease: false

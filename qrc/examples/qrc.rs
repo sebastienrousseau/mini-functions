@@ -1,7 +1,7 @@
 extern crate image;
 use image::{imageops, ImageBuffer, Rgba, RgbaImage};
-extern crate qr;
-use self::qr::{add_image_watermark, qr_code, qr_code_to, QRCode};
+extern crate qrc;
+use self::qrc::{add_image_watermark, qr_code, qr_code_to, QRCode};
 use std::fs; // Import the fs module from the standard library // Import the QRCode struct from the mini_functions crate
 
 const URL: &str = "https://minifunctions.com/"; // Define a constant for the URL to be encoded
