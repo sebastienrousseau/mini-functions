@@ -60,7 +60,7 @@ It takes just a few minutes to get up and running with `qrc`.
 
 ### Requirements
 
-`qrc` requires Rust **1.57.0** or later.
+`qrc` requires Rust **1.67.0** or later.
 
 ### Documentation
 
@@ -75,7 +75,7 @@ To use `qrc` in your project, add the following to your
 
 ```toml
 [dependencies]
-qrc = "0.0.1"
+qrc = "0.0.2"
 ```
 
 Add the following to your `main.rs` file:
@@ -89,10 +89,10 @@ then you can use the functions in your application code.
 
 ### Examples
 
-`QRC` comes with a set of examples that you can use to get
-started. The examples are located in the `examples` directory of the
-project. To run the examples, clone the repository and run the following
-command in your terminal from the project root directory.
+`QRC` comes with a set of examples that you can use to get started. The
+examples are located in the `examples` directory of the project. To run
+the examples, clone the repository and run the following command in your
+terminal from the project root directory.
 
 ```shell
 cargo run --example qrc
@@ -132,14 +132,14 @@ for their help and support.
 [4]: https://raw.githubusercontent.com/sebastienrousseau/mini-functions/main/.github/CONTRIBUTING.md
 [6]: https://github.com/sebastienrousseau/mini-functions/graphs/contributors
 [7]: http://semver.org/
-[8]: https://crates.io/crates/mini-functions
-[9]: https://docs.rs/mini-functions
-[10]: https://lib.rs/crates/mini-functions
+[8]: https://crates.io/crates/qrc
+[9]: https://docs.rs/qrc
+[10]: https://lib.rs/crates/qrc
 
 [banner]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/banners/banner-qrc-1597x377.svg "QRC Banner"
 [crates-badge]: https://img.shields.io/crates/v/qrc.svg?style=for-the-badge 'Crates.io'
 [divider]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/elements/divider.svg "divider"
 [docs-badge]: https://img.shields.io/docsrs/qrc.svg?style=for-the-badge 'Docs.rs'
-[libs-badge]: https://img.shields.io/badge/lib.rs-v0.0.1-orange.svg?style=for-the-badge 'Lib.rs'
+[libs-badge]: https://img.shields.io/badge/lib.rs-v0.0.2-orange.svg?style=for-the-badge 'Lib.rs'
 [license-badge]: https://img.shields.io/crates/l/qrc.svg?style=for-the-badge 'License'
 [mwl]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg "Made With Love"
