@@ -52,7 +52,7 @@
 #![doc(
     html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-hsh.svg",
     html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-hsh.svg",
-    html_root_url = "https://docs.rs/mini-functions"
+    html_root_url = "https://docs.rs/hsh"
 )]
 #![crate_name = "hsh"]
 #![crate_type = "lib"]

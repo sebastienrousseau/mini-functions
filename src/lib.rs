@@ -42,7 +42,7 @@
 //! - **[Password](../password/index.html)** - Provides access to
 //! password functions.
 //! - **[QR](../qr/index.html)** - Provides access to QR code functions.
-//! - **[Random](../random/index.html)** - Provides access to random
+//! - **[Random](../vrd/index.html)** - Provides access to random
 //! number functions.
 //! - And so much more.
 //!
@@ -121,5 +121,5 @@ pub mod mini_functions {
     pub use qrc::*;
 
     /// Provides access to Random numbers functions.
-    pub use random::*;
+    pub use vrd::*;
 }

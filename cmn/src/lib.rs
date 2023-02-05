@@ -83,7 +83,7 @@
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-cmn.svg",
     html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-cmn.svg",
-    html_root_url = "https://docs.rs/mini-functions"
+    html_root_url = "https://docs.rs/cmn"
 )]
 #![crate_name = "cmn"]
 #![crate_type = "lib"]

@@ -1,5 +1,5 @@
-extern crate random;
-use self::random::Random;
+extern crate vrd;
+use self::vrd::Random;
 
 fn main() {
     // Create a new random boolean

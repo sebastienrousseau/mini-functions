@@ -4,15 +4,15 @@
 //!
 //! # A Rust library for generating random and pseudo-random numbers based on the Mersenne Twister algorithm
 //!
-//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-random.svg)](https://minifunctions.com)
+//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-vrd.svg)](https://minifunctions.com)
 //!
 //! <center>
 //!
 //! [![Rust](https://img.shields.io/badge/rust-f04041?style=for-the-badge&labelColor=c0282d&logo=rust)](https://www.rust-lang.org)
-//! [![Crates.io](https://img.shields.io/crates/v/mini-functions.svg?style=for-the-badge&color=success&labelColor=27A006)](https://crates.io/crates/mini-functions)
-//! [![Lib.rs](https://img.shields.io/badge/lib.rs-v0.0.8-success.svg?style=for-the-badge&color=8A48FF&labelColor=6F36E4)](https://lib.rs/crates/mini-functions)
-//! [![GitHub](https://img.shields.io/badge/github-555555?style=for-the-badge&labelColor=000000&logo=github)](https://github.com/sebastienrousseau/mini-functions/tree/main/claims)
-//! [![License](https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge&color=007EC6&labelColor=03589B)](http://opensource.org/licenses/MIT)
+//! [![Crates.io](https://img.shields.io/crates/v/vrd.svg?style=for-the-badge&color=success&labelColor=27A006)](https://crates.io/crates/vrd)
+//! [![Lib.rs](https://img.shields.io/badge/lib.rs-v0.0.1-success.svg?style=for-the-badge&color=8A48FF&labelColor=6F36E4)](https://lib.rs/crates/vrd)
+//! [![GitHub](https://img.shields.io/badge/github-555555?style=for-the-badge&labelColor=000000&logo=github)](https://github.com/sebastienrousseau/mini-functions/tree/main/vrd)
+//! [![License](https://img.shields.io/crates/l/vrd.svg?style=for-the-badge&color=007EC6&labelColor=03589B)](http://opensource.org/licenses/MIT)
 //!
 //! </center>
 //!
@@ -27,20 +27,41 @@
 //!
 //! ## Features
 //!
-//! - Generates random numbers based on the Mersenne Twister algorithm
-//! (MT19937)
-//! - Generates random numbers in the range 0..(2^32 - 1)
+//! - Pseudorandom number generation: The library uses the Mersenne
+//!   Twister algorithm (MT19937) to generate pseudorandom integers
+//!   uniformly distributed in 0 to (2^32 - 1) using an array of
+//!   unsigned 32-bit integers and an index.
+//! - Random number types: The library provides several methods to
+//!   generate different types of random numbers including bool, bytes,
+//!   char, float, and int.
+//! - Range of values: The methods for generating random numbers allow
+//!   the user to specify the range of values for the output.
+//! - Random element selection: The library provides a method to choose
+//!   a random element from a given slice of values.
+//! - Initialization: The library provides a new() method to create a
+//!   new instance of the random number generator.
+//! - Optimization: The library is optimized for performance with the
+//!   number of elements in the array set to 624 and the number of
+//!   elements to skip set to 397.
+//! - Constant values: The library uses several constant values in the
+//!   Mersenne Twister algorithm including MATRIX_A, UPPER_MASK,
+//!   LOWER_MASK, TEMPERING_MASK_B, and TEMPERING_MASK_C.
 //!
 //!
-#![warn(missing_debug_implementations)]
-#![warn(missing_copy_implementations)]
-#![warn(missing_docs)]
+//! [`serde`]: https://github.com/serde-rs/serde
+//!
+#![cfg_attr(feature = "bench", feature(test))]
+#![deny(dead_code)]
+#![deny(missing_debug_implementations)]
+#![deny(missing_docs)]
 #![forbid(unsafe_code)]
+#![warn(unreachable_pub)]
 #![doc(
-    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-random.svg",
-    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-random.svg",
-    html_root_url = "https://docs.rs/mini-functions"
+    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-vrd.svg",
+    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-vrd.svg",
+    html_root_url = "https://docs.rs/vrd"
 )]
+#![crate_name = "vrd"]
 #![crate_type = "lib"]
 
 extern crate rand;

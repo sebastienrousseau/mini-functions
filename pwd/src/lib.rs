@@ -60,11 +60,10 @@ pub use cmn::constants::*;
 pub use cmn::words::WORD_LIST;
 
 extern crate hsh;
-/// hash
 pub use hsh::Hash;
 
-extern crate random;
-use crate::random::Random;
+extern crate vrd;
+pub use vrd::Random;
 
 use std::collections::{HashMap, HashSet};
 use std::convert::TryInto;

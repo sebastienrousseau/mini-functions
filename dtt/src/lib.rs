@@ -83,7 +83,7 @@
 #![doc(
     html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-dtt.svg",
     html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-dtt.svg",
-    html_root_url = "https://docs.rs/mini-functions"
+    html_root_url = "https://docs.rs/dtt"
 )]
 #![crate_name = "dtt"]
 #![crate_type = "lib"]

@@ -1,6 +1,6 @@
 extern crate criterion;
-extern crate random;
-use self::random::Random;
+extern crate vrd;
+use self::vrd::Random;
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
 fn benchmark_random(c: &mut Criterion) {

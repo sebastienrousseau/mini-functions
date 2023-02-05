@@ -3,8 +3,8 @@
 // TODO: Add more tests to bring the code coverage to 100%
 mod tests {
 
-    extern crate random;
-    use self::random::Random;
+    extern crate vrd;
+    use self::vrd::Random;
 
     const N: usize = 624;
 

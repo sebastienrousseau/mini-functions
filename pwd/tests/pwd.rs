@@ -4,7 +4,7 @@
 mod tests {
     use cmn::constants::*;
     use pwd::Password;
-    use random::Random;
+    use vrd::Random;
 
     #[test]
     fn test_password() {

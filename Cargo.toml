@@ -20,7 +20,7 @@ include = [
     "/md5/**",
     "/pwd/**",
     "/qrc/**",
-    "/random/**",
+    "/vrd/**",
     "/README.md",
     "/src/**",
     "/tests/**",
@@ -64,6 +64,7 @@ keywords = [
     "qr",
     "qrc",
     "qrcode",
+    "vrd",
     "random-generation",
     "random-number",
     "random",
@@ -91,7 +92,7 @@ logger = { path = "./logger", version = "*" }
 md5 = { path = "./md5", version = "*" }
 pwd = { path = "./pwd", version = "*" }
 qrc = { path = "./qrc", version = "*" }
-random = { path = "./random", version = "*" }
+vrd = { path = "./vrd", version = "*" }
 
 [workspace]
 exclude = ["src"]
@@ -107,7 +108,7 @@ members = [
     "md5",
     "pwd",
     "qrc",
-    "random",
+    "vrd",
 ] # List of workspace members
 
 [workspace.package]
@@ -130,7 +131,7 @@ required-features = [
     "md5",
     "pwd",
     "qrc",
-    "random",
+    "vrd",
 ]
 
 [profile.dev]
