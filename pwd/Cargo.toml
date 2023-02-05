@@ -22,8 +22,8 @@ keywords = [
     "security",
 ]
 license = "MIT OR Apache-2.0"
-name = "password"
-repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/password/"
+name = "pwd"
+repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/pwd/"
 rust-version = "1.66.1"
 version = "0.0.1"
 include = [
@@ -39,14 +39,14 @@ include = [
 ]
 
 [[bench]]
-name = "password"
+name = "pwd"
 harness = false
-path = "benches/password.rs"
+path = "benches/pwd.rs"
 
 [dependencies]
 common = { path = "../common" }
 date = { path = "../date" }
-hash = { path = "../hash" }
+hsh = { path = "../hsh" }
 random = { path = "../random" }
 regex = "1.7.1"
 serde = "1.0.152"
@@ -57,7 +57,7 @@ criterion = "0.4.0"
 
 [lib]
 crate-type = ["lib"]
-name = "password"
+name = "pwd"
 path = "src/lib.rs"
 
 [features]

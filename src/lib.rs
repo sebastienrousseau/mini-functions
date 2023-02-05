@@ -106,7 +106,7 @@ pub mod mini_functions {
     pub use errors::*;
 
     /// Provides access to Hash functions.
-    pub use hash::*;
+    pub use hsh::*;
 
     /// Provides access to JSON Web Token (JWT) functions.
     pub use jot::*;

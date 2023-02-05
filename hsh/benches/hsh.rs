@@ -1,6 +1,6 @@
 use blake3::Hasher;
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use hash::Hash;
+use hsh::Hash;
 
 fn generate_hash(c: &mut Criterion) {
     c.bench_function("generate_hash", |b| {

@@ -1,5 +1,5 @@
 use common::constants::*;
-use password::Password;
+use pwd::Password;
 
 fn main() {
     let password = Password::new(4, "-", SPECIAL_CHARS.to_vec());

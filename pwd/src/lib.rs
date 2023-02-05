@@ -50,7 +50,7 @@
     html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-password.svg",
     html_root_url = "https://docs.rs/mini-functions"
 )]
-#![crate_name = "password"]
+#![crate_name = "pwd"]
 #![crate_type = "lib"]
 
 extern crate common;
@@ -61,7 +61,7 @@ pub use common::words::WORD_LIST;
 
 extern crate hash;
 /// hash
-pub use hash::Hash;
+pub use hsh::Hash;
 
 extern crate random;
 use crate::random::Random;

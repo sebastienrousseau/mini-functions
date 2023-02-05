@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 //!
-//! # A Rust cryptographic library for hash functionalities based on the [blake3](https://crates.io/crates/blake3) crate
+//! # A Cryptographic Hash Algorithms Library for Rust
 //!
 //!
-//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-hash.svg)](https://minifunctions.com)
+//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-hsh.svg)](https://minifunctions.com)
 //!
 //! <center>
 //!
@@ -41,11 +41,11 @@
 #![forbid(unsafe_code)]
 #![warn(unreachable_pub)]
 #![doc(
-    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-hash.svg",
-    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-hash.svg",
+    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-hsh.svg",
+    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-hsh.svg",
     html_root_url = "https://docs.rs/mini-functions"
 )]
-#![crate_name = "hash"]
+#![crate_name = "hsh"]
 #![crate_type = "lib"]
 
 extern crate blake3;
