@@ -6,16 +6,7 @@ version = "0.0.1"
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 description = "A Rust library for generating and manipulating QR code images in various formats"
 homepage = "https://minifunctions.com/"
-keywords = [
-    "barcode",
-    "encoding",
-    "mini-functions",
-    "qr-code",
-    "qr",
-    "qrc",
-    "qrcode",
-    "scanning",
-]
+keywords = ["barcode", "mini-functions", "qr", "qrc", "qrcode"]
 categories = ["Algorithms", "Encoding", "Images", "Rendering", "Visualization"]
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/qrc/"
