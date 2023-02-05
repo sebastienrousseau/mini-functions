@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
-    extern crate hash;
-    use self::hash::Hash;
+    extern crate hsh;
+    use self::hsh::Hash;
 
     #[test]
     fn test_hash_fmt() {

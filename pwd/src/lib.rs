@@ -59,7 +59,7 @@ pub use common::constants::*;
 /// words
 pub use common::words::WORD_LIST;
 
-extern crate hash;
+extern crate hsh;
 /// hash
 pub use hsh::Hash;
 

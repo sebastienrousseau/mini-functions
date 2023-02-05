@@ -32,11 +32,11 @@ A Cryptographic Hash Algorithms Library for Rust 🦀
 HSH, is a Cryptographic Hash Algorithms Library for secure password
 management.
 
-Utilizing the cutting-edge Blake3 algorithm, this library generates and
-verifies hashed passwords with ease. The library features a struct for
-storing and verifying hashed passwords, as well as a series of methods
-for calculating entropy, generating hashes, accessing password and hash
-values, and more.
+Utilizing the cutting-edge [Blake3][11] algorithm, this library generates
+and verifies hashed passwords with ease. The library features a struct
+for storing and verifying hashed passwords, as well as a series of
+methods for calculating entropy, generating hashes, accessing
+password and hash values, and more.
 
 The Hash library also implements the Default and Display traits for
 flexible use and easy readability.
@@ -47,22 +47,27 @@ The `Hash` struct is designed to store and verify password hashes using
 the `BLAKE3` cryptographic hash function. The struct has several fields,
 including the password and its hash, both represented as strings.
 
-The `Hash` struct also provides several methods to interact with the
-password and its hash. The entropy method calculates the entropy of the
-hash in bits based on the Shannon entropy formula. The generate_hash
-method hashes the password and returns the hash as a string. The hash
-and hash_length methods provide access to the stored hash and its length
-, respectively. The new method creates a new instance of the Hash struct
-with default values for the password and hash. The password and
-password_length methods provide access to the stored password and its
-length, respectively. The set_hash and set_password methods allow you to
-update the stored hash and password, respectively. Finally, the verify
-method verifies the password against the stored hash and returns a
-Boolean indicating whether they match.
+- The `Hash` struct also provides several methods to interact with the
+password and its hash.
+- The `entropy` method calculates the entropy of the hash in bits based
+on the Shannon entropy formula.
+- The `generate_hash` method hashes the password and returns the hash
+as a string.
+- The `hash` and `hash_length` methods provide access to the stored hash
+and its length, respectively.
+- The `new` method creates a new instance of the Hash struct with
+default values for the password and hash.
+- The `password` and `password_length` methods provide access to the
+stored password and its length, respectively.
+- The `set_hash` and `set_password` methods allow you to update the
+stored hash and password, respectively.
+- Finally, the `verify` method verifies the password against the stored
+hash and returns a Boolean indicating whether they match.
 
-The Hash struct implements the std::fmt::Display trait, which allows it
-to be formatted as a string for printing. The struct also implements the
-Default trait, which allows it to be initialized with default values.
+The Hash struct implements the `std::fmt::Display trait`, which allows
+it to be formatted as a string for printing. The struct also implements
+the `Default` trait, which allows it to be initialized with default
+values.
 
 ## Installation 📦
 
@@ -99,7 +104,7 @@ then you can use the functions in your application code.
 
 ### Examples
 
-`QRC` comes with a set of examples that you can use to get started. The
+`HRC` comes with a set of examples that you can use to get started. The
 examples are located in the `examples` directory of the project. To run
 the examples, clone the repository and run the following command in your
 terminal from the project root directory.
@@ -145,6 +150,7 @@ for their help and support.
 [8]: https://crates.io/crates/hsh
 [9]: https://docs.rs/hsh
 [10]: https://lib.rs/crates/hsh
+[11]: https://github.com/BLAKE3-team/BLAKE3
 
 [banner]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/banners/banner-hsh-1597x377.svg "HSH Banner"
 [crates-badge]: https://img.shields.io/crates/v/hsh.svg?style=for-the-badge 'Crates.io'

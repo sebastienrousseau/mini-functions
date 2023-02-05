@@ -1,5 +1,5 @@
-extern crate hash;
-use self::hash::Hash;
+extern crate hsh;
+use self::hsh::Hash;
 
 fn main() {
     let mut hash = Hash::new();
