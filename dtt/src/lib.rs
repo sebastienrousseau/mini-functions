@@ -335,7 +335,7 @@ impl std::fmt::Display for DateTime {
 /// ```rust
 ///
 /// extern crate dtt;
-/// use date::is_valid;
+/// use dtt::is_valid;
 ///
 /// is_valid!(day, u32);
 /// let input = "31";

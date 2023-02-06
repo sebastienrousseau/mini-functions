@@ -1,19 +1,28 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 categories = [
-    "Authentication",
-    "Cryptography",
-    "Datastructures",
-    "Developmenttools",
-    "Encoding",
+    "Asynchronous",
+    "Debugging",
+    "Development tools",
+    "Logging",
+    "Tracing",
 ]
-description = "A Rust library for managing errors and exceptions"
+description = "A Rust library that implements application-level logging with a simple, readable output format."
 edition = "2018"
 homepage = "https://minifunctions.com/"
-keywords = ["idk", "error-handling", "error", "exception-handling", "failure"]
+keywords = [
+    "async",
+    "debugging",
+    "log",
+    "rlg",
+    "logging",
+    "logging",
+    "mini-functions",
+    "tracing",
+]
 license = "MIT OR Apache-2.0"
-name = "idk"
-repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/errors/"
+name = "rlg"
+repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/rlg/"
 rust-version = "1.66.1"
 version = "0.0.1"
 include = [
@@ -28,24 +37,20 @@ include = [
     "/tests/**",
 ]
 
+[[bench]]
+name = "rlg"
+harness = false
+path = "benches/rlg.rs"
+
 [dependencies]
-base64 = "0.21.0"
-hmac = "0.12.1"
-jsonwebtoken = "8.2.0"
-jwt = "0.16.0"
-once_cell = "1.17.0"
-serde = { version = "1.0.152", features = ["derive"] }
-# openssl = "0.10.45"
-serde_derive = "1.0.152"
-serde_json = "1.0.91"
-sha2 = "0.10.6"
+dtt = { path = "../dtt" }
 
 [dev-dependencies]
 criterion = "0.4.0"
 
 [lib]
 crate-type = ["lib"]
-name = "idk"
+name = "rlg"
 path = "src/lib.rs"
 
 [features]

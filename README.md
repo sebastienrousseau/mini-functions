@@ -121,7 +121,7 @@ application. The `mini-functions` library consists of the following
 | [![Errors][errors-badge]][12] | The **Error functions** are used to retrieve and manipulate information about errors. |
 | [![Hash][hash-badge]][12] | The **Hash functions** are used to retrieve and manipulate information about hashes. |
 | [![Jot][jot-badge]][12] | The **Jot functions** are used to retrieve and manipulate information about JSON Object Tokens (JOT). |
-| [![Logger][logger-badge]][12] | The **Logger functions** are used to retrieve and manipulate information about logging. |
+| [![rlg][rlg-badge]][12] | The **rlg functions** are used to retrieve and manipulate information about logging. |
 | [![MD5][md5-badge]][12] | The **MD5 functions** are used to retrieve and manipulate information about MD5. |
 | [![Password][password-badge]][12] | The **Password functions** are used to retrieve and manipulate information about passwords. |
 | [![QR][qr-badge]][12] | The **QR functions** are used to retrieve and manipulate information about QR codes. |
@@ -188,7 +188,7 @@ for their help and support.
 [errors-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-errors.png 'Errors'
 [hash-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-hash.png 'Hash'
 [jot-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-jot.png 'Jot'
-[logger-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-logger.png 'Logger'
+[rlg-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-rlg.png 'rlg'
 [md5-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-md5.png 'MD5'
 [password-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-password.png 'Password'
 [qr-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-qr.png 'QR'
