@@ -62,8 +62,8 @@
 //! ```rust
 //!
 //! // Import the Common libraries
-//! use self::common::Constants;
-//! use self::common::Words;
+//! use self::cmn::Constants;
+//! use self::cmn::Words;
 //!
 //! // Constants
 //! let constants = Constants.constants();

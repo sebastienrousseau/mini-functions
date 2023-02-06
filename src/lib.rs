@@ -36,7 +36,7 @@
 //! functions.
 //! - **[Jot](../jot/index.html)** - Provides access to JSON Web Token
 //! (JWT) functions.
-//! - **[Logger](../logger/index.html)** - Provides access to logging
+//! - **[rlg](../rlg/index.html)** - Provides access to logging
 //! functions.
 //! - **[MD5](../md5/index.html)** - Provides access to MD5 functions.
 //! - **[Password](../password/index.html)** - Provides access to
@@ -112,7 +112,7 @@ pub mod mini_functions {
     pub use jot::*;
 
     /// Provides access to Log functions.
-    pub use logger::*;
+    pub use rlg::*;
 
     /// Provides access to MD5 functions.
     pub use md5::*;

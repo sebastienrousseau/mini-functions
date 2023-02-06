@@ -1,6 +1,6 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-extern crate logger;
-use logger::*;
+extern crate rlg;
+use rlg::*;
 
 fn new_benchmark(c: &mut Criterion) {
     c.bench_function("new", |b| {
@@ -11,7 +11,7 @@ fn new_benchmark(c: &mut Criterion) {
                 &LogLevel::INFO,
                 "test",
                 "test log message",
-                &LogFormat::COMMON,
+                &LogFormat::CLF,
             );
             black_box(log);
         })

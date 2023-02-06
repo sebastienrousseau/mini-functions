@@ -1,14 +1,14 @@
 extern crate dtt;
-extern crate logger;
+extern crate rlg;
 
 use self::dtt::DateTime;
-use self::logger::{Log, LogFormat, LogLevel};
+use self::rlg::{Log, LogFormat, LogLevel};
 
 fn main() {
     let date = DateTime::new();
     let iso = date.iso_8601;
     let log_formats = vec![
-        LogFormat::COMMON,
+        LogFormat::CLF,
         LogFormat::JSON,
         LogFormat::CEF,
         LogFormat::ELF,

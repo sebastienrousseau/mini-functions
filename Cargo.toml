@@ -16,7 +16,7 @@ include = [
     "/jot/**",
     "/LICENSE-APACHE",
     "/LICENSE-MIT",
-    "/logger/**",
+    "/rlg/**",
     "/md5/**",
     "/pwd/**",
     "/qrc/**",
@@ -53,7 +53,7 @@ keywords = [
     "jwt",
     "libraries",
     "log",
-    "logger",
+    "rlg",
     "logging",
     "mini-functions",
     "pwd",
@@ -88,7 +88,7 @@ dtt = { path = "./dtt", version = "*" }
 idk = { path = "./idk", version = "*" }
 hsh = { path = "./hsh", version = "*" }
 jot = { path = "./jot", version = "*" }
-logger = { path = "./logger", version = "*" }
+rlg = { path = "./rlg", version = "*" }
 md5 = { path = "./md5", version = "*" }
 psph = { path = "./psph", version = "*" }
 qrc = { path = "./qrc", version = "*" }
@@ -104,7 +104,7 @@ members = [
     "idk",
     "hsh",
     "jot",
-    "logger",
+    "rlg",
     "md5",
     "psph",
     "qrc",
@@ -127,7 +127,7 @@ required-features = [
     "idk",
     "hsh",
     "jot",
-    "logger",
+    "rlg",
     "md5",
     "psph",
     "qrc",

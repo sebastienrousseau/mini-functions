@@ -4,12 +4,12 @@
 mod tests {
 
     extern crate dtt;
-    extern crate logger;
+    extern crate rlg;
 
     use self::dtt::DateTime;
-    use self::logger::LogLevel::ERROR;
-    use self::logger::{Log, LogFormat, LogLevel};
-    use logger::LogFormat::COMMON;
+    use self::rlg::LogLevel::ERROR;
+    use self::rlg::{Log, LogFormat, LogLevel};
+    use rlg::LogFormat::CLF;
 
     #[test]
     fn test_log_common_format() {
@@ -19,7 +19,7 @@ mod tests {
             &ERROR,
             "component_a",
             "description_a",
-            &COMMON,
+            &CLF,
         );
         let expected_output = "SessionID=session_id_123 Timestamp=2022-01-01T00:00:00Z Description=description_a Level=ERROR Component=component_a";
         assert_eq!(log.to_string(), expected_output);
@@ -34,7 +34,7 @@ mod tests {
             &LogLevel::INFO,
             "SystemTrayEvent",
             "Showing main window",
-            &LogFormat::COMMON,
+            &LogFormat::CLF,
         );
         log.log();
     }
@@ -47,7 +47,7 @@ mod tests {
             &LogLevel::INFO,
             "SystemTrayEvent",
             "Showing main window",
-            &LogFormat::COMMON,
+            &LogFormat::CLF,
         );
         log.log();
     }
@@ -60,7 +60,7 @@ mod tests {
             &LogLevel::INFO,
             "SystemTrayEvent",
             "Showing main window",
-            &LogFormat::COMMON,
+            &LogFormat::CLF,
         );
         log.log();
     }
@@ -73,7 +73,7 @@ mod tests {
             &LogLevel::INFO,
             "SystemTrayEvent",
             "Showing main window",
-            &LogFormat::COMMON,
+            &LogFormat::CLF,
         );
         log.log();
     }
@@ -86,7 +86,7 @@ mod tests {
             &LogLevel::INFO,
             "SystemTrayEvent",
             "Showing main window",
-            &LogFormat::COMMON,
+            &LogFormat::CLF,
         );
         log.log();
     }
@@ -107,7 +107,7 @@ mod tests {
             &LogLevel::ERROR,
             "Test",
             "This is a test log message",
-            &LogFormat::COMMON,
+            &LogFormat::CLF,
         );
         assert_eq!(
         log.to_string(),
@@ -132,7 +132,7 @@ mod tests {
             &LogLevel::ERROR,
             "Test",
             "This is a test log message",
-            &LogFormat::COMMON,
+            &LogFormat::CLF,
         );
         let log_string = format!("{log}");
         println!("{log_string}");
@@ -206,7 +206,7 @@ mod tests {
             &LogLevel::INFO,
             "test",
             "test log message",
-            &LogFormat::COMMON,
+            &LogFormat::CLF,
         );
         let expected_output = "SessionID=123 Timestamp=2023-01-23 14:04:09.881393 +00:00:00 Description=test log message Level=INFO Component=test";
         assert_eq!(log.to_string(), expected_output);
@@ -285,7 +285,7 @@ mod tests {
     #[test]
     fn test_log_format_display() {
         for (log_format, expected_output) in vec![
-            (LogFormat::COMMON, "COMMON"),
+            (LogFormat::CLF, "CLF"),
             (LogFormat::JSON, "JSON"),
             (LogFormat::CEF, "CEF"),
             (LogFormat::ELF, "ELF"),
