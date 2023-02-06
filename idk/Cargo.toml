@@ -7,7 +7,7 @@ categories = [
     "Developmenttools",
     "Encoding",
 ]
-description = "A Rust library for error handling and reporting in Mini Functions."
+description = "A Rust library for managing errors and exceptions"
 edition = "2018"
 homepage = "https://minifunctions.com/"
 keywords = ["idk", "error-handling", "error", "exception-handling", "failure"]
