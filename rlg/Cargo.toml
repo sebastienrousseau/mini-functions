@@ -10,16 +10,7 @@ categories = [
 description = "A Rust library that implements application-level logging with a simple, readable output format."
 edition = "2018"
 homepage = "https://minifunctions.com/"
-keywords = [
-    "async",
-    "debugging",
-    "log",
-    "rlg",
-    "logging",
-    "logging",
-    "mini-functions",
-    "tracing",
-]
+keywords = ["debugging", "log", "rlg", "logging", "tracing"]
 license = "MIT OR Apache-2.0"
 name = "rlg"
 repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/rlg/"
