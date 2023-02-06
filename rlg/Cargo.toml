@@ -43,7 +43,7 @@ harness = false
 path = "benches/rlg.rs"
 
 [dependencies]
-dtt = { path = "../dtt" }
+dtt = "0.0.1"
 
 [dev-dependencies]
 criterion = "0.4.0"
