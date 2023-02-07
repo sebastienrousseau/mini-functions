@@ -4,16 +4,7 @@ categories = ["cryptography", "encoding", "algorithms"]
 description = "A Rust library that implements the MD5 cryptographic hash function"
 edition = "2018"
 homepage = "https://minifunctions.com/"
-keywords = [
-    "checksum",
-    "crypto",
-    "cryptography",
-    "digest",
-    "encryption",
-    "hash",
-    "mdg",
-    "mini-functions",
-]
+keywords = ["md5", "mdg", "digest", "encryption", "hash"]
 license = "MIT OR Apache-2.0"
 name = "mdg"
 repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/mdg/"
@@ -38,7 +29,7 @@ path = "benches/mdg.rs"
 
 [dependencies]
 claims = { path = "../claims" }
-jot = { path = "../jot" }
+cjwt = { path = "../cjwt" }
 
 [dev-dependencies]
 criterion = "0.4.0"

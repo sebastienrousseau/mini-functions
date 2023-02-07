@@ -34,7 +34,7 @@
 //! handling functions.
 //! - **[Hash](../hash/index.html)** - Provides access to hash
 //! functions.
-//! - **[Jot](../jot/index.html)** - Provides access to JSON Web Token
+//! - **[Jot](../cjwt/index.html)** - Provides access to JSON Web Token
 //! (JWT) functions.
 //! - **[rlg](../rlg/index.html)** - Provides access to logging
 //! functions.
@@ -109,7 +109,7 @@ pub mod mini_functions {
     pub use hsh::*;
 
     /// Provides access to JSON Web Token (JWT) functions.
-    pub use jot::*;
+    pub use cjwt::*;
 
     /// Provides access to Log functions.
     pub use rlg::*;

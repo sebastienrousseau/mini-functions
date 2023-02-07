@@ -2,8 +2,8 @@ extern crate criterion;
 use claims::Claims;
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
-extern crate jot;
-use self::jot::{Algorithm, Header, JWT};
+extern crate cjwt;
+use self::cjwt::{Algorithm, Header, JWT};
 
 fn bench_to_string_benchmark(c: &mut Criterion) {
     let jwt = JWT::default();

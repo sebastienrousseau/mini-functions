@@ -120,7 +120,7 @@ application. The `mini-functions` library consists of the following
 | [![Date][date-badge]][12] | The **Date and time functions** are used to retrieve and manipulate information about dates and times. |
 | [![Errors][errors-badge]][12] | The **Error functions** are used to retrieve and manipulate information about errors. |
 | [![Hash][hash-badge]][12] | The **Hash functions** are used to retrieve and manipulate information about hashes. |
-| [![Jot][jot-badge]][12] | The **Jot functions** are used to retrieve and manipulate information about JSON Object Tokens (JOT). |
+| [![Jot][cjwt-badge]][12] | The **Jot functions** are used to retrieve and manipulate information about JSON Object Tokens (JOT). |
 | [![rlg][rlg-badge]][12] | The **rlg functions** are used to retrieve and manipulate information about logging. |
 | [![MD5][mdg-badge]][12] | The **MD5 functions** are used to retrieve and manipulate information about MD5. |
 | [![Password][password-badge]][12] | The **Password functions** are used to retrieve and manipulate information about passwords. |
@@ -187,7 +187,7 @@ for their help and support.
 [date-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-date.png 'Date'
 [errors-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-errors.png 'Errors'
 [hash-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-hash.png 'Hash'
-[jot-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-jot.png 'Jot'
+[cjwt-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-cjwt.png 'Jot'
 [rlg-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-rlg.png 'rlg'
 [mdg-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-mdg.png 'MD5'
 [password-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-password.png 'Password'

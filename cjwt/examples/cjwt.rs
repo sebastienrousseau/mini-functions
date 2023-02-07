@@ -1,7 +1,7 @@
-extern crate jot;
+extern crate cjwt;
 extern crate jwt;
 
-use self::jot::{Algorithm, Header, JWT};
+use self::cjwt::{Algorithm, Header, JWT};
 use claims::Claims;
 
 fn main() {

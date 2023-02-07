@@ -13,7 +13,7 @@ homepage = "https://minifunctions.com/"
 keywords = [
     "api",
     "deserialization",
-    "jot",
+    "cjwt",
     "json",
     "jws",
     "jwt",
@@ -23,8 +23,8 @@ keywords = [
     "unmarshalling",
 ]
 license = "MIT OR Apache-2.0"
-name = "jot"
-repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/jot/"
+name = "cjwt"
+repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/cjwt/"
 rust-version = "1.66.1"
 version = "0.0.1"
 include = [
@@ -40,9 +40,9 @@ include = [
 ]
 
 [[bench]]
-name = "jot"
+name = "cjwt"
 harness = false
-path = "benches/jot.rs"
+path = "benches/cjwt.rs"
 
 [dependencies]
 base64 = "0.21.0"
@@ -63,7 +63,7 @@ criterion = "0.4.0"
 
 [lib]
 crate-type = ["lib"]
-name = "jot"
+name = "cjwt"
 path = "src/lib.rs"
 
 [features]

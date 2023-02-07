@@ -4,7 +4,7 @@
 //!
 //! # A Rust library for working with JSON Web Tokens (JWTs) and JSON Web Signatures (JWSs)
 //!
-//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-jot.svg)](https://minifunctions.com)
+//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-cjwt.svg)](https://minifunctions.com)
 //!
 //! <center>
 //!
@@ -40,11 +40,11 @@
 #![forbid(unsafe_code)]
 #![warn(unreachable_pub)]
 #![doc(
-    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-jot.svg",
-    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-jot.svg",
+    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-cjwt.svg",
+    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-cjwt.svg",
     html_root_url = "https://docs.rs/mini-functions"
 )]
-#![crate_name = "jot"]
+#![crate_name = "cjwt"]
 #![crate_type = "lib"]
 
 extern crate base64;

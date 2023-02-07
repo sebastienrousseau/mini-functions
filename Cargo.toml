@@ -13,7 +13,7 @@ include = [
     "/dtt/**",
     "/idk/**",
     "/hsh/**",
-    "/jot/**",
+    "/cjwt/**",
     "/LICENSE-APACHE",
     "/LICENSE-MIT",
     "/rlg/**",
@@ -48,7 +48,7 @@ keywords = [
     "hash",
     "hashing",
     "helper",
-    "jot",
+    "cjwt",
     "json",
     "jwt",
     "libraries",
@@ -87,7 +87,7 @@ cmn = { path = "./cmn", version = "*" }
 dtt = { path = "./dtt", version = "*" }
 idk = { path = "./idk", version = "*" }
 hsh = { path = "./hsh", version = "*" }
-jot = { path = "./jot", version = "*" }
+cjwt = { path = "./cjwt", version = "*" }
 rlg = { path = "./rlg", version = "*" }
 mdg = { path = "./mdg", version = "*" }
 psph = { path = "./psph", version = "*" }
@@ -103,7 +103,7 @@ members = [
     "dtt",
     "idk",
     "hsh",
-    "jot",
+    "cjwt",
     "rlg",
     "mdg",
     "psph",
@@ -126,7 +126,7 @@ required-features = [
     "dtt",
     "idk",
     "hsh",
-    "jot",
+    "cjwt",
     "rlg",
     "mdg",
     "psph",
