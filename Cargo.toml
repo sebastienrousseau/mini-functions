@@ -78,7 +78,7 @@ license = "Apache-2.0 OR MIT"
 name = "mini-functions"
 readme = "README.md"
 repository = "https://github.com/sebastienrousseau/mini-functions.git"
-rust-version = "1.67.0"
+rust-version = "1.67"
 version = "0.0.8"
 
 [dependencies]
@@ -101,7 +101,7 @@ members = [
     "claims",
     "cmn",
     "dtt",
-    "idk",  
+    "idk",
     "hsh",
     "cjwt",
     "rlg",
@@ -112,7 +112,7 @@ members = [
 ] # List of workspace members
 
 [workspace.package]
-rust-version = "1.67.0"
+rust-version = "1.67"
 
 [badges]
 maintenance = { status = "actively-developed" }

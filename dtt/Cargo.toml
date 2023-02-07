@@ -1,6 +1,6 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
-categories = ["Date and time"]
+categories = ["date-and-time"]
 description = "A Rust library for parsing, validating, manipulating, and formatting dates and times."
 edition = "2021"
 homepage = "https://minifunctions.com/"
@@ -8,7 +8,7 @@ keywords = ["dtt", "date", "datetime", "time", "timezone"]
 license = "MIT OR Apache-2.0"
 name = "dtt"
 repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/dtt/"
-rust-version = "1.67.0"
+rust-version = "1.67"
 version = "0.0.1"
 include = [
     "../../LICENSE-APACHE",

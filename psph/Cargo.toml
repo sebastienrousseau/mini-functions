@@ -1,11 +1,11 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 categories = [
-    "Algorithms",
-    "Cryptography",
-    "Development tools",
-    "Security",
-    "Utilities",
+    "algorithms",
+    "cryptography",
+    "data-structures",
+    "development-tools",
+    "security",
 ]
 description = "A Rust library for generating random passwords and passphrases"
 edition = "2021"

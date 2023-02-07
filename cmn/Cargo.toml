@@ -1,6 +1,12 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
-categories = ["Configuration"]
+categories = [
+    "config",
+    "cryptography",
+    "mathematics",
+    "data-structures",
+    "development-tools",
+]
 description = "A Rust library for accessing a collection of mathematical and cryptographic constants"
 edition = "2021"
 homepage = "https://minifunctions.com/"
@@ -8,7 +14,7 @@ keywords = ["cmn", "common", "config", "configurations", "constants"]
 license = "MIT OR Apache-2.0"
 name = "cmn"
 repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/cmn/"
-rust-version = "1.67.0"
+rust-version = "1.67"
 version = "0.0.1"
 include = [
     "../../LICENSE-APACHE",

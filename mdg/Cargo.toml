@@ -8,7 +8,7 @@ keywords = ["md5", "mdg", "digest", "encryption", "hash"]
 license = "MIT OR Apache-2.0"
 name = "mdg"
 repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/mdg/"
-rust-version = "1.67.0"
+rust-version = "1.67"
 version = "0.0.1"
 include = [
     "../../LICENSE-APACHE",

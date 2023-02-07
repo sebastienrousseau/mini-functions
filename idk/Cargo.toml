@@ -1,11 +1,11 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 categories = [
-    "Authentication",
-    "Cryptography",
-    "Datastructures",
-    "Developmenttools",
-    "Encoding",
+    "authentication",
+    "cryptography",
+    "data-structures",
+    "development-tools",
+    "encoding",
 ]
 description = "A Rust library for managing errors and exceptions"
 edition = "2021"

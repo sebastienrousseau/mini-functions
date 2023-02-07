@@ -14,7 +14,7 @@ keywords = ["authorization", "claims", "mini-functions", "security", "token"]
 license = "MIT OR Apache-2.0"
 name = "claims"
 repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/claims/"
-rust-version = "1.67.0"
+rust-version = "1.67"
 version = "0.0.1"
 include = [
     "../../LICENSE-APACHE",

@@ -1,11 +1,10 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 categories = [
-    "Asynchronous",
-    "Debugging",
-    "Development tools",
-    "Logging",
-    "Tracing",
+    "asynchronous",
+    "development-tools::debugging",
+    "development-tools",
+    "data-structures",
 ]
 description = "A Rust library that implements application-level logging with a simple, readable output format."
 edition = "2021"

@@ -1,6 +1,6 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
-categories = ["Algorithms", "Data structures", "Cryptography"]
+categories = ["algorithms", "data-structures", "cryptography"]
 description = "A Cryptographic Hash Algorithms Library for Rust"
 edition = "2021"
 homepage = "https://minifunctions.com/"
