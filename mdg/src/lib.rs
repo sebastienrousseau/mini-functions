@@ -213,10 +213,11 @@ impl MD5 {
         }
 
         // Update the number of bits
-        self.count[0] += nbits;
+        self.count[0] = self.count[0].wrapping_add(nbits);
         if self.count[0] < nbits {
             self.count[1] += 1;
         }
+
         self.count[1] += (nbytes >> 29) as u32;
 
         let part_len = BLOCK_LENGTH - offset;
@@ -230,7 +231,7 @@ impl MD5 {
 
             while i < nbytes - part_len {
                 if nbytes - i >= 64 {
-                    let buf = self.buffer[i..i + 64].to_vec();
+                    let buf = self.buffer[i..i + part_len].to_vec();
                     self.transform(&buf);
                     i += 64;
                 } else {

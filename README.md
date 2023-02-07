@@ -1,7 +1,5 @@
 # Mini Functions 🦀
 
-[![Made With Love][mwl]][6]
-
 <!-- markdownlint-disable MD033 -->
 <center>
 
@@ -120,7 +118,7 @@ application. The `mini-functions` library consists of the following
 | [![Date][date-badge]][12] | The **Date and time functions** are used to retrieve and manipulate information about dates and times. |
 | [![Errors][errors-badge]][12] | The **Error functions** are used to retrieve and manipulate information about errors. |
 | [![Hash][hash-badge]][12] | The **Hash functions** are used to retrieve and manipulate information about hashes. |
-| [![Jot][jot-badge]][12] | The **Jot functions** are used to retrieve and manipulate information about JSON Object Tokens (JOT). |
+| [![Jot][cjwt-badge]][12] | The **Jot functions** are used to retrieve and manipulate information about JSON Object Tokens (JOT). |
 | [![rlg][rlg-badge]][12] | The **rlg functions** are used to retrieve and manipulate information about logging. |
 | [![MD5][mdg-badge]][12] | The **MD5 functions** are used to retrieve and manipulate information about MD5. |
 | [![Password][password-badge]][12] | The **Password functions** are used to retrieve and manipulate information about passwords. |
@@ -155,7 +153,9 @@ or conditions.
 ## Acknowledgements 💙
 
 A big thank you to all the awesome contributors of [Mini Functions][6]
-for their help and support.
+for their help and support. A special thank you goes to the
+[Rust Reddit](https://www.reddit.com/r/rust/) community for providing a
+lot of useful suggestions on how to improve this project.
 
 [0]: https://minifunctions.com
 [1]: http://www.apache.org/licenses/LICENSE-2.0
@@ -179,7 +179,6 @@ for their help and support.
 [libs-badge]: https://img.shields.io/badge/lib.rs-v0.0.8-orange.svg?style=for-the-badge 'Lib.rs'
 [license-badge]: https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge 'License'
 [rust-badge]: https://img.shields.io/badge/rust-f04041?style=for-the-badge&labelColor=c0282d&logo=rust 'Rust'
-[mwl]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg "Made With Love"
 [fossa-badge]: https://img.shields.io/static/v1?style=for-the-badge&message=Fossa&color=289E6D&logo=Fossa&logoColor=FFFFFF&label= 'Fossa'
 
 [claims-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-claims.png 'Claims'
@@ -187,7 +186,7 @@ for their help and support.
 [date-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-date.png 'Date'
 [errors-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-errors.png 'Errors'
 [hash-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-hash.png 'Hash'
-[jot-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-jot.png 'Jot'
+[cjwt-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-cjwt.png 'Jot'
 [rlg-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-rlg.png 'rlg'
 [mdg-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-mdg.png 'MD5'
 [password-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-password.png 'Password'

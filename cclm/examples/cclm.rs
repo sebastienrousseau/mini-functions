@@ -1,5 +1,5 @@
-extern crate claims;
-use self::claims::Claims;
+extern crate cclm;
+use self::cclm::Claims;
 
 fn main() {
     // Create a new instance of Claims

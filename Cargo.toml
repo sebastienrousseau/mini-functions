@@ -8,12 +8,12 @@ homepage = "https://minifunctions.com"
 include = [
     "/build.rs",
     "/Cargo.toml",
-    "/claims/**",
+    "/cclm/**",
     "/cmn/**",
     "/dtt/**",
     "/idk/**",
     "/hsh/**",
-    "/jot/**",
+    "/cjwt/**",
     "/LICENSE-APACHE",
     "/LICENSE-MIT",
     "/rlg/**",
@@ -28,7 +28,7 @@ include = [
 keywords = [
     "barcode",
     "checksum",
-    "claims",
+    "cclm",
     "cryptography",
     "cmn",
     "dtt",
@@ -48,7 +48,7 @@ keywords = [
     "hash",
     "hashing",
     "helper",
-    "jot",
+    "cjwt",
     "json",
     "jwt",
     "libraries",
@@ -78,16 +78,16 @@ license = "Apache-2.0 OR MIT"
 name = "mini-functions"
 readme = "README.md"
 repository = "https://github.com/sebastienrousseau/mini-functions.git"
-rust-version = "1.67.0"
+rust-version = "1.67"
 version = "0.0.8"
 
 [dependencies]
-claims = { path = "./claims", version = "*" }
+cclm = { path = "./cclm", version = "*" }
 cmn = { path = "./cmn", version = "*" }
 dtt = { path = "./dtt", version = "*" }
 idk = { path = "./idk", version = "*" }
 hsh = { path = "./hsh", version = "*" }
-jot = { path = "./jot", version = "*" }
+cjwt = { path = "./cjwt", version = "*" }
 rlg = { path = "./rlg", version = "*" }
 mdg = { path = "./mdg", version = "*" }
 psph = { path = "./psph", version = "*" }
@@ -98,12 +98,12 @@ vrd = { path = "./vrd", version = "*" }
 exclude = ["src"]
 resolver = "2"
 members = [
-    "claims",
+    "cclm",
     "cmn",
     "dtt",
     "idk",
     "hsh",
-    "jot",
+    "cjwt",
     "rlg",
     "mdg",
     "psph",
@@ -112,7 +112,7 @@ members = [
 ] # List of workspace members
 
 [workspace.package]
-rust-version = "1.67.0"
+rust-version = "1.67"
 
 [badges]
 maintenance = { status = "actively-developed" }
@@ -121,12 +121,12 @@ maintenance = { status = "actively-developed" }
 crate-type = ["lib"]
 path = "src/lib.rs"
 required-features = [
-    "claims",
+    "cclm",
     "cmn",
     "dtt",
     "idk",
     "hsh",
-    "jot",
+    "cjwt",
     "rlg",
     "mdg",
     "psph",

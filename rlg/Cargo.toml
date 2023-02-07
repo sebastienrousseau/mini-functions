@@ -1,14 +1,13 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 categories = [
-    "Asynchronous",
-    "Debugging",
-    "Development tools",
-    "Logging",
-    "Tracing",
+    "asynchronous",
+    "development-tools::debugging",
+    "development-tools",
+    "data-structures",
 ]
 description = "A Rust library that implements application-level logging with a simple, readable output format."
-edition = "2018"
+edition = "2021"
 homepage = "https://minifunctions.com/"
 keywords = ["debugging", "log", "rlg", "logging", "tracing"]
 license = "MIT OR Apache-2.0"

@@ -1,4 +1,4 @@
-[![Made With Love][mwl]][6]
+# Mini Functions 🦀
 
 <!-- markdownlint-disable MD033 -->
 <center>
@@ -100,7 +100,6 @@ A big thank you to all the awesome contributors of [Mini Functions][4] for their
 [2]: http://opensource.org/licenses/MIT
 [3]: https://github.com/sebastienrousseau/mini-functions/issues
 [4]: https://raw.githubusercontent.com/sebastienrousseau/mini-functions/main/.github/CONTRIBUTING.md
-[6]: https://github.com/sebastienrousseau/mini-functions/graphs/contributors
 [8]: https://crates.io/crates/mini-functions
 [9]: https://docs.rs/mini-functions
 [10]: https://lib.rs/crates/mini-functions
@@ -113,4 +112,3 @@ A big thank you to all the awesome contributors of [Mini Functions][4] for their
 [libs-badge]: https://img.shields.io/badge/lib.rs-v0.0.8-orange.svg?style=for-the-badge 'Lib.rs'
 [license-badge]: https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge 'License'
 [made-with-rust-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-rust.svg "Made With Rust 🦀"
-[mwl]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg "Made With Love"

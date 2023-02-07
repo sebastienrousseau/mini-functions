@@ -1,14 +1,14 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 categories = [
-    "Algorithms",
-    "Cryptography",
-    "Development Tools",
-    "Encoding",
-    "Security",
+    "algorithms",
+    "cryptography",
+    "data-structures",
+    "development-tools",
+    "encoding",
 ]
 description = "A Rust library for generating random and pseudo-random numbers based on the Mersenne Twister algorithm"
-edition = "2018"
+edition = "2021"
 homepage = "https://minifunctions.com/"
 keywords = ["entropy", "vrd", "rand", "random-number", "random"]
 license = "MIT OR Apache-2.0"

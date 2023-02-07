@@ -1,14 +1,14 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 categories = [
-    "Algorithms",
-    "Cryptography",
-    "Development tools",
-    "Security",
-    "Utilities",
+    "algorithms",
+    "cryptography",
+    "data-structures",
+    "development-tools",
+    "security",
 ]
 description = "A Rust library for generating random passwords and passphrases"
-edition = "2018"
+edition = "2021"
 homepage = "https://minifunctions.com/"
 keywords = ["passphrase", "password", "psph", "pwd", "security"]
 license = "MIT OR Apache-2.0"

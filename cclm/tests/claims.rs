@@ -2,10 +2,10 @@
 
 mod tests {
 
-    extern crate claims;
+    extern crate cclm;
     extern crate dtt;
 
-    use self::claims::Claims;
+    use self::cclm::Claims;
     use self::dtt::DateTime;
 
     #[test]
