@@ -82,32 +82,32 @@ rust-version = "1.67"
 version = "0.0.8"
 
 [dependencies]
-cclm = { path = "./cclm", version = "*" }
-cmn = { path = "./cmn", version = "*" }
-dtt = { path = "./dtt", version = "*" }
-idk = { path = "./idk", version = "*" }
-hsh = { path = "./hsh", version = "*" }
-cjwt = { path = "./cjwt", version = "*" }
-rlg = { path = "./rlg", version = "*" }
-mdg = { path = "./mdg", version = "*" }
-psph = { path = "./psph", version = "*" }
-qrc = { path = "./qrc", version = "*" }
-vrd = { path = "./vrd", version = "*" }
+cclm = "0.0.1"
+cjwt = "0.0.1"
+cmn = "0.0.1"
+dtt = "0.0.1"
+hsh = "0.0.1"
+idk = "0.0.1"
+mdg = "0.0.1"
+psph = "0.0.1"
+qrc = "0.0.2"
+rlg = "0.0.1"
+vrd = "0.0.1"
 
 [workspace]
 exclude = ["src"]
 resolver = "2"
 members = [
     "cclm",
+    "cjwt",
     "cmn",
     "dtt",
-    "idk",
     "hsh",
-    "cjwt",
-    "rlg",
+    "idk",
     "mdg",
     "psph",
     "qrc",
+    "rlg",
     "vrd",
 ] # List of workspace members
 
