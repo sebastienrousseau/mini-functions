@@ -8,7 +8,7 @@ categories = [
     "Encoding",
 ]
 description = "A Rust library for managing errors and exceptions"
-edition = "2018"
+edition = "2021"
 homepage = "https://minifunctions.com/"
 keywords = ["idk", "error-handling", "error", "exception-handling", "failure"]
 license = "MIT OR Apache-2.0"

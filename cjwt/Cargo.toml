@@ -8,7 +8,7 @@ categories = [
     "Web programming",
 ]
 description = "A Rust library for working with JSON Web Tokens (JWTs) and JSON Web Signatures (JWSs)"
-edition = "2018"
+edition = "2021"
 homepage = "https://minifunctions.com/"
 keywords = ["api", "cjwt", "json", "jws", "jwt"]
 license = "MIT OR Apache-2.0"

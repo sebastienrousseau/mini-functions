@@ -2,7 +2,7 @@
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 categories = ["Algorithms", "Data structures", "Cryptography"]
 description = "A Cryptographic Hash Algorithms Library for Rust"
-edition = "2018"
+edition = "2021"
 homepage = "https://minifunctions.com/"
 keywords = ["blake3", "hsh", "hash", "hasher", "mini-functions"]
 license = "MIT OR Apache-2.0"

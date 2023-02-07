@@ -8,7 +8,7 @@ categories = [
     "Webprogramming",
 ]
 description = "The `Claims` library holds JSON Web Token (JWT) claims. It provides an RFC7519 compliant implementation of JSON Web Tokens (JWT) and JSON Web Signature (JWS) for Rust."
-edition = "2018"
+edition = "2021"
 homepage = "https://minifunctions.com/"
 keywords = ["authorization", "claims", "mini-functions", "security", "token"]
 license = "MIT OR Apache-2.0"

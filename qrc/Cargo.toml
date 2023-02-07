@@ -1,6 +1,6 @@
 [package]
 name = "qrc"
-edition = "2018"
+edition = "2021"
 rust-version = "1.66.1"
 version = "0.0.2"
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]

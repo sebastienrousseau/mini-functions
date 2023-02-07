@@ -2,7 +2,7 @@
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 categories = ["Configuration"]
 description = "A Rust library for accessing a collection of mathematical and cryptographic constants"
-edition = "2018"
+edition = "2021"
 homepage = "https://minifunctions.com/"
 keywords = ["cmn", "common", "config", "configurations", "constants"]
 license = "MIT OR Apache-2.0"

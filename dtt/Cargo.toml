@@ -2,7 +2,7 @@
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 categories = ["Date and time"]
 description = "A Rust library for parsing, validating, manipulating, and formatting dates and times."
-edition = "2018"
+edition = "2021"
 homepage = "https://minifunctions.com/"
 keywords = ["dtt", "date", "datetime", "time", "timezone"]
 license = "MIT OR Apache-2.0"

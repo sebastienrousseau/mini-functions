@@ -2,7 +2,7 @@
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 categories = ["cryptography", "encoding", "algorithms"]
 description = "A Rust library that implements the MD5 cryptographic hash function"
-edition = "2018"
+edition = "2021"
 homepage = "https://minifunctions.com/"
 keywords = ["md5", "mdg", "digest", "encryption", "hash"]
 license = "MIT OR Apache-2.0"
