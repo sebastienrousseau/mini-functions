@@ -1,7 +1,5 @@
 # Mini Functions 🦀
 
-[![Made With Love][made-with-rust]][6]
-
 <!-- markdownlint-disable MD033 -->
 <center>
 
