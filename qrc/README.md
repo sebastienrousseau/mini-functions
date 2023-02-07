@@ -2,7 +2,7 @@
 
 The QR Code Library for Rust 🦀
 
-[![Made With Love][mwl]][6]
+[![Made With Love][made-with-rust]][6]
 [![Crates.io][crates-badge]][8]
 [![Lib.rs][libs-badge]][10]
 [![Docs.rs][docs-badge]][9]
@@ -144,4 +144,4 @@ lot of useful suggestions on how to improve this project.
 [docs-badge]: https://img.shields.io/docsrs/qrc.svg?style=for-the-badge 'Docs.rs'
 [libs-badge]: https://img.shields.io/badge/lib.rs-v0.0.2-orange.svg?style=for-the-badge 'Lib.rs'
 [license-badge]: https://img.shields.io/crates/l/qrc.svg?style=for-the-badge 'License'
-[mwl]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg "Made With Love"
+[made-with-rust]: https://img.shields.io/badge/Made%20with-Rust-c0282d.svg?style=for-the-badge&color=f04041 'Made With Rust'

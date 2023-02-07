@@ -1,4 +1,4 @@
-[![Made With Love][mwl]][6]
+[![Made With Love][made-with-rust]][6]
 
 <!-- markdownlint-disable MD033 -->
 <center>
@@ -113,4 +113,3 @@ A big thank you to all the awesome contributors of [Mini Functions][4] for their
 [libs-badge]: https://img.shields.io/badge/lib.rs-v0.0.8-orange.svg?style=for-the-badge 'Lib.rs'
 [license-badge]: https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge 'License'
 [made-with-rust-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-rust.svg "Made With Rust 🦀"
-[mwl]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg "Made With Love"

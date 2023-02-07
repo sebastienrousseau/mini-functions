@@ -1,6 +1,6 @@
 # Mini Functions 🦀
 
-[![Made With Love][mwl]][6]
+[![Made With Love][made-with-rust]][6]
 
 <!-- markdownlint-disable MD033 -->
 <center>
@@ -181,7 +181,6 @@ lot of useful suggestions on how to improve this project.
 [libs-badge]: https://img.shields.io/badge/lib.rs-v0.0.8-orange.svg?style=for-the-badge 'Lib.rs'
 [license-badge]: https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge 'License'
 [rust-badge]: https://img.shields.io/badge/rust-f04041?style=for-the-badge&labelColor=c0282d&logo=rust 'Rust'
-[mwl]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/shields/made-with-love.svg "Made With Love"
 [fossa-badge]: https://img.shields.io/static/v1?style=for-the-badge&message=Fossa&color=289E6D&logo=Fossa&logoColor=FFFFFF&label= 'Fossa'
 
 [claims-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-claims.png 'Claims'
