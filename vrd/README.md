@@ -30,7 +30,7 @@ the Mersenne Twister algorithm
 
 ## Overview 📖
 
-The Random (VRD) library is an implementation of a pseudorandom number
+The Varied (VRD) library is an implementation of a pseudorandom number
 generator using the Mersenne Twister algorithm.
 
 The library generates random integers uniformly distributed in the range

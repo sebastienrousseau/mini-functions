@@ -55,17 +55,17 @@ impl Digest for MD5 {
     fn hexdigest_file(path: &str) -> String {
         let mut file = File::open(path).expect("Couldn't open file");
         let mut buffer = [0; 1024];
-        let mut md5 = Self::new();
+        let mut mdg = Self::new();
 
         loop {
             let nbytes = file.read(&mut buffer).expect("Couldn't read file");
             if nbytes == 0 {
                 break;
             }
-            md5.update_with_len(&buffer, nbytes);
+            mdg.update_with_len(&buffer, nbytes);
         }
 
-        md5.finalize().to_string()
+        mdg.finalize().to_string()
     }
     /// Reset the internal state of the MD5 object and update it with new data from a file.
     fn reset_file(&mut self, path: &str) -> &mut Self {

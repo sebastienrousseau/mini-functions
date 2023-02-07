@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
-    extern crate md5;
-    use self::md5::constants::{
+    extern crate mdg;
+    use self::mdg::constants::{
         BLOCK_LENGTH, DIGEST_LENGTH, INITIAL_STATE, PADDING, SHIFTS, T_VALUES,
     };
 

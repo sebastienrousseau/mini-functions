@@ -17,7 +17,7 @@ include = [
     "/LICENSE-APACHE",
     "/LICENSE-MIT",
     "/rlg/**",
-    "/md5/**",
+    "/mdg/**",
     "/pwd/**",
     "/qrc/**",
     "/vrd/**",
@@ -89,7 +89,7 @@ idk = { path = "./idk", version = "*" }
 hsh = { path = "./hsh", version = "*" }
 jot = { path = "./jot", version = "*" }
 rlg = { path = "./rlg", version = "*" }
-md5 = { path = "./md5", version = "*" }
+mdg = { path = "./mdg", version = "*" }
 psph = { path = "./psph", version = "*" }
 qrc = { path = "./qrc", version = "*" }
 vrd = { path = "./vrd", version = "*" }
@@ -105,7 +105,7 @@ members = [
     "hsh",
     "jot",
     "rlg",
-    "md5",
+    "mdg",
     "psph",
     "qrc",
     "vrd",
@@ -128,7 +128,7 @@ required-features = [
     "hsh",
     "jot",
     "rlg",
-    "md5",
+    "mdg",
     "psph",
     "qrc",
     "vrd",

@@ -122,7 +122,7 @@ application. The `mini-functions` library consists of the following
 | [![Hash][hash-badge]][12] | The **Hash functions** are used to retrieve and manipulate information about hashes. |
 | [![Jot][jot-badge]][12] | The **Jot functions** are used to retrieve and manipulate information about JSON Object Tokens (JOT). |
 | [![rlg][rlg-badge]][12] | The **rlg functions** are used to retrieve and manipulate information about logging. |
-| [![MD5][md5-badge]][12] | The **MD5 functions** are used to retrieve and manipulate information about MD5. |
+| [![MD5][mdg-badge]][12] | The **MD5 functions** are used to retrieve and manipulate information about MD5. |
 | [![Password][password-badge]][12] | The **Password functions** are used to retrieve and manipulate information about passwords. |
 | [![QR][qr-badge]][12] | The **QR functions** are used to retrieve and manipulate information about QR codes. |
 | [![Random][random-badge]][12] | The **Random functions** are used to retrieve and manipulate information about random data. |
@@ -189,7 +189,7 @@ for their help and support.
 [hash-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-hash.png 'Hash'
 [jot-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-jot.png 'Jot'
 [rlg-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-rlg.png 'rlg'
-[md5-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-md5.png 'MD5'
+[mdg-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-mdg.png 'MD5'
 [password-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-password.png 'Password'
 [qr-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-qr.png 'QR'
 [random-badge]: https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/png/ico-random.png 'Random'
