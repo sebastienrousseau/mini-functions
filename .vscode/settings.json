@@ -14,6 +14,7 @@
         "cdylib",
         "ceee",
         "certutil",
+        "cjwt",
         "clippy",
         "commitish",
         "congruential",
