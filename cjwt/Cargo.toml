@@ -35,9 +35,9 @@ path = "benches/cjwt.rs"
 
 [dependencies]
 base64 = "0.21.0"
-cclm = { path = "../cclm", version = "*" }
-dtt = { path = "../dtt", version = "*" }
-idk = { path = "../idk", version = "*" }
+cclm = "0.0.1"
+dtt = "0.0.1"
+idk = "0.0.1"
 hmac = "0.12.1"
 jsonwebtoken = "8.2.0"
 jwt = "0.16.0"
