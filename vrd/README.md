@@ -138,7 +138,9 @@ or conditions.
 ## Acknowledgements 💙
 
 A big thank you to all the awesome contributors of [Mini Functions][6]
-for their help and support.
+for their help and support. A special thank you goes to the
+[Rust Reddit](https://www.reddit.com/r/rust/) community for providing a
+lot of useful suggestions on how to improve this project.
 
 [0]: https://minifunctions.com
 [1]: http://www.apache.org/licenses/LICENSE-2.0

@@ -18,7 +18,7 @@
 //!
 //! ## Overview
 //!
-//! JOT is a struct that holds the JWT token and its associated claims. It provides a set of utility functions for working with JSON Web Tokens (JWTs) and JSON Web Signatures (JWSs).
+//! Core JWT (CJWT) is a struct that holds the JWT token and its associated claims. It provides a set of utility functions for working with JSON Web Tokens (JWTs) and JSON Web Signatures (JWSs).
 //!
 //! ## Features
 //!
