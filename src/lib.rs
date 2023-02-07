@@ -38,7 +38,7 @@
 //! (JWT) functions.
 //! - **[rlg](../rlg/index.html)** - Provides access to logging
 //! functions.
-//! - **[MD5](../md5/index.html)** - Provides access to MD5 functions.
+//! - **[MD5](../mdg/index.html)** - Provides access to MD5 functions.
 //! - **[Password](../password/index.html)** - Provides access to
 //! password functions.
 //! - **[QR](../qr/index.html)** - Provides access to QR code functions.
@@ -115,7 +115,7 @@ pub mod mini_functions {
     pub use rlg::*;
 
     /// Provides access to MD5 functions.
-    pub use md5::*;
+    pub use mdg::*;
 
     /// Provides access to QR code functions.
     pub use qrc::*;

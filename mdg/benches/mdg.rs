@@ -1,18 +1,18 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-extern crate md5;
-use md5::*;
+extern crate mdg;
+use mdg::*;
 
 pub const BLOCK_LENGTH: usize = 64;
 
 fn finalize_benchmark(c: &mut Criterion) {
     c.bench_function("finalize", |b| {
-        let mut md5 = MD5::new();
+        let mut mdg = MD5::new();
         let data = vec![0u8; BLOCK_LENGTH];
-        md5.update(&data);
+        mdg.update(&data);
 
         b.iter(|| {
-            md5.finalize();
-            // md5.digest;
+            mdg.finalize();
+            // mdg.digest;
         });
     });
 }
@@ -24,57 +24,57 @@ fn new_benchmark(c: &mut Criterion) {
 }
 
 fn transform_benchmark(c: &mut Criterion) {
-    let mut md5 = MD5::new();
+    let mut mdg = MD5::new();
     let data = vec![0u8; BLOCK_LENGTH];
 
     c.bench_function("transform", |b| {
         b.iter(|| {
-            md5.transform(black_box(&data));
+            mdg.transform(black_box(&data));
         });
     });
 }
 
 fn update_with_len_benchmark(c: &mut Criterion) {
-    let mut md5 = MD5::new();
+    let mut mdg = MD5::new();
     let data = vec![0u8; BLOCK_LENGTH];
     let nbytes = Some(BLOCK_LENGTH);
 
     c.bench_function("update_with_len", |b| {
         b.iter(|| {
-            // md5.update_with_len(black_box(&data), black_box(nbytes));
-            md5.update_with_len(black_box(&data), black_box(nbytes.unwrap_or(BLOCK_LENGTH)));
+            // mdg.update_with_len(black_box(&data), black_box(nbytes));
+            mdg.update_with_len(black_box(&data), black_box(nbytes.unwrap_or(BLOCK_LENGTH)));
         });
     });
 }
 
 fn reset_benchmark(c: &mut Criterion) {
-    let mut md5 = MD5::new();
+    let mut mdg = MD5::new();
 
     c.bench_function("reset", |b| {
         b.iter(|| {
-            md5.reset();
+            mdg.reset();
         });
     });
 }
 
 fn update_benchmark(c: &mut Criterion) {
-    let mut md5 = MD5::new();
+    let mut mdg = MD5::new();
     let data = vec![0u8; BLOCK_LENGTH];
 
     c.bench_function("update", |b| {
         b.iter(|| {
-            md5.update(black_box(&data));
+            mdg.update(black_box(&data));
         });
     });
 }
 
 fn update_file_benchmark(c: &mut Criterion) {
-    let mut md5 = MD5::new();
+    let mut mdg = MD5::new();
     let path = "file.txt";
 
     c.bench_function("update_file", |b| {
         b.iter(|| {
-            md5.update_file(black_box(path));
+            mdg.update_file(black_box(path));
         });
     });
 }
@@ -101,12 +101,12 @@ fn hexdigest_file_benchmark(c: &mut Criterion) {
 }
 
 fn reset_file_benchmark(c: &mut Criterion) {
-    let mut md5 = MD5::new();
+    let mut mdg = MD5::new();
     let path = "file.txt";
 
     c.bench_function("reset_file", |b| {
         b.iter(|| {
-            md5.reset_file(black_box(path));
+            mdg.reset_file(black_box(path));
         });
     });
 }

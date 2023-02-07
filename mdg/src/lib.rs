@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 //!
-//! # A Rust library for the MD5 algorithm
+//! # A Rust library that implements the MD5 cryptographic hash function
 //!
-//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-md5.svg)](https://minifunctions.com)
+//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-mdg.svg)](https://minifunctions.com)
 //!
 //! <center>
 //!
@@ -18,30 +18,36 @@
 //!
 //! ## Overview
 //!
-//! The crate `md5` provides an easy way to produces a 128-bit (16-byte)
-//! hash value using the MD5 algorithm. MD5 (Message Digest Method 5) is
-//! a cryptographic hash algorithm used to generate a 128-bit digest
-//! from a string of any length. It represents the digests as 32 digit
-//! hexadecimal numbers.
+//! The Message Digest (MDG) is an easy way to produces a 128-bit
+//! (16-byte) hash value using the MD5 cryptographic hash function. It
+//! provides a struct, MD5, that can generate a message digest of data
+//! in a secure, one-way hash. The message digest can verify the
+//! integrity of the data without having to store the entire message.
 //!
 //! Several options are available to produce the hash value:
 //!
 //! - `MD5::default()` - Returns the hash value of an empty string.
 //! - `MD5::digest()` - Returns the hash value of a string.
-//! - `MD5::finalize()` - Finalize the MD5 object and return the result as a 16-byte array.
-//! - `MD5::hexdigest()` - Returns the hash value of a string as a hexadecimal string.
+//! - `MD5::finalize()` - Finalize the MD5 object and return the result
+//!    as a 16-byte array.
+//! - `MD5::hexdigest()` - Returns the hash value of a string as a
+//!    hexadecimal string.
 //! - `MD5::new()` - Create a new instance of the MD5 struct.
 //! - `MD5::reset()` - Reset the internal state of the MD5 object.
-//! - `MD5::to_hex_string()` - Returns the hash value of a string as a hexadecimal string.
-//! - `MD5::to_string()` - Returns the hash value of a string as a string.
-//! - `MD5::update()` - Update the internal state of the MD5 object with new data.
-//! - `MD5::update_file()` - Update the internal state of the MD5 object with new data from a file.
+//! - `MD5::to_hex_string()` - Returns the hash value of a string as a
+//!    hexadecimal string.
+//! - `MD5::to_string()` - Returns the hash value of a string as a
+//!    string.
+//! - `MD5::update()` - Update the internal state of the MD5 object
+//!    with new data.
+//! - `MD5::update_file()` - Update the internal state of the MD5
+//!    object with new data from a file.
 //!
-//! To use this crate, add `md5` to your `Cargo.toml`:
+//! To use this crate, add `mdg` to your `Cargo.toml`:
 //!
 //! ```toml
 //! [dependencies]
-//! md5 = "0.0.1"
+//! mdg = "0.0.1"
 //! ```
 //!
 //! ## Usage
@@ -51,22 +57,19 @@
 //! # Examples
 //!
 //! ```no_run
-//! use md5::MD5;
+//! use mdg::MD5;
 //!
 //! let hash = MD5::default();
 //! assert_eq!(hash.to_string(), "d41d8cd98f00b204e9800998ecf8427e");
 //! ```
 //! # Warning
 //!
-//! This crate is not intended for cryptographic use. MD5 is not a cryptographically secure hashing algorithm and should not be used for applications that require a collision-resistant hash function.
-//! MD5 is sensitive to length extension attacks, which alter the hash value if additional data is appended to the input.
+//! This crate is not intended for cryptographic use. MD5 is not a
+//! cryptographically secure hashing algorithm and should not be used
+//! for applications that require a collision-resistant hash function.
 //!
-//! # Join the Mini Functions Community
-//!
-//! Mini Functions is an ongoing project that is constantly evolving and improving. Our goal is to make it a highly-performant utility and wrapper functions library for Rust. We’ve already added a number of functions and features to the library, and we have more planned for the future but we need your help.
-//!
-//! As an open source project, we welcome contributions from the community. If you’re an experienced Rust developer and you’re interested in helping us shape the direction of the project, we encourage you to get involved. Whether you have ideas for new features, want to help fix bugs, or just want to learn more about Rust development, we welcome your contributions.
-//!
+//! MD5 is sensitive to length extension attacks, which alter the hash
+//! value if additional data is appended to the input.
 //!
 //! [`serde`]: https://github.com/serde-rs/serde
 //!
@@ -77,11 +80,11 @@
 #![forbid(unsafe_code)]
 #![warn(unreachable_pub)]
 #![doc(
-    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-md5.svg",
-    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-md5.svg",
-    html_root_url = "https://docs.rs/mini-functions"
+    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-mdg.svg",
+    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-mdg.svg",
+    html_root_url = "https://docs.rs/mdg"
 )]
-#![crate_name = "md5"]
+#![crate_name = "mdg"]
 #![crate_type = "lib"]
 
 /// Import the `params` module.

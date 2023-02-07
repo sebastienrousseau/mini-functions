@@ -41,7 +41,7 @@ pub fn f(params: &mut MD5Params) -> u32 {
     // let s = params.s;
     // let ac = params.ac;
 
-    let res = md5_f(b, c, d);
+    let res = mdg_f(b, c, d);
 
     params.a = params
         .a
@@ -104,19 +104,19 @@ pub fn i(params: &mut MD5Params) -> u32 {
     b.wrapping_add(c ^ (d | !b))
 }
 #[inline(always)]
-/// md5_f
-pub fn md5_f(x: u32, y: u32, z: u32) -> u32 {
+/// mdg_f
+pub fn mdg_f(x: u32, y: u32, z: u32) -> u32 {
     (x & y) | (!x & z)
 }
 
 #[inline(always)]
-/// md5_h
-pub fn md5_h(x: u32, y: u32, z: u32) -> u32 {
+/// mdg_h
+pub fn mdg_h(x: u32, y: u32, z: u32) -> u32 {
     x ^ y ^ z
 }
-/// md5_i
+/// mdg_i
 #[inline(always)]
-pub fn md5_i(x: u32, y: u32, z: u32) -> u32 {
+pub fn mdg_i(x: u32, y: u32, z: u32) -> u32 {
     y ^ (x | !z)
 }
 /// Rotate left
