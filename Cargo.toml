@@ -8,7 +8,7 @@ homepage = "https://minifunctions.com"
 include = [
     "/build.rs",
     "/Cargo.toml",
-    "/claims/**",
+    "/cclm/**",
     "/cmn/**",
     "/dtt/**",
     "/idk/**",
@@ -28,7 +28,7 @@ include = [
 keywords = [
     "barcode",
     "checksum",
-    "claims",
+    "cclm",
     "cryptography",
     "cmn",
     "dtt",
@@ -82,7 +82,7 @@ rust-version = "1.67"
 version = "0.0.8"
 
 [dependencies]
-claims = { path = "./claims", version = "*" }
+cclm = { path = "./cclm", version = "*" }
 cmn = { path = "./cmn", version = "*" }
 dtt = { path = "./dtt", version = "*" }
 idk = { path = "./idk", version = "*" }
@@ -98,7 +98,7 @@ vrd = { path = "./vrd", version = "*" }
 exclude = ["src"]
 resolver = "2"
 members = [
-    "claims",
+    "cclm",
     "cmn",
     "dtt",
     "idk",
@@ -121,7 +121,7 @@ maintenance = { status = "actively-developed" }
 crate-type = ["lib"]
 path = "src/lib.rs"
 required-features = [
-    "claims",
+    "cclm",
     "cmn",
     "dtt",
     "idk",

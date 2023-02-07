@@ -97,7 +97,7 @@ pub mod mini_functions {
     pub use cmn::*;
 
     /// Provides access to the claims of a JSON Web Token (JWT).
-    pub use claims::*;
+    pub use cclm::*;
 
     /// Provides access to Date functions.
     pub use dtt::*;

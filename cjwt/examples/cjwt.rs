@@ -2,7 +2,7 @@ extern crate cjwt;
 extern crate jwt;
 
 use self::cjwt::{Algorithm, Header, JWT};
-use claims::Claims;
+use cclm::Claims;
 
 fn main() {
     // Constants for the JWT struct examples.
@@ -36,7 +36,7 @@ fn main() {
     println!("🦀 JWT::default():                ✅ {jdrv:?}\n");
 
     // Encode a JWT struct.
-    let encoded: String = JWT::encode(hdrv, claims::Claims::default(), b"secret").unwrap();
+    let encoded: String = JWT::encode(hdrv, Claims::default(), b"secret").unwrap();
     println!("🦀 encode():                      ✅ {encoded:?}\n");
 
     // Extract the token field from the passed JWT struct and return it.

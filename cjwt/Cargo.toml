@@ -35,7 +35,7 @@ path = "benches/cjwt.rs"
 
 [dependencies]
 base64 = "0.21.0"
-claims = { path = "../claims" }
+cclm = { path = "../cclm" }
 dtt = { path = "../dtt" }
 idk = { path = "../idk" }
 hmac = "0.12.1"

@@ -1,5 +1,5 @@
 extern crate criterion;
-use claims::Claims;
+use cclm::Claims;
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
 extern crate cjwt;

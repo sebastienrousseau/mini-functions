@@ -28,7 +28,7 @@ harness = false
 path = "benches/mdg.rs"
 
 [dependencies]
-claims = { path = "../claims" }
+cclm = { path = "../cclm" }
 cjwt = { path = "../cjwt" }
 
 [dev-dependencies]

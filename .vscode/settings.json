@@ -11,6 +11,7 @@
         "binutils",
         "blake",
         "BSON",
+        "cclm",
         "cdylib",
         "ceee",
         "certutil",

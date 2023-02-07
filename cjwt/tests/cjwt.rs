@@ -3,10 +3,10 @@
 // FIXME: Add more tests to bring the code coverage to 100%
 mod tests {
     extern crate cjwt;
-    extern crate claims;
+    extern crate cclm;
 
     use self::cjwt::{Algorithm, Header, JWT};
-    use self::claims::Claims;
+    use self::cclm::Claims;
 
     #[test]
     fn test_header_default() {

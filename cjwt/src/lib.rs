@@ -48,7 +48,7 @@
 #![crate_type = "lib"]
 
 extern crate base64;
-extern crate claims;
+extern crate cclm;
 extern crate dtt;
 extern crate hmac;
 extern crate idk;
@@ -57,7 +57,7 @@ extern crate serde;
 extern crate serde_json;
 extern crate sha2;
 
-use self::claims::Claims;
+use self::cclm::Claims;
 use idk::jwt::JwtError;
 
 use base64::{engine::general_purpose, Engine as _};

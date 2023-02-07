@@ -53,7 +53,7 @@
 //! ## Examples
 //!
 //! ```rust
-//! use self::claims::Claims;
+//! use self::cclm::Claims;
 //! use std::collections::HashMap;
 //!
 //! // Create a new instance of Claims
@@ -102,7 +102,7 @@
     html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-claims.svg",
     html_root_url = "https://docs.rs/mini-functions"
 )]
-#![crate_name = "claims"]
+#![crate_name = "cclm"]
 #![crate_type = "lib"]
 
 extern crate serde;
@@ -136,7 +136,7 @@ impl Claims {
     /// # Example
     ///
     /// ```
-    /// use self::claims::Claims;
+    /// use self::cclm::Claims;
     /// let claims = Claims::new();
     /// assert!(claims.claims.is_empty());
     /// ```
@@ -150,7 +150,7 @@ impl Claims {
     /// # Example
     ///
     /// ```
-    /// use self::claims::Claims;
+    /// use self::cclm::Claims;
     /// let mut claims = Claims::new();
     /// claims.set_claim("sub", "1234567890");
     /// assert_eq!(claims.get_claim("sub"), Some(&String::from("1234567890")));
@@ -165,7 +165,7 @@ impl Claims {
     /// # Example
     ///
     /// ```
-    /// use self::claims::Claims;
+    /// use self::cclm::Claims;
     /// let mut claims = Claims::new();
     /// claims.set_claim("sub", "1234567890");
     /// assert_eq!(claims.get_claim("sub"), Some(&String::from("1234567890")));
@@ -180,7 +180,7 @@ impl Claims {
     /// # Example
     ///
     /// ```
-    /// use self::claims::Claims;
+    /// use self::cclm::Claims;
     /// let mut claims = Claims::new();
     /// claims.set_claim("sub", "1234567890");
     /// assert_eq!(claims.remove_claim("sub"), Some("1234567890".to_owned()));
@@ -193,7 +193,7 @@ impl Claims {
     /// # Example
     ///
     /// ```
-    /// use self::claims::Claims;
+    /// use self::cclm::Claims;
     /// let mut claims = Claims::new();
     /// claims.set_claim("sub", "1234567890");
     /// claims.clear_claims();
@@ -207,7 +207,7 @@ impl Claims {
     /// # Example
     ///
     /// ```
-    /// use self::claims::Claims;
+    /// use self::cclm::Claims;
     /// let mut claims = Claims::new();
     /// claims.set_claim("sub", "1234567890");
     /// assert!(claims.has_claim("sub"));
@@ -220,7 +220,7 @@ impl Claims {
     /// # Example
     ///
     /// ```
-    /// use self::claims::Claims;
+    /// use self::cclm::Claims;
     /// let mut claims = Claims::new();
     /// claims.set_claim("sub", "1234567890");
     /// assert_eq!(claims.len(), 1);
@@ -233,7 +233,7 @@ impl Claims {
     /// # Example
     ///
     /// ```
-    /// use self::claims::Claims;
+    /// use self::cclm::Claims;
     /// let mut claims = Claims::new();
     /// assert!(claims.is_empty());
     /// claims.set_claim("sub", "1234567890");
@@ -248,7 +248,7 @@ impl Claims {
     /// # Example
     ///
     /// ```
-    /// use self::claims::Claims;
+    /// use self::cclm::Claims;
     /// let mut claims = Claims::new();
     /// claims.set_claim("sub", "1234567890");
     /// claims.set_claim("name", "John Doe");
