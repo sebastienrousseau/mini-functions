@@ -34,7 +34,7 @@ harness = false
 path = "benches/psph.rs"
 
 [dependencies]
-cmn = "0.0.1"
+cmn = "0.0.2"
 dtt = "0.0.1"
 hsh = "0.0.1"
 regex = "1.7.1"
