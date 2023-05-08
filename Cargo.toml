@@ -92,7 +92,7 @@ mdg = "0.0.1"
 psph = "0.0.1"
 qrc = "0.0.2"
 rlg = "0.0.1"
-vrd = "0.0.1"
+vrd = "0.0.2"
 
 [workspace]
 exclude = ["src"]
