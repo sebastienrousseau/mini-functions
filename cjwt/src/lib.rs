@@ -69,7 +69,7 @@ use std::{fmt, string::ToString};
 /// JWT is a struct that holds the JWT token and its associated claims.
 /// Provides a set of utility functions for working with JSON Web Tokens
 /// (JWTs) and JSON Web Signatures (JWSs).
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct JWT {
     /// The header of the JWT.
     pub header: Header,
@@ -81,7 +81,7 @@ pub struct JWT {
     pub token: String,
 }
 /// The Header struct contains the header of the JWT.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Debug, PartialEq, Eq, Hash, Clone, Serialize, Deserialize, PartialOrd)] 
 pub struct Header {
     /// Indicates the algorithm used to sign the JWT. Defaults to HS256.
     /// See the Algorithm enum for a list of supported algorithms.
@@ -96,7 +96,7 @@ pub struct Header {
 }
 
 /// The Algorithm enum contains a list of supported algorithms.
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Serialize, Deserialize, PartialOrd)]
 pub enum Algorithm {
     /// HMAC using SHA-256 hash algorithm.
     HS256,
