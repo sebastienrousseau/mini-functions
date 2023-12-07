@@ -27,13 +27,43 @@ A Rust library of highly performant utility and wrapper functions
 
 </center>
 
-## Overview 📖
+## Overview
 
 `Mini Functions` is a highly performant utility and wrapper functions library for Rust that has been carefully designed with optimization and efficiency in mind. By providing convenient wrapper functions, our library aims to provide a high-level interface for common tasks while still leveraging the performance benefits of Rust under the hood. These utility functions serve as an essential toolkit for any Rust developer, and the library's design abstractions allow for easy integration into a variety of projects and applications.
 
 These utility functions serve as an essential toolkit for any Rust developer, and the library's design abstractions allow for easy integration into a variety of projects and applications.
 
-## Features ✨
+## Table of Contents
+
+- [Mini Functions](#mini-functions)
+  - [Overview](#overview)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Functionality](#functionality)
+  - [Getting Started](#getting-started)
+    - [Requirements](#requirements)
+    - [Installation](#installation)
+  - [Usage](#usage)
+  - [Examples](#examples)
+    - [Example 1: Working with JWT Claims](#example-1-working-with-jwt-claims)
+    - [Example 2: Working with Mathematical Constants](#example-2-working-with-mathematical-constants)
+    - [Example 3: Working with Date and Time](#example-3-working-with-date-and-time)
+    - [Example 4: Error Handling](#example-4-error-handling)
+    - [Example 5: Password Hashing](#example-5-password-hashing)
+    - [Example 7: Logging](#example-7-logging)
+    - [Example 8: MD5 Hashing](#example-8-md5-hashing)
+    - [Example 9: QR Codes](#example-9-qr-codes)
+    - [Example 10: Random Number Generation](#example-10-random-number-generation)
+  - [Platform support](#platform-support)
+    - [Tier 1 platforms](#tier-1-platforms)
+    - [Tier 2 platforms](#tier-2-platforms)
+  - [Documentation](#documentation)
+  - [Semantic Versioning Policy](#semantic-versioning-policy)
+  - [License](#license)
+  - [Contribution](#contribution)
+  - [Acknowledgements](#acknowledgements)
+
+## Features
 
 - **Built with Rust** — A modern programming language that is well-suited for building high-performance, reliable, and secure systems.
 - **High-level Utility Functions** — A collection of high-level, abstracted functions for common tasks, such as string manipulation, file manipulation, and data parsing.
@@ -43,7 +73,7 @@ These utility functions serve as an essential toolkit for any Rust developer, an
 - **Comprehensive Documentation and Examples** — Documentation and examples to help developers understand and use the library effectively.
 - **Regular Maintenance and Updates** — Regular updates and maintenance to ensure the library stays up-to-date and reliable.
 
-## Functionality 📚
+## Functionality
 
 `Mini Functions` is a library of functions for Rust that provides a collection of tools for working with various aspects of a Rust application. The `mini-functions` library consists of the following `non-exhaustive` functions:
 
@@ -64,7 +94,7 @@ See [Documentation][08] for full API details.
 
 ![divider][divider]
 
-## Getting Started 🚀
+## Getting Started
 
 It takes just a few minutes to get up and running with `mini-functions`.
 
@@ -85,7 +115,7 @@ cargo install mini-functions
 
 ![Divider][divider]
 
-## Usage 📖
+## Usage
 
 To use the `mini-functions` library in your project, add the following to your `Cargo.toml` file:
 
@@ -103,11 +133,345 @@ use mini_functions::*;
 
 then you can use the functions in your application code.
 
-### Platform support
+![divider][divider]
+
+## Examples
+
+The `mini-functions` library comes with a set of examples that demonstrate how to use the library. You can find the examples in the `examples` directory.
+
+To run the examples, use the following command:
+
+```shell
+cargo run --example <example-name>
+```
+
+![divider][divider]
+
+### Example 1: Working with JWT Claims
+
+The `mini_functions` crate provides a Claims struct for working with JWT claims.
+
+It contains the following functions:
+
+- Setting Claims with `set_claim` to add claims.
+- Getting Claims with `get_claim` to retrieve a claim value.
+- Removing Claims with `remove_claim` to remove a claim.
+
+Here is a full example:
+
+```rust
+let mut claims = Claims::new();
+
+claims.set_claim("iss", "https://example.com");
+claims.set_claim("admin", "true");
+
+let admin = claims.get_claim("admin").unwrap();
+
+claims.remove_claim("admin");
+```
+
+This allows setting, retrieving, and removing JWT claims conveniently.
+
+To run the JWT Claims example, use the following command:
+
+```shell
+cargo run --example example_claims
+```
+
+![divider][divider]
+
+### Example 2: Working with Mathematical Constants
+
+The `mini_functions` crate provides access to common mathematical constants through the `Constants` struct and `cmn_constants` macro.
+
+It contains the following functions:
+
+- **Constants::new()** - Create a new Constants instance
+- **constants()** - Get the full list of constants
+- **constant(name)** - Lookup a constant by name
+- **cmn_constants!** - Import constants into scope
+
+Here is a full example:
+
+```rust
+use cmn::{constants::{Constant, ConstantValue}, cmn_constants};
+
+let c = Constants::new();
+let euler = c.constant("EULER").unwrap();
+
+cmn_constants! {
+    PI = cmn::constants::PI,
+}
+
+println!("Euler's constant: {euler}"); 
+println!("Pi: {PI}");
+```
+This allows convenient access to mathematical constants.
+
+To run the constants example:
+
+```shell
+cargo run --example example_constants
+```
+
+![divider][divider]
+
+### Example 3: Working with Date and Time
+
+The `mini_functions` crate provides a `DateTime` struct for working with dates and times.
+
+It contains the following functions:
+
+- `DateTime::now` - Get current date/time
+- `DateTime::new` - Create a DateTime with default (UTC) timezone
+- `DateTime::new_with_tz` - Create a DateTime with custom timezone
+- `is_valid_day` - Check if a day value is valid
+- `next_day`/`previous_day` - Get next/previous day
+- `from_str` - Parse a date/time string
+- `relative_delta` - Apply a delta to the DateTime
+
+Here is an example:
+
+```rust
+let now = DateTime::now();
+
+let tomorrow = now + chrono::Duration::days(1);
+let yesterday = now - chrono::Duration::days(1);
+
+println!("Today: {now}");
+println!("Tomorrow: {tomorrow}"); 
+println!("Yesterday: {yesterday}");
+```
+
+This allows convenient date/time handling.
+
+To run the date/time example:
+
+```shell
+cargo run --example example_date
+```
+
+![divider][divider]
+
+### Example 4: Error Handling
+
+The `mini_functions` crate provides error handling functionality through the `ErrorType` enum.
+
+It contains the following functions:
+
+- `ErrorType::new` - Create new error type
+- `new_subtype` - Create error subtype
+
+Here is an example:
+
+```rust
+use mini_functions::errors::common::ErrorType;
+
+let error = ErrorType::new("illegal_argument");
+let sub_error = error.new_subtype("invalid_value");
+
+println!("Main error: {error:?}");
+println!("Sub-error: {sub_error:?}");
+```
+
+This allows simple error handling with custom types and subtypes.
+
+To run the errors example:
+
+```rust
+cargo run --example example_errors
+```
+
+![divider][divider]
+
+### Example 5: Password Hashing
+
+The `mini_functions` crate provides password hashing and verification functions through the `Hash` struct.
+
+It contains the following functions:
+
+- `Hash::new_{algo}` - Generate a hash for a password 
+- `set_password` - Update password for a hash 
+- `verify` - Verify a password against a hash
+- `to_string` - Convert hash to a string
+
+Here is an example:
+
+```rust
+use mini_functions::hash::Hash;
+
+let hash = Hash::new_argon2i("mypassword");
+let is_valid = hash.verify("mypassword");
+
+let updated_hash = hash.set_password("newpassword");
+let new_is_valid = updated_hash.verify("newpassword");
+```
+
+This allows generating and verifying password hashes conveniently.
+
+To run the password hashing example:
+
+```rust
+cargo run --example example_hash
+```
+
+![divider][divider]
+
+### Example 7: Logging
+
+The `mini_functions` crate provides application logging functionality through the `Log` struct.
+
+It contains functions like:
+
+- `Log::new` - Create a new log entry
+- `LogFormat` - Supported log formats
+
+Here is an example of logging events with different formats:
+
+```rust
+use mini_functions::logs::{Log, LogFormat, LogLevel};
+
+let log_json = Log::new(
+    "message-id", 
+    "2023-01-01T12:00:00Z",
+    LogLevel::Info,
+    "AppEvent",
+    "User logged in",
+    LogFormat::JSON
+);
+
+let log_clf = Log::new(
+    "message-id",
+    "2023-01-01T12:00:00Z",
+    LogLevel::Info,
+    "AuthEvent",
+    "User login successful",
+    LogFormat::CLF
+);
+```
+
+This allows flexible logging in various text and JSON formats.
+
+To run the logging example:
+
+```rust
+cargo run --example example_logs
+```
+
+![divider][divider]
+
+### Example 8: MD5 Hashing  
+
+The `mini_functions` crate provides MD5 hash generation functionality through the `MD5` struct.
+
+It contains functions like:  
+
+- `MD5::hexdigest` - Generate MD5 hash for input 
+- `MD5::new` - Create MD5 hasher instance  
+- `update` - Update hasher with new input
+- `finalize` - Obtain final hash  
+
+Here is an example of hashing different input sources:
+
+```rust
+use mini_functions::md5::MD5;
+
+let digest = MD5::hexdigest("input string");
+
+let mut hasher = MD5::new();
+hasher.update(&[1, 2, 3]);
+let hash = hasher.finalize();
+```
+
+This allows flexible hashing of strings, byte arrays, files.
+
+To run the MD5 example:
+
+```rust
+cargo run --example example_md5
+```
+
+![divider][divider]
+
+### Example 9: QR Codes
+
+The `mini_functions` crate provides QR code generation and manipulation functionality through the `QRCode` struct.
+
+It contains functions like:
+
+- `QRCode::from_string` - Generate QR code from text
+- `to_png` - Convert to PNG image
+- `colorize` - Colorize the QR code
+- `resize` - Resize image 
+
+And macros like:
+
+- `qr_code_to!` - QR code generation macro
+
+Here is an example:
+
+```rust
+use mini_functions::qr;
+
+let qr_code = qr::QRCode::from_string("https://example.com");
+let img = qr_code.to_png(512);
+
+qr::save_png(&img, "qr.png");
+```
+
+This allows convenient QR code creation, manipulation and saving.
+
+To run the QR code example:
+
+```rust
+cargo run --example example_qr
+```
+
+![divider][divider]
+
+### Example 10: Random Number Generation
+
+The `mini_functions` crate provides random number generation functionality through the `Random` struct and associated functions.
+
+It contains functions like:
+
+- `Random::new` - Create random number generator
+- `bool` - Random boolean
+- `int` - Random integer
+- `float` - Random float
+- `bytes` - Random byte vector
+
+And macros like:
+
+- `rand_int!` - Random integer in range
+- `rand_bool!` - Random boolean with probability
+
+Here is an example:
+
+```rust
+use mini_functions::random::{Random, rand_int};
+
+let mut rng = Random::new();
+
+let rand_num = rand_int!(rng, 0, 10);
+let rand_bool = rand_bool!(rng, 0.5);
+```
+
+This allows convenient random number generation.
+
+To run the random example:
+
+```rust
+cargo run --example example_random
+```
+
+![divider][divider]
+
+## Platform support
 
 `mini-functions` is supported and tested on the following platforms:
 
-### Tier 1 platforms 🏆
+### Tier 1 platforms
 
 | | Operating System | Target | Description |
 | --- | --- | --- | --- |
@@ -120,7 +484,7 @@ then you can use the functions in your application code.
 | ✅ | Windows | x86_64-pc-windows-msvc | 64-bit Windows systems using the Microsoft Visual C toolchain |
 | ✅ | Linux   | x86_64-unknown-linux-gnu | 64-bit Linux systems (kernel 2.6.32+, glibc 2.11+) |
 
-### Tier 2 platforms 🥈
+### Tier 2 platforms
 
 | | Operating System | Target | Description |
 | --- | --- | --- | --- |
@@ -142,23 +506,23 @@ The [GitHub Actions ⧉][22] shows the platforms in which the `mini-functions` l
 
 ![divider][divider]
 
-### Documentation
+## Documentation
 
 **Info:** Please check out our [website ⧉][00] for more information. You can find our documentation on [docs.rs ⧉][08], [lib.rs ⧉][09] and [crates.io ⧉][07].
 
-## Semantic Versioning Policy 🚥
+## Semantic Versioning Policy
 
 For transparency into our release cycle and in striving to maintain backward compatibility, `mini-functions` follows [semantic versioning ⧉][06].
 
 ![divider][divider]
 
-## License 📝
+## License
 
 The project is licensed under the terms of Apache License, Version 2.0 and the MIT license.
 
 ![divider][divider]
 
-## Contribution 🤝
+## Contribution
 
 We welcome all people who want to contribute. Please see the [contributing instructions ⧉][04] for more information.
 
@@ -168,7 +532,7 @@ Unless you explicitly state otherwise, any contribution intentionally submitted 
 
 ![divider][divider]
 
-## Acknowledgements 💙
+## Acknowledgements
 
 A big thank you to all the awesome contributors of [mini-functions ⧉][05] for their help and support.
 

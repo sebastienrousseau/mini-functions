@@ -5,34 +5,6 @@ use mini_functions::hash::{models::{hash::Hash, hash_algorithm::HashAlgorithm}, 
 use std::str::FromStr;
 
 /// This function demonstrates how to create and verify password hashes using Argon2i, Bcrypt, and Scrypt algorithms.
-///
-/// # Example
-///
-/// ```rust
-/// use hsh::models::{hash::Hash, salt::Salt};
-///
-/// // Function to create and verify hash
-/// fn create_and_verify_hash() {
-///     // Create new hashes for Argon2i, Bcrypt, and Scrypt
-///     let password = "password";
-///     let salt_argon2i: Salt = vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-///     let salt_scrypt: Salt = vec![10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
-///     let cost_bcrypt = 16;
-///
-///     let hash_argon2i = Hash::new_argon2i(password, salt_argon2i).unwrap();
-///     let hash_bcrypt = Hash::new_bcrypt(password, cost_bcrypt).unwrap();
-///     let hash_scrypt = Hash::new_scrypt(password, salt_scrypt).unwrap();
-///
-///     // Verify these hashes
-///     verify_password(&hash_argon2i, "password", "Argon2i");
-///     verify_password(&hash_bcrypt, "password", "BCrypt");
-///     verify_password(&hash_scrypt, "password", "Scrypt");
-///
-///     // ... (the rest of the function)
-/// }
-/// ```
-///
-/// Note: This is a simplified example, and in a real-world application, you should handle errors and edge cases more carefully.
 fn create_and_verify_hash() {
     // Create new hashes for Argon2i, Bcrypt, and Scrypt
     let hash_argon2i = Hash::new_argon2i("password", "salt1234".into()).unwrap();
