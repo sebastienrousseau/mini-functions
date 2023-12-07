@@ -32,16 +32,13 @@ A collection of mini functions for building secure, reliable, and performant app
 - [ ] A function for mock testing APIs, which can be used to test client applications without relying on the real API.
 - [ ] A function for monitoring APIs for uptime and performance, with support for alerting and notification when issues arise.
 
-## In progress
+## Completed
 
-- [ ] **Claims** - A function for generating and verifying claims, which can be used to prove the ownership of a resource.
-- [ ] **Date** - A function for generating and parsing dates, which can be used to represent a specific point in time.
-- [ ] **Errors** - A function for generating and parsing errors, which can be used to represent a failure in a system.
-- [ ] **Hash** - A function for generating and verifying cryptographic hashes, which can be used to verify the integrity of a message or document.
-- [ ] **JOT** - A function for generating and verifying JWTs (JSON Web Tokens), which can be used for secure, stateless authentication between systems.
-- [ ] **rlg** - A function for generating and parsing logs, which can be used to represent the state of a system.
-- [ ] **MD5** - A function for generating and verifying MD5 hashes, which can be used to verify the integrity of a message or document.
-- [ ] **Password** - A function for generating and verifying passwords, which can be used to authenticate a user.
-- [ ] **QR** - A function for generating short, unique codes that could be used as an alternative to UUIDs for identifying resources.
-
-## Done
+- [X] **Claims** - A function for generating and verifying claims, which can be used to prove the ownership of a resource.
+- [X] **Date** - A function for generating and parsing dates, which can be used to represent a specific point in time.
+- [X] **Errors** - A function for generating and parsing errors, which can be used to represent a failure in a system.
+- [X] **Hash** - A function for generating and verifying cryptographic hashes, which can be used to verify the integrity of a message or document.
+- [X] **JWT** - A function for generating and verifying JWTs (JSON Web Tokens), which can be used for secure, stateless authentication between systems.
+- [X] **Logs** - A function for generating and parsing logs, which can be used to represent the state of a system.
+- [X] **MD5** - A function for generating and verifying MD5 hashes, which can be used to verify the integrity of a message or document.
+- [X] **QR** - A function for generating short, unique codes that could be used as an alternative to UUIDs for identifying resources.
