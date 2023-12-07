@@ -68,6 +68,7 @@
         "math",
         "Matsumoto",
         "Mersenne",
+        "minifunctions",
         "mips",
         "mipsel",
         "msvc",
