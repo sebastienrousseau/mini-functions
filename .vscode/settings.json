@@ -11,12 +11,14 @@
         "binutils",
         "blake",
         "BSON",
+        "bubba",
         "cclm",
         "cdylib",
         "ceee",
         "certutil",
         "cjwt",
         "clippy",
+        "Codecov",
         "commitish",
         "congruential",
         "constify",
@@ -63,6 +65,7 @@
         "linux",
         "Makoto",
         "mant",
+        "math",
         "Matsumoto",
         "Mersenne",
         "mips",
@@ -125,5 +128,8 @@
         "xfffa",
         "xffff",
         "Zellers"
+    ],
+    "conventionalCommits.scopes": [
+        "mini-functions"
     ]
 }

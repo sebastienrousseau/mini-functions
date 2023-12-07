@@ -2,9 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 //!
-//! A Rust library of highly performant utility and wrapper functions
+//! # `Mini Functions` 🦀
 //!
-//! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-mini-functions.svg)](https://minifunctions.com)
+//! [![Mini Functions Logo][01]][00]
+//!
+//! ## A Highly Performant Utility and Wrapper Functions Library for Rust
+//!
+//! Elevate your Rust development with this comprehensive library of functions and utilities designed to streamline common tasks, enhance performance, and promote maintainability across various aspects of Rust application development.
 //!
 //! <center>
 //!
@@ -24,40 +28,24 @@
 //!
 //! ## Features
 //!
-//! - **[Claims](../claims/index.html)** - Provides access to the claims
-//! of a JSON Web Token (JWT).
-//! - **[Common](../common/index.html)** - Provides access to common
-//! functions and constants.
-//! - **[Date](../date/index.html)** - Provides access to the current
-//! date and time.
-//! - **[Errors](../errors/index.html)** - Provides access to error
-//! handling functions.
-//! - **[Hash](../hash/index.html)** - Provides access to hash
-//! functions.
-//! - **[Jot](../cjwt/index.html)** - Provides access to JSON Web Token
-//! (JWT) functions.
-//! - **[rlg](../rlg/index.html)** - Provides access to logging
-//! functions.
-//! - **[MD5](../mdg/index.html)** - Provides access to MD5 functions.
-//! - **[Password](../password/index.html)** - Provides access to
-//! password functions.
-//! - **[QR](../qr/index.html)** - Provides access to QR code functions.
-//! - **[Random](../vrd/index.html)** - Provides access to random
-//! number functions.
-//! - And so much more.
+//! - **[Claims](Claims/index.html)** - Provides access to the claims of a JSON Web Token (JWT).
+//! - **[Common](Common/index.html)** - Provides access to functions for accessing a collection of mathematical and cryptographic constants.
+//! - **[Date](Date/index.html)** - Provides access to functions for parsing, validating, manipulating, and formatting dates and times.
+//! - **[Errors](Errors/index.html)** - Provides access to error handling functions.
+//! - **[Hash](Hash/index.html)** - Provides access to a Quantum-Resistant Cryptographic Hash Library for Password Hashing and Verification.
+//! - **[Logs](Logs/index.html)** - Provides access to functions for application-level logging with a simple, readable output format.
+//! - **[JWT](JWT/index.html)** - Provides access to JSON Web Token (JWT) functions.
+//! - **[MD5](MD5/index.html)** - Provides access to MD5 functions.
+//! - **[QR](QR/index.html)** - Provides access to QR code functions.
+//! - **[Random](Random/index.html)** - Provides access to functions for generating high-quality random numbers based on the Mersenne Twister algorithm.
 //!
-//! These components provide a comprehensive set of functionality and
-//! offer powerful new capabilities to help you build better
-//! applications and services in the Rust programming language.
+//! These components provide a comprehensive set of functionality and offer powerful new capabilities to help you build better applications and services in the Rust programming language.
 //!
 //! [**Learn more**](https://minifunctions.com) [❯](https://minifunctions.com)
 //!
-//!
 //! ## Installation
 //!
-//! Mini Functions is available on both
-//! [Crates.io](https://crates.io/crates/mini_functions) and
-//! [Lib.rs](https://lib.rs/crates/mini_functions).
+//! Mini Functions is available on both [Crates.io](https://crates.io/crates/mini_functions) and [Lib.rs](https://lib.rs/crates/mini_functions).
 //!
 //! Learn more about Mini Functions at <https://minifunctions.com>.
 //!
@@ -74,12 +62,14 @@
 //!
 //! ```
 //!
+//! [00]: https://minifunctions.com "Mini Functions - Highly performant utility and wrapper functions library for Rust"
+//! [01]: https://kura.pro/mini-functions/images/v2/banners/banner-mini-functions.svg "Mini Functions - Highly performant utility and wrapper functions library for Rust"
 //!
 #![warn(missing_docs)]
 #![forbid(unsafe_code)]
 #![doc(
-    html_logo_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-mini-functions.svg",
-    html_favicon_url = "https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/icons/ico-mini-functions.svg",
+    html_favicon_url = "https://kura.pro/mini-functions/images/v2/favicon.ico",
+    html_logo_url = "https://kura.pro/mini-functions/images/v2/logos/mini-functions.svg",
     html_root_url = "https://docs.rs/mini-functions"
 )]
 #![crate_name = "mini_functions"]
@@ -88,38 +78,48 @@
 #![crate_type = "rlib"]
 #![crate_type = "staticlib"]
 
-/// Mini-Functions module that provides a variety of features for
-/// building apps, including several major crates that you can use
-/// individually or together to construct the core infrastructure of
-/// your Rust applications.
+/// Provides access to the claims of a JSON Web Token (JWT).
+pub mod claims;
+
+/// Provides access to functions for accessing a collection of mathematical and cryptographic constants.
+pub mod common;
+
+/// Provides access to functions for parsing, validating, manipulating, and formatting dates and times.
+pub mod date;
+
+/// Provides access to error handling functions.
+pub mod errors;
+
+/// Provides access to hash functions.
+pub mod hash;
+
+/// Provides access to functions for application-level logging with a simple, readable output format.
+pub mod logs;
+
+/// Provides access to JSON Web Token (JWT) functions.
+pub mod jwt;
+
+/// Provides access to MD5 functions.
+pub mod md5;
+
+/// Provides access to functions for generating high-quality random numbers based on the Mersenne Twister algorithm.
+pub mod random;
+
+/// Provides access to QR code functions.
+pub mod qr;
+
+/// Re-exports public contents of key modules
 pub mod mini_functions {
-    /// Provides access to common functions and constants.
-    pub use cmn::*;
-
-    /// Provides access to the claims of a JSON Web Token (JWT).
-    pub use cclm::*;
-
-    /// Provides access to Date functions.
-    pub use dtt::*;
-
-    /// Provides access to Error handling functions.
-    pub use idk::*;
-
-    /// Provides access to Hash functions.
-    pub use hsh::*;
-
-    /// Provides access to JSON Web Token (JWT) functions.
-    pub use cjwt::*;
-
-    /// Provides access to Log functions.
-    pub use rlg::*;
-
-    /// Provides access to MD5 functions.
-    pub use mdg::*;
-
-    /// Provides access to QR code functions.
-    pub use qrc::*;
-
-    /// Provides access to Random numbers functions.
-    pub use vrd::*;
+    pub use crate::{
+        claims::*,
+        common::{self,cmn_macros},
+        date::{self,dtt_macros},
+        errors::*,
+        hash::{self,hsh_macros},
+        jwt::*,
+        logs::{self,rlg_macros},
+        md5::{self,mdg_constants},
+        qr::*,
+        random::{self,vrd_macros},
+    };
 }
