@@ -1,26 +1,27 @@
 [package]
-authors = ["Sebastien Rousseau"]
+authors = ["The minifunctions contributors <contact@minifunctions.com>"]
+build = "build.rs"
 categories = ["development-tools", "parsing", "randomness", "security", "time"]
 description = "A Rust library of highly performant utility and wrapper functions"
 documentation = "https://docs.rs/mini-functions"
 edition = "2021"
+exclude = [
+    "/.git/*",
+    "/.github/*",
+    "/.gitignore",
+    "/.vscode/*"
+]
 homepage = "https://minifunctions.com"
 include = [
     "/build.rs",
     "/Cargo.toml",
     "/cclm/**",
-    "/cmn/**",
-    "/dtt/**",
-    "/idk/**",
-    "/hsh/**",
     "/cjwt/**",
+    "/idk/**",
     "/LICENSE-APACHE",
     "/LICENSE-MIT",
-    "/rlg/**",
     "/mdg/**",
-    "/pwd/**",
     "/qrc/**",
-    "/vrd/**",
     "/README.md",
     "/src/**",
     "/tests/**",
@@ -84,15 +85,16 @@ version = "0.0.8"
 [dependencies]
 cclm = "0.0.1"
 cjwt = "0.0.1"
-cmn = "0.0.1"
-dtt = "0.0.1"
-hsh = "0.0.1"
+cmn = "0.0.3"
+dtt = "0.0.5"
+hsh = "0.0.7"
 idk = "0.0.1"
 mdg = "0.0.1"
-psph = "0.0.1"
 qrc = "0.0.2"
-rlg = "0.0.1"
-vrd = "0.0.1"
+rlg = "0.0.2"
+vrd = "0.0.4"
+serde_json = "1.0.108"
+image = "0.24.7"
 
 [workspace]
 exclude = ["src"]
@@ -100,15 +102,9 @@ resolver = "2"
 members = [
     "cclm",
     "cjwt",
-    "cmn",
-    "dtt",
-    "hsh",
     "idk",
     "mdg",
-    "psph",
     "qrc",
-    "rlg",
-    "vrd",
 ] # List of workspace members
 
 [workspace.package]
@@ -129,13 +125,11 @@ required-features = [
     "cjwt",
     "rlg",
     "mdg",
-    "psph",
     "qrc",
-    "vrd",
 ]
 
 [profile.dev]
-codegen-units = 256
+codegen-units = 4
 debug = true
 debug-assertions = true
 incremental = true
@@ -147,16 +141,16 @@ rpath = false
 strip = false
 
 [profile.release]
-codegen-units = 1        # Compile crates one after another so the compiler can optimize better
-debug = false            # Disable debug information
-debug-assertions = false # Disable debug assertions
-incremental = false      # Disable incremental compilation
-lto = true               # Enables link to optimizations
-opt-level = "s"          # Optimize for binary size
-overflow-checks = false  # Disable overflow checks
-panic = "abort"          # Strip expensive panic clean-up logic
-rpath = false            # Disable rpath
-strip = "symbols"        # Automatically strip symbols from the binary.
+codegen-units = 1
+debug = false
+debug-assertions = false
+incremental = false
+lto = true
+opt-level = "s"
+overflow-checks = false
+panic = "abort"
+rpath = false
+strip = "symbols"
 
 [profile.test]
 codegen-units = 256
