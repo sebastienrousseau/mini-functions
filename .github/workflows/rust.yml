@@ -101,7 +101,7 @@ jobs:
     steps:
       - name: Checkout repository 🛎️
         id: checkout-repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with: { submodules: true }
 
       - name: Installing Rust 🦀
