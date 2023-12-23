@@ -1,7 +1,7 @@
 [package]
 authors = ["The minifunctions contributors <contact@minifunctions.com>"]
 build = "build.rs"
-categories = ["development-tools", "parsing", "randomness", "security", "date-and-time"]
+categories = ["development-tools", "parsing", "value-formatting", "security", "date-and-time"]
 description = "A Rust library of highly performant utility and wrapper functions"
 documentation = "https://docs.rs/mini-functions"
 edition = "2021"
