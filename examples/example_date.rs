@@ -5,7 +5,7 @@ use mini_functions::date::DateTime;
 use std::str::FromStr;
 
 /// This is the main function for the build script.
-pub fn main() { 
+pub fn main() {
     // Create a new DateTime object with a custom timezone (e.g., CET)
     let paris_time = DateTime::new_with_tz("CET").now;
     println!("🦀 Paris time:        ✅ {}", paris_time);

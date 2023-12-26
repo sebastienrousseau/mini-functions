@@ -122,7 +122,7 @@ To use the `mini-functions` library in your project, add the following to your `
 
 ```toml
 [dependencies]
-mini-functions = "0.0.8"
+mini-functions = "0.0.10"
 ```
 
 Add the following to your `main.rs` file:

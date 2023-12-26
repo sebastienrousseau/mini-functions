@@ -1,21 +1,24 @@
 // Copyright © 2023 Mini Functions library. All rights reserved.
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-use image::{Rgba,RgbaImage};
+use image::{Rgba, RgbaImage};
 use mini_functions::qr::QRCode;
-use mini_functions::qr::{qr_code_to,add_image_watermark};
+use mini_functions::qr::{add_image_watermark, qr_code_to};
 extern crate image;
 use std::fs;
 
 const URL: &str = "https://minifunctions.com/";
 
-fn add_watermark_to_qrcode(qrcode: &mut RgbaImage, watermark_path: &str) -> Result<(), String> {
+fn add_watermark_to_qrcode(
+    qrcode: &mut RgbaImage,
+    watermark_path: &str,
+) -> Result<(), String> {
     match image::open(watermark_path) {
         Ok(watermark_img) => {
             let watermark_rgba = watermark_img.into_rgba8();
             add_image_watermark!(qrcode, &watermark_rgba);
             Ok(())
-        },
+        }
         Err(e) => Err(format!("Failed to open watermark image: {}", e)),
     }
 }
@@ -32,21 +35,27 @@ where
 fn save_image(image: &RgbaImage, file_name: &str) {
     match image.save(file_name) {
         Ok(_) => println!("🦀 File created: ✅ {}", file_name),
-        Err(e) => println!("🦀 File creation failed: ❌ {}: {}", file_name, e),
+        Err(e) => {
+            println!("🦀 File creation failed: ❌ {}: {}", file_name, e)
+        }
     }
 }
 
 fn save_svg(data: &str, file_name: &str) {
     match fs::write(file_name, data) {
         Ok(_) => println!("🦀 File created: ✅ {}", file_name),
-        Err(e) => println!("🦀 File creation failed: ❌ {}: {}", file_name, e),
+        Err(e) => {
+            println!("🦀 File creation failed: ❌ {}: {}", file_name, e)
+        }
     }
 }
 
 fn remove_file(file_name: &str) {
     match fs::remove_file(file_name) {
         Ok(_) => println!("🦀 File removed: ✅ {}", file_name),
-        Err(e) => println!("🦀 File removal failed: ❌ {}: {}", file_name, e),
+        Err(e) => {
+            println!("🦀 File removal failed: ❌ {}: {}", file_name, e)
+        }
     }
 }
 
@@ -56,11 +65,19 @@ fn main() {
     remove_file("qrcode.png");
 
     // Generate QR colorized QR Code, save it as a PNG file and remove it after.
-    process_qrcode(URL, |qrcode| qrcode.colorize(Rgba([255, 0, 0, 255])), "qrcode_colorized.png");
+    process_qrcode(
+        URL,
+        |qrcode| qrcode.colorize(Rgba([255, 0, 0, 255])),
+        "qrcode_colorized.png",
+    );
     remove_file("qrcode_colorized.png");
 
     // Generate QR Code, resize it and save it as a PNG file and remove it after.
-    process_qrcode(URL, |qrcode| qrcode.resize(512, 512), "qrcode_resized.png");
+    process_qrcode(
+        URL,
+        |qrcode| qrcode.resize(512, 512),
+        "qrcode_resized.png",
+    );
     remove_file("qrcode_resized.png");
 
     // SVG creation with decoupled functions
@@ -91,7 +108,9 @@ fn main() {
     let mut watermark_qr_img = watermark_qrcode.to_png(512);
 
     match add_watermark_to_qrcode(&mut watermark_qr_img, "bubba.ico") {
-        Ok(_) => save_image(&watermark_qr_img, "qrcode_watermarked.png"),
+        Ok(_) => {
+            save_image(&watermark_qr_img, "qrcode_watermarked.png")
+        }
         Err(e) => println!("🦀 Error adding watermark: {}", e),
     }
 

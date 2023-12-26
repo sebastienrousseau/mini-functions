@@ -39,10 +39,8 @@ cclm = "0.0.1"
 dtt = "0.0.5"
 hmac = "0.12.1"
 idk = "0.0.1"
-jsonwebtoken = "9.2.0"
 jwt = "0.16.0"
 serde = { version = "1.0.193", features = ["derive"] }
-serde_derive = "1.0.193"
 serde_json = "1.0.108"
 sha2 = "0.10.8"
 

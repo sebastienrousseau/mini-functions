@@ -102,12 +102,13 @@ mod tests {
         // Convert the QR code to a PNG image and assert that all of the dark cells are red.
         let image: RgbaImage = red_qrcode;
         for (x, y, pixel) in image.enumerate_pixels() {
-            let expected_color =
-                if qrcode.to_qrcode()[(x as usize, y as usize)] == qrcode::Color::Dark {
-                    Rgba([255, 0, 0, 255])
-                } else {
-                    Rgba([255, 255, 255, 255])
-                };
+            let expected_color = if qrcode.to_qrcode()[(x as usize, y as usize)]
+                == qrcode::Color::Dark
+            {
+                Rgba([255, 0, 0, 255])
+            } else {
+                Rgba([255, 255, 255, 255])
+            };
             assert_eq!(*pixel, expected_color);
         }
     }

@@ -81,7 +81,7 @@ pub struct JWT {
     pub token: String,
 }
 /// The Header struct contains the header of the JWT.
-#[derive(Debug, PartialEq, Eq, Hash, Clone, Serialize, Deserialize, PartialOrd)] 
+#[derive(Debug, PartialEq, Eq, Hash, Clone, Serialize, Deserialize, PartialOrd)]
 pub struct Header {
     /// Indicates the algorithm used to sign the JWT. Defaults to HS256.
     /// See the Algorithm enum for a list of supported algorithms.
