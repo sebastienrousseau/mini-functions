@@ -21,7 +21,6 @@ include = [
     "/LICENSE-APACHE",
     "/LICENSE-MIT",
     "/mdg/**",
-    "/qrc/**",
     "/README.md",
     "/src/**",
     "/tests/**",
@@ -37,7 +36,7 @@ license = "Apache-2.0 OR MIT"
 name = "mini-functions"
 readme = "README.md"
 repository = "https://github.com/sebastienrousseau/mini-functions.git"
-rust-version = "1.67"
+rust-version = "1.71.1"
 version = "0.0.10"
 
 [dependencies]
@@ -48,7 +47,7 @@ dtt = "0.0.5"
 hsh = "0.0.7"
 idk = "0.0.1"
 mdg = "0.0.1"
-qrc = "0.0.2"
+qrc = "0.0.5"
 rlg = "0.0.2"
 vrd = "0.0.5"
 serde_json = "1.0.108"
@@ -62,11 +61,10 @@ members = [
     "cjwt",
     "idk",
     "mdg",
-    "qrc",
 ] # List of workspace members
 
 [workspace.package]
-rust-version = "1.67"
+rust-version = "1.71.1"
 
 [badges]
 maintenance = { status = "actively-developed" }

@@ -5,8 +5,5 @@
 //!
 //! Provides access to JWT claims functions and types.
 
-/// Re-exported module containing JWT claim related types.
-pub use cclm::*;
-
 /// Re-exported [`Claims`] struct from cclm for accessing JWT claims.
 pub use cclm::Claims;
