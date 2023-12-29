@@ -96,11 +96,12 @@ mod tests {
     }
     #[test]
     fn reset_file() {
-        let digest = MD5::new()
-            .update_file("update.txt")
-            .reset()
-            .finalize()
-            .to_string();
+        let digest =
+            MD5::new()
+                .update_file("update.txt")
+                .reset()
+                .finalize()
+                .to_string();
         assert_eq!(digest, "d41d8cd98f00b204e9800998ecf8427e");
     }
     #[test]
@@ -312,5 +313,4 @@ mod tests {
     //     assert_eq!(i, NBYTES);
     //     assert_eq!(md5.count, [63, 0]);
     // }
-
 }

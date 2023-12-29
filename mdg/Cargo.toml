@@ -28,7 +28,6 @@ harness = false
 path = "benches/mdg.rs"
 
 [dependencies]
-cclm = "0.0.1"
 cjwt = "0.0.1"
 
 [dev-dependencies]

@@ -15,29 +15,27 @@
 //! [![GitHub](https://img.shields.io/badge/github-555555?style=for-the-badge&labelColor=000000&logo=github)](https://github.com/sebastienrousseau/mini-functions)
 //! [![Rust](https://img.shields.io/badge/rust-f04041?style=for-the-badge&labelColor=c0282d&logo=rust)](https://www.rust-lang.org)
 //! [![Crates.io](https://img.shields.io/crates/v/mini-functions.svg?style=for-the-badge&color=success&labelColor=27A006)](https://crates.io/crates/mini-functions)
-//! [![Lib.rs](https://img.shields.io/badge/lib.rs-v0.0.8-success.svg?style=for-the-badge&color=8A48FF&labelColor=6F36E4)](https://lib.rs/crates/mini-functions)
+//! [![Lib.rs](https://img.shields.io/badge/lib.rs-v0.0.10-success.svg?style=for-the-badge&color=8A48FF&labelColor=6F36E4)](https://lib.rs/crates/mini-functions)
 //! [![License](https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge&color=007EC6&labelColor=03589B)](http://opensource.org/licenses/MIT)
 //!
 //! </center>
 //!
 //! ## Overview
 //!
-//! Mini-Functions is a modern Rust library that prioritizes performance
-//! , security, and modularity. It provides a low-overhead access to
-//! functions for common programming tasks.
+//! Mini-Functions is a modern Rust library that prioritizes performance, security, and modularity. It provides a low-overhead access to functions for common programming tasks.
 //!
 //! ## Features
 //!
-//! - **[Claims](Claims/index.html)** - Provides access to the claims of a JSON Web Token (JWT).
-//! - **[Common](Common/index.html)** - Provides access to functions for accessing a collection of mathematical and cryptographic constants.
-//! - **[Date](Date/index.html)** - Provides access to functions for parsing, validating, manipulating, and formatting dates and times.
-//! - **[Errors](Errors/index.html)** - Provides access to error handling functions.
-//! - **[Hash](Hash/index.html)** - Provides access to a Quantum-Resistant Cryptographic Hash Library for Password Hashing and Verification.
-//! - **[Logs](Logs/index.html)** - Provides access to functions for application-level logging with a simple, readable output format.
-//! - **[JWT](JWT/index.html)** - Provides access to JSON Web Token (JWT) functions.
-//! - **[MD5](MD5/index.html)** - Provides access to MD5 functions.
-//! - **[QR](QR/index.html)** - Provides access to QR code functions.
-//! - **[Random](Random/index.html)** - Provides access to functions for generating high-quality random numbers based on the Mersenne Twister algorithm.
+//! - **[Claims](#Modules/Claims/index.html)** - Provides robust functionalities for handling various types of claims in JSON Web Tokens (JWT), including standard, custom, and private claims. Ideal for authentication and authorization processes in Rust applications.
+//! - **[Common](#Modules/Common/index.html)** - Offers a comprehensive collection of mathematical and cryptographic constants, such as prime numbers, Pi, cryptographic keys, and more. Essential for applications requiring high-level mathematical computations and secure cryptographic operations.
+//! - **[Date](#Modules/Date/index.html)** - Features an extensive suite of functions for parsing, validating, manipulating, and formatting dates and times. Supports a wide range of date/time formats and is tailored for time-sensitive Rust applications.
+//! - **[Errors](#Modules/Errors/index.html)** - Delivers advanced error handling functions with support for custom error types, integration with logging systems, and streamlined error propagation. Enhances the reliability and maintainability of Rust applications through robust error management.
+//! - **[Hash](#Modules/Hash/index.html)** - Specializes in Quantum-Resistant Cryptographic Hashing, offering a library tailored for password hashing and verification. Includes modern algorithms designed to withstand quantum-computing threats, ensuring long-term security.
+//! - **[JWT](#Modules/JWT/index.html)** - Provides a full range of JSON Web Token (JWT) functionalities, including secure token generation, decoding, and validation. Facilitates secure and efficient user authentication processes in Rust-based systems.
+//! - **[Logs](#Modules/Logs/index.html)** - Enables application-level logging with a focus on simplicity and readability. Features customizable log formats, multiple log levels, and easy integration with Rust applications, making debugging and monitoring more efficient.
+//! - **[MD5](#Modules/MD5/index.html)** - Offers MD5 hash functions, suitable for legacy systems compatibility. Includes a clear advisory on MD5's vulnerabilities and guidance on secure alternatives for modern applications.
+//! - **[QR](#Modules/QR/index.html)** - Allows for comprehensive QR code operations, including generation, customization, and scanning capabilities. Supports a variety of formats and use-cases, making it a versatile tool for Rust applications involving QR code integration.
+//! - **[Random](Random/index.html)** - Features high-quality random number generation using the Mersenne Twister algorithm. Ideal for applications requiring random data generation, including simulations, gaming, and cryptographic operations.
 //!
 //! These components provide a comprehensive set of functionality and offer powerful new capabilities to help you build better applications and services in the Rust programming language.
 //!
@@ -52,7 +50,7 @@
 //! Add the following to your `Cargo.toml` file:
 //! ```toml
 //! [dependencies]
-//! mini_functions = "0.0.8"
+//! mini_functions = "0.0.10"
 //! ```
 //! Then, add the following to your crate root:
 //! ```rust
@@ -81,45 +79,45 @@
 /// Provides access to the claims of a JSON Web Token (JWT).
 pub mod claims;
 
-/// Provides access to functions for accessing a collection of mathematical and cryptographic constants.
+/// Offers a comprehensive collection of mathematical and cryptographic constants.
 pub mod common;
 
-/// Provides access to functions for parsing, validating, manipulating, and formatting dates and times.
+/// Features an extensive suite of functions for handling dates and times.
 pub mod date;
 
-/// Provides access to error handling functions.
+/// Delivers advanced error handling functionalities.
 pub mod errors;
 
-/// Provides access to hash functions.
+/// Specializes in Quantum-Resistant Cryptographic Hashing.
 pub mod hash;
 
-/// Provides access to functions for application-level logging with a simple, readable output format.
+/// Enables application-level logging with customizable features.
 pub mod logs;
 
-/// Provides access to JSON Web Token (JWT) functions.
+/// Provides a full range of JSON Web Token (JWT) functionalities.
 pub mod jwt;
 
-/// Provides access to MD5 functions.
+/// Offers MD5 hash functions with advisories on usage.
 pub mod md5;
 
-/// Provides access to functions for generating high-quality random numbers based on the Mersenne Twister algorithm.
+/// Features high-quality random number generation using the Mersenne Twister algorithm.
 pub mod random;
 
-/// Provides access to QR code functions.
+/// Allows for comprehensive QR code operations.
 pub mod qr;
 
 /// Re-exports public contents of key modules
 pub mod mini_functions {
     pub use crate::{
         claims::*,
-        common::{self,cmn_macros},
-        date::{self,dtt_macros},
+        common::{self, cmn_macros},
+        date::{self, dtt_macros},
         errors::*,
-        hash::{self,hsh_macros},
+        hash::{self, hsh_macros},
         jwt::*,
-        logs::{self,rlg_macros},
-        md5::{self,mdg_constants},
+        logs::{self, rlg_macros},
+        md5::{self, mdg_constants},
         qr::*,
-        random::{self,vrd_macros},
+        random::{self, vrd_macros},
     };
 }

@@ -1,9 +1,11 @@
 // Copyright © 2023 Mini Functions library. All rights reserved.
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-use cmn::{constants::{Constant,ConstantValue}, cmn_constants};
+use cmn::{
+    cmn_constants,
+    constants::{Constant, ConstantValue},
+};
 use mini_functions::common::*;
-
 
 fn main() {
     // Create a Constants instance

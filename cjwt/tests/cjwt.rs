@@ -1,10 +1,10 @@
 #[cfg(test)]
 mod tests {
-    extern crate cjwt;
     extern crate cclm;
+    extern crate cjwt;
 
-    use self::cjwt::{Algorithm, Header, JWT};
     use self::cclm::Claims;
+    use self::cjwt::{Algorithm, Header, JWT};
 
     #[test]
     fn test_default_algorithm_is_hs256() {

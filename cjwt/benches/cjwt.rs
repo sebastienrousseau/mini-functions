@@ -21,12 +21,13 @@ fn bench_decode_benchmark(c: &mut Criterion) {
     let claims = Claims::default();
 
     let token = JWT::encode(header, claims, secret).unwrap();
-    let mut jwt = JWT {
-        header: Header::default(),
-        claims: Claims::default(),
-        signature: vec![],
-        token,
-    };
+    let mut jwt =
+        JWT {
+            header: Header::default(),
+            claims: Claims::default(),
+            signature: vec![],
+            token,
+        };
 
     c.bench_function("decode", move |b| b.iter(|| jwt.decode(secret)));
 }

@@ -5,5 +5,5 @@
 //!
 //! Provides access to hash functions and types.
 
-pub use hsh::*;
 pub use hsh::macros as hsh_macros;
+pub use hsh::*;

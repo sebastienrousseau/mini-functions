@@ -101,8 +101,7 @@ It takes just a few minutes to get up and running with `mini-functions`.
 
 ### Requirements
 
-The minimum supported Rust toolchain version is currently Rust
-**1.56.0** or later (stable).
+The minimum supported Rust toolchain version is currently Rust **1.71.1** or later (stable).
 
 ### Installation
 
@@ -122,7 +121,7 @@ To use the `mini-functions` library in your project, add the following to your `
 
 ```toml
 [dependencies]
-mini-functions = "0.0.8"
+mini-functions = "0.0.10"
 ```
 
 Add the following to your `main.rs` file:
@@ -207,6 +206,7 @@ cmn_constants! {
 println!("Euler's constant: {euler}"); 
 println!("Pi: {PI}");
 ```
+
 This allows convenient access to mathematical constants.
 
 To run the constants example:
@@ -291,8 +291,8 @@ The `mini_functions` crate provides password hashing and verification functions 
 
 It contains the following functions:
 
-- `Hash::new_{algo}` - Generate a hash for a password 
-- `set_password` - Update password for a hash 
+- `Hash::new_{algo}` - Generate a hash for a password
+- `set_password` - Update password for a hash
 - `verify` - Verify a password against a hash
 - `to_string` - Convert hash to a string
 
@@ -367,7 +367,7 @@ The `mini_functions` crate provides MD5 hash generation functionality through th
 
 It contains functions like:  
 
-- `MD5::hexdigest` - Generate MD5 hash for input 
+- `MD5::hexdigest` - Generate MD5 hash for input
 - `MD5::new` - Create MD5 hasher instance  
 - `update` - Update hasher with new input
 - `finalize` - Obtain final hash  
@@ -403,7 +403,7 @@ It contains functions like:
 - `QRCode::from_string` - Generate QR code from text
 - `to_png` - Convert to PNG image
 - `colorize` - Colorize the QR code
-- `resize` - Resize image 
+- `resize` - Resize image
 
 And macros like:
 
@@ -540,7 +540,6 @@ A big thank you to all the awesome contributors of [mini-functions ⧉][05] for 
 A special thank you goes to the [Rust Reddit ⧉][24] community for providing a lot of useful suggestions on how to improve this project.
 
 [00]: https://minifunctions.com "Mini Functions - Highly performant utility and wrapper functions library for Rust"
-[01]: http://www.apache.org/licenses/LICENSE-2.0 "Apache License, Version 2.0"
 [02]: http://opensource.org/licenses/MIT "MIT license"
 [03]: https://github.com/sebastienrousseau/mini-functions/issues "Mini Functions Issues"
 [04]: https://raw.githubusercontent.com/sebastienrousseau/mini-functions/main/.github/CONTRIBUTING.md "Mini Functions Contributing Guidelines"
@@ -551,27 +550,25 @@ A special thank you goes to the [Rust Reddit ⧉][24] community for providing a 
 [09]: https://lib.rs/crates/mini-functions "Mini Functions on Lib.rs"
 [10]: https://www.rust-lang.org/ "The Rust Programming Language"
 [11]: https://codecov.io/github/sebastienrousseau/mini-functions "Mini Functions Codecov"
-[12]: https://docs.rs/mini-functions/0.0.8/mini_functions/claims/index.html "Mini Functions Claims"
-[13]: https://docs.rs/mini-functions/0.0.8/mini_functions/common/index.html "Mini Functions Common"
-[14]: https://docs.rs/mini-functions/0.0.8/mini_functions/date/index.html "Mini Functions Date"
-[15]: https://docs.rs/mini-functions/0.0.8/mini_functions/errors/index.html "Mini Functions Errors"
-[16]: https://docs.rs/mini-functions/0.0.8/mini_functions/hash/index.html "Mini Functions Hash"
-[17]: https://docs.rs/mini-functions/0.0.8/mini_functions/logs/index.html "Mini Functions Logs"
-[18]: https://docs.rs/mini-functions/0.0.8/mini_functions/jwt/index.html "Mini Functions JWT"
-[19]: https://docs.rs/mini-functions/0.0.8/mini_functions/md5/index.html "Mini Functions MD5"
-[20]: https://docs.rs/mini-functions/0.0.8/mini_functions/qr/index.html "Mini Functions QR"
-[21]: https://docs.rs/mini-functions/0.0.8/mini_functions/random/index.html "Mini Functions Random"
+[12]: https://docs.rs/mini-functions/0.0.10/mini_functions/claims/index.html "Mini Functions Claims"
+[13]: https://docs.rs/mini-functions/0.0.10/mini_functions/common/index.html "Mini Functions Common"
+[14]: https://docs.rs/mini-functions/0.0.10/mini_functions/date/index.html "Mini Functions Date"
+[15]: https://docs.rs/mini-functions/0.0.10/mini_functions/errors/index.html "Mini Functions Errors"
+[16]: https://docs.rs/mini-functions/0.0.10/mini_functions/hash/index.html "Mini Functions Hash"
+[17]: https://docs.rs/mini-functions/0.0.10/mini_functions/logs/index.html "Mini Functions Logs"
+[18]: https://docs.rs/mini-functions/0.0.10/mini_functions/jwt/index.html "Mini Functions JWT"
+[19]: https://docs.rs/mini-functions/0.0.10/mini_functions/md5/index.html "Mini Functions MD5"
+[20]: https://docs.rs/mini-functions/0.0.10/mini_functions/qr/index.html "Mini Functions QR"
+[21]: https://docs.rs/mini-functions/0.0.10/mini_functions/random/index.html "Mini Functions Random"
 [22]: https://github.com/sebastienrousseau/mini-functions/actions "Mini Functions on GitHub Actions"
 [23]: https://www.rust-lang.org/policies/code-of-conduct "Rust Code of Conduct"
 [24]: https://www.reddit.com/r/rust/ "Reddit"
 
-[banner]: https://kura.pro/mini-functions/images/v2/banners/banner-mini-functions.svg "Mini Functions Banner"
 [codecov-badge]: https://img.shields.io/codecov/c/github/sebastienrousseau/mini-functions?style=for-the-badge&token=M1REIC3QCK 'Codecov'
 [crates-badge]: https://img.shields.io/crates/v/mini-functions.svg?style=for-the-badge 'Crates.io'
 [divider]: https://kura.pro/common/images/elements/divider.svg "divider"
 [docs-badge]: https://img.shields.io/docsrs/mini-functions.svg?style=for-the-badge 'Docs.rs'
-[libs-badge]: https://img.shields.io/badge/lib.rs-v0.0.8-orange.svg?style=for-the-badge 'Lib.rs'
+[libs-badge]: https://img.shields.io/badge/lib.rs-v0.0.10-orange.svg?style=for-the-badge 'Lib.rs'
 [license-badge]: https://img.shields.io/crates/l/mini-functions.svg?style=for-the-badge 'License'
-[logo]: https://kura.pro/mini-functions/images/v2/logos/mini-functions.svg "Mini Functions Logo"
 [made-with-rust]: https://img.shields.io/badge/rust-f04041?style=for-the-badge&labelColor=c0282d&logo=rust 'Made With Rust'
 [title]: https://kura.pro/mini-functions/images/v2/titles/title-mini-functions.svg "Mini Functions Logo"

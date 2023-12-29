@@ -5,5 +5,5 @@
 //!
 //! Provides access to functions for generating high-quality random numbers based on the Mersenne Twister algorithm.
 
-pub use vrd::*;
 pub use vrd::macros as vrd_macros;
+pub use vrd::*;
