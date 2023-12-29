@@ -4,7 +4,7 @@
 extern crate image;
 use image::{imageops, ImageBuffer, Rgba, RgbaImage};
 extern crate qrc;
-use self::qrc::{QRCode};
+use self::qrc::QRCode;
 
 use std::fs;
 
