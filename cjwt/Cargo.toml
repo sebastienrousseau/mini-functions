@@ -34,7 +34,7 @@ harness = false
 path = "benches/cjwt.rs"
 
 [dependencies]
-base64 = "0.21.5"
+base64 = "0.22.0"
 cclm = "0.0.1"
 dtt = "0.0.5"
 hmac = "0.12.1"
