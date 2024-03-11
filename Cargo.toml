@@ -51,7 +51,7 @@ qrc = "0.0.5"
 rlg = "0.0.2"
 vrd = "0.0.5"
 serde_json = "1.0.108"
-image = "0.24.7"
+image = "0.25.0"
 
 [workspace]
 exclude = ["src"]
