@@ -52,7 +52,7 @@ rlg = "0.0.4"
 vrd = "0.0.5"
 serde_json = "1.0.108"
 image = "0.25.1"
-commons = { git = "https://github.com/sebastienrousseau/commons", tag = "v0.0.1", default-features = false, features = ["error"] }
+commons = { package = "euxis-commons", git = "https://github.com/sebastienrousseau/commons", tag = "v0.0.3", default-features = false, features = ["error"] }
 
 [workspace]
 exclude = ["src"]
