@@ -38,7 +38,7 @@ serde = { version = "1.0.193", features = ["derive"] }
 
 [dev-dependencies]
 criterion = "0.5.1"
-dtt = "0.0.5"
+dtt = "0.0.11"
 
 [lib]
 crate-type = ["lib"]
