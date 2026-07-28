@@ -173,7 +173,7 @@ jobs:
       - name: Upload to codecov.io 📊
         id: upload-codecov
         if: github.ref == 'refs/heads/main' && !github.event.check_run.conclusion
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: false
