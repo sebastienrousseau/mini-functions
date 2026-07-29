@@ -42,7 +42,7 @@ version = "0.0.10"
 [dependencies]
 cclm = "0.0.1"
 cjwt = "0.0.1"
-cmn = "0.0.4"
+cmn = "0.0.6"
 dtt = "0.0.11"
 hsh = "0.0.7"
 idk = "0.0.1"
