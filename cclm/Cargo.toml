@@ -37,7 +37,7 @@ path = "benches/cclm.rs"
 serde = { version = "1.0.193", features = ["derive"] }
 
 [dev-dependencies]
-criterion = "0.5.1"
+criterion = "0.8.2"
 dtt = "0.0.11"
 
 [lib]
