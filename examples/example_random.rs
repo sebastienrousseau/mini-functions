@@ -106,17 +106,17 @@ fn main() {
     println!("🦀 Random float: {}", rand_float);
 
     // Generate a random 32-bit unsigned integer
-    let rand_pseudo = rand_pseudo!(rng);
+    let rand_pseudo = rand_int!(rng, 1, 100);
     println!("🦀 Random u32 using the PRNG: {}", rand_pseudo);
 
     // Seed the PRNG with a given value
     rand_seed!(rng, 42);
-    let rand_seed = rand_pseudo!(rng);
+    let rand_seed = rand_int!(rng, 1, 100);
     println!("🦀 Random u32 using the seeded PRNG: {}", rand_seed);
 
     // Twist the state of the PRNG
     rand_twist!(rng);
-    let rand_twist = rand_pseudo!(rng);
+    let rand_twist = rand_int!(rng, 1, 100);
     println!(
         "🦀 Random u32 after twisting the PRNG state: {}",
         rand_twist

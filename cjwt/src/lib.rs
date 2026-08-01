@@ -61,7 +61,7 @@ use self::cclm::Claims;
 use idk::jwt::JwtError;
 
 use base64::{engine::general_purpose, Engine as _};
-use hmac::{Hmac, Mac};
+use hmac::{Hmac, KeyInit, Mac};
 use serde::{Deserialize, Serialize};
 use sha2::Sha256;
 use std::{fmt, string::ToString};
@@ -218,8 +218,12 @@ impl JWT {
                 claims_b64_signature_b64.split_once('.').unwrap();
 
             // Base64-decode the header and claims
-            let header_json = general_purpose::STANDARD.decode(header_b64)?;
-            let claims_json = general_purpose::STANDARD.decode(claims_b64)?;
+            let header_json = general_purpose::STANDARD
+                .decode(header_b64)
+                .map_err(|e| JwtError::DecodeError(e.to_string()))?;
+            let claims_json = general_purpose::STANDARD
+                .decode(claims_b64)
+                .map_err(|e| JwtError::DecodeError(e.to_string()))?;
 
             // Allocate Vec of references to slices
             let header_json_tmp = header_json.as_slice();
@@ -264,7 +268,8 @@ impl JWT {
 
         // Sign the JWT with the secret
         type HmacSha256 = Hmac<Sha256>;
-        let mut hmac = HmacSha256::new_from_slice(secret)?;
+        let mut hmac = HmacSha256::new_from_slice(secret)
+            .map_err(|e| JwtError::InvalidLength(e.to_string()))?;
         hmac.update(jwt.as_bytes());
         let signature = hmac.finalize();
 
@@ -312,8 +317,12 @@ impl JWT {
                 claims_b64_signature_b64.split_once('.').unwrap();
 
             // Base64-decode the header and claims
-            let header_json = general_purpose::STANDARD.decode(header_b64)?;
-            let claims_json = general_purpose::STANDARD.decode(claims_b64)?;
+            let header_json = general_purpose::STANDARD
+                .decode(header_b64)
+                .map_err(|e| JwtError::DecodeError(e.to_string()))?;
+            let claims_json = general_purpose::STANDARD
+                .decode(claims_b64)
+                .map_err(|e| JwtError::DecodeError(e.to_string()))?;
 
             // Allocate Vec of references to slices
             let header_json_tmp = header_json.as_slice();
@@ -325,12 +334,14 @@ impl JWT {
 
             // Sign the JWT with the secret
             type HmacSha256 = Hmac<Sha256>;
-            let mut hmac = HmacSha256::new_from_slice(secret)?;
+            let mut hmac = HmacSha256::new_from_slice(secret)
+                .map_err(|e| JwtError::InvalidLength(e.to_string()))?;
             hmac.update(jwt.as_bytes());
             let signature = hmac.finalize();
 
             // Verify the signature
-            let mut hmac = HmacSha256::new_from_slice(secret)?;
+            let mut hmac = HmacSha256::new_from_slice(secret)
+                .map_err(|e| JwtError::InvalidLength(e.to_string()))?;
             hmac.update(inner_signature_b64.as_bytes());
             let inner_signature = hmac.finalize();
             if signature != inner_signature {

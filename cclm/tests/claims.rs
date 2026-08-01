@@ -20,7 +20,7 @@ mod tests {
         const CL_VP: &str = "MINI-FUNCTIONS-CLAIMS-VP";
 
         let date = DateTime::new();
-        let iso = date.iso_8601;
+        let iso = date.to_string();
 
         let mut claims = Claims::new();
         claims.set_claim("aud", CL_AUD);

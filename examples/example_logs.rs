@@ -2,29 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 use mini_functions::date::DateTime;
-use mini_functions::logs::{Log, LogFormat, LogLevel};
+use mini_functions::logs::Log;
 
 fn main() {
     let date = DateTime::new();
-    let iso = date.iso_8601;
-    let log_formats = vec![
-        LogFormat::CLF,
-        LogFormat::JSON,
-        LogFormat::CEF,
-        LogFormat::ELF,
-        LogFormat::GELF,
-        LogFormat::W3C,
-    ];
+    let iso = date.to_string();
 
-    for format in log_formats {
-        let log = Log::new(
-            "12345678-1234-1234-1234-1234567890ab",
-            &iso,
-            &LogLevel::INFO,
-            "SystemTrayEvent",
-            "Showing main window",
-            &format,
-        );
-        println!("🦀 Log::new():            ✅ {log}");
-    }
+    let log = Log::info("SystemTrayEvent - Showing main window");
+    println!("Log: [{}] session={} msg={}", iso, log.session_id, log.description);
 }
