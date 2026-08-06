@@ -30,12 +30,12 @@ include = [
 
 [dependencies]
 base64 = "0.23.0"
-hmac = "0.12.1"
+hmac = "0.13.0"
 jwt = "0.16.0"
 serde_json = "1.0.108"
 
 [dev-dependencies]
-criterion = "0.5.1"
+criterion = "0.8.2"
 
 [lib]
 crate-type = ["lib"]
@@ -47,3 +47,12 @@ default = []
 
 [package.metadata.docs.rs]
 all-features = true
+
+[lints.rust]
+# src/lib.rs carries `#![cfg_attr(feature = "bench", feature(test))]` for
+# nightly benchmarking. `bench` is deliberately NOT a real [features]
+# entry: declaring it would make --all-features turn it on, and
+# `feature(test)` is nightly-only (E0554 on the stable channel CI uses).
+# Declaring the cfg here tells rustc the value is expected, so
+# unexpected_cfgs stays quiet under -D warnings.
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(feature, values("bench"))'] }

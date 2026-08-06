@@ -122,5 +122,5 @@ pub fn mdg_i(x: u32, y: u32, z: u32) -> u32 {
 /// Rotate left
 #[inline(always)]
 pub fn rotate_left(x: u32, n: u32) -> u32 {
-    (x << n) | (x >> (32 - n))
+    x.rotate_left(n)
 }

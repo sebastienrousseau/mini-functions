@@ -113,7 +113,7 @@ pub mod mini_functions {
         common::{self, cmn_macros},
         date::{self, dtt_macros},
         errors::*,
-        hash::{self, hsh_macros},
+        hash::{self},
         jwt::*,
         logs::{self, rlg_macros},
         md5::{self, mdg_constants},

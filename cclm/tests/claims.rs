@@ -1,5 +1,4 @@
 #[cfg(test)]
-
 mod tests {
 
     extern crate cclm;
@@ -20,7 +19,10 @@ mod tests {
         const CL_VP: &str = "MINI-FUNCTIONS-CLAIMS-VP";
 
         let date = DateTime::new();
-        let iso = date.iso_8601;
+        // dtt dropped the `iso_8601` field; `format_rfc3339()` is the
+        // replacement, and RFC 3339 is a profile of ISO 8601, so the
+        // claim value is unchanged in shape.
+        let iso = date.format_rfc3339().expect("format the current time");
 
         let mut claims = Claims::new();
         claims.set_claim("aud", CL_AUD);

@@ -1,4 +1,5 @@
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{criterion_group, criterion_main, Criterion};
+use std::hint::black_box;
 extern crate mdg;
 use mdg::*;
 
@@ -37,12 +38,10 @@ fn transform_benchmark(c: &mut Criterion) {
 fn update_with_len_benchmark(c: &mut Criterion) {
     let mut mdg = MD5::new();
     let data = vec![0u8; BLOCK_LENGTH];
-    let nbytes = Some(BLOCK_LENGTH);
 
     c.bench_function("update_with_len", |b| {
         b.iter(|| {
-            // mdg.update_with_len(black_box(&data), black_box(nbytes));
-            mdg.update_with_len(black_box(&data), black_box(nbytes.unwrap_or(BLOCK_LENGTH)));
+            mdg.update_with_len(black_box(&data), black_box(BLOCK_LENGTH));
         });
     });
 }
@@ -80,7 +79,7 @@ fn update_file_benchmark(c: &mut Criterion) {
 }
 
 fn hexdigest_benchmark(c: &mut Criterion) {
-    let data = vec![0u8; BLOCK_LENGTH];
+    let data = [0u8; BLOCK_LENGTH];
 
     c.bench_function("hexdigest", |b| {
         b.iter(|| {

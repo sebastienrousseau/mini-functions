@@ -1,6 +1,7 @@
 extern crate criterion;
 use cclm::Claims;
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{criterion_group, criterion_main, Criterion};
+use std::hint::black_box;
 
 extern crate cjwt;
 use self::cjwt::{Algorithm, Header, JWT};
@@ -21,13 +22,12 @@ fn bench_decode_benchmark(c: &mut Criterion) {
     let claims = Claims::default();
 
     let token = JWT::encode(header, claims, secret).unwrap();
-    let mut jwt =
-        JWT {
-            header: Header::default(),
-            claims: Claims::default(),
-            signature: vec![],
-            token,
-        };
+    let mut jwt = JWT {
+        header: Header::default(),
+        claims: Claims::default(),
+        signature: vec![],
+        token,
+    };
 
     c.bench_function("decode", move |b| b.iter(|| jwt.decode(secret)));
 }

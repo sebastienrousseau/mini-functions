@@ -208,32 +208,40 @@ mod tests {
 
     #[test]
     fn test_decode_with_invalid_header() {
-        let mut jwt = JWT::default();
-        jwt.token = "invalid.header.structure".to_owned();
+        let mut jwt = JWT {
+            token: "invalid.header.structure".to_owned(),
+            ..Default::default()
+        };
         let secret = b"secret";
         assert!(JWT::decode(&mut jwt, secret).is_err());
     }
 
     #[test]
     fn test_decode_with_invalid_claims() {
-        let mut jwt = JWT::default();
-        jwt.token = "invalid.claims.structure".to_owned();
+        let mut jwt = JWT {
+            token: "invalid.claims.structure".to_owned(),
+            ..Default::default()
+        };
         let secret = b"secret";
         assert!(JWT::decode(&mut jwt, secret).is_err());
     }
 
     #[test]
     fn test_validate_with_invalid_claims() {
-        let mut jwt = JWT::default();
-        jwt.token = "invalid.claims.structure".to_string();
+        let jwt = JWT {
+            token: "invalid.claims.structure".to_string(),
+            ..Default::default()
+        };
         let secret = b"secret";
         assert!(JWT::validate(&jwt, secret).is_err());
     }
 
     #[test]
     fn test_decode_with_invalid_signature() {
-        let mut jwt = JWT::default();
-        jwt.token = "invalid.signature.value".to_owned();
+        let mut jwt = JWT {
+            token: "invalid.signature.value".to_owned(),
+            ..Default::default()
+        };
         let secret = b"secret";
         assert!(JWT::decode(&mut jwt, secret).is_err());
     }
@@ -252,16 +260,20 @@ mod tests {
 
     #[test]
     fn test_decode_with_expired_iat() {
-        let mut jwt = JWT::default();
-        jwt.token = "expired.iat.jwt".to_owned();
+        let mut jwt = JWT {
+            token: "expired.iat.jwt".to_owned(),
+            ..Default::default()
+        };
         let secret = b"secret";
         assert!(JWT::decode(&mut jwt, secret).is_err());
     }
 
     #[test]
     fn test_decode_with_expired_exp() {
-        let mut jwt = JWT::default();
-        jwt.token = "expired.exp.jwt".to_owned();
+        let mut jwt = JWT {
+            token: "expired.exp.jwt".to_owned(),
+            ..Default::default()
+        };
         let secret = b"secret";
         assert!(JWT::decode(&mut jwt, secret).is_err());
     }
