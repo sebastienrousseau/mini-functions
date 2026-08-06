@@ -29,19 +29,19 @@
 //! - `MD5::default()` - Returns the hash value of an empty string.
 //! - `MD5::digest()` - Returns the hash value of a string.
 //! - `MD5::finalize()` - Finalize the MD5 object and return the result
-//!    as a 16-byte array.
+//!   as a 16-byte array.
 //! - `MD5::hexdigest()` - Returns the hash value of a string as a
-//!    hexadecimal string.
+//!   hexadecimal string.
 //! - `MD5::new()` - Create a new instance of the MD5 struct.
 //! - `MD5::reset()` - Reset the internal state of the MD5 object.
 //! - `MD5::to_hex_string()` - Returns the hash value of a string as a
-//!    hexadecimal string.
+//!   hexadecimal string.
 //! - `MD5::to_string()` - Returns the hash value of a string as a
-//!    string.
+//!   string.
 //! - `MD5::update()` - Update the internal state of the MD5 object
-//!    with new data.
+//!   with new data.
 //! - `MD5::update_file()` - Update the internal state of the MD5
-//!    object with new data from a file.
+//!   object with new data from a file.
 //!
 //! To use this crate, add `mdg` to your `Cargo.toml`:
 //!

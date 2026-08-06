@@ -35,7 +35,7 @@ fn main() {
     let default = Random::default();
     println!("🦀 Random::default():     ✅ {default}");
 
-    // Generate a random number between 0 and u32::max_value()
+    // Generate a random number between 0 and u32::MAX
     let random = rng.rand();
     println!("🦀 Random::random():      ✅ {random}");
 
@@ -72,14 +72,11 @@ fn main() {
     // Generate a random number within a range
     let rand_range =
         rand_float!(rng) * (max as f32 - min as f32) + min as f32;
-    println!("🦀 Random number between 0 and 1: {}", rand_range);
+    println!("🦀 Random number in [{min}, {max}): {}", rand_range);
 
     // Generate a random 32-bit unsigned integer within a range
-    let rand_uint = random_range!(rng, 0, u32::max_value());
-    println!(
-        "🦀 Random u32 between 0 and u32::max_value(): {}",
-        rand_uint
-    );
+    let rand_uint = random_range!(rng, 0, u32::MAX);
+    println!("🦀 Random u32 between 0 and u32::MAX: {}", rand_uint);
 
     // Generate a random boolean with a given probability
     let rand_bool = rand_bool!(rng, 0.5);
@@ -106,17 +103,17 @@ fn main() {
     println!("🦀 Random float: {}", rand_float);
 
     // Generate a random 32-bit unsigned integer
-    let rand_pseudo = rand_pseudo!(rng);
+    let rand_pseudo = rng.pseudo();
     println!("🦀 Random u32 using the PRNG: {}", rand_pseudo);
 
     // Seed the PRNG with a given value
     rand_seed!(rng, 42);
-    let rand_seed = rand_pseudo!(rng);
+    let rand_seed = rng.pseudo();
     println!("🦀 Random u32 using the seeded PRNG: {}", rand_seed);
 
     // Twist the state of the PRNG
     rand_twist!(rng);
-    let rand_twist = rand_pseudo!(rng);
+    let rand_twist = rng.pseudo();
     println!(
         "🦀 Random u32 after twisting the PRNG state: {}",
         rand_twist

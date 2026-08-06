@@ -54,16 +54,16 @@ fn main() {
         TAU = cmn::constants::TAU
     }
     println!("🦀 Using cmn_constants! macro:");
-    println!("- Avogadro's constant:     ✅ {}", &AVOGADRO);
-    println!("- Boltzmann's constant:    ✅ {}", &BOLTZMANN);
-    println!("- Euler's constant:        ✅ {}", &EULER);
-    println!("- Gamma's constant:        ✅ {}", &GAMMA);
-    println!("- Phi's constant:          ✅ {}", &PHI);
-    println!("- Pi's constant:           ✅ {}", &PI);
-    println!("- Planck's constant:       ✅ {}", &PLANCK);
-    println!("- Silver ratio's constant: ✅ {}", &SILVER_RATIO);
-    println!("- Sqrt2's constant:        ✅ {}", &SQRT2);
-    println!("- Sqrt3's constant:        ✅ {}", &SQRT3);
-    println!("- Sqrt5's constant:        ✅ {}", &SQRT5);
-    println!("- Tau's constant:          ✅ {}", &TAU);
+    println!("- Avogadro's constant:     ✅ {}", AVOGADRO);
+    println!("- Boltzmann's constant:    ✅ {}", BOLTZMANN);
+    println!("- Euler's constant:        ✅ {}", EULER);
+    println!("- Gamma's constant:        ✅ {}", GAMMA);
+    println!("- Phi's constant:          ✅ {}", PHI);
+    println!("- Pi's constant:           ✅ {}", PI);
+    println!("- Planck's constant:       ✅ {}", PLANCK);
+    println!("- Silver ratio's constant: ✅ {}", SILVER_RATIO);
+    println!("- Sqrt2's constant:        ✅ {}", SQRT2);
+    println!("- Sqrt3's constant:        ✅ {}", SQRT3);
+    println!("- Sqrt5's constant:        ✅ {}", SQRT5);
+    println!("- Tau's constant:          ✅ {}", TAU);
 }

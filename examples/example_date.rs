@@ -1,108 +1,97 @@
 // Copyright © 2023 Mini Functions library. All rights reserved.
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
+//! Demonstrates the `date` module, a re-export of `dtt`'s [`DateTime`].
+//!
+//! `dtt` 0.0.11 replaced the old struct-of-strings (`date.hour` as a
+//! `String`, `date.iso_8601`, `relative_delta()`) with a compact
+//! `PrimitiveDateTime` + `UtcOffset` pair behind typed accessors, and
+//! fallible constructors now return `Result`. This example tracks that
+//! API.
+
 use mini_functions::date::DateTime;
 use std::str::FromStr;
 
-/// This is the main function for the build script.
-pub fn main() {
-    // Create a new DateTime object with a custom timezone (e.g., CET)
-    let paris_time = DateTime::new_with_tz("CET").now;
-    println!("🦀 Paris time:        ✅ {}", paris_time);
+/// Runs every demonstration, propagating any failure to `main`.
+fn run() -> Result<(), Box<dyn std::error::Error>> {
+    // A DateTime in a named timezone. Fallible: the name is validated.
+    let paris_time = DateTime::new_with_tz("CET")?;
+    println!("🦀 Paris time:        ✅ {paris_time}");
 
-    // Example of how to use the `new` function with the UTC timezone
+    // `new()` is infallible and yields the current time in UTC.
     let date = DateTime::new();
-    println!("🦀 Date:              ✅ {}", date.now);
-    println!("🦀 Day:               ✅ {}", date.day);
-    println!("🦀 Hour:              ✅ {}", date.hour);
-    println!("🦀 ISO 8601:          ✅ {}", date.iso_8601);
-    println!("🦀 ISO Week Number:   ✅ {}", date.iso_week);
-    println!("🦀 Microsecond:       ✅ {}", date.microsecond);
-    println!("🦀 Minute:            ✅ {}", date.minute);
-    println!("🦀 Month:             ✅ {}", date.month);
-    println!("🦀 Offset:            ✅ {}", date.offset);
-    println!("🦀 Ordinal Date:      ✅ {}", date.ordinal);
-    println!("🦀 Second:            ✅ {}", date.second);
-    println!("🦀 Time:              ✅ {}", date.time);
-    println!("🦀 Time zone:         ✅ {}", date.tz);
-    println!("🦀 Weekday:           ✅ {}", date.weekday);
-    println!("🦀 Year:              ✅ {}", date.year);
 
-    // Example of how to use the `is_valid_day` function
+    // `Display` renders RFC 3339, which is the ISO 8601 profile the old
+    // `iso_8601` field carried.
+    println!("🦀 Date:              ✅ {date}");
+    println!("🦀 RFC 3339:          ✅ {}", date.format_rfc3339()?);
+    println!("🦀 Day:               ✅ {}", date.day());
+    println!("🦀 Hour:              ✅ {}", date.hour());
+    println!("🦀 ISO Week Number:   ✅ {}", date.iso_week());
+    println!("🦀 Microsecond:       ✅ {}", date.microsecond());
+    println!("🦀 Minute:            ✅ {}", date.minute());
+    // `month()` returns a `Month`, whose `Display` is the month *name*.
+    println!("🦀 Month:             ✅ {}", date.month());
+    println!("🦀 Month number:      ✅ {}", u8::from(date.month()));
+    println!("🦀 Offset:            ✅ {}", date.offset());
+    println!("🦀 Ordinal Date:      ✅ {}", date.ordinal());
+    println!("🦀 Second:            ✅ {}", date.second());
     println!(
-        "🦀 Valid day (32):    ❌ {}",
-        DateTime::is_valid_day("32")
+        "🦀 Time:              ✅ {}",
+        date.format("[hour]:[minute]:[second]")?
     );
-    println!(
-        "🦀 Valid day:         ✅ {}",
-        DateTime::is_valid_day(&date.day.to_string())
-    );
+    println!("🦀 Weekday:           ✅ {}", date.weekday());
+    println!("🦀 Year:              ✅ {}", date.year());
+    println!("🦀 Unix timestamp:    ✅ {}", date.unix_timestamp());
 
-    // Example of how to use the `is_valid_hour` function
+    // Validation. `is_valid_iso_8601` replaces the per-component
+    // `is_valid_day` / `is_valid_hour` helpers.
     println!(
-        "🦀 Valid hour (24):   ❌ {}",
-        DateTime::is_valid_hour("24")
+        "🦀 Valid ISO 8601:    ❌ {}",
+        DateTime::is_valid_iso_8601("2024-13-01")
     );
     println!(
-        "🦀 Valid hour:        ✅ {}",
-        DateTime::is_valid_hour(&date.hour.to_string())
-    );
-
-    // Example of how to use the `next_day` function
-    let nd = DateTime::next_day(&date);
-    println!(
-        "🦀 Next day:          ✅ {}",
-        String::from(&nd.day.to_string())
+        "🦀 Valid ISO 8601:    ✅ {}",
+        DateTime::is_valid_iso_8601(&date.format_rfc3339()?)
     );
 
-    // Example of how to use the `previous_day` function
-    let pd = DateTime::previous_day(&date);
-    println!(
-        "🦀 Previous day:      ✅ {}",
-        String::from(&pd.day.to_string())
-    );
+    // Day arithmetic. Both directions are fallible because they can
+    // leave the representable range.
+    println!("🦀 Next day:          ✅ {}", date.next_day()?.day());
+    println!("🦀 Previous day:      ✅ {}", date.previous_day()?.day());
 
-    // Example of how to use the `from_str` function
+    // Parsing, via either `FromStr` or the inherent `parse`.
     let date_str = "2022-01-01T12:00:00+01:00";
-    let expected = Ok(DateTime {
-        day: 1,
-        hour: 12,
-        iso_8601: date_str.to_owned(),
-        iso_week: 0,
-        microsecond: 0,
-        minute: 0,
-        month: "".to_owned(),
-        now: "".to_owned(),
-        offset: "".to_owned(),
-        ordinal: 0,
-        second: 0,
-        time: "".to_owned(),
-        tz: "".to_owned(),
-        weekday: "".to_owned(),
-        year: 2022,
-    });
-    let result = DateTime::from_str(date_str);
-    println!("🦀 from_str():        ✅ {}", result == expected);
-    println!("🦀 from_str(day):     ✅ {}", result.unwrap().day);
+    let parsed = DateTime::from_str(date_str)?;
+    println!("🦀 from_str(year):    ✅ {}", parsed.year());
+    println!("🦀 from_str(day):     ✅ {}", parsed.day());
+    println!("🦀 from_str(hour):    ✅ {}", parsed.hour());
+    println!("🦀 from_str(offset):  ✅ {}", parsed.offset());
 
-    // Example of how to use the `relative_delta` function
-    let mut dt = DateTime::new();
-    dt.day = "11".parse::<u8>().unwrap();
-    dt.hour = "08".parse::<u8>().unwrap();
-    dt.iso_week = "19".parse::<u8>().unwrap();
-    dt.microsecond = "000000".parse::<u32>().unwrap();
-    dt.minute = "08".parse::<u8>().unwrap();
-    dt.month = String::from("05");
-    dt.second = "00".parse::<u8>().unwrap();
-    dt.year = "1975".parse::<i32>().unwrap();
+    // `relative_delta()` is gone; build a specific instant explicitly
+    // and shift it with the typed arithmetic helpers instead.
+    // The offset argument is a `time::UtcOffset`, which `dtt` does not
+    // re-export; take it off an existing value rather than pulling
+    // `time` in as a direct dependency just to name the type. `date` is
+    // UTC, so this builds the instant in UTC.
+    let dt =
+        DateTime::from_components(1975, 5, 11, 8, 8, 0, date.offset())?;
+    println!("🦀 Built:             ✅ {dt}");
+    println!("🦀 Built week:        ✅ {}", dt.iso_week());
+    println!("🦀 Built weekday:     ✅ {}", dt.weekday());
+    println!("🦀 + 30 days:         ✅ {}", dt.add_days(30)?);
+    println!("🦀 + 6 months:        ✅ {}", dt.add_months(6)?);
+    println!("🦀 - 5 years:         ✅ {}", dt.sub_years(5)?);
+    println!("🦀 Start of month:    ✅ {}", dt.start_of_month()?);
+    println!("🦀 End of year:       ✅ {}", dt.end_of_year()?);
 
-    let new_dt = dt.relative_delta();
-    println!("🦀 Rd day:(11)        ✅ {}", new_dt.day);
-    println!("🦀 Rd hour:(08)       ✅ {}", new_dt.hour);
-    println!("🦀 Rd week:(19)       ✅ {}", new_dt.iso_week);
-    println!("🦀 Rd ms:(000000)     ✅ {}", new_dt.microsecond);
-    println!("🦀 Rd minute:(08)     ✅ {}", new_dt.minute);
-    println!("🦀 Rd month:(05)      ✅ {}", new_dt.month);
-    println!("🦀 Rd second:(00)     ✅ {}", new_dt.second);
-    println!("🦀 Rd year:(1975)     ✅ {}", new_dt.year);
+    Ok(())
+}
+
+/// Entry point for the example.
+pub fn main() {
+    if let Err(e) = run() {
+        eprintln!("example_date failed: {e}");
+        std::process::exit(1);
+    }
 }

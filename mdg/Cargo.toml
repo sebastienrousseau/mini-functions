@@ -28,10 +28,10 @@ harness = false
 path = "benches/mdg.rs"
 
 [dependencies]
-cjwt = "0.0.1"
+cjwt = { version = "0.0.1", path = "../cjwt" }
 
 [dev-dependencies]
-criterion = "0.5.1"
+criterion = "0.8.2"
 
 [lib]
 name = "mdg"
@@ -43,3 +43,12 @@ default = []
 
 [package.metadata.docs.rs]
 all-features = true
+
+[lints.rust]
+# src/lib.rs carries `#![cfg_attr(feature = "bench", feature(test))]` for
+# nightly benchmarking. `bench` is deliberately NOT a real [features]
+# entry: declaring it would make --all-features turn it on, and
+# `feature(test)` is nightly-only (E0554 on the stable channel CI uses).
+# Declaring the cfg here tells rustc the value is expected, so
+# unexpected_cfgs stays quiet under -D warnings.
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(feature, values("bench"))'] }

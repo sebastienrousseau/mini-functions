@@ -1,30 +1,29 @@
 // Copyright © 2023 Mini Functions library. All rights reserved.
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-use mini_functions::hash::{
-    models::{hash::Hash, hash_algorithm::HashAlgorithm},
-    new_hash,
+use mini_functions::hash::models::{
+    hash::Hash, hash_algorithm::HashAlgorithm,
 };
 use std::str::FromStr;
 
-/// This function demonstrates how to create and verify password hashes using Argon2i, Bcrypt, and Scrypt algorithms.
+/// This function demonstrates how to create and verify password hashes using Argon2id, Bcrypt, and Scrypt algorithms.
 fn create_and_verify_hash() {
-    // Create new hashes for Argon2i, Bcrypt, and Scrypt
-    let hash_argon2i =
-        Hash::new_argon2i("password", "salt1234".into()).unwrap();
+    // Create new hashes for Argon2id, Bcrypt, and Scrypt
+    let hash_argon2id =
+        Hash::new_argon2id("password", "salt1234".into()).unwrap();
     let hash_bcrypt = Hash::new_bcrypt("password", 16).unwrap();
     let hash_scrypt =
         Hash::new_scrypt("password", "salt1234".into()).unwrap();
 
     // Verify these hashes
-    verify_password(&hash_argon2i, "password", "Argon2i");
+    verify_password(&hash_argon2id, "password", "Argon2id");
     verify_password(&hash_bcrypt, "password", "BCrypt");
     verify_password(&hash_scrypt, "password", "Scrypt");
 
     // Update the hashes
-    let mut new_hash_argon2i = hash_argon2i.clone();
-    new_hash_argon2i
-        .set_password("new_password", "salt1234", "argon2i")
+    let mut new_hash_argon2id = hash_argon2id.clone();
+    new_hash_argon2id
+        .set_password("new_password", "salt1234", "argon2id")
         .unwrap();
 
     let mut new_hash_bcrypt = hash_bcrypt.clone();
@@ -38,7 +37,7 @@ fn create_and_verify_hash() {
         .unwrap();
 
     // Verify the updated hashes
-    verify_password(&new_hash_argon2i, "new_password", "Argon2i");
+    verify_password(&new_hash_argon2id, "new_password", "Argon2id");
     verify_password(&new_hash_bcrypt, "new_password", "BCrypt");
     verify_password(&new_hash_scrypt, "new_password", "Scrypt");
 }
@@ -99,27 +98,24 @@ fn parse_and_display_hash() {
     // Print header for hash to string conversion
     println!("\n===[ Hash to String Conversion ]===\n");
 
-    let argon2i_hash = new_hash!("password", "salt12345", "argon2i");
-    let bcrypt_hash = new_hash!("password", "salt12345", "bcrypt");
-    let scrypt_hash = new_hash!("password", "salt12345", "scrypt");
+    let argon2id_hash = Hash::new("password", "salt12345", "argon2id");
+    let bcrypt_hash = Hash::new("password", "salt12345", "bcrypt");
+    let scrypt_hash = Hash::new("password", "salt12345", "scrypt");
 
-    let argon2i_hash_string =
-        match argon2i_hash {
-            Ok(hash) => hash.to_string_representation(),
-            Err(e) => format!("Error: {}", e),
-        };
-    let bcrypt_hash_string =
-        match bcrypt_hash {
-            Ok(hash) => hash.to_string_representation(),
-            Err(e) => format!("Error: {}", e),
-        };
-    let scrypt_hash_string =
-        match scrypt_hash {
-            Ok(hash) => hash.to_string_representation(),
-            Err(e) => format!("Error: {}", e),
-        };
+    let argon2id_hash_string = match argon2id_hash {
+        Ok(hash) => hash.to_string_representation(),
+        Err(e) => format!("Error: {}", e),
+    };
+    let bcrypt_hash_string = match bcrypt_hash {
+        Ok(hash) => hash.to_string_representation(),
+        Err(e) => format!("Error: {}", e),
+    };
+    let scrypt_hash_string = match scrypt_hash {
+        Ok(hash) => hash.to_string_representation(),
+        Err(e) => format!("Error: {}", e),
+    };
 
-    println!("🦀 Argon2i Hash to a string: {}", argon2i_hash_string);
+    println!("🦀 Argon2id Hash to a string: {}", argon2id_hash_string);
     println!("🦀 Bcrypt Hash to a string: {}", bcrypt_hash_string);
     println!("🦀 Scrypt Hash to a string: {}", scrypt_hash_string);
 

@@ -1,5 +1,4 @@
 #[cfg(test)]
-
 mod tests {
     extern crate idk;
     use idk::property::Property;

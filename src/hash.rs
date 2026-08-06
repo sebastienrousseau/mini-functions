@@ -5,5 +5,7 @@
 //!
 //! Provides access to hash functions and types.
 
-pub use hsh::macros as hsh_macros;
+// `hsh` removed its `macros` module in 0.0.10, so there is nothing left
+// to re-export here. Kept as a note so the removal is not mistaken for
+// an accidental deletion.
 pub use hsh::*;

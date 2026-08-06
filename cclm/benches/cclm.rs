@@ -2,7 +2,8 @@ extern crate cclm;
 use self::cclm::Claims;
 
 extern crate criterion;
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{criterion_group, criterion_main, Criterion};
+use std::hint::black_box;
 
 fn memory_usage_benchmark(c: &mut Criterion) {
     c.bench_function("memory_usage", |b| {

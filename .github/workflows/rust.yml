@@ -118,6 +118,16 @@ jobs:
           echo "VERSION=$NEW_VERSION" >> $GITHUB_ENV
         shell: /bin/bash -e {0}
 
+      - name: Add Rust target 🎯
+        id: add-target
+        # `cross` supplies a prebuilt std through its Docker images, which
+        # exist for the Linux targets but not for darwin — there it falls
+        # back to plain cargo on the host. macos-latest is arm64 now, so
+        # x86_64-apple-darwin's std is absent and the build dies with
+        # "can't find crate for `core`". Harmless for the Docker targets.
+        run: rustup target add ${{ matrix.target }}
+        shell: /bin/bash -e {0}
+
       - name: Install Cross 🦀
         id: install-cross
         run: |

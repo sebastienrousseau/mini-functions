@@ -61,7 +61,7 @@ use self::cclm::Claims;
 use idk::jwt::JwtError;
 
 use base64::{engine::general_purpose, Engine as _};
-use hmac::{Hmac, Mac};
+use hmac::{Hmac, KeyInit, Mac};
 use serde::{Deserialize, Serialize};
 use sha2::Sha256;
 use std::{fmt, string::ToString};
@@ -126,20 +126,25 @@ pub enum Algorithm {
     ES512,
 }
 
-impl ToString for Algorithm {
-    /// Converts an Algorithm enum to a string.
-    fn to_string(&self) -> String {
-        match self {
-            Algorithm::HS256 => "HS256".to_string(),
-            Algorithm::HS384 => "HS384".to_string(),
-            Algorithm::HS512 => "HS512".to_string(),
-            Algorithm::RS256 => "RS256".to_string(),
-            Algorithm::RS384 => "RS384".to_string(),
-            Algorithm::RS512 => "RS512".to_string(),
-            Algorithm::ES256 => "ES256".to_string(),
-            Algorithm::ES384 => "ES384".to_string(),
-            Algorithm::ES512 => "ES512".to_string(),
-        }
+impl std::fmt::Display for Algorithm {
+    /// Writes the JWS `alg` name, e.g. `HS256`.
+    ///
+    /// Implemented as `Display` rather than `ToString` directly: the
+    /// blanket impl gives `.to_string()` for free, and this additionally
+    /// makes the variant usable in `{}` formatting.
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let name = match self {
+            Algorithm::HS256 => "HS256",
+            Algorithm::HS384 => "HS384",
+            Algorithm::HS512 => "HS512",
+            Algorithm::RS256 => "RS256",
+            Algorithm::RS384 => "RS384",
+            Algorithm::RS512 => "RS512",
+            Algorithm::ES256 => "ES256",
+            Algorithm::ES384 => "ES384",
+            Algorithm::ES512 => "ES512",
+        };
+        f.write_str(name)
     }
 }
 
@@ -196,13 +201,13 @@ impl JWT {
     /// # Arguments
     ///
     /// * `secret` - A byte array containing the secret used to sign
-    /// the JWT.
+    ///   the JWT.
     ///
     /// # Returns
     ///
     /// * `Ok(String)` - The decoded JWT as a string.
     /// * `Err(Error)` - An error if the JWT is invalid or if there was
-    /// a problem decoding it.
+    ///   a problem decoding it.
     ///
     pub fn decode(&mut self, secret: &[u8]) -> Result<String, JwtError> {
         let jwt = &self.token;

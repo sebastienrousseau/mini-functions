@@ -1,5 +1,4 @@
 #[cfg(test)]
-
 // TODO: Add more tests to bring the code coverage to 100%
 mod tests {
     extern crate mdg;
@@ -96,12 +95,11 @@ mod tests {
     }
     #[test]
     fn reset_file() {
-        let digest =
-            MD5::new()
-                .update_file("update.txt")
-                .reset()
-                .finalize()
-                .to_string();
+        let digest = MD5::new()
+            .update_file("update.txt")
+            .reset()
+            .finalize()
+            .to_string();
         assert_eq!(digest, "d41d8cd98f00b204e9800998ecf8427e");
     }
     #[test]
@@ -192,7 +190,7 @@ mod tests {
         // Test updating with data that results in overflow of count[0]
         let data = b"test data";
         let nbytes = data.len();
-        md5.count[0] = u32::max_value();
+        md5.count[0] = u32::MAX;
         md5.update_with_len(data, nbytes);
         assert_eq!(md5.count, [71, 1]);
         // Check the state of the md5 after the update

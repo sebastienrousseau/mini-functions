@@ -29,30 +29,30 @@
 //! `Property`, `Stacktrace`, and `Traits`.
 //!
 //! - **The common module:** This module provides a foundation of common
-//! functionalities that can be utilized throughout the entire project.
-//! These functionalities serve as a building block for the rest of the
-//! project, making it easier for developers to create and manage their
-//! code.
+//!   functionalities that can be utilized throughout the entire project.
+//!   These functionalities serve as a building block for the rest of the
+//!   project, making it easier for developers to create and manage their
+//!   code.
 //! - **The error module:** This module contains all the error types
-//! that are used in the project. By providing a centralized location
-//! for errors, developers can quickly and easily identify and resolve
-//! any issues that may arise.
+//!   that are used in the project. By providing a centralized location
+//!   for errors, developers can quickly and easily identify and resolve
+//!   any issues that may arise.
 //! - **The jwt module:** This module offers the tools necessary to
-//! encode and decode JSON Web Tokens (JWT). With a simple, easy-to-use
-//! interface, developers can ensure secure communication between
-//! parties.
+//!   encode and decode JSON Web Tokens (JWT). With a simple, easy-to-use
+//!   interface, developers can ensure secure communication between
+//!   parties.
 //! - **The property module:** This module provides the functionality to
-//! create and manage properties. By utilizing this module, developers
-//! can keep track of all properties within the project and make changes
-//! as necessary.
+//!   create and manage properties. By utilizing this module, developers
+//!   can keep track of all properties within the project and make changes
+//!   as necessary.
 //! - **The stacktrace module:** This module offers the tools to create
-//! and manage stacktraces. By providing detailed information about the
-//! execution of the code, developers can quickly identify and resolve
-//! any issues that may arise.
+//!   and manage stacktraces. By providing detailed information about the
+//!   execution of the code, developers can quickly identify and resolve
+//!   any issues that may arise.
 //! - **The traits module:** This module provides functionality to
-//! create and manage traits. By utilizing this module, developers can
-//! ensure that all traits within the project are consistent and
-//! well-defined.
+//!   create and manage traits. By utilizing this module, developers can
+//!   ensure that all traits within the project are consistent and
+//!   well-defined.
 //!
 //! ## Usage
 //!
