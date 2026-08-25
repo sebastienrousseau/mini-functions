@@ -51,7 +51,17 @@ qrc = "0.0.6"
 rlg = "0.0.11"
 vrd = "0.0.12"
 serde_json = "1.0.108"
-image = "0.25.1"
+# default-features = false drops the OpenEXR decoder, which pulls in
+# `pulp` -- a SIMD crate whose const-eval size assertion fails to
+# compile on 32-bit targets (i686). Only PNG is actually written
+# here; the feature set matches what qrc already requests, so cargo
+# resolves one consistent set across the graph.
+image = { version = "0.25.1", default-features = false, features = [
+    "png",
+    "jpeg",
+    "gif",
+    "ico",
+] }
 
 [workspace]
 exclude = ["src"]
