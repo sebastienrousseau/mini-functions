@@ -48,7 +48,7 @@ hsh = "0.0.10"
 idk = { version = "0.0.1", path = "idk" }
 mdg = { version = "0.0.1", path = "mdg" }
 qrc = "0.0.6"
-rlg = "0.0.11"
+rlg = "0.0.12"
 vrd = "0.0.12"
 serde_json = "1.0.108"
 # default-features = false drops the OpenEXR decoder, which pulls in
