@@ -142,9 +142,8 @@ mod tests {
         let encoded = encoded_result.unwrap();
         jwt.token.clone_from(&encoded);
         let decoded = JWT::decode(&mut jwt, secret);
-        if let Ok(decoded_token) = decoded {
-            assert_eq!(decoded_token, encoded);
-        }
+        assert!(decoded.is_ok(), "Expected decode to succeed, got: {:?}", decoded);
+        assert_eq!(decoded.unwrap(), encoded);
     }
 
     #[test]
@@ -300,5 +299,23 @@ mod tests {
         };
         let secret = b"secret";
         assert!(JWT::validate(&jwt, secret).is_err());
+    }
+
+    #[test]
+    fn test_decode_malformed_tokens_do_not_panic() {
+        let mut jwt = JWT::default();
+        let secret = b"secret";
+
+        // No dots
+        jwt.token = "malformed_token".to_string();
+        assert!(JWT::decode(&mut jwt, secret).is_err());
+
+        // Single dot
+        jwt.token = "header.payload".to_string();
+        assert!(JWT::decode(&mut jwt, secret).is_err());
+
+        // Invalid signature
+        jwt.token = "header.payload.invalidsig".to_string();
+        assert!(JWT::decode(&mut jwt, secret).is_err());
     }
 }

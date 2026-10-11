@@ -18,11 +18,17 @@
 //!
 //! ## Overview
 //!
-//! The Message Digest (MDG) is an easy way to produces a 128-bit
-//! (16-byte) hash value using the MD5 cryptographic hash function. It
-//! provides a struct, MD5, that can generate a message digest of data
-//! in a secure, one-way hash. The message digest can verify the
-//! integrity of the data without having to store the entire message.
+//! The Message Digest (MDG) produces a 128-bit (16-byte) hash value
+//! using the legacy MD5 hash function.
+//!
+//! ### ⚠️ Security Warning
+//!
+//! MD5 is cryptographically broken and vulnerable to collision attacks.
+//! It MUST NOT be used for security-sensitive purposes such as digital
+//! signatures, authentication tokens, password hashing, or cryptographic
+//! integrity verification. It is provided strictly for non-cryptographic
+//! checksums and legacy compatibility. For cryptographic hashing, use
+//! SHA-256 or BLAKE3.
 //!
 //! Several options are available to produce the hash value:
 //!

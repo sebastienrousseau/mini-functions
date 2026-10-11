@@ -211,42 +211,48 @@ impl JWT {
     ///
     pub fn decode(&mut self, secret: &[u8]) -> Result<String, JwtError> {
         let jwt = &self.token;
-        {
-            // Split the JWT into its header, claims, and signature
-            // let (header_b64, claims_b64_signature_b64) = jwt.split_once('.').unwrap();
-            let (header_b64, claims_b64_signature_b64) = match jwt.split_once('.') {
-                Some(tuple) => tuple,
-                None => return Err(JwtError::DecodeError("Invalid JWT".to_string())),
-            };
+        let (header_b64, rest) = jwt
+            .split_once('.')
+            .ok_or_else(|| JwtError::DecodeError("Invalid JWT: missing header separator".to_string()))?;
 
-            let (claims_b64, inner_signature_b64) =
-                claims_b64_signature_b64.split_once('.').unwrap();
+        let (claims_b64, inner_signature_b64) = rest
+            .split_once('.')
+            .ok_or_else(|| JwtError::DecodeError("Invalid JWT: missing payload separator".to_string()))?;
 
-            // Base64-decode the header and claims
-            let header_json = general_purpose::STANDARD.decode(header_b64)?;
-            let claims_json = general_purpose::STANDARD.decode(claims_b64)?;
+        // Base64-decode the header and claims
+        let header_json = general_purpose::STANDARD.decode(header_b64)?;
+        let claims_json = general_purpose::STANDARD.decode(claims_b64)?;
 
-            // Allocate Vec of references to slices
-            let header_json_tmp = header_json.as_slice();
-            let claims_json = claims_json.as_slice();
+        // Deserialize the header and claims from JSON
+        let decoded_header: Header = serde_json::from_slice(&header_json)?;
+        let decoded_claims: Claims = serde_json::from_slice(&claims_json)?;
 
-            // Deserialize the header and claims from JSON
-            let _decoded_header: Header = serde_json::from_slice(header_json_tmp)?;
-            let _decoded_claims: Claims = serde_json::from_slice(claims_json)?;
+        // Recompute the HMAC-SHA256 signature over the signing input
+        let signing_input = format!("{header_b64}.{claims_b64}");
+        type HmacSha256 = Hmac<Sha256>;
+        let mut hmac = HmacSha256::new_from_slice(secret)
+            .map_err(|e| JwtError::DecodeError(e.to_string()))?;
+        hmac.update(signing_input.as_bytes());
+        let signature = hmac.finalize();
+        let signature_b64 = general_purpose::STANDARD.encode(signature.into_bytes());
 
-            // Sign the JWT with the secret
-            type HmacSha256 = Hmac<Sha256>;
-            let mut hmac = HmacSha256::new_from_slice(secret).unwrap();
-            hmac.update(jwt.as_bytes());
-            let signature = hmac.finalize();
-            let signature_b64 = general_purpose::STANDARD.encode(signature.into_bytes());
+        // Constant-time signature comparison to eliminate timing side-channel leakage
+        let sig_a = signature_b64.as_bytes();
+        let sig_b = inner_signature_b64.as_bytes();
+        let matches = if sig_a.len() != sig_b.len() {
+            false
+        } else {
+            sig_a.iter().zip(sig_b.iter()).fold(0, |acc, (x, y)| acc | (x ^ y)) == 0
+        };
 
-            // Compare the signature to the signature in the JWT
-            if signature_b64 != inner_signature_b64 {
-                return Err(JwtError::SignatureInvalid(signature_b64));
-            }
-            Ok(jwt.to_string())
+        if !matches {
+            return Err(JwtError::SignatureInvalid(signature_b64));
         }
+
+        self.header = decoded_header;
+        self.claims = decoded_claims;
+
+        Ok(jwt.to_string())
     }
 
     /// Encodes a JWT token using the provided header, claims, and
@@ -264,18 +270,18 @@ impl JWT {
         let header_b64 = general_purpose::STANDARD.encode(header_json.as_bytes());
         let claims_b64 = general_purpose::STANDARD.encode(claims_json.as_bytes());
 
-        // Concatenate the encoded header, claims, and separators
-        let jwt = format!("{header_b64}.{claims_b64}.");
+        // Concatenate the encoded header and claims (signing input)
+        let signing_input = format!("{header_b64}.{claims_b64}");
 
         // Sign the JWT with the secret
         type HmacSha256 = Hmac<Sha256>;
         let mut hmac = HmacSha256::new_from_slice(secret)?;
-        hmac.update(jwt.as_bytes());
+        hmac.update(signing_input.as_bytes());
         let signature = hmac.finalize();
 
-        // Base64-encode the signature and concatenate it with the JWT
+        // Base64-encode the signature and append to signing input
         let signature_b64 = general_purpose::STANDARD.encode(signature.into_bytes());
-        let jwt = format!("{jwt}.{signature_b64}");
+        let jwt = format!("{signing_input}.{signature_b64}");
 
         Ok(jwt)
     }
