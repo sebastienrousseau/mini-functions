@@ -14,7 +14,7 @@ keywords = ["api", "cjwt", "json", "jws", "jwt"]
 license = "MIT OR Apache-2.0"
 name = "cjwt"
 repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/cjwt/"
-rust-version = "1.66.1"
+rust-version = "1.89.0"
 version = "0.0.1"
 include = [
     "../../LICENSE-APACHE",

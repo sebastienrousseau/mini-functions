@@ -14,7 +14,7 @@ keywords = ["authorization", "cclm", "mini-functions", "security", "token"]
 license = "MIT OR Apache-2.0"
 name = "cclm"
 repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/cclm/"
-rust-version = "1.67"
+rust-version = "1.89.0"
 version = "0.0.1"
 include = [
     "../../LICENSE-APACHE",
