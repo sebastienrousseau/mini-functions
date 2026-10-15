@@ -19,3 +19,6 @@ the [GitHub releases page](https://github.com/sebastienrousseau/mini-functions/r
 - CI runs the shared pipelines security workflow (cargo audit, cargo
   deny, CodeQL and dependency review), as the other crates in the
   family do. cargo deny ran nowhere in CI before.
+- The release workflow builds with `cross build` directly instead of
+  the archived `actions-rs/cargo` action, whose node12 runner GitHub no
+  longer runs.
