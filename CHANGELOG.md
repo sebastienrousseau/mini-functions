@@ -22,3 +22,7 @@ the [GitHub releases page](https://github.com/sebastienrousseau/mini-functions/r
 - The release workflow builds with `cross build` directly instead of
   the archived `actions-rs/cargo` action, whose node12 runner GitHub no
   longer runs.
+- The release changelog step writes the version heading, the
+  template and the commit subjects in one redirect. The heading used to
+  be appended and then overwritten by the template, so release notes
+  started without it.
