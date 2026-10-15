@@ -101,7 +101,7 @@ It takes just a few minutes to get up and running with `mini-functions`.
 
 ### Requirements
 
-The minimum supported Rust toolchain version is currently Rust **1.71.1** or later (stable).
+The minimum supported Rust toolchain version is currently Rust **1.89.0** or later (stable).
 
 ### Installation
 
