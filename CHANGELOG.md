@@ -16,3 +16,6 @@ the [GitHub releases page](https://github.com/sebastienrousseau/mini-functions/r
   the licence `deny` list are gone), so `cargo deny check` could not
   run. The allow list now names the licences the old rules accepted in
   the dependency graph; the policy is unchanged.
+- CI runs the shared pipelines security workflow (cargo audit, cargo
+  deny, CodeQL and dependency review), as the other crates in the
+  family do. cargo deny ran nowhere in CI before.
