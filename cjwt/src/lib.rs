@@ -211,13 +211,13 @@ impl JWT {
     ///
     pub fn decode(&mut self, secret: &[u8]) -> Result<String, JwtError> {
         let jwt = &self.token;
-        let (header_b64, rest) = jwt
-            .split_once('.')
-            .ok_or_else(|| JwtError::DecodeError("Invalid JWT: missing header separator".to_string()))?;
+        let (header_b64, rest) = jwt.split_once('.').ok_or_else(|| {
+            JwtError::DecodeError("Invalid JWT: missing header separator".to_string())
+        })?;
 
-        let (claims_b64, inner_signature_b64) = rest
-            .split_once('.')
-            .ok_or_else(|| JwtError::DecodeError("Invalid JWT: missing payload separator".to_string()))?;
+        let (claims_b64, inner_signature_b64) = rest.split_once('.').ok_or_else(|| {
+            JwtError::DecodeError("Invalid JWT: missing payload separator".to_string())
+        })?;
 
         // Base64-decode the header and claims
         let header_json = general_purpose::STANDARD.decode(header_b64)?;
@@ -230,8 +230,8 @@ impl JWT {
         // Recompute the HMAC-SHA256 signature over the signing input
         let signing_input = format!("{header_b64}.{claims_b64}");
         type HmacSha256 = Hmac<Sha256>;
-        let mut hmac = HmacSha256::new_from_slice(secret)
-            .map_err(|e| JwtError::DecodeError(e.to_string()))?;
+        let mut hmac =
+            HmacSha256::new_from_slice(secret).map_err(|e| JwtError::DecodeError(e.to_string()))?;
         hmac.update(signing_input.as_bytes());
         let signature = hmac.finalize();
         let signature_b64 = general_purpose::STANDARD.encode(signature.into_bytes());
@@ -242,7 +242,11 @@ impl JWT {
         let matches = if sig_a.len() != sig_b.len() {
             false
         } else {
-            sig_a.iter().zip(sig_b.iter()).fold(0, |acc, (x, y)| acc | (x ^ y)) == 0
+            sig_a
+                .iter()
+                .zip(sig_b.iter())
+                .fold(0, |acc, (x, y)| acc | (x ^ y))
+                == 0
         };
 
         if !matches {

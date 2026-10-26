@@ -142,7 +142,11 @@ mod tests {
         let encoded = encoded_result.unwrap();
         jwt.token.clone_from(&encoded);
         let decoded = JWT::decode(&mut jwt, secret);
-        assert!(decoded.is_ok(), "Expected decode to succeed, got: {:?}", decoded);
+        assert!(
+            decoded.is_ok(),
+            "Expected decode to succeed, got: {:?}",
+            decoded
+        );
         assert_eq!(decoded.unwrap(), encoded);
     }
 

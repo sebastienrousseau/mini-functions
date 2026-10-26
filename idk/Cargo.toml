@@ -14,7 +14,7 @@ keywords = ["idk", "error-handling", "error", "exception-handling", "failure"]
 license = "MIT OR Apache-2.0"
 name = "idk"
 repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/errors/"
-rust-version = "1.66.1"
+rust-version = "1.89.0"
 version = "0.0.1"
 include = [
     "../../LICENSE-APACHE",
