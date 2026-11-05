@@ -42,7 +42,7 @@ version = "0.0.11"
 [dependencies]
 cclm = { version = "0.0.1", path = "cclm" }
 cjwt = { version = "0.0.1", path = "cjwt" }
-cmn = "0.0.6"
+cmn = "0.0.7"
 dtt = "0.0.11"
 hsh = "0.0.10"
 idk = { version = "0.0.1", path = "idk" }
