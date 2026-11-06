@@ -52,7 +52,6 @@ extern crate cclm;
 extern crate dtt;
 extern crate hmac;
 extern crate idk;
-extern crate jwt;
 extern crate serde;
 extern crate serde_json;
 extern crate sha2;

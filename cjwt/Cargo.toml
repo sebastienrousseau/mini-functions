@@ -34,12 +34,15 @@ harness = false
 path = "benches/cjwt.rs"
 
 [dependencies]
+# Not used directly: a floor so no ctutils with RUSTSEC-2026-0385
+# (non-constant-time comparisons, fixed in 0.4.4) can resolve through
+# hmac and digest.
+ctutils = "0.4.4"
 base64 = "0.23.0"
 cclm = { version = "0.0.1", path = "../cclm" }
 dtt = "0.0.11"
 hmac = "0.13.0"
 idk = { version = "0.0.1", path = "../idk" }
-jwt = "0.16.0"
 serde = { version = "1.0.193", features = ["derive"] }
 serde_json = "1.0.108"
 sha2 = "0.11.0"
