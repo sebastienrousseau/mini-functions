@@ -5,6 +5,7 @@ mod tests {
 
     use self::cclm::Claims;
     use self::cjwt::{Algorithm, Header, JWT};
+    use idk::jwt::JwtError;
 
     #[test]
     fn test_default_algorithm_is_hs256() {
@@ -166,40 +167,6 @@ mod tests {
     }
 
     #[test]
-    fn test_validate_success() {
-        let secret: &[u8; 6] = b"secret";
-        let jwt = JWT {
-            header: Header::default(),
-            claims: Claims::default(),
-            signature: vec![],
-            token: "example_token".to_owned(),
-        };
-        let result = JWT::validate(&jwt, secret);
-        assert!(result.is_err());
-    }
-
-    #[test]
-    fn test_validate_with_empty_signature() {
-        // Create a JWT with valid claims and an empty signature
-        let secret = b"secret";
-        let jwt = JWT {
-            header: Header {
-                alg: Some(Algorithm::HS256),
-                kid: Some("example_kid".to_string()),
-                typ: Some("example_type".to_string()),
-                cty: Some("example_cty".to_string()),
-            },
-            claims: Claims::default(),
-            signature: vec![],
-            token: "example_token".to_owned(),
-        };
-
-        // Test validating the JWT
-        let result = jwt.validate(secret);
-        assert!(result.is_err());
-    }
-
-    #[test]
     fn test_decode_invalid_token() {
         let mut jwt = JWT {
             token: "invalid.token.structure".to_owned(),
@@ -230,16 +197,6 @@ mod tests {
     }
 
     #[test]
-    fn test_validate_with_invalid_claims() {
-        let jwt = JWT {
-            token: "invalid.claims.structure".to_string(),
-            ..Default::default()
-        };
-        let secret = b"secret";
-        assert!(JWT::validate(&jwt, secret).is_err());
-    }
-
-    #[test]
     fn test_decode_with_invalid_signature() {
         let mut jwt = JWT {
             token: "invalid.signature.value".to_owned(),
@@ -247,18 +204,6 @@ mod tests {
         };
         let secret = b"secret";
         assert!(JWT::decode(&mut jwt, secret).is_err());
-    }
-
-    #[test]
-    fn test_validate_with_invalid_signature() {
-        let jwt = JWT {
-            header: Header::default(),
-            claims: Claims::default(),
-            signature: vec![],
-            token: "invalid.signature.value".to_string(),
-        };
-        let secret = b"secret";
-        assert!(JWT::validate(&jwt, secret).is_err());
     }
 
     #[test]
@@ -282,30 +227,6 @@ mod tests {
     }
 
     #[test]
-    fn test_validate_with_expired_iat() {
-        let jwt = JWT {
-            header: Header::default(),
-            claims: Claims::default(),
-            signature: vec![],
-            token: "expired.iat.jwt".to_string(),
-        };
-        let secret = b"secret";
-        assert!(JWT::validate(&jwt, secret).is_err());
-    }
-
-    #[test]
-    fn test_validate_with_expired_exp() {
-        let jwt = JWT {
-            header: Header::default(),
-            claims: Claims::default(),
-            signature: vec![],
-            token: "expired.exp.jwt".to_owned(),
-        };
-        let secret = b"secret";
-        assert!(JWT::validate(&jwt, secret).is_err());
-    }
-
-    #[test]
     fn test_decode_malformed_tokens_do_not_panic() {
         let mut jwt = JWT::default();
         let secret = b"secret";
@@ -321,5 +242,39 @@ mod tests {
         // Invalid signature
         jwt.token = "header.payload.invalidsig".to_string();
         assert!(JWT::decode(&mut jwt, secret).is_err());
+    }
+
+    // `JWT::validate` never verified a token and panicked on a token
+    // with a single dot. It is deprecated and now always returns an
+    // error; these tests call it on purpose, hence the scoped allow.
+    fn assert_validate_removed(result: Result<(), JwtError>) {
+        match result {
+            Err(JwtError::InvalidSignature(msg)) => {
+                assert!(msg.contains("broken"), "unexpected message: {msg}")
+            }
+            other => panic!("expected the removal error, got {other:?}"),
+        }
+    }
+
+    #[test]
+    #[allow(deprecated)]
+    fn test_validate_one_dot_token_errors_without_panic() {
+        let jwt = JWT {
+            token: "header.payload".to_owned(),
+            ..JWT::default()
+        };
+        assert_validate_removed(jwt.validate(b"secret"));
+    }
+
+    #[test]
+    #[allow(deprecated)]
+    fn test_validate_rejects_even_a_freshly_encoded_token() {
+        let secret = b"secret";
+        let token = JWT::encode(Header::default(), Claims::default(), secret).unwrap();
+        let jwt = JWT {
+            token,
+            ..JWT::default()
+        };
+        assert_validate_removed(jwt.validate(secret));
     }
 }
