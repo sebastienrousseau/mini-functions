@@ -1,5 +1,15 @@
 # CJWT
 
+> [!WARNING]
+> **Deprecated and unmaintained.** `cjwt` 0.0.2 is the final release.
+>
+> **`JWT::validate` is broken and must not be used.** It never verified
+> a token: a correctly signed token was always rejected, and a token
+> with one dot made it panic. It used standard base64 instead of
+> base64url and never checked `exp`. In 0.0.2 it always returns an
+> error. Use the [`jsonwebtoken`](https://crates.io/crates/jsonwebtoken)
+> crate instead.
+
 A Rust library for working with JSON Web Tokens (JWTs) and JSON Web Signatures (JWSs)
 
 [![Made With Love][made-with-rust]][6]
@@ -62,7 +72,7 @@ To use `cjwt` in your project, add the following to your
 
 ```toml
 [dependencies]
-cjwt = "0.0.1"
+cjwt = "0.0.2"
 ```
 
 Add the following to your `main.rs` file:

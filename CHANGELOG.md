@@ -3,7 +3,39 @@
 Notable changes to `mini-functions`. Earlier releases are described on
 the [GitHub releases page](https://github.com/sebastienrousseau/mini-functions/releases).
 
-## [0.0.12] - Unreleased
+## [0.0.12] - 2026-11-06
+
+The final release. `cclm`, `cjwt`, `idk` and `mdg` ship as 0.0.2 with it.
+
+### Deprecated
+
+- **`mini-functions` and its sub-crates `cclm`, `cjwt`, `idk` and `mdg`
+  are deprecated and unmaintained.** The GitHub repository is archived
+  after this release. Nothing on crates.io depends on any of them
+  outside this workspace. Use `cmn`, `dtt`, `hsh`, `qrc`, `rlg` and
+  `vrd` directly; for JSON Web Tokens use `jsonwebtoken`; for MD5 use
+  `md-5`. Every manifest declares
+  `[badges] maintenance = { status = "deprecated" }`, and every README
+  and crate root opens with the notice.
+
+### Fixed
+
+- **`cjwt::JWT::validate` always returns an error and is
+  `#[deprecated]`.** It never verified a token: it compared the HMAC of
+  the whole token with the HMAC of the signature text, so a correctly
+  signed token was rejected, and it panicked on a token with one dot.
+  It also decoded with standard base64 rather than base64url and never
+  checked `exp`. It is not repaired; use `jsonwebtoken`. The v0.0.11
+  release notes describe a fix for the panic that is not in the v0.0.11
+  tag; this release is the first that does not panic.
+
+### Security
+
+- `idk` and `cjwt` no longer declare the unmaintained `jwt` crate
+  (RUSTSEC-2016-0007), which neither used.
+- `idk` and `cjwt` require `ctutils` 0.4.4 or newer, so the versions
+  affected by RUSTSEC-2026-0385 (reached through `hmac` and `digest`)
+  cannot resolve.
 
 ### Changed
 

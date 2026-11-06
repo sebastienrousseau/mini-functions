@@ -4,6 +4,10 @@
 //!
 //! # A Rust library for working with JSON Web Tokens (JWTs) and JSON Web Signatures (JWSs)
 //!
+//! **Deprecated and unmaintained.** 0.0.2 is the final release.
+//! `JWT::validate` never verified a token and now always returns an
+//! error. Use the `jsonwebtoken` crate.
+//!
 //! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-cjwt.svg)](https://minifunctions.com)
 //!
 //! <center>

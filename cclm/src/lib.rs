@@ -4,6 +4,9 @@
 //!
 //! # A Rust library for accessing and manipulating claims of a JSON Web Token (JWT)
 //!
+//! **Deprecated and unmaintained.** 0.0.2 is the final release. Use the
+//! `jsonwebtoken` crate.
+//!
 //! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-claims.svg)](https://minifunctions.com)
 //!
 //! <center>

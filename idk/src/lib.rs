@@ -4,6 +4,9 @@
 //!
 //! # A Rust library for managing errors and exceptions
 //!
+//! **Deprecated and unmaintained.** 0.0.2 is the final release. Use the
+//! `jsonwebtoken` crate for JSON Web Tokens.
+//!
 //! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-idk.svg)](https://minifunctions.com)
 //!
 //! <center>

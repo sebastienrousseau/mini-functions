@@ -4,6 +4,9 @@
 //!
 //! # A Rust library that implements the MD5 cryptographic hash function
 //!
+//! **Deprecated and unmaintained.** 0.0.2 is the final release. Use the
+//! `md-5` crate.
+//!
 //! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-mdg.svg)](https://minifunctions.com)
 //!
 //! <center>
