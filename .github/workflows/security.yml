@@ -1,0 +1,30 @@
+# The shared security workflow, as the other crates in the family call
+# it: cargo audit --deny warnings, cargo deny check against deny.toml,
+# CodeQL and, on pull requests, dependency review. That workflow
+# reports cargo deny without failing on it (continue-on-error).
+name: Security
+
+on:
+  push:
+    branches:
+      - main
+      - "feat/**"
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  security:
+    permissions:
+      contents: read
+      security-events: write
+    uses: sebastienrousseau/pipelines/.github/workflows/security.yml@980375f1d96368885ff65cc4c7f1ff355a5a4095 # main 2026-10-13
+    with:
+      language: rust

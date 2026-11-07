@@ -14,8 +14,8 @@ keywords = ["api", "cjwt", "json", "jws", "jwt"]
 license = "MIT OR Apache-2.0"
 name = "cjwt"
 repository = "https://github.com/sebastienrousseau/mini-functions/tree/main/cjwt/"
-rust-version = "1.66.1"
-version = "0.0.1"
+rust-version = "1.89.0"
+version = "0.0.2"
 include = [
     "../../LICENSE-APACHE",
     "../../LICENSE-MIT",
@@ -34,12 +34,15 @@ harness = false
 path = "benches/cjwt.rs"
 
 [dependencies]
+# Not used directly: a floor so no ctutils with RUSTSEC-2026-0385
+# (non-constant-time comparisons, fixed in 0.4.4) can resolve through
+# hmac and digest.
+ctutils = "0.4.4"
 base64 = "0.23.0"
-cclm = { version = "0.0.1", path = "../cclm" }
+cclm = { version = "0.0.2", path = "../cclm" }
 dtt = "0.0.11"
 hmac = "0.13.0"
-idk = { version = "0.0.1", path = "../idk" }
-jwt = "0.16.0"
+idk = { version = "0.0.2", path = "../idk" }
 serde = { version = "1.0.193", features = ["derive"] }
 serde_json = "1.0.108"
 sha2 = "0.11.0"
@@ -66,3 +69,6 @@ all-features = true
 # Declaring the cfg here tells rustc the value is expected, so
 # unexpected_cfgs stays quiet under -D warnings.
 unexpected_cfgs = { level = "warn", check-cfg = ['cfg(feature, values("bench"))'] }
+
+[badges]
+maintenance = { status = "deprecated" }

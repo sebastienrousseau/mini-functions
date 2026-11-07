@@ -7,6 +7,29 @@ alt="Common (CMN) logo" height="261" width="261" align="right" />
 
 # Mini Functions
 
+> [!WARNING]
+> **Deprecated and unmaintained.** `mini-functions` 0.0.12 is the final
+> release. It will receive no further fixes, including security fixes,
+> and the repository is archived.
+>
+> **Do not use `cjwt::JWT::validate`** (re-exported here). It never
+> verified a token: a correctly signed token was always rejected, and a
+> token with one dot made it panic. In 0.0.12 it always returns an
+> error. Earlier versions are broken.
+>
+> Use instead:
+>
+> - the individual crates directly:
+>   [`cmn`](https://crates.io/crates/cmn),
+>   [`dtt`](https://crates.io/crates/dtt),
+>   [`hsh`](https://crates.io/crates/hsh),
+>   [`qrc`](https://crates.io/crates/qrc),
+>   [`rlg`](https://crates.io/crates/rlg) and
+>   [`vrd`](https://crates.io/crates/vrd);
+> - for JSON Web Tokens (`cjwt`, `cclm`), the
+>   [`jsonwebtoken`](https://crates.io/crates/jsonwebtoken) crate;
+> - for MD5 (`mdg`), the [`md-5`](https://crates.io/crates/md-5) crate.
+
 A Rust library of highly performant utility and wrapper functions
 
 <!-- markdownlint-disable MD033 -->
@@ -101,7 +124,7 @@ It takes just a few minutes to get up and running with `mini-functions`.
 
 ### Requirements
 
-The minimum supported Rust toolchain version is currently Rust **1.71.1** or later (stable).
+The minimum supported Rust toolchain version is currently Rust **1.89.0** or later (stable).
 
 ### Installation
 
@@ -121,7 +144,7 @@ To use the `mini-functions` library in your project, add the following to your `
 
 ```toml
 [dependencies]
-mini-functions = "0.0.10"
+mini-functions = "0.0.12"
 ```
 
 Add the following to your `main.rs` file:

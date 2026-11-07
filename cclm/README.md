@@ -1,5 +1,10 @@
 # CCLM
 
+> [!WARNING]
+> **Deprecated and unmaintained.** `cclm` 0.0.2 is the final release.
+> For JSON Web Token claims, use the
+> [`jsonwebtoken`](https://crates.io/crates/jsonwebtoken) crate.
+
 A Rust library for accessing and manipulating claims of a JSON Web Token (JWT)
 
 [![Made With Love][made-with-rust]][6]
@@ -78,7 +83,7 @@ To use `cclm` in your project, add the following to your
 
 ```toml
 [dependencies]
-cclm = "0.0.1"
+cclm = "0.0.2"
 ```
 
 Add the following to your `main.rs` file:

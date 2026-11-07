@@ -1,5 +1,4 @@
 extern crate cjwt;
-extern crate jwt;
 
 use self::cjwt::{Algorithm, Header, JWT};
 use cclm::Claims;

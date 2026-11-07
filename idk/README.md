@@ -1,5 +1,11 @@
 # IDK
 
+> [!WARNING]
+> **Deprecated and unmaintained.** `idk` 0.0.2 is the final release. It
+> held the error types of the retired `cjwt` crate; for JSON Web
+> Tokens use the [`jsonwebtoken`](https://crates.io/crates/jsonwebtoken)
+> crate.
+
 A Rust library for managing errors and exceptions
 
 [![Made With Love][made-with-rust]][6]
@@ -84,7 +90,7 @@ To use `idk` in your project, add the following to your
 
 ```toml
 [dependencies]
-idk = "0.0.1"
+idk = "0.0.2"
 ```
 
 Add the following to your `main.rs` file:

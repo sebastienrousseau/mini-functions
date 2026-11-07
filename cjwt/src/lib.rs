@@ -4,6 +4,10 @@
 //!
 //! # A Rust library for working with JSON Web Tokens (JWTs) and JSON Web Signatures (JWSs)
 //!
+//! **Deprecated and unmaintained.** 0.0.2 is the final release.
+//! `JWT::validate` never verified a token and now always returns an
+//! error. Use the `jsonwebtoken` crate.
+//!
 //! [![Rust](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/mini-functions/logo/logo-cjwt.svg)](https://minifunctions.com)
 //!
 //! <center>
@@ -52,7 +56,6 @@ extern crate cclm;
 extern crate dtt;
 extern crate hmac;
 extern crate idk;
-extern crate jwt;
 extern crate serde;
 extern crate serde_json;
 extern crate sha2;
@@ -211,13 +214,13 @@ impl JWT {
     ///
     pub fn decode(&mut self, secret: &[u8]) -> Result<String, JwtError> {
         let jwt = &self.token;
-        let (header_b64, rest) = jwt
-            .split_once('.')
-            .ok_or_else(|| JwtError::DecodeError("Invalid JWT: missing header separator".to_string()))?;
+        let (header_b64, rest) = jwt.split_once('.').ok_or_else(|| {
+            JwtError::DecodeError("Invalid JWT: missing header separator".to_string())
+        })?;
 
-        let (claims_b64, inner_signature_b64) = rest
-            .split_once('.')
-            .ok_or_else(|| JwtError::DecodeError("Invalid JWT: missing payload separator".to_string()))?;
+        let (claims_b64, inner_signature_b64) = rest.split_once('.').ok_or_else(|| {
+            JwtError::DecodeError("Invalid JWT: missing payload separator".to_string())
+        })?;
 
         // Base64-decode the header and claims
         let header_json = general_purpose::STANDARD.decode(header_b64)?;
@@ -230,8 +233,8 @@ impl JWT {
         // Recompute the HMAC-SHA256 signature over the signing input
         let signing_input = format!("{header_b64}.{claims_b64}");
         type HmacSha256 = Hmac<Sha256>;
-        let mut hmac = HmacSha256::new_from_slice(secret)
-            .map_err(|e| JwtError::DecodeError(e.to_string()))?;
+        let mut hmac =
+            HmacSha256::new_from_slice(secret).map_err(|e| JwtError::DecodeError(e.to_string()))?;
         hmac.update(signing_input.as_bytes());
         let signature = hmac.finalize();
         let signature_b64 = general_purpose::STANDARD.encode(signature.into_bytes());
@@ -242,7 +245,11 @@ impl JWT {
         let matches = if sig_a.len() != sig_b.len() {
             false
         } else {
-            sig_a.iter().zip(sig_b.iter()).fold(0, |acc, (x, y)| acc | (x ^ y)) == 0
+            sig_a
+                .iter()
+                .zip(sig_b.iter())
+                .fold(0, |acc, (x, y)| acc | (x ^ y))
+                == 0
         };
 
         if !matches {
@@ -308,47 +315,32 @@ impl JWT {
         jwt.token.len()
     }
 
-    /// Validates a JWT token.
-    pub fn validate(&self, secret: &[u8]) -> Result<(), JwtError> {
-        let jwt = &self.token;
-        {
-            // Split the JWT into its header, claims, and signature
-            // let (header_b64, claims_b64_signature_b64) = jwt.split_once('.').unwrap();
-            let (header_b64, claims_b64_signature_b64) = match jwt.split_once('.') {
-                Some(tuple) => tuple,
-                None => return Err(JwtError::DecodeError("Invalid JWT".to_string())),
-            };
-
-            let (claims_b64, inner_signature_b64) =
-                claims_b64_signature_b64.split_once('.').unwrap();
-
-            // Base64-decode the header and claims
-            let header_json = general_purpose::STANDARD.decode(header_b64)?;
-            let claims_json = general_purpose::STANDARD.decode(claims_b64)?;
-
-            // Allocate Vec of references to slices
-            let header_json_tmp = header_json.as_slice();
-            let claims_json = claims_json.as_slice();
-
-            // Deserialize the header and claims from JSON
-            let _decoded_header: Header = serde_json::from_slice(header_json_tmp)?;
-            let _decoded_claims: Claims = serde_json::from_slice(claims_json)?;
-
-            // Sign the JWT with the secret
-            type HmacSha256 = Hmac<Sha256>;
-            let mut hmac = HmacSha256::new_from_slice(secret)?;
-            hmac.update(jwt.as_bytes());
-            let signature = hmac.finalize();
-
-            // Verify the signature
-            let mut hmac = HmacSha256::new_from_slice(secret)?;
-            hmac.update(inner_signature_b64.as_bytes());
-            let inner_signature = hmac.finalize();
-            if signature != inner_signature {
-                return Err(JwtError::InvalidSignature("Invalid signature".to_string()));
-            }
-        }
-        Ok(())
+    /// Removed: always returns an error.
+    ///
+    /// This function never verified a token. It compared the HMAC of
+    /// the whole token with the HMAC of the signature text, so a valid
+    /// token was always rejected; it also panicked on a token with a
+    /// single dot, decoded with standard base64 instead of base64url,
+    /// and ignored `exp`. It now returns
+    /// [`JwtError::InvalidSignature`] for every input.
+    ///
+    /// `cjwt` is deprecated and unmaintained. Use the
+    /// [`jsonwebtoken`](https://crates.io/crates/jsonwebtoken) crate to
+    /// verify JSON Web Tokens.
+    ///
+    /// # Errors
+    ///
+    /// Always.
+    #[deprecated(
+        since = "0.0.2",
+        note = "broken and removed: it never verified a token; use the jsonwebtoken crate"
+    )]
+    pub fn validate(&self, _secret: &[u8]) -> Result<(), JwtError> {
+        Err(JwtError::InvalidSignature(
+            "cjwt::JWT::validate is broken and has been removed; it never verified a \
+             token. Use the jsonwebtoken crate."
+                .to_string(),
+        ))
     }
 }
 

@@ -1,5 +1,10 @@
 # MDG
 
+> [!WARNING]
+> **Deprecated and unmaintained.** `mdg` 0.0.2 is the final release.
+> For MD5, use the [`md-5`](https://crates.io/crates/md-5) crate. MD5
+> is broken for security purposes; do not use it to protect anything.
+
 A Rust library that implements the MD5 cryptographic hash function
 
 [![Made With Love][made-with-rust]][6]
@@ -70,7 +75,7 @@ To use `mdg` in your project, add the following to your
 
 ```toml
 [dependencies]
-mdg = "0.0.1"
+mdg = "0.0.2"
 ```
 
 Add the following to your `main.rs` file:

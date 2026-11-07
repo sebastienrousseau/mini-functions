@@ -138,13 +138,13 @@ jobs:
           cargo clean --verbose
         shell: /bin/bash -e {0}
 
+      # actions-rs/cargo is archived and its node12 runner no longer runs
+      # on GitHub Actions. With use-cross it only ran `cross build` with
+      # these arguments, and the step above already installs cross.
       - name: Build targets 🏗
         id: build-targets
-        uses: actions-rs/cargo@v1
-        with:
-          use-cross: true
-          command: build
-          args: --verbose --workspace --release --target ${{ matrix.target }}
+        run: cross build --verbose --workspace --release --target ${{ matrix.target }}
+        shell: /bin/bash -e {0}
 
       - name: Run Cargo Format 🦀
         id: run-check-format
@@ -208,16 +208,17 @@ jobs:
         id: generate-changelog
         if: github.ref == 'refs/heads/main' && !github.event.check_run.conclusion
         run: |
-          # Append version information to CHANGELOG.md
-          echo "## [${{ env.VERSION }}] - $(date +'%Y-%m-%d')" >> ${{ github.workspace }}/CHANGELOG.md
-          # Copy content of template file to CHANGELOG.md
-          cat TEMPLATE.md > ${{ github.workspace }}/CHANGELOG.md
-          # Append git log to CHANGELOG.md
-          echo "$(git log --pretty=format:'%s' --reverse $(git describe --tags --abbrev=0)..HEAD)" >> ${{ github.workspace }}/CHANGELOG.md
-          # Append empty line to CHANGELOG.md
-          echo "" >> ${{ github.workspace }}/CHANGELOG.md
-          # Append empty line to CHANGELOG.md
-          echo "" >> ${{ github.workspace }}/CHANGELOG.md
+          # The release body: version heading, template, then the commit
+          # subjects since the last tag, in one redirect. The heading used
+          # to be appended first and then overwritten by the template.
+          {
+            echo "## [${{ env.VERSION }}] - $(date +'%Y-%m-%d')"
+            cat TEMPLATE.md
+            git log --pretty=format:'%s' --reverse "$(git describe --tags --abbrev=0)..HEAD"
+            echo ""
+            echo ""
+            echo ""
+          } > "${{ github.workspace }}/CHANGELOG.md"
 
       - name: Create Release 🚀
         id: create_release
