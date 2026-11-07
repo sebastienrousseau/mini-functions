@@ -4,7 +4,7 @@
 //!
 //! # `Mini Functions` 🦀
 //!
-//! **Deprecated and unmaintained.** 0.0.12 is the final release. Use
+//! **Deprecated and unmaintained.** 0.0.13 is the final release. Use
 //! `cmn`, `dtt`, `hsh`, `qrc`, `rlg` and `vrd` directly, `jsonwebtoken`
 //! for JSON Web Tokens and `md-5` for MD5. `cjwt::JWT::validate` is
 //! broken in every earlier version and always errors in this one.

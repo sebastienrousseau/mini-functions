@@ -3,9 +3,14 @@
 Notable changes to `mini-functions`. Earlier releases are described on
 the [GitHub releases page](https://github.com/sebastienrousseau/mini-functions/releases).
 
-## [0.0.12] - 2026-11-06
+## [0.0.13] - 2026-11-07
 
 The final release. `cclm`, `cjwt`, `idk` and `mdg` ship as 0.0.2 with it.
+
+v0.0.12 was tagged but never published: crates.io rejected `cclm`
+because its `categories` used display names ("Development tools")
+instead of slugs, and `cjwt` had the same fault. Both now use valid
+slugs. Nothing else differs from v0.0.12.
 
 ### Deprecated
 

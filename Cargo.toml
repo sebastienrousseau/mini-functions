@@ -37,7 +37,7 @@ name = "mini-functions"
 readme = "README.md"
 repository = "https://github.com/sebastienrousseau/mini-functions.git"
 rust-version = "1.89.0"
-version = "0.0.12"
+version = "0.0.13"
 
 [dependencies]
 cclm = { version = "0.0.2", path = "cclm" }

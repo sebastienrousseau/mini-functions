@@ -1,11 +1,11 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 categories = [
-    "Authentication",
-    "Cryptography",
-    "Development tools",
-    "WebAssembly",
-    "Webprogramming",
+    "authentication",
+    "cryptography",
+    "development-tools",
+    "wasm",
+    "web-programming",
 ]
 description = "The `Claims` library holds JSON Web Token (JWT) cclm. It provides an RFC7519 compliant implementation of JSON Web Tokens (JWT) and JSON Web Signature (JWS) for Rust."
 edition = "2021"
