@@ -1,11 +1,11 @@
 [package]
 authors = ["Sebastian Rousseau <sebastian.rousseau@gmail.com"]
 categories = [
-    "Authentication",
-    "Cryptography",
-    "Development tools",
-    "Encoding",
-    "Web programming",
+    "authentication",
+    "cryptography",
+    "development-tools",
+    "encoding",
+    "web-programming",
 ]
 description = "A Rust library for working with JSON Web Tokens (JWTs) and JSON Web Signatures (JWSs)"
 edition = "2021"

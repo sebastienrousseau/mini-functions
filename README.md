@@ -8,13 +8,13 @@ alt="Common (CMN) logo" height="261" width="261" align="right" />
 # Mini Functions
 
 > [!WARNING]
-> **Deprecated and unmaintained.** `mini-functions` 0.0.12 is the final
+> **Deprecated and unmaintained.** `mini-functions` 0.0.13 is the final
 > release. It will receive no further fixes, including security fixes,
 > and the repository is archived.
 >
 > **Do not use `cjwt::JWT::validate`** (re-exported here). It never
 > verified a token: a correctly signed token was always rejected, and a
-> token with one dot made it panic. In 0.0.12 it always returns an
+> token with one dot made it panic. In 0.0.13 it always returns an
 > error. Earlier versions are broken.
 >
 > Use instead:
@@ -144,7 +144,7 @@ To use the `mini-functions` library in your project, add the following to your `
 
 ```toml
 [dependencies]
-mini-functions = "0.0.12"
+mini-functions = "0.0.13"
 ```
 
 Add the following to your `main.rs` file:
